@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Late Night Reborn</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="header-logo-link">
+          <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <section class="hero">
+        <div class="hero-eyebrow">✦ Raid Guides ✦</div>
+        <h1 class="hero-heading">The Forked Tower</h1>
+        <p class="hero-sub">
+          Guides for the Occult Crescent's high-end field operations.
+          Select a raid below to get started.
+        </p>
+      </section>
+
+      <!-- ── Raid Selector ── -->
+      <div class="raid-selector">
+        <button class="raid-choice active" data-raid="ftb">
+          <span class="raid-tag available">✦ Available</span>
+          <div class="raid-name">Forked Tower: Blood</div>
+          <div class="raid-subtitle">Tower of Blood &nbsp;·&nbsp; Patch 7.25</div>
+          <div class="raid-desc">24–48 player field operation set within the Occult Crescent: South Horn. Four boss encounters across seven sections, with three traversal passages requiring precise phantom job coordination.</div>
+        </button>
+        <button class="raid-choice locked" data-raid="ftm" title="Not yet released">
+          <span class="raid-tag unreleased">⧗ Unreleased</span>
+          <div class="raid-name">Forked Tower: Magic</div>
+          <div class="raid-subtitle">Tower of Magic &nbsp;·&nbsp; Coming Soon</div>
+          <div class="raid-desc">Located within the Occult Crescent: North Horn. Guide content will be added once this raid has been released in a future patch.</div>
+        </button>
+      </div>
+
+      <!-- ── FTB: Blood Content ── -->
+      <div id="ftb-content" class="raid-content">
+        <div class="sections-label">Sections</div>
+        <div class="section-grid">
+
+          <a href="demon-tablet.html" class="section-card is-boss">
+            <span class="card-badge boss">⚔ Boss 1</span>
+            <div class="card-index">01</div>
+            <div class="card-title">Demon Tablet</div>
+            <div class="card-desc">A massive tablet-like construct that bisects the arena. Navigate its cleaves, tower mechanics, and add phases.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="hallways.html" class="section-card wip">
+            <span class="card-badge traversal">↗ Traversal</span>
+            <div class="card-index">02</div>
+            <div class="card-title">Central Passages</div>
+            <div class="card-desc">Two mirrored hallways full of hidden explosive traps and dangerous mob pulls. Thieves and Rangers lead the way.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="dead-stars.html" class="section-card is-boss wip">
+            <span class="card-badge boss">⚔ Boss 2</span>
+            <div class="card-index">03</div>
+            <div class="card-title">Dead Stars</div>
+            <div class="card-desc">A three-boss encounter — Nereid, Triton, and Phobos. Each phase transforms two bosses as the third takes center stage.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="bridges.html" class="section-card wip">
+            <span class="card-badge traversal">↗ Traversal</span>
+            <div class="card-index">04</div>
+            <div class="card-title">Pronged Passages</div>
+            <div class="card-desc">Four sections of bridge crawling with traps and unique enemy pulls, ending with a two-boss finale that must fall together.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="marble-dragon.html" class="section-card is-boss wip">
+            <span class="card-badge boss">⚔ Boss 3</span>
+            <div class="card-index">05</div>
+            <div class="card-title">Marble Dragon</div>
+            <div class="card-desc">A stone dragon whose water and ice mechanics chain-react across the arena. Master Imitation Rain and the Adds Phase to clear.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="lockwards.html" class="section-card wip">
+            <span class="card-badge traversal">↗ Traversal</span>
+            <div class="card-index">06</div>
+            <div class="card-title">The Binding Lock</div>
+            <div class="card-desc">Six guardian side rooms guard the Binding Lock. Clear each with the right phantom job tools, then authenticate to proceed.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="magitaur.html" class="section-card is-boss wip">
+            <span class="card-badge boss">⚔ Boss 4</span>
+            <div class="card-index">07</div>
+            <div class="card-title">Magitaur</div>
+            <div class="card-desc">The final guardian. A magitek behemoth with rotating daggers, timed spread AoEs, and conduit mechanics across three party squares.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- ── FTM: Magic Content (locked) ── -->
+      <div id="ftm-content" class="raid-content" hidden>
+        <div class="coming-soon-card">
+          <div class="coming-soon-icon">🔒</div>
+          <div class="coming-soon-title">Forked Tower: Magic</div>
+          <p class="coming-soon-text">
+            This raid has not yet been released. Guide content will be written
+            here once the Tower of Magic opens its doors in the Occult Crescent: North Horn.
+          </p>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn &mdash; Final Fantasy XIV Raid Guide</p>
+    </footer>
+
+  </div>
+
+  <script src="js/stars.js"></script>
+  <script>
+    (function () {
+      var choices = document.querySelectorAll('.raid-choice:not(.locked)');
+      choices.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.raid-choice').forEach(function (b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          var raidId = this.dataset.raid;
+          document.querySelectorAll('.raid-content').forEach(function (c) { c.hidden = true; });
+          document.getElementById(raidId + '-content').hidden = false;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

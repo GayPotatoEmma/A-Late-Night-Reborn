@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marble Dragon — A Late Night Reborn</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="header-logo-link">
+          <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Marble Dragon</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge boss">⚔ Boss 3</div>
+        <h1 class="page-title boss-title">Marble Dragon</h1>
+        <p class="page-subtitle">The third encounter of the Forked Tower: Blood.</p>
+      </div>
+
+      <div class="page-wip-banner">
+        <span>🚧</span>
+        <span>This section's guide is currently under construction and not yet available.</span>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card">
+        <h2 class="card-heading purple">📖 Overview</h2>
+        <div class="content-body">
+          <p>
+            Marble Dragon is fought in an extremely large circular arena that gains a death wall at
+            the start. Six tanks (one per party) should be identified as main tanks before the pull.
+            Waymarks are placed at NW (A), N (B), NE (C), SE (1/D), S (2/E), SW (3/F).
+          </p>
+          <p>
+            The core mechanic throughout: <strong>water circles are inactive</strong> (standing in them is harmless).
+            <strong>Ice mechanics are active</strong> and must be avoided. When ice contacts water, the water <em>freezes</em>
+            — dealing damage to anyone in it — and becomes an active ice AoE that then resolves.
+          </p>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Draconiform Motion:</strong> The boss faces a random player and fires late-telegraphed 90° conal AoEs from both its front and back. Groups typically stack south (tanks north) to bait these safely. Anyone hit is knocked into the death wall and dies.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imitation Rains 1 & 2 -->
+      <div class="content-card">
+        <h2 class="card-heading teal">💧 Imitation Rain 1 &amp; 2</h2>
+        <div class="content-body">
+          <p><strong>Imitation Rain 1:</strong> Eight water circles spawn in two horizontal lines of four. One circle per line has spikes in a plus shape (explodes as a plus AoE when frozen). Imitation Icicle then spawns two ice circles — one overlapping each line.</p>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span>To find the safe side: locate the spiked water circle in the south line, <em>or</em> the ice circle closer to the wall. Both tell you the same safe direction. Dodge toward that side once Draconiform Motion's cast bar appears. When the first ice AoE explodes, sprint into the space it just vacated.</span>
+          </div>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span><strong>Dread Deluge:</strong> Heavy tankbusters (non-AoE) on all six main tanks with a strong Dropsy lasting 10+ seconds. Use mitigation regardless.</span>
+          </div>
+          <p><strong>Imitation Rain 2:</strong> Seven water circles — one center (always spiked) and two arcs of three. Frigid Twister spawns east and west, rotating clockwise or counterclockwise (both in the same direction, randomly chosen). The twister direction determines which water circles chain-react and in what order.</p>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span>The raid leader calls which side to dodge to (either side works due to 180° symmetry). After the Draconiform Motion cast bar appears, move to the called side and track the twister: dodge plus-shaped AoE at the far cardinal first if the twister hits a spiked circle, or dodge the circular AoEs first if it hits a plain circle.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adds Phase -->
+      <div class="content-card">
+        <h2 class="card-heading gold">🧊 Adds Phase</h2>
+        <div class="content-body">
+          <p>The boss becomes untargetable and leaves the arena. Six <strong>Ice Golems</strong> spawn at each waymark position. Each party tanks the Golem at their waymark — Golems near each other gain Vulnerability Down, so keep them separated.</p>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Imitation Rain + Frigid Dive (×2):</strong> Seven water circles spawn (one center always spiked, six in two arcs = towers when frozen). The boss telegraphs a dive through two central towers + the center circle, activating them. Stand near but not in line — move in to soak after the dive. The center AoE then activates the remaining four towers in the same way.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span>Each player absent from a tower adds raidwide damage and a Sustained Damage stack. With 48 players, body language is sufficient for tower assignment — but having a clear rotation plan is recommended.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Ice Sprites:</strong> After the second tower set resolves, the boss reappears and begins Lifeless Legacy. Six Ice Sprites spawn at the edge (one per waymark), tethered to the boss, walking toward it. Each party kills their Sprite before it reaches the boss — even one reaching it makes Lifeless Legacy essentially lethal. Phantom Bard's Romeo's Ballad is typically used when Sprites are close to the boss.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imitation Rain 3 -->
+      <div class="content-card">
+        <h2 class="card-heading blue">💧 Imitation Rain 3 — Wicked Water</h2>
+        <div class="content-body">
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Wicked Water:</strong> Twelve players receive a marker, then gain Wicked Water and Throttle debuffs. During the Imitation Rain 1 pattern that follows, these 12 players intentionally do <em>not</em> dodge the final ice AoEs — they get frozen into Gelid Gaols. This converts Wicked Water to Gelid Gaol. Non-frozen players must immediately break the Gaols to cleanse the Throttle debuff before it kills them.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span>A Wicked Water player who fails to get frozen cannot have their Throttle cleansed and will die when the timer expires. There is no recovery.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imitation Rain 4 -->
+      <div class="content-card">
+        <h2 class="card-heading purple">💧 Imitation Rain 4 &amp; Enrage</h2>
+        <div class="content-body">
+          <p>Ten water circles — four at cardinals (east and west are spiked) and six near the center in two horizontal lines as towers. Frigid Twisters spawn northeast and southwest. After Draconiform Motion, the twisters rotate and chain into the water circles.</p>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span>Watch the twister direction and dodge away from the circles they are moving into. Stay out of towers until after the first wave of circle AoEs fires, then move in. The twisters keep rotating for a second set of Imitation Rain (now north/south spikes, vertical tower lines).</span>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <span>Parties A, C, 1/D, 3/F soak the towers near their standard waymarks. Party B shifts to center-east; Party 2/E shifts to center-west for the second set.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Lifeless Legacy:</strong> Hard enrage following Imitation Star + Dread Deluge. Defeat the boss before this cast completes.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="bridges.html" class="nav-btn nav-prev wip">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← Pronged Passages</span>
+          </div>
+        </a>
+        <a href="index.html" class="nav-btn nav-home">⌂ Home</a>
+        <a href="lockwards.html" class="nav-btn nav-next wip">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>The Binding Lock →</span>
+          </div>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn &mdash; Final Fantasy XIV Raid Guide</p>
+    </footer>
+
+  </div>
+
+  <script src="js/stars.js"></script>
+</body>
+</html>

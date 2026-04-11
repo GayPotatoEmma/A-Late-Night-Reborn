@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bridges — A Late Night Reborn</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="header-logo-link">
+          <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Pronged Passages</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge traversal">↗ Traversal</div>
+        <h1 class="page-title traversal-title">Pronged Passages</h1>
+        <p class="page-subtitle">The bridge section between Dead Stars and Marble Dragon. Also referred to as &ldquo;Bridges.&rdquo;</p>
+      </div>
+
+      <div class="page-wip-banner">
+        <span>🚧</span>
+        <span>This section's guide is currently under construction and not yet available.</span>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card">
+        <h2 class="card-heading teal">📖 Overview</h2>
+        <div class="content-body">
+          <p>
+            The Pronged Passages split the raid into two sides (letters left, numbers right) for a
+            bridge crawl across four sections. Fire spreads across the map over time as a soft enrage —
+            the damage (~40k per tick) is not immediately lethal but will pressure healers. Do not run ahead of your group to escape fire — you may walk into a trap.
+          </p>
+          <p>
+            <strong>Arcane Spear</strong> attacks occur in Sections 1, 2, and 4: the bridge lights up in four columns and
+            a wild-charge line stack fires down each one. The player at the front of the column receives
+            Piercing Resistance Down — a different tank must front the next Arcane Spear.
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 1 & 2 -->
+      <div class="content-card">
+        <h2 class="card-heading gold">🔹 Section 1 &amp; 2 — Bhoots, Bogys, and Abysses</h2>
+        <div class="content-body">
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span><strong>Tower Bhoot:</strong> Occasionally casts Paralyze III — <em>interrupt it</em>. Tower Bogys have no special mechanics.</span>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <span>After engaging the Aetherial Ward at the end of Section 1, Arcane Spear begins firing. Prefer to sync both sides before advancing through the ward.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Tower Abyss (Section 2):</strong> Immediately casts Dense Darkness, granting Magic Damage Up. <em>Phantom Time Mage must Occult Dispel this before its next cast.</em> If the buff is not removed, Diffuse Darkness deals lethal damage to most of the bridge. A single Time Mage can reach both sides with Occult Dispel's range — but having one per side is safer.</span>
+          </div>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span>Before the Section 2 Aetherial Ward there is one normal trap at a random position (left, middle, or center). Reveal or pre-pop before advancing.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="content-card">
+        <h2 class="card-heading purple">🔹 Section 3 — Idols &amp; Suspension</h2>
+        <div class="content-body">
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Tower Idols:</strong> Six Tower Idols spawn and begin casting Ancient Aero III. Wait until <em>all six</em> have started their cast — then Phantom Bard uses Romeo's Ballad to freeze them all. Stopping any before it begins casting causes it to resume after unfreeze.</span>
+          </div>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span>Two normal traps just past the Idols: one always in the center, one randomly left or right. Using Occult Falcon aimed at the center will detonate both simultaneously.</span>
+          </div>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span><strong>Phantom Geomancer — Suspend:</strong> The Geomancer on the right side must walk onto electrified ground (using Suspend) to activate the Trap Control Plinth, filling in the missing floor on the left side. Tank invulnerability cannot be used — even one tick of Electrocution damage is lethal. The left Geomancer then fills in the right side later.</span>
+          </div>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span>After the missing floor section: an unstable trap in the center of the bridge and a normal trap randomly left or right. Players seeking to pre-pop can aim at the Bhoot ahead — but be aware enemies will aggro.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="content-card">
+        <h2 class="card-heading blue">🔹 Section 4 — Progenitor &amp; Progenitrix</h2>
+        <div class="content-body">
+          <p>The bridge splits in half. One path has a normal trap, the other has an unstable trap. The left side has the orange <strong>Tower Progenitrix</strong>, the right side has the blue <strong>Tower Progenitor</strong>. Both are mechanically identical. Once engaged, Arcane Spear resumes.</p>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Close Call / Far Cry to Detonate:</strong> Both bosses gain Short Fuse (blue tether, arrows out = too close) or Long Fuse (green tether, arrows in = too far). While the tether is visible, the bosses pulse for heavy raidwide damage and Vulnerability Up. Adjust boss distance to hide the tether immediately.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Bombshell Drop:</strong> Each boss spawns two Lava Bombs tethered to itself that slowly walk toward it. Kill them before they arrive — a Massive Explosion raidwide and Vulnerability Up fires if they reach the boss. Typically boss is pulled north for the 1st drop, then south for the 2nd, alternating.</span>
+          </div>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span><strong>Punishing Pounce:</strong> A high-damage stack on a random player per side.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Massive Explosion:</strong> When either Progenitor/Progenitrix dies, the other <em>must be defeated within 12 seconds</em> or a raid wipe occurs. Co-ordinate DPS across both sides to kill them simultaneously.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="dead-stars.html" class="nav-btn nav-prev wip">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← Dead Stars</span>
+          </div>
+        </a>
+        <a href="index.html" class="nav-btn nav-home">⌂ Home</a>
+        <a href="marble-dragon.html" class="nav-btn nav-next wip">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>Marble Dragon →</span>
+          </div>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn &mdash; Final Fantasy XIV Raid Guide</p>
+    </footer>
+
+  </div>
+
+  <script src="js/stars.js"></script>
+</body>
+</html>

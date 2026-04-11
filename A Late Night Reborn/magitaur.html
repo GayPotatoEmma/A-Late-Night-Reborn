@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magitaur — A Late Night Reborn</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="header-logo-link">
+          <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Magitaur</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge boss">⚔ Boss 4</div>
+        <h1 class="page-title boss-title">Magitaur</h1>
+        <p class="page-subtitle">Infamy of Blood &mdash; the final encounter of the Forked Tower: Blood.</p>
+      </div>
+
+      <div class="page-wip-banner">
+        <span>🚧</span>
+        <span>This section's guide is currently under construction and not yet available.</span>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card">
+        <h2 class="card-heading purple">📖 Overview</h2>
+        <div class="content-body">
+          <p>
+            Magitaur is the final guardian of the Forked Tower: Blood. The arena is an extremely large
+            circle with three large outward-pointing squares separated by 30° wedges. Nine colored circles
+            (pink/yellow/blue repeating) ring the outside.
+          </p>
+          <p>
+            Party assignments: <strong>Parties A &amp; 1/D</strong> → NW square. <strong>Parties B &amp; 2/E</strong> → South square.
+            <strong>Parties C &amp; 3/F</strong> → NE square. Being outside your square when not explicitly required is
+            dangerous — it will cause additional debuffs on yourself and others.
+          </p>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span><strong>BAP Waymarks:</strong> Most NA groups use a specific waymark set per square for Assassin's Dagger. Each square has a "left waymark," "right waymark," and "center waymark." Place them precisely — a third-party plugin makes this easier.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Abilities -->
+      <div class="content-card">
+        <h2 class="card-heading gold">⚡ Core Abilities</h2>
+        <div class="content-body">
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Unsealed Aura:</strong> Heavy raidwide magical damage. Requires heavy mitigation (Occult Mage Masher, Occult Unicorn, Mighty March).</span>
+          </div>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span><strong>Unseal:</strong> Magitaur unseals either its yellow axe or blue lance, granting Unsealed buff. Axe = auto-attacks target nearest 2 players per square. Lance = auto-attacks target furthest 2 players per square. Three sets of autos follow each Unseal.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Assassin's Dagger:</strong> Three rotating dagger lines offset 120° apart. Daggers shoot out, return after 2 seconds, then shoot again rotated ~50° clockwise — 6 shoots total. Being hit adds a Thrice-come Ruin stack. "North/right" or "south/left" pattern determines starting safe position (BAP waymarks). After the 3rd return, move to the center waymark for the remaining daggers.</span>
+          </div>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Critical Axeblow / Lanceblow:</strong> Two of these are used during each Assassin's Dagger sequence. Axeblow safe zones = far from boss + inside squares. Lanceblow safe zones = near boss + between squares. The first resolves between dagger shoot 4 and return 4; the second after the final return.</span>
+          </div>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Forked Fury:</strong> Tankbusters targeting the nearest and furthest player in each square simultaneously.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Aura Burst / Holy (Conduits):</strong> Lethal raidwide unless the conduit adds that spawn at the start of the cast bar are defeated first. See Conduits section.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conduits -->
+      <div class="content-card">
+        <h2 class="card-heading teal">⚙ Conduits</h2>
+        <div class="content-body">
+          <p>Seven of the nine outer circles rise: all 3 yellow → Axe Empowerment Conduits (ring in middle), all 3 blue → Lance Empowerment Conduits (sphere in middle), 1 random pink → Universal Empowerment Conduit (both). The unsealed weapon determines which colored conduits must die.</p>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Arcane Recoil:</strong> When an Axe/Lance Conduit is defeated, it targets the nearest 2 players with a catastrophic hit. Two Phantom Knight tanks stand inside the conduit — one uses Pledge on themselves + their invulnerability, or Phantom Guard. If only one Phantom Knight per square, pre-assign a "pledge buddy" who accepts the hit with a personal invulnerability.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Universal Conduit / Arcane Reaction:</strong> A single Phantom Berserker kills the Universal Conduit alone, standing between it and the wall. The Berserker <em>must activate Rage before killing it</em> — Arcane Reaction fires a line AoE at the nearest player and inflicts 1-minute Hysteria. Rage grants immunity to Hysteria.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase Breakdown -->
+      <div class="content-card">
+        <h2 class="card-heading blue">🔄 Phase Breakdown</h2>
+        <div class="phase-list">
+          <div class="phase-item">
+            <div class="phase-num">1</div>
+            <div>
+              <div class="phase-name">Opening + First Conduits</div>
+              <div class="phase-desc">Unsealed Aura → Unseal (axe or lance) → 3 auto-attack sets → Conduits (Aura Burst or Holy)</div>
+            </div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-num">2</div>
+            <div>
+              <div class="phase-name">Sage's Staff</div>
+              <div class="phase-desc">Three Sage's Staves appear → Critical Axeblow/Lanceblow → Mana Expulsion line stacks → three more Staves appear → Critical Axeblow/Lanceblow (opposite) → line stacks → Unsealed Aura</div>
+            </div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-num">3</div>
+            <div>
+              <div class="phase-name">Rune Axe</div>
+              <div class="phase-desc">Unseal (always axe) → 3 auto sets (nearest 2) → Rune Axe: Axebit debuffs resolve in three waves (10s Greater → 13s Lesser → 21s both) → Critical Lanceblow mid-sequence → Carving Rune → Forked Fury → Aura Burst Conduits (Axe)</div>
+            </div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-num">4</div>
+            <div>
+              <div class="phase-name">Holy Lance</div>
+              <div class="phase-desc">Assassin's Dagger → Unseal (always lance) → 3 auto sets (furthest 2) → Holy Lance: 12 Luminous Lances fire Lancelight in sequence + Lancepoint stacks → Critical Axeblow → Unsealed Aura → Forked Fury → Holy Conduits (Lance) → Assassin's Dagger → Unsealed Aura (enrage)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips -->
+      <div class="content-card">
+        <h2 class="card-heading purple">💡 Tips &amp; Tricks</h2>
+        <div class="content-body">
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <span>For Rune Axe: the 10-second Greater Axebit player runs to the edge behind the nearest pink circle immediately on the cast. Remaining players with 13-second Lesser Axebit stand at their square's center and <em>do not move</em> until their AoE resolves.</span>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <span>For Holy Lance: Lances fire in clockwise order (1→12). When the lances inside your square are firing, move to the back of the square. Return immediately after lance 4/8/12 passes. Your Lancepoint stack resolves outside when your square is "hot."</span>
+          </div>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span>For Sage's Staff, the simpler NA strat ("A staff" or "Spiral stack") has everyone collapse to a single point — typically the A square's left waymark. Damage is distributed across the whole raid so each stack is survivable.</span>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <span>Resurrection debuffs are <em>not</em> cleared after Magitaur dies. Any player with Resurrection Denied at kill cannot loot the personal spoils coffin or activate the Survey Point.</span>
+          </div>
+        </div>
+      </div>
+            <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="lockwards.html" class="nav-btn nav-prev wip">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← The Binding Lock</span>
+          </div>
+        </a>
+        <a href="index.html" class="nav-btn nav-home">⌂ Home</a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn &mdash; Final Fantasy XIV Raid Guide</p>
+    </footer>
+
+  </div>
+
+  <script src="js/stars.js"></script>
+</body>
+</html>

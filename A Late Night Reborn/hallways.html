@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hallways — A Late Night Reborn</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="header-logo-link">
+          <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Central Passages</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge traversal">↗ Traversal</div>
+        <h1 class="page-title traversal-title">Central Passages</h1>
+        <p class="page-subtitle">The hallway section between Demon Tablet and Dead Stars. Also referred to as &ldquo;Hallways.&rdquo;</p>
+      </div>
+
+      <div class="page-wip-banner">
+        <span>🚧</span>
+        <span>This section's guide is currently under construction and not yet available.</span>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card">
+        <h2 class="card-heading teal">📖 Overview</h2>
+        <div class="content-body">
+          <p>
+            After defeating Demon Tablet, the raid splits into two groups at the transporter — letter
+            parties (A, B, C) take the left passage, number parties (D/1, E/2, F/3) take the right.
+            Each side navigates a mirrored layout of hallways containing hidden explosive traps and
+            dangerous enemy pulls, then rejoins at the Dead Stars arena.
+          </p>
+          <p>
+            Every avoidable enemy AoE in this section is <strong>instantly lethal</strong>. Your lives are limited —
+            do not take unnecessary risks. Stay behind your Thieves and Rangers at all times in trap areas.
+          </p>
+        </div>
+      </div>
+
+      <!-- Traps -->
+      <div class="content-card">
+        <h2 class="card-heading gold">💣 Hidden Explosive Traps</h2>
+        <div class="content-body">
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Normal Trap:</strong> Small lethal AoE on detonation. Phantom Thief uses Trap Detection to reveal, then Phantom Ranger uses Occult Falcon to disarm at range — or a tank runs it with invulnerability active.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Unstable (Super) Trap:</strong> Massive wipe-level AoE. Do <em>not</em> disarm with Occult Falcon. Only a tank using a full invulnerability ability can safely disarm one. All raid members must be notified and moved far away first.</span>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <span>Trap areas are marked by glyphs emanating from a thick red line on the floor. The glyph side contains the traps. Your Thief should always be ahead revealing the path.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enemies -->
+      <div class="content-card">
+        <h2 class="card-heading purple">👾 Notable Enemies</h2>
+        <div class="content-body">
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Tower Manticore:</strong> Casts Left Hammer or Right Hammer — a 180° cleave in the named direction, then immediately follows with the <em>opposite</em> direction. Dodge to the first unsafe side. Use Phantom Time Mage's Occult Slowga to extend the telegraph window.</span>
+          </div>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Tower Scarab:</strong> Uses Rhino Guard, granting Evasion Up — <em>Phantom Time Mage must Occult Dispel this immediately</em> or attacks miss. Vulnerable to Slow, Blind, and Doom.</span>
+          </div>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span><strong>Silent Orbs:</strong> Patrolling green orbs with a point-blank AoE field. Walking into one inflicts a 60-second uncleansable Silence. Casters and healers must keep clear at all times.</span>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <span><strong>General mobs:</strong> All enemies respond to Stun, Sleep, Slow, and Doom (varies by type). Use Occult Slowga on every pull to give the group time to react to AoEs. Tank enmity first — mob auto-attacks hit hard.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loot -->
+      <div class="content-card">
+        <h2 class="card-heading blue">🎁 Loot & Secret Rooms</h2>
+        <div class="content-body">
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <span><strong>Thief's Trick Room:</strong> A Phantom Thief can reveal a hidden passage to a locked room on their side, yielding 2 Sanguinite per chest.</span>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <span><strong>North Secret Rooms:</strong> One of the two northern secret rooms per side contains a chest with 3 Sanguinite. Groups can choose to collect or skip.</span>
+          </div>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span>Players can only access their own side's chests. A full-loot pass of both sides yields up to 10 Sanguinite total across the raid.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="demon-tablet.html" class="nav-btn nav-prev wip">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← Demon Tablet</span>
+          </div>
+        </a>
+        <a href="index.html" class="nav-btn nav-home">⌂ Home</a>
+        <a href="dead-stars.html" class="nav-btn nav-next wip">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>Dead Stars →</span>
+          </div>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn &mdash; Final Fantasy XIV Raid Guide</p>
+    </footer>
+
+  </div>
+
+  <script src="js/stars.js"></script>
+</body>
+</html>

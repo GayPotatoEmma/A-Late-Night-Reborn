@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bridges — A Late Night Reborn</title>
+  <title>Bridges | A Late Night Reborn</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -42,101 +42,154 @@
         <p class="page-subtitle">The bridge section between Dead Stars and Marble Dragon. Also referred to as &ldquo;Bridges.&rdquo;</p>
       </div>
 
-      <div class="page-wip-banner">
-        <span>🚧</span>
-        <span>This section's guide is currently under construction and not yet available.</span>
-      </div>
-
       <!-- Overview -->
       <div class="content-card">
-        <h2 class="card-heading teal">📖 Overview</h2>
+        <h2 class="card-heading teal">Overview</h2>
         <div class="content-body">
           <p>
-            The Pronged Passages split the raid into two sides (letters left, numbers right) for a
-            bridge crawl across four sections. Fire spreads across the map over time as a soft enrage —
-            the damage (~40k per tick) is not immediately lethal but will pressure healers. Do not run ahead of your group to escape fire — you may walk into a trap.
+            After defeating Dead Stars, the raid splits into two groups: letter parties (A, B, C) take the left bridge, number parties (1, 2, 3) take the right. Both sides navigate four zones filled with hidden traps and enemies before converging at the Marble Dragon arena.
           </p>
           <p>
-            <strong>Arcane Spear</strong> attacks occur in Sections 1, 2, and 4: the bridge lights up in four columns and
-            a wild-charge line stack fires down each one. The player at the front of the column receives
-            Piercing Resistance Down — a different tank must front the next Arcane Spear.
+            <strong>Wild Charge</strong> fires in Zones 1, 2, and 4. It deals AoE damage with significantly increased damage to the player at the front. Always have a <strong>tank at the front</strong> and ensure everyone mitigates. A different tank must lead each subsequent Wild Charge as it applies <strong>Piercing Resistance Down</strong>. Wild Charge is taken on the two inner middle lines, so listen to your caller for positioning.
           </p>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span>Most of this encounter can be handled by listening to callouts.</span>
+          </div>
+          <div class="img-row single">
+            <img src="assets/bridges/bridges.png" alt="Pronged Passages overview" class="section-img" />
+          </div>
         </div>
       </div>
 
-      <!-- Section 1 & 2 -->
+      <!-- Zone 1 -->
       <div class="content-card">
-        <h2 class="card-heading gold">🔹 Section 1 &amp; 2 — Bhoots, Bogys, and Abysses</h2>
+        <h2 class="card-heading gold">Zone 1</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Wild Charge</strong>: tank in front, everyone mitigate.</li>
+            <li>Interrupt casts from the <strong>Tower Bhoot</strong> (Paralyze III).</li>
+            <li>Damage down the <strong>Aetherial Ward</strong> in parallel with the other side.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Zone 2 -->
+      <div class="content-card">
+        <h2 class="card-heading blue">Zone 2</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Wild Charge</strong>: tank in front, everyone mitigate.</li>
+            <li>Thieves move ahead to find the trap near the Aetherial Ward. Rangers defuse when safe and the raid leader calls for it.</li>
+            <li>The <strong>Tower Abyss</strong> casts Diffuse Darkness, granting a buff. The <strong>Phantom Time Mage must Occult Dispel</strong> this before the second cast finishes.</li>
+            <li>Damage down the <strong>Aetherial Ward</strong> in parallel with the other side.</li>
+            <li>Rangers can fish for traps on the far side while the Ward is being attacked.</li>
+          </ul>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span>If the Diffuse Darkness buff is not dispelled before the second cast, the resulting damage will kill most of the bridge.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zone 3 -->
+      <div class="content-card">
+        <h2 class="card-heading purple">Zone 3</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Wild Charge</strong>: tank in front, everyone mitigate.</li>
+            <li>Thieves move ahead to find 2 traps near the Tower Idols. Rangers defuse when safe and called.</li>
+            <li>Once all 6 Tower Idols have begun casting, the <strong>Phantom Bard uses Romeo's Ballad</strong> to stop them all.</li>
+            <li>The <strong>Geomancer on the right side</strong> uses Suspend and presses the button on the blue walkway.</li>
+          </ul>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span>All 6 Tower Idols must be casting before Romeo's Ballad is used. Stopping any Idol before it begins its cast will cause it to resume after the freeze, leading to a wipe.</span>
+          </div>
+          <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);">Once the Tower Idols are killed and the right-side button is pressed, a walkway opens for the left team; both sides progress together:</p>
+          <ul class="mech-steps">
+            <li>Thieves move ahead to find 2 traps (1 large, 1 small) near the Tower Bhoot. <strong>Do not defuse these</strong>.</li>
+            <li>Move enemies away from the traps and interrupt casts from the Tower Bhoot (Paralyze III).</li>
+            <li>The <strong>Geomancer on the left side</strong> uses Suspend and presses the button on the blue walkway, dodging traps on the way.</li>
+            <li>Thieves move ahead to find 2 traps (1 large, 1 small) on either side of the forked path.</li>
+            <li>Rangers defuse <em>only the small trap</em> on both sides.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Zone 4 -->
+      <div class="content-card">
+        <h2 class="card-heading gold">Zone 4: Progenitor &amp; Progenitrix</h2>
         <div class="content-body">
           <div class="alert-box info">
             <span class="alert-icon">ℹ</span>
-            <span><strong>Tower Bhoot:</strong> Occasionally casts Paralyze III — <em>interrupt it</em>. Tower Bogys have no special mechanics.</span>
+            <span><strong>Tanks &amp; Healers:</strong> auto-attacks from both bosses hit hard. Maintain active mitigation throughout.</span>
+          </div>
+          <ul class="mech-steps">
+            <li>Thieves move ahead to find the large trap. <strong>Do not defuse it</strong>.</li>
+            <li>Wild Charge: Tanks in front</li>
+            <li>Mobs will periodically cast Close Call to Detonate or Far Cry to Detonate. Do the opposite of their cast:
+              <ul class="mech-sub">
+                <li><strong>Close Call to Detonate</strong> (blue tether): separate them by taking them to the outside edge of the bridges</li>
+                <li><strong>Far Cry to Detonate</strong> (green tether): bring them close to each other by taking them to the inside edge of the bridges</li>
+              </ul>
+            </li>
+            <li>Bombshell Drop summons 2 tethered Lava Bombs:
+              <ul class="mech-sub">
+                <li>The main tank moves the mob away from the Lava Bombs while everyone else damages them down</li>
+                <li>Once the first set of Lava Bombs are dead, keep the mob at the end of the bridge</li>
+                <li>After the second set, everyone stays and the tank brings the mob back</li>
+              </ul>
+            </li>
+          </ul>
+          <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);">Mechanics will now loop. A firewall spawns from the south; dodge it. Repeating sequence:</p>
+          <ul class="mech-steps">
+            <li>Close or Far Cry to Detonate</li>
+            <li>Stack Marker: everybody stack together on the wall</li>
+            <li>Bombshell Drop</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phantom Job Responsibilities -->
+      <div class="content-card">
+        <h2 class="card-heading teal">Phantom Job Responsibilities</h2>
+        <div class="content-body">
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Thief</strong>
+              <ul class="mech-steps">
+                <li>Communicate with your Ranger if they are going to blind-fish for traps.</li>
+                <li>Where the paths split: standing in the middle right before the split reveals both the large and the small trap.</li>
+              </ul>
+            </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
-            <span>After engaging the Aetherial Ward at the end of Section 1, Arcane Spear begins firing. Prefer to sync both sides before advancing through the ward.</span>
+            <div>
+              <strong>Ranger</strong>
+              <ul class="mech-steps">
+                <li>Talk to your Thief if you want to blind-fish for traps.</li>
+              </ul>
+            </div>
           </div>
-          <div class="alert-box danger">
-            <span class="alert-icon">☠</span>
-            <span><strong>Tower Abyss (Section 2):</strong> Immediately casts Dense Darkness, granting Magic Damage Up. <em>Phantom Time Mage must Occult Dispel this before its next cast.</em> If the buff is not removed, Diffuse Darkness deals lethal damage to most of the bridge. A single Time Mage can reach both sides with Occult Dispel's range — but having one per side is safer.</span>
-          </div>
-          <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span>Before the Section 2 Aetherial Ward there is one normal trap at a random position (left, middle, or center). Reveal or pre-pop before advancing.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section 3 -->
-      <div class="content-card">
-        <h2 class="card-heading purple">🔹 Section 3 — Idols &amp; Suspension</h2>
-        <div class="content-body">
-          <div class="alert-box danger">
-            <span class="alert-icon">☠</span>
-            <span><strong>Tower Idols:</strong> Six Tower Idols spawn and begin casting Ancient Aero III. Wait until <em>all six</em> have started their cast — then Phantom Bard uses Romeo's Ballad to freeze them all. Stopping any before it begins casting causes it to resume after unfreeze.</span>
-          </div>
-          <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span>Two normal traps just past the Idols: one always in the center, one randomly left or right. Using Occult Falcon aimed at the center will detonate both simultaneously.</span>
-          </div>
-          <div class="alert-box info">
-            <span class="alert-icon">ℹ</span>
-            <span><strong>Phantom Geomancer — Suspend:</strong> The Geomancer on the right side must walk onto electrified ground (using Suspend) to activate the Trap Control Plinth, filling in the missing floor on the left side. Tank invulnerability cannot be used — even one tick of Electrocution damage is lethal. The left Geomancer then fills in the right side later.</span>
-          </div>
-          <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span>After the missing floor section: an unstable trap in the center of the bridge and a normal trap randomly left or right. Players seeking to pre-pop can aim at the Bhoot ahead — but be aware enemies will aggro.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section 4 -->
-      <div class="content-card">
-        <h2 class="card-heading blue">🔹 Section 4 — Progenitor &amp; Progenitrix</h2>
-        <div class="content-body">
-          <p>The bridge splits in half. One path has a normal trap, the other has an unstable trap. The left side has the orange <strong>Tower Progenitrix</strong>, the right side has the blue <strong>Tower Progenitor</strong>. Both are mechanically identical. Once engaged, Arcane Spear resumes.</p>
-          <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span><strong>Close Call / Far Cry to Detonate:</strong> Both bosses gain Short Fuse (blue tether, arrows out = too close) or Long Fuse (green tether, arrows in = too far). While the tether is visible, the bosses pulse for heavy raidwide damage and Vulnerability Up. Adjust boss distance to hide the tether immediately.</span>
-          </div>
-          <div class="alert-box danger">
-            <span class="alert-icon">☠</span>
-            <span><strong>Bombshell Drop:</strong> Each boss spawns two Lava Bombs tethered to itself that slowly walk toward it. Kill them before they arrive — a Massive Explosion raidwide and Vulnerability Up fires if they reach the boss. Typically boss is pulled north for the 1st drop, then south for the 2nd, alternating.</span>
-          </div>
-          <div class="alert-box info">
-            <span class="alert-icon">ℹ</span>
-            <span><strong>Punishing Pounce:</strong> A high-damage stack on a random player per side.</span>
-          </div>
-          <div class="alert-box danger">
-            <span class="alert-icon">☠</span>
-            <span><strong>Massive Explosion:</strong> When either Progenitor/Progenitrix dies, the other <em>must be defeated within 12 seconds</em> or a raid wipe occurs. Co-ordinate DPS across both sides to kill them simultaneously.</span>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Bard</strong>
+              <ul class="mech-steps">
+                <li>Stand at the outer side of your bridge.</li>
+                <li>The AoE from Romeo's Ballad is massive, so do not stop the adds from the other bridge early.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Section Nav -->
       <div class="section-nav">
-        <a href="dead-stars.html" class="nav-btn nav-prev wip">
+        <a href="dead-stars.html" class="nav-btn nav-prev">
           <div>
             <span class="nav-label">Previous</span>
             <span>← Dead Stars</span>
@@ -155,11 +208,18 @@
 
     <!-- ── Footer ── -->
     <footer class="site-footer">
-      <p>A Late Night Reborn &mdash; Final Fantasy XIV Raid Guide</p>
+      <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide</p>
     </footer>
 
   </div>
 
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
   <script src="js/stars.js"></script>
+  <script src="js/lightbox.js"></script>
 </body>
 </html>

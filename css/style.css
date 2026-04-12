@@ -462,6 +462,7 @@ img { max-width: 100%; display: block; }
 }
 
 .alert-box:last-child { margin-bottom: 0; }
+.mech-steps + .alert-box { margin-top: .75rem; }
 .alert-box .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: .05rem; }
 
 .alert-box.tip     { background: rgba(52,211,153,.07);  border: 1px solid rgba(52,211,153,.18);  color: #a7f3d0; }
@@ -821,6 +822,7 @@ img { max-width: 100%; display: block; }
 .tl-badge.enrage { color: #fca5a5; background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.4); }
 .tl-legend { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
 .tl-section-gap { height: .6rem; }
+.tl-time { font-size: .7rem; color: rgba(148,163,184,.45); font-variant-numeric: tabular-nums; min-width: 2.6rem; flex-shrink: 0; letter-spacing: .01em; }
 
 /* ── Mechanic Steps ──────────────────────────────────────── */
 .mech-steps { list-style: none; padding: 0; margin: .5rem 0 0; display: flex; flex-direction: column; gap: .3rem; }

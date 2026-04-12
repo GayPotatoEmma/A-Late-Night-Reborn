@@ -119,6 +119,19 @@ img { max-width: 100%; display: block; }
   white-space: nowrap;
 }
 
+.header-discord {
+  margin-left: auto;
+  color: #a78bfa;
+  font-size: .875rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: .03em;
+  transition: color var(--transition);
+  white-space: nowrap;
+}
+
+.header-discord:hover { color: #e2e8f0; }
+
 /* ── Main Content ─────────────────────────────────── */
 
 .main-content {

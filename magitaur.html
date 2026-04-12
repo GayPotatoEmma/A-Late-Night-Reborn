@@ -39,142 +39,401 @@
       <div class="page-header">
         <div class="page-badge boss">⚔ Boss 4</div>
         <h1 class="page-title boss-title">Magitaur</h1>
-        <p class="page-subtitle">Infamy of Blood, the final encounter of the Forked Tower: Blood.</p>
-      </div>
-
-      <div class="page-wip-banner">
-        <span>🚧</span>
-        <span>This section's guide is currently under construction and not yet available.</span>
+        <p class="page-subtitle"><em>"This monstrous brute guards the uppermost floor of the Tower of Blood. Although voidsent of its ilk are seldom endowed with much intelligence, this specimen is capable of complex combat techniques, guided by skillful manipulation of magical stone tablets. However, it is Magitaur's arsenal of dread weapons, including the rune axe, the sage's staff, the assassin's dagger, and the holy lance─all of which date back to the War of the Magi─that make it an opponent as treacherous as any of its more elevated kin."</em></p>
       </div>
 
       <!-- Overview -->
       <div class="content-card">
-        <h2 class="card-heading purple">📖 Overview</h2>
+        <h2 class="card-heading purple">Overview</h2>
         <div class="content-body">
-          <p>
-            Magitaur is the final guardian of the Forked Tower: Blood. The arena is an extremely large
-            circle with three large outward-pointing squares separated by 30° wedges. Nine colored circles
-            (pink/yellow/blue repeating) ring the outside.
-          </p>
-          <p>
-            Party assignments: <strong>Parties A &amp; 1/D</strong> → NW square. <strong>Parties B &amp; 2/E</strong> → South square.
-            <strong>Parties C &amp; 3/F</strong> → NE square. Being outside your square when not explicitly required is
-            dangerous, as it will cause additional debuffs on yourself and others.
-          </p>
-          <div class="alert-box info">
-            <span class="alert-icon">ℹ</span>
-            <span><strong>BAP Waymarks:</strong> Most NA groups use a specific waymark set per square for Assassin's Dagger. Each square has a "left waymark," "right waymark," and "center waymark." Place them precisely; a third-party plugin makes this easier.</span>
+          <p>Magitaur is the final guardian of the Forked Tower: Blood. The arena has two relevant parts that are referenced throughout this guide:</p>
+          <ul class="mech-steps">
+            <li><strong>Platforms:</strong> The three large squares on the ground.</li>
+            <li><strong>Non-platforms:</strong> The area outside of these squares.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="content-card">
+        <h2 class="card-heading teal">Timeline</h2>
+        <div class="content-body">
+          <div class="tl-legend">
+            <span class="tl-badge raidwide">Raidwide</span>
+            <span class="tl-badge tankbuster">Tankbuster</span>
+            <span class="tl-badge mechanic">Mechanic</span>
+            <span class="tl-badge enrage">Enrage</span>
+          </div>
+          <div class="timeline">
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unsealed Aura</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unseal (charges random weapon)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">3 weapon auto-attacks</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Assassin's Dagger</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Random Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Other Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Forked Fury</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2 weapon auto-attacks</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Conduits spawn (based on charged weapon)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Aura Burst or Holy <em>(conduits must be dead)</em></span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Sage's Staff (cast)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Random Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Sage's Staff (beam)</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Other Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Sage's Staff (beam)</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unsealed Aura</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unseal (Axe)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">3 axe auto-attacks</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Rune Axe</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">1 large AoE</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">3 small AoEs</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Critical Lanceblow</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">1 large and 2 small AoEs</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Forked Fury</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2 axe auto-attacks</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Conduits spawn (Yellow)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Aura Burst <em>(conduits must be dead)</em></span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Assassin's Dagger</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Random Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Other Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unseal (Spear)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">3 spear auto-attacks</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Holy Lance</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Critical Lanceblow</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">12 Lances</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Critical Axeblow</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unsealed Aura</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Forked Fury</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2 spear auto-attacks</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Conduits spawn (Blue)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Holy <em>(conduits must be dead)</em></span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Assassin's Dagger</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Random Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Other Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row enrage"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unsealed Aura, 10-second cast &nbsp;<em>(Resolves @ 8:00)</em></span><span class="tl-badge enrage">Enrage</span></div></div>
           </div>
         </div>
       </div>
 
-      <!-- Core Abilities -->
+      <!-- Weapon Mechanics -->
       <div class="content-card">
-        <h2 class="card-heading gold">⚡ Core Abilities</h2>
+        <h2 class="card-heading gold">Weapon Mechanics: Axe and Lance</h2>
         <div class="content-body">
+          <ul class="mech-steps">
+            <li>Throughout the fight the boss will resolve mechanics based on the weapon he activated.</li>
+            <li>Activated weapons will also have a glow to them.
+              <ul class="mech-sub">
+                <li><span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">Axe</span> will hit players or the area close to the boss.</li>
+                <li><span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">Lance</span> will hit players or the area furthest away from the boss.</li>
+              </ul>
+            </li>
+          </ul>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;">Unseal:</p>
+          <ul class="mech-steps" style="margin-top:0;">
+            <li>Determines where auto-attacks go, hitting 2 tanks per platform:
+              <ul class="mech-sub">
+                <li>Tanks go inside the hitbox for <span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">Axe</span>, or outside the hitbox for <span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">Lance</span>.</li>
+                <li>The party stays on the hitbox ring.</li>
+              </ul>
+            </li>
+          </ul>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;">Critical Axe- or Lanceblow:</p>
+          <ul class="mech-steps" style="margin-top:0;">
+            <li>Spawns AoEs covering the majority of the arena. The safe spots are as follows:
+              <ul class="mech-sub">
+                <li><span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">Axe</span>: Stay on the platform, far away from the boss.</li>
+                <li><span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">Lance</span>: Move off the platform, close to the boss.</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="img-row double">
+            <img src="assets/boss4/axeblow.png" alt="Critical Axeblow safe spots" class="section-img" />
+            <img src="assets/boss4/lanceblow.png" alt="Critical Lanceblow safe spots" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Assassin's Dagger -->
+      <div class="content-card">
+        <h2 class="card-heading gold">Assassin's Dagger</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>3 lines spawn in one of two patterns:
+              <ul class="mech-sub">
+                <li>Going straight through each platform, or</li>
+                <li>Going through the spaces in between.</li>
+              </ul>
+            </li>
+            <li>These lines are referred to as <strong>Daggers</strong>.</li>
+            <li>Daggers always travel outward and then shoot back in, hitting twice per Dagger.</li>
+            <li>The lines rotate from their starting position for 6 Daggers total (12 AoEs).</li>
+            <li>A Critical Axe- or Lanceblow follows after the 3rd Dagger and again after the last.</li>
+          </ul>
+          <div class="img-row double">
+            <img src="assets/boss4/daggers1.png" alt="Assassin's Dagger pattern 1" class="section-img" />
+            <img src="assets/boss4/daggers2.png" alt="Assassin's Dagger pattern 2" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Forked Fury -->
+      <div class="content-card">
+        <h2 class="card-heading gold">Forked Fury</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>Targets 2 players per platform: the closest and farthest player from the boss.
+              <ul class="mech-sub">
+                <li>Tanks 1 stay inside the hitbox; Tanks 2 stay outside the hitbox.</li>
+                <li>The party stays on the hitbox ring.</li>
+              </ul>
+            </li>
+            <li>Always followed by auto-attacks on tanks.</li>
+          </ul>
           <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span><strong>Unsealed Aura:</strong> Heavy raidwide magical damage. Requires heavy mitigation (Occult Mage Masher, Occult Unicorn, Mighty March).</span>
+            <span class="alert-icon">&#9888;</span>
+            <div>
+              <strong>Phantom Knight</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Phantom Guard</strong> to mitigate.</li>
+              </ul>
+            </div>
           </div>
           <div class="alert-box info">
-            <span class="alert-icon">ℹ</span>
-            <span><strong>Unseal:</strong> Magitaur unseals either its yellow axe or blue lance, granting Unsealed buff. Axe = auto-attacks target nearest 2 players per square. Lance = auto-attacks target furthest 2 players per square. Three sets of autos follow each Unseal.</span>
-          </div>
-          <div class="alert-box danger">
-            <span class="alert-icon">☠</span>
-            <span><strong>Assassin's Dagger:</strong> Three rotating dagger lines offset 120° apart. Daggers shoot out, return after 2 seconds, then shoot again rotated ~50° clockwise (6 shoots total). Being hit adds a Thrice-come Ruin stack. "North/right" or "south/left" pattern determines starting safe position (BAP waymarks). After the 3rd return, move to the center waymark for the remaining daggers.</span>
-          </div>
-          <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span><strong>Critical Axeblow / Lanceblow:</strong> Two of these are used during each Assassin's Dagger sequence. Axeblow safe zones = far from boss + inside squares. Lanceblow safe zones = near boss + between squares. The first resolves between dagger shoot 4 and return 4; the second after the final return.</span>
-          </div>
-          <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span><strong>Forked Fury:</strong> Tankbusters targeting the nearest and furthest player in each square simultaneously.</span>
-          </div>
-          <div class="alert-box danger">
-            <span class="alert-icon">☠</span>
-            <span><strong>Aura Burst / Holy (Conduits):</strong> Lethal raidwide unless the conduit adds that spawn at the start of the cast bar are defeated first. See Conduits section.</span>
+            <span class="alert-icon">&#8505;</span>
+            <div>
+              <strong>All other tanks</strong>
+              <ul class="mech-steps">
+                <li>Use your <strong>40%</strong> and your <strong>25-second</strong> cooldowns.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Conduits -->
       <div class="content-card">
-        <h2 class="card-heading teal">⚙ Conduits</h2>
+        <h2 class="card-heading gold">Conduits (Canisters)</h2>
         <div class="content-body">
-          <p>Seven of the nine outer circles rise: all 3 yellow → Axe Empowerment Conduits (ring in middle), all 3 blue → Lance Empowerment Conduits (sphere in middle), 1 random pink → Universal Empowerment Conduit (both). The unsealed weapon determines which colored conduits must die.</p>
-          <div class="alert-box danger">
-            <span class="alert-icon">☠</span>
-            <span><strong>Arcane Recoil:</strong> When an Axe/Lance Conduit is defeated, it targets the nearest 2 players with a catastrophic hit. Two Phantom Knight tanks stand inside the conduit; one uses Pledge on themselves + their invulnerability, or Phantom Guard. If only one Phantom Knight per square, pre-assign a "pledge buddy" who accepts the hit with a personal invulnerability.</span>
-          </div>
-          <div class="alert-box danger">
-            <span class="alert-icon">☠</span>
-            <span><strong>Universal Conduit / Arcane Reaction:</strong> A single Phantom Berserker kills the Universal Conduit alone, standing between it and the wall. The Berserker <em>must activate Rage before killing it</em>. Arcane Reaction fires a line AoE at the nearest player and inflicts 1-minute Hysteria. Rage grants immunity to Hysteria.</span>
+          <p>The boss casts either <strong>Aura Burst</strong>, activating the <span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">Axe</span>, or <strong>Holy</strong>, activating the <span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">Lance</span>. The glowing weapon always matches the Unseal cast immediately before.</p>
+          <ul class="mech-steps">
+            <li>The conduit matching the boss's active weapon colour must die before the raidwide resolves. Failure to kill it in time wipes the group.</li>
+            <li>Two conduits spawn behind each platform:
+              <ul class="mech-sub">
+                <li>A <span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">blue Lance</span> conduit with an animated sphere in the middle.</li>
+                <li>A <span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">yellow Axe</span> conduit with an animated donut in the middle.</li>
+              </ul>
+            </li>
+            <li>A single <span style="color:var(--accent-purple);text-shadow:0 0 8px rgba(167,139,250,.5);">purple</span> conduit spawns in one of the spots between platforms (sphere + donut).</li>
+            <li>Every platform group finds and destroys the conduit behind their platform that matches the boss's active weapon colour. Ignore the boss entirely during this time.</li>
+            <li>2 Phantom Knights position below the targeted conduit to bait the tankbuster when it dies. Press <strong>Pledge</strong> when the conduit reaches 40% HP.
+              <ul class="mech-sub">
+                <li>Non-Knight tanks can take the hit using invuln if required.</li>
+              </ul>
+            </li>
+            <li>The <span style="color:var(--accent-purple);text-shadow:0 0 8px rgba(167,139,250,.5);">purple</span> conduit is handled by the assigned Phantom Berserker.</li>
+          </ul>
+          <div class="alert-box info">
+            <span class="alert-icon">&#8505;</span>
+            <span>When a conduit dies, it deals a massive tankbuster hit on the two closest targets.</span>
           </div>
         </div>
       </div>
 
-      <!-- Phase Breakdown -->
+      <!-- Sage's Staff -->
       <div class="content-card">
-        <h2 class="card-heading blue">🔄 Phase Breakdown</h2>
-        <div class="phase-list">
-          <div class="phase-item">
-            <div class="phase-num">1</div>
-            <div>
-              <div class="phase-name">Opening + First Conduits</div>
-              <div class="phase-desc">Unsealed Aura → Unseal (axe or lance) → 3 auto-attack sets → Conduits (Aura Burst or Holy)</div>
-            </div>
+        <h2 class="card-heading gold">Sage's Staff</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>Three Staffs spawn next to each other: 2 on a platform, 1 in the space between those two.</li>
+            <li>Each Staff fires a line stack in the direction of the closest player.</li>
+            <li>These line stacks do not apply vulnerability debuffs.</li>
+          </ul>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;">The mechanic resolves as follows:</p>
+          <ul class="mech-steps" style="margin-top:0;">
+            <li>Dodge a Critical Axe- or Lanceblow.</li>
+            <li>Bait a line stack, typically through the middle of the arena.</li>
+            <li>Repeat a second time.</li>
+            <li>The mechanic ends with a quick raidwide after the second stack.</li>
+          </ul>
+          <div class="alert-box info">
+            <span class="alert-icon">&#8505;</span>
+            <span>This strategy is currently undergoing discussions about changes. In future runs we may bait all line stacks on the A-waymark. Guides will be updated to reflect this once we fully move over.</span>
           </div>
-          <div class="phase-item">
-            <div class="phase-num">2</div>
-            <div>
-              <div class="phase-name">Sage's Staff</div>
-              <div class="phase-desc">Three Sage's Staves appear → Critical Axeblow/Lanceblow → Mana Expulsion line stacks → three more Staves appear → Critical Axeblow/Lanceblow (opposite) → line stacks → Unsealed Aura</div>
-            </div>
-          </div>
-          <div class="phase-item">
-            <div class="phase-num">3</div>
-            <div>
-              <div class="phase-name">Rune Axe</div>
-              <div class="phase-desc">Unseal (always axe) → 3 auto sets (nearest 2) → Rune Axe: Axebit debuffs resolve in three waves (10s Greater → 13s Lesser → 21s both) → Critical Lanceblow mid-sequence → Carving Rune → Forked Fury → Aura Burst Conduits (Axe)</div>
-            </div>
-          </div>
-          <div class="phase-item">
-            <div class="phase-num">4</div>
-            <div>
-              <div class="phase-name">Holy Lance</div>
-              <div class="phase-desc">Assassin's Dagger → Unseal (always lance) → 3 auto sets (furthest 2) → Holy Lance: 12 Luminous Lances fire Lancelight in sequence + Lancepoint stacks → Critical Axeblow → Unsealed Aura → Forked Fury → Holy Conduits (Lance) → Assassin's Dagger → Unsealed Aura (enrage)</div>
-            </div>
+          <div class="img-row single">
+            <img src="assets/boss4/staffs.png" alt="Sage's Staff formation" class="section-img" />
           </div>
         </div>
       </div>
 
-      <!-- Tips -->
+      <!-- Rune Axe -->
       <div class="content-card">
-        <h2 class="card-heading purple">💡 Tips &amp; Tricks</h2>
+        <h2 class="card-heading gold">Rune Axe</h2>
         <div class="content-body">
-          <div class="alert-box tip">
-            <span class="alert-icon">✦</span>
-            <span>For Rune Axe: the 10-second Greater Axebit player runs to the edge behind the nearest pink circle immediately on the cast. Remaining players with 13-second Lesser Axebit stand at their square's center and <em>do not move</em> until their AoE resolves.</span>
-          </div>
-          <div class="alert-box tip">
-            <span class="alert-icon">✦</span>
-            <span>For Holy Lance: Lances fire in clockwise order (1→12). When the lances inside your square are firing, move to the back of the square. Return immediately after lance 4/8/12 passes. Your Lancepoint stack resolves outside when your square is "hot."</span>
-          </div>
           <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span>For Sage's Staff, the simpler NA strat ("A staff" or "Spiral stack") has everyone collapse to a single point, typically the A square's left waymark. Damage is distributed across the whole raid so each stack is survivable.</span>
+            <span class="alert-icon">&#9888;</span>
+            <span>Stay on your platform during the cast! If you are on the wrong platform, stay there.</span>
           </div>
-          <div class="alert-box tip">
-            <span class="alert-icon">✦</span>
-            <span>Resurrection debuffs are <em>not</em> cleared after Magitaur dies. Any player with Resurrection Denied at kill cannot loot the personal spoils coffin or activate the Survey Point.</span>
+          <ul class="mech-steps">
+            <li>The boss assigns debuffs based on platforms. There are two types: big and small.
+              <ul class="mech-sub">
+                <li>Platform A receives 2 big debuffs (one short, one long) and 1 small debuff.</li>
+                <li>Platforms B and C each receive 2 small debuffs (one shorter, one longer).</li>
+              </ul>
+            </li>
+            <li>This creates a total of 5 small and 2 big AoEs, resolving in 3 sets.</li>
+            <li>Between the second and third set of AoEs, there is an additional Critical Lanceblow to dodge.</li>
+            <li>The debuff is indicated by a circle AoE around the affected player. This circle AoE explodes the entire area it hits:
+              <ul class="mech-sub">
+                <li>A debuff resolving on a platform will explode that platform.</li>
+                <li>A debuff resolving outside a platform will explode the rest of the arena.</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="alert-box warning">
+            <span class="alert-icon">&#9888;</span>
+            <span>If you clip an additional area, both will explode. Play it safe!</span>
+          </div>
+          <div class="img-row single">
+            <img src="assets/boss4/runeaxedebuffs.png" alt="Rune Axe debuff types" class="section-img" />
+          </div>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;">The mechanic resolves as follows:</p>
+          <ul class="mech-steps" style="margin-top:0;">
+            <li>The short big AoE moves behind any <span style="color:var(--accent-purple);text-shadow:0 0 8px rgba(167,139,250,.5);">purple</span> conduit. Everyone except the 3 small AoEs moves off their platform.
+              <ul class="mech-sub">
+                <li>Small AoEs stay at the centre of their platform and do not clip the edges.</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="alert-box warning">
+            <span class="alert-icon">&#9888;</span>
+            <span>Do not clip any platforms while placing the big AoE.</span>
+          </div>
+          <ul class="mech-steps">
+            <li>Move off the platform and near the boss for the Critical Lanceblow. Sprint helps.</li>
+            <li>For the second set of AoEs (1 big and 2 small):
+              <ul class="mech-sub">
+                <li>The big AoE moves behind any <span style="color:var(--accent-purple);text-shadow:0 0 8px rgba(167,139,250,.5);">purple</span> conduit.</li>
+                <li>The 2 small AoEs return to their platform (B and C).</li>
+                <li>Everyone else moves north-west to the A platform.</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="alert-box danger">
+            <span class="alert-icon">&#9888;</span>
+            <span>Do not greed. As soon as your marker appears above your head, move immediately. Greeding here may result in a wipe.</span>
+          </div>
+          <div class="img-row double">
+            <img src="assets/boss4/runeaxe1.png" alt="Rune Axe resolution - do not clip platforms" class="section-img" />
+            <img src="assets/boss4/runeaxe2.png" alt="Rune Axe resolution - north-west repositioning" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Holy Lance -->
+      <div class="content-card">
+        <h2 class="card-heading gold">Holy Lance</h2>
+        <div class="content-body">
+          <div class="alert-box warning">
+            <span class="alert-icon">&#9888;</span>
+            <span>Stay on your platform during the cast. If you are not, additional debuffs will be handed out.</span>
+          </div>
+          <ul class="mech-steps">
+            <li>12 Lances spawn around the arena, always starting north and going clockwise.</li>
+            <li>Each Lance cleaves either the platform it overlaps or the area outside of it.</li>
+            <li>The boss applies a debuff to 3 players on each platform (9 total). When the timer expires, the debuff becomes a stack. All timers are synced between platforms.</li>
+            <li>The mechanic always starts with a Critical Lanceblow and ends with a Critical Axeblow. Dodge the Critical Lanceblow and immediately return to your platform.</li>
+          </ul>
+          <div class="alert-box danger">
+            <span class="alert-icon">&#9888;</span>
+            <span>Never cleave the outside with your stack. Place it as centred as possible and drop uptime if needed. Tanks and melee DPS must join their stacks or they will receive <strong>Doom</strong>.</span>
+          </div>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;">The lances explode clockwise from north:</p>
+          <ul class="mech-steps" style="margin-top:0;">
+            <li>North-east platform (C/3):
+              <ul class="mech-sub">
+                <li>Make your way to the back of your platform.</li>
+                <li>The 1st Lance explodes on the outside.</li>
+                <li>Group C/3: move to the outside (you can clip your own platform with your stack) and wait for 3 Lances to resolve.</li>
+                <li>Once the last Lance on your platform resolves, move back and keep your stack centred.</li>
+              </ul>
+            </li>
+            <li>South platform (B/2):
+              <ul class="mech-sub">
+                <li>Make your way to the back of your platform.</li>
+                <li>One Lance explodes on the outside.</li>
+                <li>Group B/2: move to the outside and wait for 3 Lances to resolve.</li>
+                <li>Once the last Lance on your platform resolves, move back and keep your stack centred.</li>
+              </ul>
+            </li>
+            <li>North-west platform (A/1):
+              <ul class="mech-sub">
+                <li>Make your way to the back of your platform.</li>
+                <li>One Lance explodes on the outside.</li>
+                <li>Group A/1: move to the outside and wait for 3 Lances to resolve.</li>
+                <li>The boss then casts Critical Axeblow. Move far away on your platform.</li>
+              </ul>
+            </li>
+          </ul>
+          <p style="margin-top:.9rem;">The mechanic ends with a raidwide.</p>
+          <div class="img-row double">
+            <img src="assets/boss4/holylance1.png" alt="Holy Lance pattern" class="section-img" />
+            <img src="assets/boss4/holylance2.png" alt="Holy Lance resolution" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- How do we resolve mechanics? -->
+      <div class="content-card">
+        <h2 class="card-heading teal">How do we resolve mechanics?</h2>
+        <div class="content-body">
+          <p>Markers will be different per party, as shown in the image below.</p>
+          <ul class="mech-steps">
+            <li>Waymarks A, B, and C are used for orientation. Waymarks D and 4 are placed for the Assassin's Dagger mechanic.</li>
+            <li>Platform assignments:
+              <ul class="mech-sub">
+                <li><strong>Parties A &amp; 1</strong>: North-West platform.</li>
+                <li><strong>Parties B &amp; 2</strong>: South platform.</li>
+                <li><strong>Parties C &amp; 3</strong>: North-East platform.</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="img-row single">
+            <img src="assets/boss4/waymarks.png" alt="Waymark layout" class="section-img" />
+          </div>
+          <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);">Assassin's Dagger:</p>
+          <ul class="mech-steps">
+            <li>Look at the boss and start on the marker left of the Dagger that hits your platform.</li>
+            <li>Wait for 3 Daggers (6 lines).</li>
+            <li>Move for Critical Axe- or Lanceblow.</li>
+            <li>Wait for 1 more Dagger (2 lines).</li>
+            <li>Move to your platform's letter marker (A, B, or C).</li>
+            <li>Wait for 2 more Daggers (4 lines).</li>
+            <li>Move for Critical Axe- or Lanceblow.</li>
+          </ul>
+          <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);">Forked Fury and Conduits:</p>
+          <ul class="mech-steps">
+            <li>Tank 1 from each party stays close to the boss, inside the hitbox.</li>
+            <li>Tank 2 from each party stays at max melee range, outside the hitbox.</li>
+          </ul>
+          <div style="margin-left:1.25rem;">
+            <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);">Knight-less Conduits:</p>
+            <ul class="mech-steps">
+              <li>If your party does not have a Phantom Knight, Tank 2 takes the first conduit and Tank 1 takes the second.</li>
+              <li>Third conduits are unlikely at this time. Per-run adjustments will be made if they appear.</li>
+            </ul>
+            <div class="alert-box info">
+              <span class="alert-icon">&#8505;</span>
+              <span><strong>Why the swapped order?</strong> Phantom Berserkers are placed in the Tank 2 slot so they can take the first conduits in Boss 4. Feel free to discuss the order in party chat if needed.</span>
+            </div>
+            <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);">Knight Conduits:</p>
+            <ul class="mech-steps">
+              <li>If your party has a Phantom Knight, they take each conduit using <strong>Pledge</strong>. If there is also a Phantom Berserker who wants a conduit, discuss an order with them or follow the Knight-less order above.</li>
+            </ul>
           </div>
         </div>
       </div>
             <!-- Section Nav -->
       <div class="section-nav">
-        <a href="lockwards.html" class="nav-btn nav-prev wip">
+        <a href="lockwards.html" class="nav-btn nav-prev">
           <div>
             <span class="nav-label">Previous</span>
             <span>← The Binding Lock</span>
@@ -192,6 +451,13 @@
 
   </div>
 
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
   <script src="js/stars.js"></script>
+  <script src="js/lightbox.js"></script>
 </body>
 </html>

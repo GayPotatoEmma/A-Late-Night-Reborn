@@ -566,7 +566,7 @@ img { max-width: 100%; display: block; }
   flex: 0;
   padding: .8rem 1.5rem;
   max-width: none;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: .78rem;
 }
 

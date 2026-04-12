@@ -42,92 +42,112 @@
         <p class="page-subtitle">The hallway section between Demon Tablet and Dead Stars. Also referred to as &ldquo;Hallways.&rdquo;</p>
       </div>
 
-      <div class="page-wip-banner">
-        <span>🚧</span>
-        <span>This section's guide is currently under construction and not yet available.</span>
-      </div>
-
       <!-- Overview -->
       <div class="content-card">
-        <h2 class="card-heading teal">📖 Overview</h2>
+        <h2 class="card-heading purple">Overview</h2>
         <div class="content-body">
           <p>
-            After defeating Demon Tablet, the raid splits into two groups at the transporter — letter
-            parties (A, B, C) take the left passage, number parties (D/1, E/2, F/3) take the right.
-            Each side navigates a mirrored layout of hallways containing hidden explosive traps and
-            dangerous enemy pulls, then rejoins at the Dead Stars arena.
+            After defeating Demon Tablet, the raid splits into two groups — letter parties (A, B, C)
+            take the left passage, number parties (D/1, E/2, F/3) take the right. Each side navigates
+            a mirrored layout of hallways filled with hidden explosive traps and enemies with unique
+            mechanics, before rejoining at the Dead Stars arena.
           </p>
           <p>
-            Every avoidable enemy AoE in this section is <strong>instantly lethal</strong>. Your lives are limited —
-            do not take unnecessary risks. Stay behind your Thieves and Rangers at all times in trap areas.
+            Traps remain invisible on the overworld until revealed by a Phantom Thief using Trap Detection.
+            They spawn in colour-coded groups — only <strong>one trap per colour group</strong> will actually spawn,
+            the other spots remain empty. Even so, always proceed with care; knowledge of the trap pattern
+            is optional, and it is safer to spam Trap Detection than to assume a spot is clear.
           </p>
         </div>
       </div>
 
       <!-- Traps -->
       <div class="content-card">
-        <h2 class="card-heading gold">💣 Hidden Explosive Traps</h2>
+        <h2 class="card-heading gold">Explosive Traps</h2>
         <div class="content-body">
           <div class="alert-box danger">
             <span class="alert-icon">☠</span>
-            <span><strong>Normal Trap:</strong> Small lethal AoE on detonation. Phantom Thief uses Trap Detection to reveal, then Phantom Ranger uses Occult Falcon to disarm at range — or a tank runs it with invulnerability active.</span>
+            <span><strong>Explosive Trap:</strong> Detonates with a lethal AoE affecting the trigger and nearby players. The Phantom Ranger disarms these by clipping the trap with the <em>outer edge</em> of Occult Falcon.</span>
           </div>
           <div class="alert-box danger">
             <span class="alert-icon">☠</span>
-            <span><strong>Unstable (Super) Trap:</strong> Massive wipe-level AoE. Do <em>not</em> disarm with Occult Falcon. Only a tank using a full invulnerability ability can safely disarm one. All raid members must be notified and moved far away first.</span>
+            <span><strong>Mega Explosive Trap:</strong> Explodes at over double the radius of a normal trap and will almost certainly cause a full wipe. The Phantom Ranger must disarm at <em>maximum range</em> with everyone standing far behind. Exercise extreme caution.</span>
           </div>
-          <div class="alert-box tip">
-            <span class="alert-icon">✦</span>
-            <span>Trap areas are marked by glyphs emanating from a thick red line on the floor. The glyph side contains the traps. Your Thief should always be ahead revealing the path.</span>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Never disarm a trap without the raid leader's permission.</strong> Confirm the type and ensure everyone is in position first.</span>
+          </div>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span>Traps spawn in colour-coded groups on the maps below — only one trap per group is live. The maps show possible spawn locations for the left and right sides respectively.</span>
+          </div>
+          <div class="img-row double">
+            <img src="assets/hallways/trapsleft.png" alt="Trap locations — left side" class="section-img" />
+            <img src="assets/hallways/trapsright.png" alt="Trap locations — right side" class="section-img" />
           </div>
         </div>
       </div>
 
-      <!-- Enemies -->
+      <!-- Phantom Job Responsibilities -->
       <div class="content-card">
-        <h2 class="card-heading purple">👾 Notable Enemies</h2>
-        <div class="content-body">
-          <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span><strong>Tower Manticore:</strong> Casts Left Hammer or Right Hammer — a 180° cleave in the named direction, then immediately follows with the <em>opposite</em> direction. Dodge to the first unsafe side. Use Phantom Time Mage's Occult Slowga to extend the telegraph window.</span>
-          </div>
-          <div class="alert-box warning">
-            <span class="alert-icon">⚠</span>
-            <span><strong>Tower Scarab:</strong> Uses Rhino Guard, granting Evasion Up — <em>Phantom Time Mage must Occult Dispel this immediately</em> or attacks miss. Vulnerable to Slow, Blind, and Doom.</span>
-          </div>
-          <div class="alert-box info">
-            <span class="alert-icon">ℹ</span>
-            <span><strong>Silent Orbs:</strong> Patrolling green orbs with a point-blank AoE field. Walking into one inflicts a 60-second uncleansable Silence. Casters and healers must keep clear at all times.</span>
-          </div>
-          <div class="alert-box tip">
-            <span class="alert-icon">✦</span>
-            <span><strong>General mobs:</strong> All enemies respond to Stun, Sleep, Slow, and Doom (varies by type). Use Occult Slowga on every pull to give the group time to react to AoEs. Tank enmity first — mob auto-attacks hit hard.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Loot -->
-      <div class="content-card">
-        <h2 class="card-heading blue">🎁 Loot & Secret Rooms</h2>
+        <h2 class="card-heading teal">Phantom Job Responsibilities</h2>
         <div class="content-body">
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
-            <span><strong>Thief's Trick Room:</strong> A Phantom Thief can reveal a hidden passage to a locked room on their side, yielding 2 Sanguinite per chest.</span>
+            <div>
+              <strong>Time Mage</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Occult Slowga</strong> on all enemies, especially the Manticore.</li>
+                <li>Use <strong>Occult Dispel</strong> on the Scarab immediately when it gains Evasion Up (Rhino Guard).</li>
+              </ul>
+            </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
-            <span><strong>North Secret Rooms:</strong> One of the two northern secret rooms per side contains a chest with 3 Sanguinite. Groups can choose to collect or skip.</span>
+            <div>
+              <strong>Cannoneer</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Shock Cannon</strong> on all enemies.</li>
+              </ul>
+            </div>
           </div>
-          <div class="alert-box info">
-            <span class="alert-icon">ℹ</span>
-            <span>Players can only access their own side's chests. A full-loot pass of both sides yields up to 10 Sanguinite total across the raid.</span>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Geomancer</strong>
+              <ul class="mech-steps">
+                <li>On blue lightning floors, use <strong>Suspend</strong> to float above the floor and walk to the buttons in the middle to activate them.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Ranger</strong>
+              <ul class="mech-steps">
+                <li>When instructed, use <strong>Occult Falcon</strong> to disarm traps — clip the trap with only the <em>outer edge</em> of the AoE.</li>
+                <li>When disarming a Mega Trap, stand at <strong>maximum range</strong> and ensure everyone is well behind you first.</li>
+                <li>You may be assigned a marker (e.g. <strong>Bind 1</strong>) at the start of hallways for visibility.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Thief</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Trap Detection</strong> to reveal traps — take your time and run ahead of the group.</li>
+                <li>In the Thief Room, use <strong>Occult Sprint</strong> to dash through and press Trap Detection at the very end to open the hidden door.</li>
+                <li>You may be assigned a marker (e.g. <strong>Ignore 1</strong>) at the start of hallways for visibility.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Section Nav -->
       <div class="section-nav">
-        <a href="demon-tablet.html" class="nav-btn nav-prev wip">
+        <a href="demon-tablet.html" class="nav-btn nav-prev">
           <div>
             <span class="nav-label">Previous</span>
             <span>← Demon Tablet</span>
@@ -151,6 +171,13 @@
 
   </div>
 
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
   <script src="js/stars.js"></script>
+  <script src="js/lightbox.js"></script>
 </body>
 </html>

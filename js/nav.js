@@ -10,7 +10,7 @@
       <a href="index.html" class="nav-home-link">&#8962; Home</a>\
       <div class="nav-divider"></div>\
       <div class="nav-section">\
-        <div class="nav-section-label"><span class="nav-badge boss">Boss 1</span></div>\
+        <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 1</span><span class="nav-chevron">&#9656;</span></div>\
         <a href="demon-tablet.html" class="nav-page-link">Demon Tablet</a>\
         <div class="nav-sub-links">\
           <a href="demon-tablet.html#overview" class="nav-sub-link">Overview</a>\
@@ -27,7 +27,7 @@
       </div>\
       <div class="nav-divider"></div>\
       <div class="nav-section">\
-        <div class="nav-section-label"><span class="nav-badge traversal">Traversal</span></div>\
+        <div class="nav-section-label nav-section-toggle"><span class="nav-badge traversal">Traversal</span><span class="nav-chevron">&#9656;</span></div>\
         <a href="hallways.html" class="nav-page-link">Central Passages</a>\
         <div class="nav-sub-links">\
           <a href="hallways.html#overview" class="nav-sub-link">Overview</a>\
@@ -37,7 +37,7 @@
       </div>\
       <div class="nav-divider"></div>\
       <div class="nav-section">\
-        <div class="nav-section-label"><span class="nav-badge boss">Boss 2</span></div>\
+        <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 2</span><span class="nav-chevron">&#9656;</span></div>\
         <a href="dead-stars.html" class="nav-page-link">Dead Stars</a>\
         <div class="nav-sub-links">\
           <a href="dead-stars.html#overview" class="nav-sub-link">Overview</a>\
@@ -54,7 +54,7 @@
       </div>\
       <div class="nav-divider"></div>\
       <div class="nav-section">\
-        <div class="nav-section-label"><span class="nav-badge traversal">Traversal</span></div>\
+        <div class="nav-section-label nav-section-toggle"><span class="nav-badge traversal">Traversal</span><span class="nav-chevron">&#9656;</span></div>\
         <a href="bridges.html" class="nav-page-link">Pronged Passages</a>\
         <div class="nav-sub-links">\
           <a href="bridges.html#overview" class="nav-sub-link">Overview</a>\
@@ -67,7 +67,7 @@
       </div>\
       <div class="nav-divider"></div>\
       <div class="nav-section">\
-        <div class="nav-section-label"><span class="nav-badge boss">Boss 3</span></div>\
+        <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 3</span><span class="nav-chevron">&#9656;</span></div>\
         <a href="marble-dragon.html" class="nav-page-link">Marble Dragon</a>\
         <div class="nav-sub-links">\
           <a href="marble-dragon.html#overview" class="nav-sub-link">Overview</a>\
@@ -85,7 +85,7 @@
       </div>\
       <div class="nav-divider"></div>\
       <div class="nav-section">\
-        <div class="nav-section-label"><span class="nav-badge traversal">Traversal</span></div>\
+        <div class="nav-section-label nav-section-toggle"><span class="nav-badge traversal">Traversal</span><span class="nav-chevron">&#9656;</span></div>\
         <a href="lockwards.html" class="nav-page-link">The Binding Lock</a>\
         <div class="nav-sub-links">\
           <a href="lockwards.html#overview" class="nav-sub-link">Overview</a>\
@@ -102,7 +102,7 @@
       </div>\
       <div class="nav-divider"></div>\
       <div class="nav-section">\
-        <div class="nav-section-label"><span class="nav-badge boss">Boss 4</span></div>\
+        <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 4</span><span class="nav-chevron">&#9656;</span></div>\
         <a href="magitaur.html" class="nav-page-link">Magitaur</a>\
         <div class="nav-sub-links">\
           <a href="magitaur.html#overview" class="nav-sub-link">Overview</a>\
@@ -154,10 +154,20 @@
     link.addEventListener('click', closeNav);
   });
 
+  document.querySelectorAll('.nav-section-toggle').forEach(function (el) {
+    el.addEventListener('click', function () {
+      this.closest('.nav-section').classList.toggle('expanded');
+    });
+  });
+
   var current = (window.location.pathname.split('/').pop() || 'index.html');
   document.querySelectorAll('.nav-page-link, .nav-home-link').forEach(function (link) {
     var href = link.getAttribute('href').split('#')[0];
-    if (href === current) link.classList.add('nav-current');
+    if (href === current) {
+      link.classList.add('nav-current');
+      var section = link.closest('.nav-section');
+      if (section) section.classList.add('expanded');
+    }
   });
 })();
 

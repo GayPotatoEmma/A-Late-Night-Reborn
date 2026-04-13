@@ -270,6 +270,20 @@ img { max-width: 100%; display: block; }
   gap: .5rem;
   padding: .55rem 1.25rem .2rem;
   margin-top: .2rem;
+  cursor: pointer;
+  user-select: none;
+  justify-content: space-between;
+}
+
+.nav-chevron {
+  font-size: .75rem;
+  color: var(--text-secondary);
+  transition: transform var(--transition);
+  flex-shrink: 0;
+}
+
+.nav-section.expanded .nav-chevron {
+  transform: rotate(90deg);
 }
 
 .nav-badge {
@@ -299,7 +313,20 @@ img { max-width: 100%; display: block; }
   background: rgba(167,139,250,.07);
 }
 
-.nav-sub-links { display: flex; flex-direction: column; padding-bottom: .25rem; }
+.nav-sub-links {
+  display: flex;
+  flex-direction: column;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.22s ease;
+}
+
+.nav-section.expanded .nav-sub-links {
+  max-height: 700px;
+  opacity: 1;
+  padding-bottom: .25rem;
+}
 
 .nav-sub-link {
   display: block;

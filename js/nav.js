@@ -106,6 +106,7 @@
         <a href="magitaur.html" class="nav-page-link">Magitaur</a>\
         <div class="nav-sub-links">\
           <a href="magitaur.html#overview" class="nav-sub-link">Overview</a>\
+          <a href="magitaur.html#simulator" class="nav-sub-link">Simulator</a>\
           <a href="magitaur.html#timeline" class="nav-sub-link">Fight Timeline</a>\
           <a href="magitaur.html#weapon-mechanics" class="nav-sub-link">Weapon Mechanics</a>\
           <a href="magitaur.html#assassins-dagger" class="nav-sub-link">Assassin\'s Dagger</a>\

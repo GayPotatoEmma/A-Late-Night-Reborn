@@ -654,6 +654,14 @@ img { max-width: 100%; display: block; }
 
 .content-body p:last-child { margin-bottom: 0; }
 
+.content-link {
+  color: var(--accent-teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition);
+}
+.content-link:hover { opacity: .75; }
+
 /* ── Alert / Info Boxes ───────────────────────────── */
 
 .alert-box {

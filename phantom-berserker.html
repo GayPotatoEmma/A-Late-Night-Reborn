@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phantom Berserker | A Late Night Reborn</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="header-logo-link">
+          <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Phantom Berserker</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge additional">Phantom Job</div>
+        <h1 class="page-title additional-title">Phantom Berserker</h1>
+        <p class="page-subtitle"><em>"Savagery and unfailing courage characterize the recollections of this former berserker. These techniques entail great risk and even greater reward."</em></p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>Phantom Berserker is not a beginner-friendly Phantom Job, as it actively encourages playing through mechanics incorrectly. If you have not yet cleared Forked Tower: Blood, please do so before trying this job.</li>
+            <li>The mitigation in this guide is balanced to keep things comfortable for yourself and your healers. If you plan to use less mitigation or adjust Rage timings, please ask your healers for consent first.</li>
+            <li>Because Berserker gains damage by taking damage, it does not work on Paladin or Gunbreaker.</li>
+          </ul>
+          <div class="alert-box warning">
+            <span class="alert-icon">&#9888;</span>
+            <span>Never use Rage during Hallways or Bridges unless you are experienced with them and have spoken to your Host beforehand.</span>
+          </div>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;">How does Berserker work?</p>
+          <ul class="mech-steps" style="margin-top:0;">
+            <li><strong>Rage</strong> renders you immovable for 10 seconds, during which you auto-attack the target six times at 150 potency (~60k per hit).</li>
+            <li>While under the effect of Rage, you gain <strong>Pent-up Rage</strong>, which multiplies the damage of your next Deadly Blow by approximately 5 times the total damage taken, up to a hard cap of ~2.4 million.</li>
+            <li><strong>Deadly Blow</strong> also deals increased damage the lower your current HP is. This effect becomes irrelevant once you reach the 2.4 million cap.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Remove Mitigation Macros -->
+      <div class="content-card" id="remove-mit-macros">
+        <h2 class="card-heading teal">Remove Mitigation Macros</h2>
+        <div class="content-body">
+          <p>Berserker's damage scales with how much damage you take during Rage. Mitigation applied by healers directly reduces that incoming damage and lowers your Pent-up Rage multiplier. Use the macro for your healer's job before each Rage to strip their buffs from you.</p>
+          <div class="accordion">
+            <details class="accordion-item">
+              <summary>Sage</summary>
+              <div class="accordion-body">
+                <div class="macro-box">
+                  <button class="macro-copy-btn">Copy</button>
+                  <pre>/statusoff "Eukrasian Diagnosis"
+/statusoff "Differential Diagnosis"
+/statusoff "Eukrasian Prognosis"
+/statusoff "Holos"
+/statusoff "Holosakos"
+/statusoff "Haima"
+/statusoff "Haimatinon"
+/statusoff "Kerachole"
+/statusoff "Kerakeia"
+/statusoff "Taurochole"
+/statusoff "Krasis"
+/statusoff "Autophysis"
+/statusoff "Physis II"
+/statusoff "Philosophia"
+/statusoff "Eudaimonia"</pre>
+                </div>
+              </div>
+            </details>
+            <details class="accordion-item">
+              <summary>Scholar</summary>
+              <div class="accordion-body">
+                <div class="macro-box">
+                  <button class="macro-copy-btn">Copy</button>
+                  <pre>/statusoff "Galvanize"
+/statusoff "Catalyze"
+/statusoff "Sacred Soil"
+/statusoff "Seraphic Veil"
+/statusoff "Whispering Dawn"
+/statusoff "Fey Illumination"
+/statusoff "Seraphism"
+/statusoff "Protraction"
+/statusoff "Excogitation"
+/statusoff "Expedience"
+/statusoff "Desperate Measures"
+/statusoff "Fey Union"</pre>
+                </div>
+              </div>
+            </details>
+            <details class="accordion-item">
+              <summary>Astrologian</summary>
+              <div class="accordion-body">
+                <div class="macro-box">
+                  <button class="macro-copy-btn">Copy</button>
+                  <pre>/statusoff "Aspected Helios"
+/statusoff "Aspected Benefic"
+/statusoff "Intersection"
+/statusoff "Opposition"
+/statusoff "Helios Conjunction"
+/statusoff "Collective Unconscious"
+/statusoff "Wheel of Fortune"
+/statusoff "Horoscope"
+/statusoff "Neutral Sect"
+/statusoff "Exaltation"
+/statusoff "The Arrow"
+/statusoff "The Spire"
+/statusoff "The Bole"
+/statusoff "The Ewer"</pre>
+                </div>
+              </div>
+            </details>
+            <details class="accordion-item">
+              <summary>White Mage</summary>
+              <div class="accordion-body">
+                <div class="macro-box">
+                  <button class="macro-copy-btn">Copy</button>
+                  <pre>/statusoff "Temperance"
+/statusoff "Divine Grace"
+/statusoff "Medica III"
+/statusoff "Divine Benison"
+/statusoff "Aquaveil"
+/statusoff "Regen"
+/statusoff "Confession"
+/statusoff "Asylum"</pre>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boss 1: Demon Tablet -->
+      <div class="content-card" id="boss1">
+        <h2 class="card-heading gold">Boss 1: Demon Tablet</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Rage 1 (Occult Chisel)</strong>
+              <ul class="mech-sub">
+                <li>Occult Chisel targets the 3 highest players on the aggro list. Press Invuln and Rage at approximately 50% of the castbar.</li>
+                <li>If you have a Phantom Oracle in your party, they can immune you instead of using your Invuln.
+                  <div class="alert-box warning" style="margin-top:.5rem;">
+                    <span class="alert-icon">&#9888;</span>
+                    <span>You need to be healed immediately after Occult Chisel resolves. The follow-up auto-attack will kill you if you have not been healed up. Let your healers know beforehand.</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Rage 1.5 (Rotate Left/Right, first pair)</strong>
+              <ul class="mech-sub">
+                <li>If Rage 1 was pressed early enough during the Occult Chisel cast, its cooldown will have expired by the time the first Rotate Left/Right fires, letting you squeeze in a second Rage. Go to the wrong side and press Rage after the spin resolves.</li>
+                <li>Use 20% + 90s + 25s mitigation to survive the damage.</li>
+              </ul>
+            </li>
+            <li><strong>Rage 2 (Rotate Left/Right, second pair)</strong>
+              <ul class="mech-sub">
+                <li>After the first Cometeor of Expulsion, there is a second pair of Rotate Left/Right casts. Go to the wrong side and press Rage after the spin resolves.</li>
+                <li>Use 40% + 25s mitigation to survive. With a trusted healer, 20% is sufficient.</li>
+                <li>If you have a Phantom Oracle in your party, use Invuln + Rage instead.</li>
+              </ul>
+            </li>
+            <li><strong>Rage 3 (After Summon / Add Phase)</strong>
+              <ul class="mech-sub">
+                <li>After the Summon / Add Phase ends, press Rage to absorb 2 boss auto-attacks (or 3 if Rage 2 was pressed early enough). No mitigation is needed and it is not worth saving.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Boss 2: Dead Stars -->
+      <div class="content-card" id="boss2">
+        <h2 class="card-heading gold">Boss 2: Dead Stars</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Rage 1 (Slice 'n' Dice)</strong>
+              <ul class="mech-sub">
+                <li>Slice 'n' Dice is a conal tankbuster.
+                  <ul class="mech-sub">
+                    <li>If Warrior: use Holmgang.</li>
+                    <li>All other tanks: use 40% + 90s + 25s + Reprisal.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Rage 2 (Three-Body Problem: Green)</strong>
+              <ul class="mech-sub">
+                <li>Position yourself in the overlap of the last two Frozen Fallout jumps and press Rage. Requires at least 40% mitigation.</li>
+                <li>If you have a Phantom Oracle in your party, they can immune you instead.</li>
+              </ul>
+            </li>
+            <li><strong>Rage 3 (Three-Body Problem: Purple)</strong>
+              <ul class="mech-sub">
+                <li>During Snowball Flight, press Rage no later than when the snowballs land.</li>
+                <li>Raging the snowballs yields no potency for Deadly Blow, but there is nothing better to use it on here.</li>
+              </ul>
+            </li>
+            <li><strong>Rage 4 (Slice 'n' Strike)</strong>
+              <ul class="mech-sub">
+                <li>Slice 'n' Strike is the second tankbuster. Use at least 40% + 90s + 25s + Reprisal.
+                  <div class="alert-box warning" style="margin-top:.5rem;">
+                    <span class="alert-icon">&#9888;</span>
+                    <span>Skip Rage 4 during clears and reclears. Use it on the first Elemental Impact tower instead.</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Rage 5 (Three-Body Problem: Red)</strong>
+              <ul class="mech-sub">
+                <li>Second set of Elemental Impact towers. Use Invuln after the first hit, then press Rage. If the tower is below 15% HP, attack the boss instead.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Boss 3: Marble Dragon -->
+      <div class="content-card" id="boss3">
+        <h2 class="card-heading gold">Boss 3: Marble Dragon</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Rage 1 (Bridge trap)</strong>
+              <ul class="mech-sub">
+                <li>Optional but optimal: have a Knight-Tank pop a trap for you on the Bridge.
+                  <ul class="mech-sub">
+                    <li>Wait for the encounter to start.</li>
+                    <li>Count to 10.</li>
+                    <li>Press Invuln, then Rage.</li>
+                    <li>The Knight pops the trap.</li>
+                    <li>Teleport in as soon as you can and gapclose to the boss.</li>
+                    <li>Dodge to the sides to avoid Draconiform Motion.
+                      <div class="alert-box warning" style="margin-top:.5rem;">
+                        <span class="alert-icon">&#9888;</span>
+                        <span>The timing to avoid Draconiform Motion is very tight. Gapclose and move to the sides as soon as you can target the boss.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                <li>If skipping the Bridge trap: stay at the boss, press 3 GCDs, then Rage.</li>
+              </ul>
+            </li>
+            <li><strong>Rage 2 (Dread Deluge, second)</strong>
+              <ul class="mech-sub">
+                <li>Provoke after the Knights have taken their hits.
+                  <ul class="mech-sub">
+                    <li>Kitchensink it. Using Invuln alone will not save you, as the DoT will kill you once it expires.</li>
+                    <li>If you have a Phantom Oracle in your party: use Invuln on the tankbuster. Once your Invuln expires, the Oracle extends it. You must be healed before the extension expires, as you will take one DoT tick before it falls off. Talk to your healers beforehand.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Rage 3 (Withering Eternity)</strong>
+              <ul class="mech-sub">
+                <li>Option 1: If an Ice Sprite enrages, use Invuln + Rage to instakill it.</li>
+                <li>Option 2: Rage through Lifeless Legacy, the raidwide that ends the Add Phase.</li>
+              </ul>
+            </li>
+            <li><strong>Rage 4 (Imitation Star, after Imitation Rain 3)</strong>
+              <ul class="mech-sub">
+                <li>Press Rage to absorb the Imitation Star raidwide that fires after Imitation Rain 3 resolves.</li>
+              </ul>
+            </li>
+            <li><strong>Rage 5 (Dread Deluge, final)</strong>
+              <ul class="mech-sub">
+                <li>The same rules as Rage 2 apply.
+                  <div class="alert-box info" style="margin-top:.5rem;">
+                    <span class="alert-icon">&#8505;</span>
+                    <span>If the boss is below 10% health, skip Rage 5.</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Boss 4: Magitaur -->
+      <div class="content-card" id="boss4">
+        <h2 class="card-heading gold">Boss 4: Magitaur</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Rage 1 (Lockward trap / first Unseal autos)</strong>
+              <ul class="mech-sub">
+                <li>Option 1: Use a trap from the Lockward section, the same method as the Bridge trap for Boss 3.</li>
+                <li>Option 2: First Unseal autos. Use 20% + 90s + 25s mitigation and press Rage after the Unseal cast ends (not Unsealed Aura).
+                  <ul class="mech-sub">
+                    <li>Can be taken off-platform to guarantee 3 auto-attacks.
+                      <div class="alert-box warning" style="margin-top:.5rem;">
+                        <span class="alert-icon">&#9888;</span>
+                        <span>Do not take autos off-platform on prog runs. It requires other tanks to be alive and performing the mechanic correctly.</span>
+                      </div>
+                    </li>
+                    <li>If you have a Phantom Oracle in your party: use your 90s cooldown for the first auto-hit and let them immune you for hits 2 and 3.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Rage 2 (Conduits, first)</strong>
+              <ul class="mech-sub">
+                <li>If Main Berserker: go to the first purple Conduit, behind it against the wall, and press Rage.</li>
+                <li>If not: Go below your group's Conduit and press Invuln + Rage at 20%. Tell your Knight-Tank beforehand to guarantee a hit.</li>
+              </ul>
+            </li>
+            <li><strong>Rage 3 (Unseal autos, second)</strong>
+              <ul class="mech-sub">
+                <li>After Sage's Staff, move into the hitbox. Use 20% + 90s + 25s mitigation and press Rage after the Unseal cast ends (not Unsealed Aura).
+                  <ul class="mech-sub">
+                    <li>Can be taken off-platform to guarantee 3 auto-attacks.
+                      <div class="alert-box warning" style="margin-top:.5rem;">
+                        <span class="alert-icon">&#9888;</span>
+                        <span>Do not take autos off-platform on prog runs. It requires other tanks to be alive and performing the mechanic correctly.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Rage 4 (Conduits, second)</strong>
+              <ul class="mech-sub">
+                <li>If Main-Zerker: second Conduit. Go behind it to the wall and press Rage.</li>
+                <li>If not: Rage your group's Conduit. There is not much to gain here.
+                  <ul class="mech-sub">
+                    <li>If you have a Phantom Oracle in your party, they can immune you for this.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Rage 5 (Unseal autos, third)</strong>
+              <ul class="mech-sub">
+                <li>Go outside the hitbox. Use 20% + 90s + 25s mitigation and press Rage after the Unseal cast ends.
+                  <ul class="mech-sub">
+                    <li>Can be taken off-platform to guarantee 3 auto-attacks.
+                      <div class="alert-box warning" style="margin-top:.5rem;">
+                        <span class="alert-icon">&#9888;</span>
+                        <span>Do not take autos off-platform on prog runs. It requires other tanks to be alive and performing the mechanic correctly.</span>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Rage 6 (Conduits, final)</strong>
+              <ul class="mech-sub">
+                <li>If Main-Zerker: third Conduit. Go behind it to the wall and press Rage.</li>
+                <li>If not: Go below your group's Conduit and press Invuln + Rage at 20%. Tell your Knight-Tank beforehand to guarantee a hit.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="magitaur.html" class="nav-btn nav-prev">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>&#8592; Magitaur</span>
+          </div>
+        </a>
+        <a href="index.html" class="nav-btn nav-home">&#8962; Home</a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="js/stars.js"></script>
+  <script src="js/lightbox.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/copy.js"></script>
+</body>
+</html>

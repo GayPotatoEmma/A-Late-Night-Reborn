@@ -118,6 +118,19 @@
           <a href="magitaur.html#how-to" class="nav-sub-link">How Do We Resolve?</a>\
         </div>\
       </div>\
+      <div class="nav-divider"></div>\
+      <div class="nav-section">\
+        <div class="nav-section-label nav-section-toggle"><span class="nav-badge additional">Phantom Job</span><span class="nav-chevron">&#9656;</span></div>\
+        <a href="phantom-berserker.html" class="nav-page-link">Phantom Berserker</a>\
+        <div class="nav-sub-links">\
+          <a href="phantom-berserker.html#overview" class="nav-sub-link">Overview</a>\
+          <a href="phantom-berserker.html#remove-mit-macros" class="nav-sub-link">Remove Mitigation Macros</a>\
+          <a href="phantom-berserker.html#boss1" class="nav-sub-link">Boss 1: Demon Tablet</a>\
+          <a href="phantom-berserker.html#boss2" class="nav-sub-link">Boss 2: Dead Stars</a>\
+          <a href="phantom-berserker.html#boss3" class="nav-sub-link">Boss 3: Marble Dragon</a>\
+          <a href="phantom-berserker.html#boss4" class="nav-sub-link">Boss 4: Magitaur</a>\
+        </div>\
+      </div>\
     </div>\
   </nav>';
 

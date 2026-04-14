@@ -1197,7 +1197,7 @@ details.accordion-item[open] > summary {
 .mech-steps > li { position: relative; padding-left: 1.2rem; font-size: .875rem; color: var(--text-secondary); line-height: 1.55; }
 .mech-steps > li::before { content: '▸'; position: absolute; left: 0; color: rgba(167,139,250,.6); font-size: .65rem; top: .25rem; }
 .mech-sub { list-style: none; padding: 0; margin: .3rem 0 .3rem 1rem; display: flex; flex-direction: column; gap: .2rem; }
-.mech-sub li { position: relative; padding-left: 1rem; font-size: .83rem; color: var(--text-secondary); line-height: 1.5; opacity: .82; }
+.mech-sub li { position: relative; padding-left: 1rem; font-size: .83rem; color: rgba(148,163,184,.82); line-height: 1.5; }
 .mech-sub li::before { content: '–'; position: absolute; left: 0; color: rgba(148,163,184,.5); }
 
 /* ── Image Placeholders ──────────────────────────────────── */
@@ -1400,6 +1400,12 @@ html.theme-transitioning *::after {
 [data-theme="light"] .page-badge.additional { color: #4c1d95; background: rgba(167,139,250,.2); border-color: rgba(167,139,250,.45); }
 
 [data-theme="light"] .raid-tag.available { color: #065f46; background: rgba(52,211,153,.15); border-color: rgba(52,211,153,.4); }
+
+[data-theme="light"] .mech-sub li { color: rgba(71,85,105,.82); }
+
+[data-theme="light"] .card-index { color: rgba(0,0,0,.1); }
+[data-theme="light"] .section-card:hover .card-index { color: rgba(124,58,237,.18); }
+[data-theme="light"] .section-card.is-boss:hover .card-index { color: rgba(180,83,9,.15); }
 
 [data-theme="light"] .tl-badge.raidwide   { color: #9f1239; background: rgba(239,68,68,.12);   border-color: rgba(239,68,68,.35); }
 [data-theme="light"] .tl-badge.tankbuster { color: #92400e; background: rgba(245,158,11,.12);  border-color: rgba(245,158,11,.35); }

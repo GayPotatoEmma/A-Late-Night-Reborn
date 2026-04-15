@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phantom Jobs | A Late Night Reborn</title>
+  <link rel="icon" href="assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Phantom Jobs | A Late Night Reborn" />
+  <meta property="og:description" content="Phantom Job ability usage and responsibilities for the Forked Tower: Blood." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="index.html" class="header-logo-link">
+          <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Phantom Jobs</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge additional">Phantom Job</div>
+        <h1 class="page-title additional-title">Phantom Jobs</h1>
+        <p class="page-subtitle">Ability usage and responsibilities for common Phantom Jobs across the Forked Tower: Blood.</p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p>
+            This guide covers the core abilities and responsibilities for each Phantom Job in the Forked Tower: Blood. Each job has specific roles in boss encounters, traversal sections, or both. Refer to your job's section below for detailed usage notes.
+          </p>
+        </div>
+      </div>
+
+      <!-- Knight -->
+      <div class="content-card" id="knight">
+        <h2 class="card-heading gold">Knight</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Pray</strong>
+              <ul class="mech-sub">
+                <li>A 30-minute buff that decreases party damage taken by 10%. Use at any available crystals.</li>
+              </ul>
+            </li>
+            <li><strong>Pledge</strong>
+              <ul class="mech-sub">
+                <li>Use on Conduits during Boss 4 to negate their damage while standing inside them.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bard -->
+      <div class="content-card" id="bard">
+        <h2 class="card-heading gold">Bard</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Romeo's Ballad</strong>
+              <ul class="mech-sub">
+                <li>Use when the Tower Idols on Bridges have all begun casting. Position on the outside of the group beforehand to avoid clipping players on the opposite side, which may cause stun failures.</li>
+              </ul>
+            </li>
+            <li><strong>Hero's Rime</strong>
+              <ul class="mech-sub">
+                <li>Use during 2-minute burst windows.</li>
+              </ul>
+            </li>
+            <li><strong>Offensive Aria</strong>
+              <ul class="mech-sub">
+                <li>Keep active at all times outside of 2-minute burst windows.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Geomancer -->
+      <div class="content-card" id="geomancer">
+        <h2 class="card-heading gold">Geomancer</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Suspend</strong>
+              <ul class="mech-sub">
+                <li>Use before crossing blue electric floor tiles in Hallways and Bridges. This allows you to float above the floor and reach the buttons that disable it.</li>
+              </ul>
+            </li>
+            <li><strong>Battle Bell</strong>
+              <ul class="mech-sub">
+                <li>Keep active on Phantom Berserkers.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Time Mage -->
+      <div class="content-card" id="time-mage">
+        <h2 class="card-heading gold">Time Mage</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Slowga</strong>
+              <ul class="mech-sub">
+                <li>Apply to all trash packs to slow their cast times. This is your primary priority.</li>
+              </ul>
+            </li>
+            <li><strong>Dispel</strong>
+              <ul class="mech-sub">
+                <li>Required on specific enemies to remove buffs that would otherwise cause a wipe.
+                  <ul class="mech-sub">
+                    <li><strong>Boss 1, Add Phase:</strong> Use on the large add.</li>
+                    <li><strong>Hallways, Tower Scarab:</strong> Use after it casts Rhino Guard.</li>
+                    <li><strong>Bridges, Tower Abyss:</strong> Use after it casts Diffuse Darkness.
+                      <div class="alert-box danger" style="margin-top:.5rem;">
+                        <span class="alert-icon">&#9888;</span>
+                        <span>Failing to dispel Diffuse Darkness can wipe the raid.</span>
+                      </div>
+                    </li>
+                    <li><strong>Lockwards, Guardian Knight:</strong> Use on pull and whenever it reapplies its invulnerability.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Thief -->
+      <div class="content-card" id="thief">
+        <h2 class="card-heading gold">Thief</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Trap Detection</strong>
+              <ul class="mech-sub">
+                <li>Reveals hidden traps in Hallways, Bridges, and Lockwards.
+                  <div class="alert-box info" style="margin-top:.5rem;">
+                    <span class="alert-icon">&#8505;</span>
+                    <span>In some cases, Phantom Rangers may choose to blind-snipe traps instead. Your raid leader will inform you if this applies.</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Pilfer Weapon</strong>
+              <ul class="mech-sub">
+                <li>Use on the Phantom Weapon in Lockwards.
+                  <div class="alert-box warning" style="margin-top:.5rem;">
+                    <span class="alert-icon">&#9888;</span>
+                    <span>If left unused, the Phantom Weapon's attacks become much larger and can easily wipe the raid.</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Lockpicker</strong>
+              <ul class="mech-sub">
+                <li>A passive trait that allows you to open select locked doors throughout the Tower.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Ranger -->
+      <div class="content-card" id="ranger">
+        <h2 class="card-heading gold">Ranger</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Occult Falcon</strong>
+              <ul class="mech-sub">
+                <li>Use to safely disarm traps in Hallways, Bridges, and Lockwards.
+                  <div class="alert-box warning" style="margin-top:.5rem;">
+                    <span class="alert-icon">&#9888;</span>
+                    <span>Only disarm when it is safe to do so. If the raid leader calls to hold, do not disarm.</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Samurai -->
+      <div class="content-card" id="samurai">
+        <h2 class="card-heading gold">Samurai</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Iainuki</strong>
+              <ul class="mech-sub">
+                <li>Use on trash packs for a chance to instantly kill enemies.</li>
+                <li>Keep on cooldown during boss encounters for its high damage output.</li>
+              </ul>
+            </li>
+            <li><strong>Zeninage</strong>
+              <ul class="mech-sub">
+                <li>Keep on cooldown during boss encounters. This is an extremely potent ability and will account for the majority of your damage.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cannoneer -->
+      <div class="content-card" id="cannoneer">
+        <h2 class="card-heading gold">Cannoneer</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Phantom Fire</strong>
+              <ul class="mech-sub">
+                <li>Use on trash packs for a chance to instantly kill enemies.</li>
+              </ul>
+            </li>
+            <li><strong>Silver Cannon</strong>
+              <ul class="mech-sub">
+                <li>Keep active on the boss at all times to increase their damage taken. This is a significant gain for the raid.
+                  <div class="alert-box info" style="margin-top:.5rem;">
+                    <span class="alert-icon">&#8505;</span>
+                    <span>Does not stack with Dancer's Mesmerize.</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Dancer -->
+      <div class="content-card" id="dancer">
+        <h2 class="card-heading gold">Dancer</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Quickstep</strong>
+              <ul class="mech-sub">
+                <li>A 30-minute buff that increases party damage by 2%. Use at any available crystals.</li>
+              </ul>
+            </li>
+            <li><strong>Mesmerize</strong>
+              <ul class="mech-sub">
+                <li>Keep active on the boss at all times to increase their damage taken. This is a significant gain for the raid.
+                  <div class="alert-box info" style="margin-top:.5rem;">
+                    <span class="alert-icon">&#8505;</span>
+                    <span>Does not stack with Cannoneer's Silver Cannon.</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Mystic Knight -->
+      <div class="content-card" id="mystic-knight">
+        <h2 class="card-heading gold">Mystic Knight</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Blazing Spellblade</strong>
+              <ul class="mech-sub">
+                <li>Keep active on the boss at all times to increase their damage taken. This is a significant gain for the raid.
+                  <div class="alert-box info" style="margin-top:.5rem;">
+                    <span class="alert-icon">&#8505;</span>
+                    <span>Stacks with Cannoneer's Silver Cannon and Dancer's Mesmerize.</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Chemist -->
+      <div class="content-card" id="chemist">
+        <h2 class="card-heading gold">Chemist</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Revive</strong>
+              <ul class="mech-sub">
+                <li>The only means of raising fallen players inside the Forked Tower. Reviving the dead should always be your top priority.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="index.html" class="nav-btn nav-home">&#8962; Home</a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script src="js/stars.js"></script>
+  <script src="js/nav.js"></script>
+</body>
+</html>

@@ -121,6 +121,25 @@
       <div class="nav-divider"></div>\
       <div class="nav-section">\
         <div class="nav-section-label nav-section-toggle"><span class="nav-badge additional">Phantom Job</span><span class="nav-chevron">&#9656;</span></div>\
+        <a href="phantom-jobs.html" class="nav-page-link">Phantom Jobs</a>\
+        <div class="nav-sub-links">\
+          <a href="phantom-jobs.html#overview" class="nav-sub-link">Overview</a>\
+          <a href="phantom-jobs.html#knight" class="nav-sub-link">Knight</a>\
+          <a href="phantom-jobs.html#bard" class="nav-sub-link">Bard</a>\
+          <a href="phantom-jobs.html#geomancer" class="nav-sub-link">Geomancer</a>\
+          <a href="phantom-jobs.html#time-mage" class="nav-sub-link">Time Mage</a>\
+          <a href="phantom-jobs.html#thief" class="nav-sub-link">Thief</a>\
+          <a href="phantom-jobs.html#ranger" class="nav-sub-link">Ranger</a>\
+          <a href="phantom-jobs.html#samurai" class="nav-sub-link">Samurai</a>\
+          <a href="phantom-jobs.html#cannoneer" class="nav-sub-link">Cannoneer</a>\
+          <a href="phantom-jobs.html#dancer" class="nav-sub-link">Dancer</a>\
+          <a href="phantom-jobs.html#mystic-knight" class="nav-sub-link">Mystic Knight</a>\
+          <a href="phantom-jobs.html#chemist" class="nav-sub-link">Chemist</a>\
+        </div>\
+      </div>\
+      <div class="nav-divider"></div>\
+      <div class="nav-section">\
+        <div class="nav-section-label nav-section-toggle"><span class="nav-badge additional">Phantom Job</span><span class="nav-chevron">&#9656;</span></div>\
         <a href="phantom-berserker.html" class="nav-page-link">Phantom Berserker</a>\
         <div class="nav-sub-links">\
           <a href="phantom-berserker.html#overview" class="nav-sub-link">Overview</a>\

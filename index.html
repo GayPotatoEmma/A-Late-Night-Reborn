@@ -6,7 +6,7 @@
   <title>A Late Night Reborn</title>
   <link rel="icon" href="assets/alnr%20logo.png" type="image/png" />
   <meta property="og:title" content="A Late Night Reborn" />
-  <meta property="og:description" content="A Late Night Reborn's guides for the Forked Tower, covering how our community clears each section." />
+  <meta property="og:description" content="A Late Night Reborn's guides for Field Exploration Raids, covering how our community clears each section." />
   <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="A Late Night Reborn" />
@@ -40,26 +40,96 @@
 
       <section class="hero">
         <div class="hero-eyebrow">✦ Raid Guides ✦</div>
-        <h1 class="hero-heading">The Forked Tower</h1>
+        <h1 class="hero-heading">A Late Night Reborn</h1>
         <p class="hero-sub">
-          A Late Night Reborn's guides for the Forked Tower, covering how our community clears each section. Pick a raid below to get started.
+          A Late Night Reborn's guides for Field Exploration Raids, covering how our community clears each section. Pick a raid below to get started.
         </p>
       </section>
 
       <!-- ── Raid Selector ── -->
       <div class="raid-selector">
+        <button class="raid-choice" data-raid="ba">
+          <span class="raid-tag available">✦ Available</span>
+          <div class="raid-name">Baldesion Arsenal</div>
+          <div class="raid-subtitle">Eureka Hydatos &nbsp;·&nbsp; Patch 4.55</div>
+          <div class="raid-desc">A 56-player instance deep within Eureka Hydatos. Survive a gauntlet of boss encounters and support rooms in one of FFXIV's most punishing alliance raids.</div>
+        </button>
         <button class="raid-choice active" data-raid="ftb">
           <span class="raid-tag available">✦ Available</span>
           <div class="raid-name">Forked Tower: Blood</div>
-          <div class="raid-subtitle">Tower of Blood &nbsp;·&nbsp; Patch 7.25</div>
+          <div class="raid-subtitle">Occult Crescent: South Horn &nbsp;·&nbsp; Patch 7.25</div>
           <div class="raid-desc">24–48 player field operation set within the Occult Crescent: South Horn. Four boss encounters across seven sections, with three traversal passages requiring precise phantom job coordination.</div>
         </button>
         <button class="raid-choice locked" data-raid="ftm" title="Not yet released">
           <span class="raid-tag unreleased">⧗ Unreleased</span>
           <div class="raid-name">Forked Tower: Magic</div>
-          <div class="raid-subtitle">Tower of Magic &nbsp;·&nbsp; Coming Soon</div>
+          <div class="raid-subtitle">Occult Crescent: North Horn &nbsp;·&nbsp; Coming Soon</div>
           <div class="raid-desc">Located within the Occult Crescent: North Horn. Guide content will be added once this raid has been released in a future patch.</div>
         </button>
+      </div>
+
+      <!-- ── BA: Baldesion Arsenal Content ── -->
+      <div id="ba-content" class="raid-content" hidden>
+        <div class="sections-label">Main Guides</div>
+        <div class="section-grid">
+
+          <a href="ba/ovni.html" class="section-card">
+            <span class="card-badge fate">&#10022; FATE</span>
+            <div class="card-title">Ovni</div>
+            <div class="card-desc">The notorious monster FATE required to open Arsenal entry portals. Earn gold participation before it dies to receive the Aetherically Primed buff needed to enter.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="#" class="section-card is-boss wip">
+            <span class="card-badge boss">⚔ Boss 1</span>
+            <div class="card-title">The Twin Spears</div>
+            <div class="card-desc">Art and Owain are aetherically linked and cannot be killed independently. Split the raid across both spears and bring them down at the exact same moment.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="#" class="section-card is-boss wip">
+            <span class="card-badge boss">⚔ Boss 2</span>
+            <div class="card-title">Raiden</div>
+            <div class="card-desc">A mounted thunderlord who electrifies the arena walls early in the fight. Survive exaflares, chain tethers, and spectral swords before his Ultimate Zantetsuken wipes the raid.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="#" class="section-card wip">
+            <span class="card-badge traversal">↗ Traversal</span>
+            <div class="card-title">Hallways</div>
+            <div class="card-desc">The Arsenal's interconnecting passages are riddled with hidden traps and patrolling enemies. Watch your step and mind the mobs before pushing through to the next boss.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="#" class="section-card wip">
+            <span class="card-badge support">⬡ Support</span>
+            <div class="card-title">Support Rooms</div>
+            <div class="card-desc">Six side rooms that must all be cleared to strip Absolute Virtue of its True Virtue super-buff. Each room locks on entry and spawns a wave of enemies when the switch is pressed.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="#" class="section-card wip">
+            <span class="card-badge support">⬡ Support</span>
+            <div class="card-title">Tristitia</div>
+            <div class="card-desc">The Expedition Support FATE that spawns after all six rooms are cleared. Completing it respawns Absolute Virtue without its super-buff and opens eight new entry portals in Hydatos.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="#" class="section-card is-boss wip">
+            <span class="card-badge boss">⚔ Boss 3</span>
+            <div class="card-title">Absolute Virtue</div>
+            <div class="card-desc">A legendary superboss whose Eidos buff shifts between Light and Dark, altering its core mechanics. Engaging it before clearing the support rooms makes it impossible to kill.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+          <a href="#" class="section-card is-boss wip">
+            <span class="card-badge boss">⚔ Boss 4</span>
+            <div class="card-title">Proto-Ozma</div>
+            <div class="card-desc">The Arsenal's final boss. A shape-shifting construct cycling through four forms, with Ozmashade clones mirroring its mechanics across all three platforms at once.</div>
+            <div class="card-cta">→</div>
+          </a>
+
+        </div>
       </div>
 
       <!-- ── FTB: Blood Content ── -->
@@ -67,7 +137,7 @@
         <div class="sections-label">Main Guides</div>
         <div class="section-grid">
 
-          <a href="demon-tablet.html" class="section-card is-boss">
+          <a href="ftb/demon-tablet.html" class="section-card is-boss">
             <span class="card-badge boss">⚔ Boss 1</span>
             <div class="card-index">01</div>
             <div class="card-title">Demon Tablet</div>
@@ -75,7 +145,7 @@
             <div class="card-cta">→</div>
           </a>
 
-          <a href="hallways.html" class="section-card">
+          <a href="ftb/hallways.html" class="section-card">
             <span class="card-badge traversal">↗ Traversal</span>
             <div class="card-index">02</div>
             <div class="card-title">Central Passages</div>
@@ -83,7 +153,7 @@
             <div class="card-cta">→</div>
           </a>
 
-          <a href="dead-stars.html" class="section-card is-boss">
+          <a href="ftb/dead-stars.html" class="section-card is-boss">
             <span class="card-badge boss">⚔ Boss 2</span>
             <div class="card-index">03</div>
             <div class="card-title">Dead Stars</div>
@@ -91,7 +161,7 @@
             <div class="card-cta">→</div>
           </a>
 
-          <a href="bridges.html" class="section-card">
+          <a href="ftb/bridges.html" class="section-card">
             <span class="card-badge traversal">↗ Traversal</span>
             <div class="card-index">04</div>
             <div class="card-title">Pronged Passages</div>
@@ -99,7 +169,7 @@
             <div class="card-cta">→</div>
           </a>
 
-          <a href="marble-dragon.html" class="section-card is-boss">
+          <a href="ftb/marble-dragon.html" class="section-card is-boss">
             <span class="card-badge boss">⚔ Boss 3</span>
             <div class="card-index">05</div>
             <div class="card-title">Marble Dragon</div>
@@ -107,7 +177,7 @@
             <div class="card-cta">→</div>
           </a>
 
-          <a href="lockwards.html" class="section-card">
+          <a href="ftb/lockwards.html" class="section-card">
             <span class="card-badge traversal">↗ Traversal</span>
             <div class="card-index">06</div>
             <div class="card-title">The Binding Lock</div>
@@ -115,7 +185,7 @@
             <div class="card-cta">→</div>
           </a>
 
-          <a href="magitaur.html" class="section-card is-boss">
+          <a href="ftb/magitaur.html" class="section-card is-boss">
             <span class="card-badge boss">⚔ Boss 4</span>
             <div class="card-index">07</div>
             <div class="card-title">Magitaur</div>
@@ -128,14 +198,14 @@
         <div class="sections-label" style="margin-top:2.5rem;">Additional Guides</div>
         <div class="section-grid">
 
-          <a href="phantom-jobs.html" class="section-card">
+          <a href="ftb/phantom-jobs.html" class="section-card">
             <span class="card-badge additional">Phantom Job</span>
             <div class="card-title">Phantom Jobs</div>
             <div class="card-desc">Ability usage and responsibilities for common Phantom Jobs across the Forked Tower: Blood.</div>
             <div class="card-cta">→</div>
           </a>
 
-          <a href="phantom-berserker.html" class="section-card">
+          <a href="ftb/phantom-berserker.html" class="section-card">
             <span class="card-badge additional">Phantom Job</span>
             <div class="card-title">Phantom Berserker</div>
             <div class="card-desc">Role-specific notes and responsibilities for Phantom Berserkers across all four bosses in the Forked Tower: Blood.</div>

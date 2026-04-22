@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ovni | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Ovni | A Late Night Reborn" />
+  <meta property="og:description" content="Guide for the Ovni FATE in Eureka Hydatos. Earn gold participation to unlock entry into the Baldesion Arsenal." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Ovni</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge fate">&#10022; FATE</div>
+        <h1 class="page-title fate-title">Ovni</h1>
+        <p class="page-subtitle">The notorious monster FATE that must be completed to unlock entry into the Baldesion Arsenal.</p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p style="font-size:.8rem; color:var(--text-muted); margin-bottom:.65rem; font-weight:400;">Element: <span class="element-ice" style="font-weight:600;">Ice</span></p>
+          <p>
+            Ovni is a level 60 notorious monster FATE
+            Umbral Turbulence weather. Defeating it and earning
+            a gold participation rating grants the Aetherically Primed buff, which allows entry
+            into the Baldesion Arsenal via the Aetherial Nodes that appear 3 minutes after the
+            FATE concludes.
+          </p>
+          <p>
+            Ovni spawns roughly every 20 to 30 minutes. It will not spawn if there are currently
+            players inside the Arsenal instance. At least 8 players who have the Arsenal unlocked
+            and are at elemental level 60 must be present in the instance for it to appear.
+          </p>
+        </div>
+        <div class="alert-box warning">
+          <span class="alert-icon">&#9888;</span>
+          <span>You must be inside the FATE area when the boss dies to receive the Aetherically Primed buff. Do not accept a resurrection if the FATE is about to end, as the animation will disqualify you.</span>
+        </div>
+      </div>
+
+      <!-- Getting Gold -->
+      <div class="content-card" id="getting-gold">
+        <h2 class="card-heading gold">Getting Gold</h2>
+        <div class="content-body">
+          <p>
+            Gold participation requires dealing sufficient damage to Ovni before it dies.
+            In an organised run, hitting the boss once while in a party with others is
+            typically enough. Do not sit outside the FATE circle waiting; enter, tag the
+            boss, and position safely.
+          </p>
+          <p>
+            Make sure your Magia Wheel is set to Fire before engaging, as Ovni is
+            an Ice-element enemy. Using the opposing element increases your damage output
+            significantly.
+          </p>
+        </div>
+        <div class="alert-box info">
+          <span class="alert-icon">&#9432;</span>
+          <span>After receiving Aetherically Primed, find a Hydatos Elemental and receive its buff. This grants a bonus to damage dealt and health regeneration. Aim to get it when about 5 minutes remain so it lasts through the full Arsenal run.</span>
+        </div>
+      </div>
+
+      <!-- Mechanics -->
+      <div class="content-card" id="mechanics">
+        <h2 class="card-heading teal">Mechanics</h2>
+        <div class="content-body">
+          <p>Ovni has a short set of mechanics. Most can be avoided by watching for the cast bar and repositioning promptly.</p>
+        </div>
+
+        <ul class="mech-steps" style="margin-top:1rem;">
+          <li><strong>Pull of the Void</strong>
+            <ul class="mech-sub">
+              <li>Drags all nearby players into melee range of Ovni. Can be prevented with Arm's Length or Surecast, but the cast is short. This is immediately followed by either Concussive Oscillation or Megastorm.
+                <ul class="mech-sub">
+                  <li><strong>Concussive Oscillation</strong> — a melee-range circle AoE centered on Ovni. Run out after being pulled in.</li>
+                  <li><strong>Megastorm</strong> — a massive donut AoE that leaves only Ovni's hitbox safe. Deals heavy damage and applies a Windburn DoT to survivors. Move into the boss immediately when you see this cast.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li><strong>Vitriolic Barrage</strong>
+            <ul class="mech-sub">
+              <li>Unavoidable raidwide damage. Use mitigation and healing cooldowns if available.</li>
+            </ul>
+          </li>
+          <li><strong>Rock Hard</strong>
+            <ul class="mech-sub">
+              <li>A circle AoE placed under a random player. Move out of the telegraph before it resolves.</li>
+            </ul>
+          </li>
+          <li><strong>Torrential Torment</strong>
+            <ul class="mech-sub">
+              <li>A long cone AoE aimed at a random player. Deals high damage and applies Heavy. Move out of the cone or stay out of Ovni's front arc.</li>
+            </ul>
+          </li>
+          <li><strong>Fluorescence</strong>
+            <ul class="mech-sub">
+              <li>Ovni gains a stacking Damage Up buff. If left up, its attacks will one-shot most players. This buff must be removed immediately with Dispel L.</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="alert-box danger">
+          <span class="alert-icon">&#9888;</span>
+          <span><strong>Dispel L is required.</strong> At least one player in the group must have <strong>Dispel L</strong> on their bar before engaging Ovni. Fluorescence will stack rapidly and wipe the FATE if left unchecked.</span>
+        </div>
+        <ul class="mech-steps" style="margin-top:1rem;">
+          <li><strong>Ion Shower</strong>
+            <ul class="mech-sub">
+              <li>Places a purple marker over a random player. After a short delay, that player takes moderate damage and is Stunned. Ovni then launches three large, untelegraphed circle AoEs in quick succession centered on the stunned player. The stunned player is immune, but everyone else nearby will die.</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="alert-box warning">
+          <span class="alert-icon">&#9888;</span>
+          <span>If you see a purple marker appear on another player, move as far away from them as possible immediately. If the marker is on you, stand still and accept the stun; the AoEs will not harm you.</span>
+        </div>
+      </div>
+
+      <!-- Entering the Arsenal -->
+      <div class="content-card" id="entering">
+        <h2 class="card-heading blue">Entering the Arsenal</h2>
+        <div class="content-body">
+          <p>
+            Three minutes after Ovni is defeated, 48 Aetherial Nodes (blue portals) will appear
+            at fixed locations throughout Hydatos. Each portal transports one player and then
+            disappears. Blue portals require an Aetheric Stabilizer, which can be purchased from
+            the Expedition Scholar at base camp.
+          </p>
+          <p>
+            In most organised runs, blue portals are left unused. After 3 additional minutes,
+            any remaining blue portals despawn and are replaced by red portals (Stable Aetherial
+            Nodes) that require no Stabilizer. Each player goes to their assigned portal location
+            and waits for the red portal to appear before entering.
+          </p>
+        </div>
+        <div class="alert-box info">
+          <span class="alert-icon">&#9432;</span>
+          <span>Do not interact with a blue portal unless instructed to. Using one removes a random red portal elsewhere, which can cause confusion for other players in your run.</span>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="../index.html" class="nav-btn nav-home">&#8962; Home</a>
+        <a href="twin-spears.html" class="nav-btn nav-next wip">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>The Twin Spears &rarr;</span>
+          </div>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

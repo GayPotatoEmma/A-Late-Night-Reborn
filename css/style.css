@@ -298,6 +298,8 @@ img { max-width: 100%; display: block; }
 .nav-badge.boss      { color: #fde68a; background: rgba(251,191,36,.1);  border: 1px solid rgba(251,191,36,.22); }
 .nav-badge.traversal { color: #6ee7b7; background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.2);  }
 .nav-badge.additional { color: #c4b5fd; background: rgba(167,139,250,.1); border: 1px solid rgba(167,139,250,.22); }
+.nav-badge.fate      { color: #d8b4fe; background: rgba(192,86,253,.12);  border: 1px solid rgba(192,86,253,.3);   }
+.nav-badge.support   { color: #7dd3fc; background: rgba(56,189,248,.1);   border: 1px solid rgba(56,189,248,.22);  }
 
 .nav-page-link {
   display: block;
@@ -350,6 +352,50 @@ img { max-width: 100%; display: block; }
 .nav-sub-link:hover {
   color: var(--accent-purple);
   background: rgba(167,139,250,.05);
+}
+
+/* ── Nav Raid Groups ──────────────────────────────── */
+
+.nav-raid-group { display: flex; flex-direction: column; }
+
+.nav-raid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .55rem 1.25rem .45rem;
+  cursor: pointer;
+  user-select: none;
+  font-family: 'Cinzel', serif;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--transition), background var(--transition);
+}
+
+.nav-raid-header:hover { color: var(--text-secondary); background: rgba(255,255,255,.03); }
+.nav-raid-group.expanded .nav-raid-header { color: var(--text-secondary); }
+
+.nav-raid-chevron {
+  font-size: .65rem;
+  color: var(--text-muted);
+  transition: transform var(--transition);
+  flex-shrink: 0;
+}
+
+.nav-raid-group.expanded .nav-raid-chevron { transform: rotate(90deg); }
+
+.nav-raid-pages {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.38s ease, opacity 0.25s ease;
+}
+
+.nav-raid-group.expanded .nav-raid-pages {
+  max-height: 3000px;
+  opacity: 1;
 }
 
 .content-card { scroll-margin-top: 80px; }
@@ -502,6 +548,18 @@ img { max-width: 100%; display: block; }
   border: 1px solid rgba(167,139,250,.22);
 }
 
+.card-badge.fate {
+  color: #d8b4fe;
+  background: rgba(192,86,253,.12);
+  border: 1px solid rgba(192,86,253,.3);
+}
+
+.card-badge.support {
+  color: #7dd3fc;
+  background: rgba(56,189,248,.1);
+  border: 1px solid rgba(56,189,248,.22);
+}
+
 .card-index {
   font-family: 'Cinzel', serif;
   font-size: 2.9rem;
@@ -613,6 +671,18 @@ img { max-width: 100%; display: block; }
   border: 1px solid rgba(167,139,250,.22);
 }
 
+.page-badge.fate {
+  color: #d8b4fe;
+  background: rgba(192,86,253,.12);
+  border: 1px solid rgba(192,86,253,.3);
+}
+
+.page-badge.support {
+  color: #7dd3fc;
+  background: rgba(56,189,248,.1);
+  border: 1px solid rgba(56,189,248,.22);
+}
+
 .page-title {
   font-family: 'Cinzel', serif;
   font-size: clamp(2rem, 4.5vw, 3.1rem);
@@ -637,6 +707,13 @@ img { max-width: 100%; display: block; }
 
 .page-title.additional-title {
   background: linear-gradient(130deg, #f5f3ff 0%, #c4b5fd 45%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-title.fate-title {
+  background: linear-gradient(130deg, #fdf4ff 0%, #d8b4fe 40%, #a855f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -709,6 +786,23 @@ img { max-width: 100%; display: block; }
 }
 .content-link:hover { opacity: .75; }
 
+/* ── Element Colours ──────────────────────────────── */
+/* For use in enemy/mechanic element labels only      */
+
+.element-wind      { color: #71ff25; }
+.element-fire      { color: #f04d4a; }
+.element-ice       { color: #71ffff; }
+.element-lightning { color: #c446ff; }
+.element-earth     { color: #ffff7c; }
+.element-water     { color: #5ea5ff; }
+
+[data-theme="light"] .element-wind      { color: #2d8a00; }
+[data-theme="light"] .element-fire      { color: #c0221f; }
+[data-theme="light"] .element-ice       { color: #0284c7; }
+[data-theme="light"] .element-lightning { color: #7e22ce; }
+[data-theme="light"] .element-earth     { color: #854d0e; }
+[data-theme="light"] .element-water     { color: #1d4ed8; }
+
 /* ── Alert / Info Boxes ───────────────────────────── */
 
 .alert-box {
@@ -724,6 +818,7 @@ img { max-width: 100%; display: block; }
 }
 
 .alert-box:last-child { margin-bottom: 0; }
+.content-body + .alert-box { margin-top: .75rem; }
 .mech-steps + .alert-box { margin-top: .75rem; }
 .alert-box .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: .05rem; }
 
@@ -1217,6 +1312,8 @@ details.accordion-item[open] > summary {
 .section-card.wip::after { content: "W.I.P."; position: absolute; top: 0.6rem; right: -1.8rem; bottom: auto; left: auto; height: auto; width: 5.5rem; background: #f59e0b; color: #0f172a; font-size: .5rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; text-align: center; padding: .28rem 0; transform: rotate(45deg); border-radius: 0; box-shadow: 0 2px 5px rgba(0,0,0,.45); z-index: 2; white-space: nowrap; pointer-events: none; }
 .nav-btn.wip { position: relative; overflow: hidden; opacity: 0.45; pointer-events: none; }
 .nav-btn.wip::after { content: "W.I.P."; position: absolute; top: 0.35rem; right: -1.5rem; width: 5rem; background: #f59e0b; color: #0f172a; font-size: .42rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; text-align: center; padding: .2rem 0; transform: rotate(45deg); z-index: 2; white-space: nowrap; }
+.nav-page-link.wip { opacity: 0.4; pointer-events: none; }
+.nav-page-link.wip::after { content: " W.I.P."; font-size: .6em; font-weight: 800; color: #f59e0b; letter-spacing: .04em; vertical-align: middle; }
 .page-wip-banner { display: flex; align-items: center; gap: .7rem; background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.28); border-radius: var(--radius-lg); padding: .85rem 1.2rem; color: #f59e0b; font-size: .875rem; font-weight: 600; margin-bottom: 1.5rem; }
 
 /* ── Lightbox ──────────────────────────────────────────────── */
@@ -1360,6 +1457,12 @@ html.theme-transitioning *::after {
 
 [data-theme="light"] .page-title.additional-title {
   background: linear-gradient(130deg, #4c1d95 0%, #7c3aed 45%, #6d28d9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+[data-theme="light"] .page-title.fate-title {
+  background: linear-gradient(130deg, #581c87 0%, #7e22ce 40%, #6d28d9 100%);
   -webkit-background-clip: text;
   background-clip: text;
 }

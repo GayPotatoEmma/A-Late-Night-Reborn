@@ -17,6 +17,9 @@
             <a href="ba/ovni.html" class="nav-page-link">Ovni</a>\
             <div class="nav-sub-links">\
               <a href="ba/ovni.html#overview" class="nav-sub-link">Overview</a>\
+              <a href="ba/ovni.html#getting-gold" class="nav-sub-link">Getting Gold</a>\
+              <a href="ba/ovni.html#mechanics" class="nav-sub-link">Mechanics</a>\
+              <a href="ba/ovni.html#entering" class="nav-sub-link">Entering the Arsenal</a>\
             </div>\
           </div>\
           <div class="nav-section">\

@@ -1285,6 +1285,8 @@ details.accordion-item[open] > summary {
 .tl-badge.enrage { color: #fca5a5; background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.4); }
 .tl-legend { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
 .tl-section-gap { height: .6rem; }
+.tl-loop-label { font-size: .72rem; font-style: italic; color: rgba(167,139,250,.5); padding: .5rem 0 .3rem 2.25rem; letter-spacing: .02em; }
+.tl-loop-box { border: 1px dashed rgba(167,139,250,.22); border-radius: var(--radius-md); padding: .35rem 0; background: rgba(167,139,250,.03); }
 .tl-time { font-size: .7rem; color: rgba(148,163,184,.45); font-variant-numeric: tabular-nums; min-width: 2.6rem; flex-shrink: 0; letter-spacing: .01em; }
 
 /* ── Mechanic Steps ──────────────────────────────────────── */
@@ -1501,6 +1503,14 @@ html.theme-transitioning *::after {
 [data-theme="light"] .card-badge.additional,
 [data-theme="light"] .nav-badge.additional,
 [data-theme="light"] .page-badge.additional { color: #4c1d95; background: rgba(167,139,250,.2); border-color: rgba(167,139,250,.45); }
+
+[data-theme="light"] .card-badge.fate,
+[data-theme="light"] .nav-badge.fate,
+[data-theme="light"] .page-badge.fate       { color: #6b21a8; background: rgba(192,86,253,.15); border-color: rgba(192,86,253,.4); }
+
+[data-theme="light"] .card-badge.support,
+[data-theme="light"] .nav-badge.support,
+[data-theme="light"] .page-badge.support    { color: #0369a1; background: rgba(56,189,248,.15); border-color: rgba(56,189,248,.4); }
 
 [data-theme="light"] .raid-tag.available { color: #065f46; background: rgba(52,211,153,.15); border-color: rgba(52,211,153,.4); }
 

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Owain | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Owain | A Late Night Reborn" />
+  <meta property="og:description" content="Boss 1 guide for the Baldesion Arsenal. One half of the Twin Spears encounter." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Owain</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge boss">&#9876; Boss 1</div>
+        <h1 class="page-title boss-title">Owain</h1>
+        <p class="page-subtitle">One half of the Twin Spears. Owain and Art can't be killed independently, requiring the raid to split and coordinate across both arenas simultaneously.</p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p style="font-size:.8rem; color:var(--text-muted); margin-bottom:.65rem; font-weight:400;">Element: <span class="element-fire" style="font-weight:600;">Fire</span> &amp; <span class="element-ice" style="font-weight:600;">Ice</span></p>
+          <p>
+            Art and Owain are aetherically linked and cannot be killed independently. The raid splits into two groups, one engaging Art and the other engaging Owain. If the players on one side die, the surviving boss will cross to the other arena and wipe the remaining group.
+          </p>
+          <p>
+            Owain's rotation is consistent and loops after the first full cycle. The loop begins at Pitfall and repeats after the second Spiritcull in the loop.
+          </p>
+          <p>
+            Most runs nowadays often will not see past the first Spiritcull. While it is nice to know how the later mechanics play out, it's often not required to spend much time learning these.
+          </p>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="content-card" id="timeline">
+        <h2 class="card-heading teal">Fight Timeline</h2>
+        <div class="content-body">
+          <div class="tl-legend">
+            <span class="tl-badge raidwide">Raidwide</span>
+            <span class="tl-badge tankbuster">Tankbuster</span>
+            <span class="tl-badge mechanic">Mechanic</span>
+          </div>
+          <div class="timeline">
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Mythcall</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elemental Shift</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elemental Magicks</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elemental Shift</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elemental Magicks</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spiritcull</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-loop-label">Loops until either Owain or the players are defeated</div>
+            <div class="tl-loop-box">
+              <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Pitfall</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+              <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elemental Shift</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spiritcull</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elemental Magicks</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+              <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Hands</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elemental Shift</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elemental Magicks</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spiritcull</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elemental Shift / Elemental Magicks -->
+      <div class="content-card" id="elemental-shift-magicks">
+        <h2 class="card-heading gold">Elemental Shift / Elemental Magicks</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Elemental Shift</strong>: Owain swaps between Fire and Ice elements.
+              <ul class="mech-sub">
+                <li>Take note of his current element, as it determines how Elemental Magicks resolves.</li>
+              </ul>
+            </li>
+            <li><strong>Elemental Magicks</strong>: Owain performs a point-blank AoE below himself. Any spears matching his current element will do the same.
+              <ul class="mech-sub">
+                <li>Move to a spear of the opposite element to avoid the AoE.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Spiritcull -->
+      <div class="content-card" id="spiritcull">
+        <h2 class="card-heading gold">Spiritcull</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>Owain assigns either circular AoE markers or triangle stack markers to random players.</li>
+            <li>Players marked with triangles must stack together, as this attack deals heavy damage split among all players hit.
+              <ul class="mech-sub">
+                <li>Being the only player in a triangle stack will deal heavy damage to you and possibly even kill you.</li>
+              </ul>
+            </li>
+            <li>Players marked with circular AoEs must spread away from others to avoid overlap.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Pitfall -->
+      <div class="content-card" id="pitfall">
+        <h2 class="card-heading gold">Pitfall</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>Owain vanishes and creates a proximity AoE. Owain reappears at the AoE's location when it resolves.
+              <ul class="mech-sub">
+                <li>Move away from the AoE to reduce damage taken.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Hands -->
+      <div class="content-card" id="hands">
+        <h2 class="card-heading gold">Hands</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>Two hands spawn and tether to random players. The hands will slowly move toward their tethered player unless that player is looking at them.</li>
+            <li>Hands gain a Defense Up buff when they are far from their tethered player.
+              <ul class="mech-sub">
+                <li>Let the hands come close before focusing damage on them.</li>
+              </ul>
+            </li>
+            <li>If left alive too long, the hands will explode and deal heavy damage to the group.
+              <ul class="mech-sub">
+                <li>Prioritise killing both hands as quickly as possible.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="art.html" class="nav-btn nav-prev">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>&larr; Art</span>
+          </div>
+        </a>
+        <a href="../index.html" class="nav-btn nav-home">&#8962; Home</a>
+        <a href="raiden.html" class="nav-btn nav-next wip">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>Raiden &rarr;</span>
+          </div>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

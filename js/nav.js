@@ -23,8 +23,29 @@
             </div>\
           </div>\
           <div class="nav-section">\
-            <div class="nav-section-label"><span class="nav-badge boss">Boss 1</span></div>\
-            <a href="ba/twin-spears.html" class="nav-page-link wip">The Twin Spears</a>\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 1</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ba/art.html" class="nav-page-link">Art</a>\
+            <div class="nav-sub-links">\
+              <a href="ba/art.html#overview" class="nav-sub-link">Overview</a>\
+              <a href="ba/art.html#timeline" class="nav-sub-link">Fight Timeline</a>\
+              <a href="ba/art.html#legendcarver-legendspinner" class="nav-sub-link">Legendcarver / Legendspinner</a>\
+              <a href="ba/art.html#mythcall" class="nav-sub-link">Mythcall</a>\
+              <a href="ba/art.html#legendary-geas" class="nav-sub-link">Legendary Geas</a>\
+              <a href="ba/art.html#pitfall-glory-unearthed" class="nav-sub-link">Pitfall / Glory Unearthed</a>\
+              <a href="ba/art.html#piercing-dark" class="nav-sub-link">Piercing Dark</a>\
+            </div>\
+          </div>\
+          <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 1</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ba/owain.html" class="nav-page-link">Owain</a>\
+            <div class="nav-sub-links">\
+              <a href="ba/owain.html#overview" class="nav-sub-link">Overview</a>\
+              <a href="ba/owain.html#timeline" class="nav-sub-link">Fight Timeline</a>\
+              <a href="ba/owain.html#elemental-shift-magicks" class="nav-sub-link">Elemental Shift / Magicks</a>\
+              <a href="ba/owain.html#spiritcull" class="nav-sub-link">Spiritcull</a>\
+              <a href="ba/owain.html#pitfall" class="nav-sub-link">Pitfall</a>\
+              <a href="ba/owain.html#hands" class="nav-sub-link">Hands</a>\
+            </div>\
           </div>\
           <div class="nav-section">\
             <div class="nav-section-label"><span class="nav-badge boss">Boss 2</span></div>\

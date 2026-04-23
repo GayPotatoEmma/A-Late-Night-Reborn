@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Art | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Art | A Late Night Reborn" />
+  <meta property="og:description" content="Boss 1 guide for the Baldesion Arsenal. One half of the Twin Spears encounter." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Art</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge boss">&#9876; Boss 1</div>
+        <h1 class="page-title boss-title">Art</h1>
+        <p class="page-subtitle">One half of the Twin Spears. Art and Owain can't be killed independently, requiring the raid to split and coordinate across both arenas simultaneously.</p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p style="font-size:.8rem; color:var(--text-muted); margin-bottom:.65rem; font-weight:400;">Element: <span class="element-earth" style="font-weight:600;">Earth</span></p>
+          <p>
+            Art and Owain are aetherically linked and cannot be killed independently. The raid splits into two groups, one engaging Art and the other engaging Owain. If the players on one side die, the surviving boss will cross to the other arena and wipe the remaining group.
+          </p>
+          <p>
+            Art's rotation is consistent and loops after the first full cycle. The loop begins at Legendary Geas and repeats through to Piercing Dark.
+          </p>
+          <p>
+            Most runs nowadays often will not see Legendary Geas and beyond. While it is nice to know how these play out, it's often not required to spend much time learning these.
+          </p>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="content-card" id="timeline">
+        <h2 class="card-heading teal">Fight Timeline</h2>
+        <div class="content-body">
+          <div class="tl-legend">
+            <span class="tl-badge raidwide">Raidwide</span>
+            <span class="tl-badge tankbuster">Tankbuster</span>
+            <span class="tl-badge mechanic">Mechanic</span>
+          </div>
+          <div class="timeline">
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Legendcarver <em>or</em> Legendspinner</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Legendspinner <em>or</em> Legendcarver</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Always the opposite of the previous</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Mythcall</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Legendcarver <em>or</em> Legendspinner</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Mythcall</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Previously unused Legend ability</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-loop-label">Loops until either Art or the players are defeated</div>
+            <div class="tl-loop-box">
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Legendary Geas</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Stop moving</span></div></div>
+              <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Pitfall &amp; Glory Unearthed</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">One player is marked and must run along the edge of the arena</span></div></div>
+              <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+              <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Mythcall &amp; Legendary Geas</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Stop moving</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Legendspinner <em>or</em> Legendcarver</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thricecull</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+              <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Acallam na Senorach</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Mythcall</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Piercing Dark</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+              <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Do not follow players with AoEs</span></div></div>
+              <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Legendcarver <em>or</em> Legendspinner</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legendcarver / Legendspinner -->
+      <div class="content-card" id="legendcarver-legendspinner">
+        <h2 class="card-heading gold">Legendcarver / Legendspinner</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Legendcarver</strong>: A point-blank AoE centred on Art that deals heavy damage.
+              <ul class="mech-sub">
+                <li>Move away from Art before this resolves.</li>
+              </ul>
+            </li>
+            <li><strong>Legendspinner</strong>: A donut AoE centred on Art that deals heavy damage.
+              <ul class="mech-sub">
+                <li>Move close to Art before this resolves.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Mythcall -->
+      <div class="content-card" id="mythcall">
+        <h2 class="card-heading gold">Mythcall</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>Art summons a set of 4 spears at either the cardinals or intercardinals of the arena.</li>
+            <li>The spears will copy Art's current Legend ability.
+              <ul class="mech-sub">
+                <li><strong>Mythcarver</strong>: A point-blank AoE below each spear. Move away from all spears.</li>
+                <li><strong>Mythspinner</strong>: A donut AoE below each spear. Move close to one of the spears.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Legendary Geas -->
+      <div class="content-card" id="legendary-geas">
+        <h2 class="card-heading gold">Legendary Geas</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>Art spawns an AoE below a random player. Move out of it before it resolves.</li>
+            <li>The floor turns dark. Any movement during this phase applies a Heavy debuff and a Bleed.
+              <ul class="mech-sub">
+                <li>Stop moving until the floor returns to normal.</li>
+              </ul>
+            </li>
+            <li>Once the floor is safe again, a star-shaped line AoE spawns where the initial AoE was dropped. Move out of it.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Pitfall / Glory Unearthed -->
+      <div class="content-card" id="pitfall-glory-unearthed">
+        <h2 class="card-heading gold">Pitfall / Glory Unearthed</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Pitfall</strong>: Art vanishes and creates a proximity AoE. Art reappears at the AoE's location when it resolves.
+              <ul class="mech-sub">
+                <li>Move away from the AoE to reduce damage taken.</li>
+              </ul>
+            </li>
+            <li><strong>Glory Unearthed</strong>: A large AoE ball chases a single player and deals moderate damage in a wide area.
+              <ul class="mech-sub">
+                <li>If you are being chased, move to the edge of the arena to keep it away from the group.</li>
+                <li>If you are not being chased, stay well away from the marked player.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Piercing Dark -->
+      <div class="content-card" id="piercing-dark">
+        <h2 class="card-heading gold">Piercing Dark</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>A circular AoE is placed on 2 random players.</li>
+            <li>Move away from other players so the AoEs do not overlap.
+              <ul class="mech-sub">
+                <li>If you are not targeted, move away from the marked players.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="ovni.html" class="nav-btn nav-prev">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>&larr; Ovni</span>
+          </div>
+        </a>
+        <a href="../index.html" class="nav-btn nav-home">&#8962; Home</a>
+        <a href="owain.html" class="nav-btn nav-next">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>Owain &rarr;</span>
+          </div>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

@@ -48,6 +48,14 @@
       'main-guides': 'Main Guides',
       'additional-guides': 'Additional Guides',
 
+      // Navigation Menu
+      'nav-title': 'Navigation',
+      'nav-home': '⌂ Home',
+      'nav-boss1': 'Boss 1',
+      'nav-boss2': 'Boss 2',
+      'nav-boss3': 'Boss 3',
+      'nav-boss4': 'Boss 4',
+
       // Boss names and cards
       'boss': 'Boss',
       'traversal': 'Traversal',
@@ -1001,6 +1009,14 @@
       'main-guides': 'Haupt-Guides',
       'additional-guides': 'Zusätzliche Guides',
 
+      // Navigation Menu
+      'nav-title': 'Navigation',
+      'nav-home': '⌂ Startseite',
+      'nav-boss1': 'Boss 1',
+      'nav-boss2': 'Boss 2',
+      'nav-boss3': 'Boss 3',
+      'nav-boss4': 'Boss 4',
+
       // Boss names and cards
       'boss': 'Boss',
       'traversal': 'Durchquerung',
@@ -1621,7 +1637,7 @@
       'mg-tl-2-spear': '2 Speer-Autoangriffe',
       'mg-tl-conduits-blue': 'Verstärker spawnen (Blau)',
       'mg-tl-holy': 'Sanctus <em>(Verstärker müssen tot sein)</em>',
-      'mg-tl-enrage': 'Entsiegelte Aura, 10-Sekunden-Cast &nbsp;<em>(Erfolgt @ 8:00)</em>',
+      'mg-tl-enrage': 'Entsiegelte Aura, 10s Cast &nbsp;<em>(Erfolgt @ 8:00)</em>',
       'mg-weapon-heading': 'Waffen-Mechaniken: Axt und Speer',
       'mg-weapon-step1': 'Während des Kampfes löst der Boss Mechaniken basierend auf der Waffe, die er aktiviert hat.',
       'mg-weapon-step2': 'Aktivierte Waffen werden auch leuchten.',

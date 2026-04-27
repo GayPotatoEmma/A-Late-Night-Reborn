@@ -30,6 +30,13 @@
           <span class="header-site-name">A Late Night Reborn</span>
         </a>
         <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+        <div class="language-selector">
+          <button class="language-toggle" id="language-toggle" aria-label="Select language" aria-expanded="false">EN</button>
+          <div class="language-dropdown" id="language-dropdown">
+            <div class="language-option selected" id="lang-en">English</div>
+            <div class="language-option" id="lang-de">Deutsch</div>
+          </div>
+        </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
         <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
       </div>
@@ -42,34 +49,34 @@
       <nav class="breadcrumb">
         <a href="../index.html">Home</a>
         <span class="breadcrumb-sep">/</span>
-        <span>Marble Dragon</span>
+        <span data-i18n="md-breadcrumb">Marble Dragon</span>
       </nav>
 
       <!-- Page Header -->
       <div class="page-header">
-        <div class="page-badge boss">⚔ Boss 3</div>
-        <h1 class="page-title boss-title">Marble Dragon</h1>
-        <p class="page-subtitle"><em>"This golem must surely be considered among the masterworks of Amdapori craftsmanship. Serving to protect the Tower of Blood from trespassers, its movements and ferocity match that of a living, breathing dragon─an impressive feat considering the fact this guardian is naught but aether-imbued marble. Given the startling attention to detail, the creator must have visited Dravania to observe their scaled muses firsthand."</em></p>
+        <div class="page-badge boss" data-i18n="md-badge">⚔ Boss 3</div>
+        <h1 class="page-title boss-title" data-i18n="md-title">Marble Dragon</h1>
+        <p class="page-subtitle"><em data-i18n="md-description">"This golem must surely be considered among the masterworks of Amdapori craftsmanship. Serving to protect the Tower of Blood from trespassers, its movements and ferocity match that of a living, breathing dragon─an impressive feat considering the fact this guardian is naught but aether-imbued marble. Given the startling attention to detail, the creator must have visited Dravania to observe their scaled muses firsthand."</em></p>
       </div>
 
       <!-- Overview -->
       <div class="content-card" id="overview">
-        <h2 class="card-heading purple">Overview</h2>
+        <h2 class="card-heading purple" data-i18n="md-overview-heading">Overview</h2>
         <div class="content-body">
-          <p>
+          <p data-i18n-html="md-overview-p1">
             The core mechanic throughout: <strong>water circles are inactive</strong> (standing in them is harmless).
             <strong>Ice mechanics are active</strong> and must be avoided. When ice contacts water, the water <em>freezes</em>, dealing damage to anyone in it, and becomes an active ice AoE that then resolves.
           </p>
           <div class="alert-box warning">
             <span class="alert-icon">⚠</span>
-            <span><strong>Draconiform Motion:</strong> At various points in the fight, the boss will have to be baited. We will bait the boss on the 2 Waymark. You will be there for the majority of this fight unless the raidlead says otherwise.</span>
+            <span data-i18n-html="md-overview-motion"><strong>Draconiform Motion:</strong> At various points in the fight, the boss will have to be baited. We will bait the boss on the 2 Waymark. You will be there for the majority of this fight unless the raidlead says otherwise.</span>
           </div>
         </div>
       </div>
 
       <!-- Fight Timeline -->
       <div class="content-card" id="timeline">
-        <h2 class="card-heading teal">Fight Timeline</h2>
+        <h2 class="card-heading teal" data-i18n="md-timeline-heading">Fight Timeline</h2>
         <div class="content-body">
           <div class="tl-legend">
             <span class="tl-badge raidwide">Raidwide</span>
@@ -78,209 +85,209 @@
             <span class="tl-badge enrage">Enrage</span>
           </div>
           <div class="timeline">
-            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Imitation Star (raidwide with bleed)</span><span class="tl-badge raidwide">Raidwide</span></div></div>
-            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Draconiform Motion (baited front &amp; back conal)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
-            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Imitation Rain 1 (8 puddles, raidwide)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Imitation Icicle (ice circles spawn)</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Draconiform Motion (baited conal)</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dodge frozen puddle explosions</span></div></div>
-            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">6&times; Tankbusters on 6 highest aggro (Dread Deluge)</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
-            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Imitation Rain 2 (6 puddles, raidwide)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Frigid Twister (ice tornado, rotate cw or ccw)</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Draconiform Motion (baited conal)</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dodge frozen puddle explosions</span></div></div>
-            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">6&times; Tankbusters on 6 highest aggro (Dread Deluge)</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
-            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Withering Eternity (add phase)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Boss untargetable; 6 adds + 7 water puddles</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Boss divebombs through the arena</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2 edge puddles become 4-person towers</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Cross AoE turns remaining puddles into 4-person towers</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Repeats &times;2</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">6 Ice Sprites spawn, tethered to boss</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Boss invulnerable until Sprites are dead</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Lifeless Legacy (raidwide)</span></div></div>
-            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Wicked Water debuffs assigned</span><span class="tl-badge mechanic">Mechanic</span></div></div>
-            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Imitation Rain 3 (8 puddles)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Imitation Icicle (ice circles spawn)</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Draconiform Motion (baited conal)</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Frozen puddles explode; debuffed players are hit and must be freed</span></div></div>
-            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Imitation Star (raidwide with bleed)</span><span class="tl-badge raidwide">Raidwide</span></div></div>
-            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Imitation Rain 4 (10 puddles)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Frigid Twister (ice tornado, rotate cw or ccw)</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Draconiform Motion (baited conal)</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2 puddles explode</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Center becomes 6&times; 4-person towers</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2 more puddles explode</span></div></div>
-            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Repeats &times;2</span></div></div>
-            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Imitation Star (raidwide with bleed)</span><span class="tl-badge raidwide">Raidwide</span></div></div>
-            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">6&times; Tankbusters on 6 highest aggro (Dread Deluge)</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
-            <div class="tl-row enrage"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Lifeless Legacy, 20s cast &nbsp;<em>(Resolves @ 6:30)</em></span><span class="tl-badge enrage">Enrage</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-star1">Imitation Star (raidwide with bleed)</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-motion1">Draconiform Motion (baited front &amp; back conal)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-rain1">Imitation Rain 1 (8 puddles, raidwide)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-icicle">Imitation Icicle (ice circles spawn)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-motion-bait">Draconiform Motion (baited conal)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-dodge">Dodge frozen puddle explosions</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-deluge">6×Tankbusters on 6 highest aggro (Dread Deluge)</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-rain2">Imitation Rain 2 (6 puddles, raidwide)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-twister">Frigid Twister (ice tornado, rotate cw or ccw)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-motion-bait">Draconiform Motion (baited conal)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-dodge">Dodge frozen puddle explosions</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-deluge">6×Tankbusters on 6 highest aggro (Dread Deluge)</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-eternity">Withering Eternity (add phase)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-adds-untarget">Boss untargetable; 6 adds + 7 water puddles</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-adds-dive">Boss divebombs through the arena</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-adds-towers1">2 edge puddles become 4-person towers</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-adds-towers2">Cross AoE turns remaining puddles into 4-person towers</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-adds-repeat">Repeats ×2</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-sprites">6 Ice Sprites spawn, tethered to boss</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-invuln">Boss invulnerable until Sprites are dead</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-legacy">Lifeless Legacy (raidwide)</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-wicked">Wicked Water debuffs assigned</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-rain3">Imitation Rain 3 (8 puddles)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-icicle">Imitation Icicle (ice circles spawn)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-motion-bait">Draconiform Motion (baited conal)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-wicked-explode">Frozen puddles explode; debuffed players are hit and must be freed</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-star1">Imitation Star (raidwide with bleed)</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-rain4">Imitation Rain 4 (10 puddles)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-twister">Frigid Twister (ice tornado, rotate cw or ccw)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-motion-bait">Draconiform Motion (baited conal)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-rain4-explode1">2 puddles explode</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-rain4-towers">Center becomes 6× 4-person towers</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-rain4-explode2">2 more puddles explode</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-adds-repeat">Repeats ×2</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-star1">Imitation Star (raidwide with bleed)</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n="md-tl-deluge">6× Tankbusters on 6 highest aggro (Dread Deluge)</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row enrage"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text" data-i18n-html="md-tl-legacy-enrage">Lifeless Legacy, 20s cast &nbsp;<em>(Resolves @ 6:30)</em></span><span class="tl-badge enrage">Enrage</span></div></div>
           </div>
         </div>
       </div>
 
       <!-- Dread Deluge -->
       <div class="content-card" id="dread-deluge">
-        <h2 class="card-heading gold">Dread Deluge</h2>
+        <h2 class="card-heading gold" data-i18n="md-deluge-heading">Dread Deluge</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>Targets the 6 highest players on the aggro list, applying a heavy-hitting DoT that requires mitigation. <strong>It does not cleave</strong>, so it is safe to remain with the group.</li>
-            <li>This happens three times throughout the fight. Two busters occur in a short window, and standard tanks do not have enough mitigation to survive both back-to-back.</li>
+            <li data-i18n-html="md-deluge-step1">Targets the 6 highest players on the aggro list, applying a heavy-hitting DoT that requires mitigation. <strong>It does not cleave</strong>, so it is safe to remain with the group.</li>
+            <li data-i18n="md-deluge-step2">This happens three times throughout the fight. Two busters occur in a short window, and standard tanks do not have enough mitigation to survive both back-to-back.</li>
           </ul>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Phantom Knight:</strong> If your party has a Phantom Knight, they should be the one taking these tankbusters.
+              <strong data-i18n="md-deluge-knight">Phantom Knight:</strong>
               <ul class="mech-steps">
-                <li>Use all of your normal mitigations for the first buster.</li>
-                <li>Use <strong>Phantom Guard</strong> (90% mitigation) for the second.</li>
+                <li data-i18n="md-deluge-knight1">Use all of your normal mitigations for the first buster.</li>
+                <li data-i18n-html="md-deluge-knight2">Use <strong>Phantom Guard</strong> (90% mitigation) for the second.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box info">
             <span class="alert-icon">ℹ</span>
-            <span>If your party does not have a Phantom Knight, a tank swap order will be needed to handle the two consecutive busters.</span>
+            <span data-i18n="md-deluge-info">If your party does not have a Phantom Knight, a tank swap order will be needed to handle the two consecutive busters.</span>
           </div>
         </div>
       </div>
 
       <!-- Draconiform Motion -->
       <div class="content-card" id="draconiform">
-        <h2 class="card-heading gold">Draconiform Motion</h2>
+        <h2 class="card-heading gold" data-i18n="md-motion-heading">Draconiform Motion</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>Stay stacked with the entire raid until the cast begins. <strong>Ignore positionals</strong> for this mechanic.</li>
-            <li>The boss targets a random player with a 90° front <em>and</em> back conal.</li>
-            <li>As soon as the cast starts, move to the sides to avoid both conals.</li>
+            <li data-i18n-html="md-motion-step1">Stay stacked with the entire raid until the cast begins. <strong>Ignore positionals</strong> for this mechanic.</li>
+            <li data-i18n-html="md-motion-step2">The boss targets a random player with a 90° front <em>and</em> back conal.</li>
+            <li data-i18n="md-motion-step3">As soon as the cast starts, move to the sides to avoid both conals.</li>
           </ul>
         </div>
       </div>
 
       <!-- Imitation Rain -->
       <div class="content-card" id="imitation-rain">
-        <h2 class="card-heading gold">Imitation Rain &amp; Imitation Icicle / Frigid Twister</h2>
+        <h2 class="card-heading gold" data-i18n="md-rain-heading">Imitation Rain &amp; Imitation Icicle / Frigid Twister</h2>
         <div class="content-body">
-          <p>Each cast of Imitation Rain spawns a set number of water puddles around the arena. Water puddles are harmless and safe to walk through. They only become dangerous when hit by an ice AoE, which freezes them and triggers their explosion.</p>
+          <p data-i18n="md-rain-intro">Each cast of Imitation Rain spawns a set number of water puddles around the arena. Water puddles are harmless and safe to walk through. They only become dangerous when hit by an ice AoE, which freezes them and triggers their explosion.</p>
           <ul class="mech-steps">
-            <li><strong>Imitation Icicle:</strong> Spawns ice puddles that explode shortly after, detonating nearby water puddles.</li>
-            <li><strong>Frigid Twister:</strong> Spawns two ice tornados that rotate clockwise or counterclockwise, detonating water puddles as they travel.</li>
+            <li data-i18n-html="md-rain-icicle"><strong>Imitation Icicle:</strong> Spawns ice puddles that explode shortly after, detonating nearby water puddles.</li>
+            <li data-i18n-html="md-rain-twister"><strong>Frigid Twister:</strong> Spawns two ice tornados that rotate clockwise or counterclockwise, detonating water puddles as they travel.</li>
           </ul>
-          <p style="margin-top:.9rem;">There are three types of water puddles, each exploding differently when frozen:</p>
+          <p style="margin-top:.9rem;" data-i18n="md-rain-types">There are three types of water puddles, each exploding differently when frozen:</p>
           <ul class="mech-steps">
-            <li><strong>Circle AoE:</strong> Plain water puddles with no extra animation. When frozen, they explode in a circle larger than the original puddle.</li>
-            <li><strong>Cross AoE:</strong> Water puddles with small &ldquo;shark-fin&rdquo;-like animations. When frozen, they fire lines outward in the direction the fins are pointing.</li>
-            <li><strong>Tower:</strong> Smaller water puddles with a &ldquo;tornado&rdquo; animation in the centre. When frozen, they become a 4-person tower that must be soaked.</li>
+            <li data-i18n-html="md-rain-circle"><strong>Circle AoE:</strong> Plain water puddles with no extra animation. When frozen, they explode in a circle larger than the original puddle.</li>
+            <li data-i18n-html="md-rain-cross"><strong>Cross AoE:</strong> Water puddles with small &ldquo;shark-fin&rdquo;-like animations. When frozen, they fire lines outward in the direction the fins are pointing.</li>
+            <li data-i18n-html="md-rain-tower"><strong>Tower:</strong> Smaller water puddles with a &ldquo;tornado&rdquo; animation in the centre. When frozen, they become a 4-person tower that must be soaked.</li>
           </ul>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
-            <span>This mechanic returns multiple times in different configurations. Bait the Draconiform Motion first, then dodge AoEs one by one as they detonate.</span>
+            <span data-i18n="md-rain-tip">This mechanic returns multiple times in different configurations. Bait the Draconiform Motion first, then dodge AoEs one by one as they detonate.</span>
           </div>
         </div>
       </div>
 
       <!-- Add Phase: Withering Eternity -->
       <div class="content-card" id="adds-eternity">
-        <h2 class="card-heading gold">Add Phase: Withering Eternity</h2>
+        <h2 class="card-heading gold" data-i18n="md-adds-heading">Add Phase: Withering Eternity</h2>
         <div class="content-body">
-          <p>The boss becomes untargetable. One Cross AoE puddle spawns in the middle of the arena, alongside two groups of three tower puddles at the edges. Six Ice Golems spawn, three to the north and three to the south. Each party is responsible for one add.</p>
+          <p data-i18n="md-adds-intro">The boss becomes untargetable. One Cross AoE puddle spawns in the middle of the arena, alongside two groups of three tower puddles at the edges. Six Ice Golems spawn, three to the north and three to the south. Each party is responsible for one add.</p>
           <ul class="mech-steps">
-            <li>The boss dives through the middle puddles on each side and the cross puddle, freezing them.</li>
-            <li>Parties soak the towers while tanks keep their adds separated at the edge.</li>
-            <li>Focus damage on the middle add first.</li>
-            <li>After the cross AoE resolves, move to soak the side towers.</li>
-            <li>This sequence repeats twice.</li>
+            <li data-i18n="md-adds-step1">The boss dives through the middle puddles on each side and the cross puddle, freezing them.</li>
+            <li data-i18n="md-adds-step2">Parties soak the towers while tanks keep their adds separated at the edge.</li>
+            <li data-i18n="md-adds-step3">Focus damage on the middle add first.</li>
+            <li data-i18n="md-adds-step4">After the cross AoE resolves, move to soak the side towers.</li>
+            <li data-i18n="md-adds-step5">This sequence repeats twice.</li>
           </ul>
           <div class="alert-box warning">
             <span class="alert-icon">&#9888;</span>
-            <span>If the Ice Golems are still alive after the second set of puddles resolves, they gain a Damage Up buff. Tanks should use their invulnerability.</span>
+            <span data-i18n="md-adds-warning">If the Ice Golems are still alive after the second set of puddles resolves, they gain a Damage Up buff. Tanks should use their invulnerability.</span>
           </div>
-          <p style="margin-top:.9rem;">Shortly after, six Ice Sprites spawn and tether to the boss. Each party must focus their assigned Sprite down.</p>
+          <p style="margin-top:.9rem;" data-i18n="md-adds-sprites">Shortly after, six Ice Sprites spawn and tether to the boss. Each party must focus their assigned Sprite down.</p>
           <ul class="mech-steps">
-            <li>The boss remains invulnerable until all Sprites are defeated.</li>
-            <li>A Phantom Bard can use <strong>Romeo's Ballad</strong> to stop the Sprites.</li>
+            <li data-i18n="md-adds-sprite1">The boss remains invulnerable until all Sprites are defeated.</li>
+            <li data-i18n-html="md-adds-sprite2">A Phantom Bard can use <strong>Romeo's Ballad</strong> to stop the Sprites.</li>
           </ul>
           <div class="img-row single">
             <img src="assets/boss3/towers.png" alt="Tower layout during Withering Eternity" class="section-img" />
           </div>
           <div class="alert-box info" style="margin-top:.75rem;">
             <span class="alert-icon">&#8505;</span>
-            <span>Party and tank specific responsibilities for this phase are detailed in the sections below.</span>
+            <span data-i18n="md-adds-info">Party and tank specific responsibilities for this phase are detailed in the sections below.</span>
           </div>
         </div>
       </div>
 
       <!-- Add Phase: Party -->
       <div class="content-card" id="adds-party">
-        <h2 class="card-heading gold">Add Phase: Party</h2>
+        <h2 class="card-heading gold" data-i18n="md-party-heading">Add Phase: Party</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>Go to your assigned marker and attack the add that spawns there.</li>
-            <li>Two sets of three towers appear alongside the adds.
+            <li data-i18n="md-party-step1">Go to your assigned marker and attack the add that spawns there.</li>
+            <li data-i18n="md-party-step2">Two sets of three towers appear alongside the adds.
               <ul class="mech-sub">
-                <li>If your marker has a tower on it, that tower is yours to soak.</li>
-                <li>If your marker does not have a tower:
+                <li data-i18n="md-party-tower1">If your marker has a tower on it, that tower is yours to soak.</li>
+                <li data-i18n="md-party-tower2">If your marker does not have a tower:
                   <ul class="mech-sub">
-                    <li><strong>Parties B / 2:</strong> Go clockwise to the next purple marker (4 / D).</li>
-                    <li><strong>Everyone else:</strong> Go to the closest purple marker (4 / D).</li>
+                    <li data-i18n-html="md-party-b2"><strong>Parties B / 2:</strong> Go clockwise to the next purple marker (4 / D).</li>
+                    <li data-i18n-html="md-party-else"><strong>Everyone else:</strong> Go to the closest purple marker (4 / D).</li>
                   </ul>
                 </li>
               </ul>
             </li>
-            <li>Check for the middle tower and dodge the dragon dive.</li>
-            <li>Parties assigned to the middle tower: soak it.</li>
-            <li>Dodge the cross AoE through the remaining towers.</li>
-            <li>Parties assigned to outer towers: soak your tower.</li>
-            <li>Return to your marker afterwards. This sequence repeats twice.</li>
+            <li data-i18n="md-party-step3">Check for the middle tower and dodge the dragon dive.</li>
+            <li data-i18n="md-party-step4">Parties assigned to the middle tower: soak it.</li>
+            <li data-i18n="md-party-step5">Dodge the cross AoE through the remaining towers.</li>
+            <li data-i18n="md-party-step6">Parties assigned to outer towers: soak your tower.</li>
+            <li data-i18n="md-party-step7">Return to your marker afterwards. This sequence repeats twice.</li>
           </ul>
           <div class="alert-box warning">
             <span class="alert-icon">&#9888;</span>
-            <span>Keep taking your towers on the second set, even if it means losing uptime on your add.</span>
+            <span data-i18n="md-party-warning">Keep taking your towers on the second set, even if it means losing uptime on your add.</span>
           </div>
           <div class="alert-box info">
             <span class="alert-icon">&#8505;</span>
-            <span><strong>Healers:</strong> Keep an eye on your tank throughout this phase.</span>
+            <span data-i18n-html="md-party-info"><strong>Healers:</strong> Keep an eye on your tank throughout this phase.</span>
           </div>
         </div>
       </div>
 
       <!-- Add Phase: Tank -->
       <div class="content-card" id="adds-tank">
-        <h2 class="card-heading gold">Add Phase: Tank</h2>
+        <h2 class="card-heading gold" data-i18n="md-tank-heading">Add Phase: Tank</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>The main tank of each party picks up one add and brings it to their assigned marker.</li>
-            <li>Keep the adds separated and stay at the edge of the arena.</li>
-            <li>Do not join the towers.</li>
-            <li>Dodge the boss dives and the water puddle cleaves.</li>
-            <li>Stay near your marker throughout the phase.</li>
+            <li data-i18n="md-tank-step1">The main tank of each party picks up one add and brings it to their assigned marker.</li>
+            <li data-i18n="md-tank-step2">Keep the adds separated and stay at the edge of the arena.</li>
+            <li data-i18n="md-tank-step3">Do not join the towers.</li>
+            <li data-i18n="md-tank-step4">Dodge the boss dives and the water puddle cleaves.</li>
+            <li data-i18n="md-tank-step5">Stay near your marker throughout the phase.</li>
           </ul>
           <div class="alert-box info">
             <span class="alert-icon">&#8505;</span>
-            <span>Adds hit hard. Use <strong>Pledge</strong> from a Phantom Knight when towers go out. <strong>Pray</strong> and <strong>Occult Heal</strong> can also help you survive.</span>
+            <span data-i18n-html="md-tank-info">Adds hit hard. Use <strong>Pledge</strong> from a Phantom Knight when towers go out. <strong>Pray</strong> and <strong>Occult Heal</strong> can also help you survive.</span>
           </div>
           <div class="alert-box warning">
             <span class="alert-icon">&#9888;</span>
-            <span>If adds are alive for too long they gain a Damage Up buff. Use your invulnerability if needed.</span>
+            <span data-i18n="md-tank-warning">If adds are alive for too long they gain a Damage Up buff. Use your invulnerability if needed.</span>
           </div>
         </div>
       </div>
 
       <!-- Wicked Water -->
       <div class="content-card" id="wicked-water">
-        <h2 class="card-heading gold">Wicked Water</h2>
+        <h2 class="card-heading gold" data-i18n="md-wicked-heading">Wicked Water</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>A portion of the raid will be targeted with a red marker above their head.</li>
-            <li>Once the marker disappears, those players receive a <strong>Wicked Water</strong> and a <strong>Throttle</strong> debuff, each with a 45-second timer.
+            <li data-i18n="md-wicked-step1">A portion of the raid will be targeted with a red marker above their head.</li>
+            <li data-i18n-html="md-wicked-step2">Once the marker disappears, those players receive a <strong>Wicked Water</strong> and a <strong>Throttle</strong> debuff, each with a 45-second timer.
               <ul class="mech-sub">
-                <li><strong>Wicked Water:</strong> Reduces movement speed.</li>
-                <li><strong>Throttle:</strong> Causes KO when the timer expires.</li>
+                <li data-i18n-html="md-wicked-water"><strong>Wicked Water:</strong> Reduces movement speed.</li>
+                <li data-i18n-html="md-wicked-throttle"><strong>Throttle:</strong> Causes KO when the timer expires.</li>
               </ul>
             </li>
-            <li>To remove Wicked Water, you must be hit by a water puddle explosion.
+            <li data-i18n="md-wicked-step3">To remove Wicked Water, you must be hit by a water puddle explosion.
               <ul class="mech-sub">
-                <li>This will freeze you in place. The raid must break you free.</li>
-                <li>Once freed, Throttle falls off as well.</li>
+                <li data-i18n="md-wicked-freeze">This will freeze you in place. The raid must break you free.</li>
+                <li data-i18n="md-wicked-free">Once freed, Throttle falls off as well.</li>
               </ul>
             </li>
           </ul>
@@ -289,15 +296,15 @@
 
       <!-- Towers during Imitation Rain 4 -->
       <div class="content-card" id="towers">
-        <h2 class="card-heading gold">Towers during Imitation Rain 4</h2>
+        <h2 class="card-heading gold" data-i18n="md-towers-heading">Towers during Imitation Rain 4</h2>
         <div class="content-body">
-          <p>Your assigned marker determines which tower is yours. Use the images below as a reference.</p>
+          <p data-i18n="md-towers-intro">Your assigned marker determines which tower is yours. Use the images below as a reference.</p>
           <ul class="mech-steps">
-            <li><strong>Parties A, C, 1, and 3:</strong> Always take the tower closest to your marker.</li>
-            <li><strong>Parties B and 2</strong> flex to the middle towers.
+            <li data-i18n-html="md-towers-ac13"><strong>Parties A, C, 1, and 3:</strong> Always take the tower closest to your marker.</li>
+            <li data-i18n-html="md-towers-b2"><strong>Parties B and 2</strong> flex to the middle towers.
               <ul class="mech-sub">
-                <li><strong>Party B:</strong> Always takes the middle tower towards a letter marker.</li>
-                <li><strong>Party 2:</strong> Always takes the middle tower towards a number marker.</li>
+                <li data-i18n-html="md-towers-b"><strong>Party B:</strong> Always takes the middle tower towards a letter marker.</li>
+                <li data-i18n-html="md-towers-2"><strong>Party 2:</strong> Always takes the middle tower towards a number marker.</li>
               </ul>
             </li>
           </ul>
@@ -310,25 +317,25 @@
 
       <!-- Resolving Mechanics -->
       <div class="content-card" id="how-to">
-        <h2 class="card-heading teal">How do we resolve mechanics?</h2>
+        <h2 class="card-heading teal" data-i18n="md-howto-heading">How do we resolve mechanics?</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li><strong>Draconiform Motion</strong> will generally be baited on the 2 marker.
+            <li data-i18n-html="md-howto-motion"><strong>Draconiform Motion</strong> will generally be baited on the 2 marker.
               <ul class="mech-sub">
-                <li>During Imitation Rain 4, the second Draconiform Motion will be baited wherever the raid ends up, either North/South or East/West.</li>
+                <li data-i18n="md-howto-motion-sub">During Imitation Rain 4, the second Draconiform Motion will be baited wherever the raid ends up, either North/South or East/West.</li>
               </ul>
             </li>
-            <li><strong>Dread Deluge</strong> mitigation order for Phantom Knights:
+            <li data-i18n-html="md-howto-deluge"><strong>Dread Deluge</strong> mitigation order for Phantom Knights:
               <ul class="mech-sub">
-                <li><strong>First tankbuster:</strong> All of your normal tank mitigations, excluding your invulnerability.</li>
-                <li><strong>Second tankbuster:</strong> Phantom Guard (90%) and your short 25-second mitigation.</li>
-                <li><strong>Third tankbuster:</strong> All of your mitigations, including Phantom Guard.</li>
+                <li data-i18n-html="md-howto-deluge1"><strong>First tankbuster:</strong> All of your normal tank mitigations, excluding your invulnerability.</li>
+                <li data-i18n-html="md-howto-deluge2"><strong>Second tankbuster:</strong> Phantom Guard (90%) and your short 25-second mitigation.</li>
+                <li data-i18n-html="md-howto-deluge3"><strong>Third tankbuster:</strong> All of your mitigations, including Phantom Guard.</li>
               </ul>
             </li>
           </ul>
           <div class="alert-box info">
             <span class="alert-icon">&#8505;</span>
-            <span>If you receive the buster as a non-Knight tank, follow the first tankbuster rule and use all of your normal tank mitigations.</span>
+            <span data-i18n="md-howto-info">If you receive the buster as a non-Knight tank, follow the first tankbuster rule and use all of your normal tank mitigations.</span>
           </div>
         </div>
       </div>
@@ -337,15 +344,15 @@
       <div class="section-nav">
         <a href="bridges.html" class="nav-btn nav-prev">
           <div>
-            <span class="nav-label">Previous</span>
-            <span>← Pronged Passages</span>
+            <span class="nav-label" data-i18n="md-nav-prev-label">Previous</span>
+            <span data-i18n="md-nav-prev">← Pronged Passages</span>
           </div>
         </a>
-        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <a href="../index.html" class="nav-btn nav-home" data-i18n="md-nav-home">⌂ Home</a>
         <a href="lockwards.html" class="nav-btn nav-next">
           <div>
-            <span class="nav-label">Next</span>
-            <span>The Binding Lock →</span>
+            <span class="nav-label" data-i18n="md-nav-next-label">Next</span>
+            <span data-i18n="md-nav-next">The Binding Lock →</span>
           </div>
         </a>
       </div>
@@ -368,6 +375,7 @@
   <script src="../js/theme.js"></script>
   <script src="../js/stars.js"></script>
   <script src="../js/lightbox.js"></script>
+  <script src="../js/language.js"></script>
   <script src="../js/nav.js"></script>
 </body>
 </html>

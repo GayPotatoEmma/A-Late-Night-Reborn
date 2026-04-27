@@ -30,6 +30,13 @@
           <span class="header-site-name">A Late Night Reborn</span>
         </a>
         <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+        <div class="language-selector">
+          <button class="language-toggle" id="language-toggle" aria-label="Select language" aria-expanded="false">EN</button>
+          <div class="language-dropdown" id="language-dropdown">
+            <div class="language-option selected" id="lang-en">English</div>
+            <div class="language-option" id="lang-de">Deutsch</div>
+          </div>
+        </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
         <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
       </div>
@@ -42,27 +49,27 @@
       <nav class="breadcrumb">
         <a href="../index.html">Home</a>
         <span class="breadcrumb-sep">/</span>
-        <span>Central Passages</span>
+        <span data-i18n="hw-breadcrumb">Central Passages</span>
       </nav>
 
       <!-- Page Header -->
       <div class="page-header">
-        <div class="page-badge traversal">↗ Traversal</div>
-        <h1 class="page-title traversal-title">Central Passages</h1>
-        <p class="page-subtitle">The hallway section between Demon Tablet and Dead Stars. Also referred to as &ldquo;Hallways.&rdquo;</p>
+        <div class="page-badge traversal" data-i18n="hw-badge">↗ Traversal</div>
+        <h1 class="page-title traversal-title" data-i18n="hw-title">Central Passages</h1>
+        <p class="page-subtitle" data-i18n="hw-subtitle">The hallway section between Demon Tablet and Dead Stars. Also referred to as &ldquo;Hallways.&rdquo;</p>
       </div>
 
       <!-- Overview -->
       <div class="content-card" id="overview">
-        <h2 class="card-heading purple">Overview</h2>
+        <h2 class="card-heading purple" data-i18n="hw-overview-heading">Overview</h2>
         <div class="content-body">
-          <p>
+          <p data-i18n="hw-overview-p1">
             After defeating Demon Tablet, the raid splits into two groups: letter parties (A, B, C)
             take the left passage, number parties (D/1, E/2, F/3) take the right. Each side navigates
             a mirrored layout of hallways filled with hidden explosive traps and enemies with unique
             mechanics, before rejoining at the Dead Stars arena.
           </p>
-          <p>
+          <p data-i18n-html="hw-overview-p2">
             Traps remain invisible on the overworld until revealed by a Phantom Thief using Trap Detection.
             They spawn in colour-coded groups; only <strong>one trap per colour group</strong> will actually spawn,
             the other spots remain empty. Even so, always proceed with care; knowledge of the trap pattern
@@ -73,23 +80,23 @@
 
       <!-- Traps -->
       <div class="content-card" id="explosive-traps">
-        <h2 class="card-heading gold">Explosive Traps</h2>
+        <h2 class="card-heading gold" data-i18n="hw-traps-heading">Explosive Traps</h2>
         <div class="content-body">
           <div class="alert-box danger">
             <span class="alert-icon">☠</span>
-            <span><strong>Explosive Trap:</strong> Detonates with a lethal AoE affecting the trigger and nearby players. The Phantom Ranger disarms these by clipping the trap with the <em>outer edge</em> of Occult Falcon.</span>
+            <span data-i18n-html="hw-trap-normal"><strong>Explosive Trap:</strong> Detonates with a lethal AoE affecting the trigger and nearby players. The Phantom Ranger disarms these by clipping the trap with the <em>outer edge</em> of Occult Falcon.</span>
           </div>
           <div class="alert-box danger">
             <span class="alert-icon">☠</span>
-            <span><strong>Mega Explosive Trap:</strong> Explodes at over double the radius of a normal trap and will almost certainly cause a full wipe. The Phantom Ranger must disarm at <em>maximum range</em> with everyone standing far behind. Exercise extreme caution.</span>
+            <span data-i18n-html="hw-trap-mega"><strong>Mega Explosive Trap:</strong> Explodes at over double the radius of a normal trap and will almost certainly cause a full wipe. The Phantom Ranger must disarm at <em>maximum range</em> with everyone standing far behind. Exercise extreme caution.</span>
           </div>
           <div class="alert-box warning">
             <span class="alert-icon">⚠</span>
-            <span><strong>Never disarm a trap without the raid leader's permission.</strong> Confirm the type and ensure everyone is in position first.</span>
+            <span data-i18n-html="hw-trap-warning"><strong>Never disarm a trap without the raid leader's permission.</strong> Confirm the type and ensure everyone is in position first.</span>
           </div>
           <div class="alert-box info">
             <span class="alert-icon">ℹ</span>
-            <span>Traps spawn in colour-coded groups on the maps below; only one trap per group is live. The maps show possible spawn locations for the left and right sides respectively.</span>
+            <span data-i18n="hw-trap-info">Traps spawn in colour-coded groups on the maps below; only one trap per group is live. The maps show possible spawn locations for the left and right sides respectively.</span>
           </div>
           <div class="img-row double">
             <img src="assets/hallways/trapsleft.png" alt="Trap locations, left side" class="section-img" />
@@ -100,65 +107,65 @@
 
       <!-- Phantom Job Responsibilities -->
       <div class="content-card" id="phantom-jobs">
-        <h2 class="card-heading teal">Phantom Job Responsibilities</h2>
+        <h2 class="card-heading teal" data-i18n="hw-jobs-heading">Phantom Job Responsibilities</h2>
         <div class="content-body">
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Time Mage</strong>
+              <strong data-i18n="hw-job-timemage">Time Mage</strong>
               <ul class="mech-steps">
-                <li>Use <strong>Occult Slowga</strong> on all enemies, especially the Manticore.</li>
-                <li>Use <strong>Occult Dispel</strong> on the Scarab immediately when it gains Evasion Up (Rhino Guard).</li>
+                <li data-i18n-html="hw-tm-slowga">Use <strong>Occult Slowga</strong> on all enemies, especially the Manticore.</li>
+                <li data-i18n-html="hw-tm-dispel">Use <strong>Occult Dispel</strong> on the Scarab immediately when it gains Evasion Up (Rhino Guard).</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Cannoneer</strong>
+              <strong data-i18n="hw-job-cannoneer">Cannoneer</strong>
               <ul class="mech-steps">
-                <li>Use <strong>Shock Cannon</strong> on all enemies.</li>
-                <li>Use <strong>Fire Cannon</strong> for a chance at one-hit KOs.</li>
+                <li data-i18n-html="hw-cn-shock">Use <strong>Shock Cannon</strong> on all enemies.</li>
+                <li data-i18n-html="hw-cn-fire">Use <strong>Fire Cannon</strong> for a chance at one-hit KOs.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Samurai</strong>
+              <strong data-i18n="hw-job-samurai">Samurai</strong>
               <ul class="mech-steps">
-                <li>Use <strong>Iainuki</strong> for a chance at one-hit KOs.</li>
+                <li data-i18n-html="hw-sm-iainuki">Use <strong>Iainuki</strong> for a chance at one-hit KOs.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Geomancer</strong>
+              <strong data-i18n="hw-job-geomancer">Geomancer</strong>
               <ul class="mech-steps">
-                <li>On blue lightning floors, use <strong>Suspend</strong> to float above the floor and walk to the buttons in the middle to activate them.</li>
+                <li data-i18n-html="hw-gm-suspend">On blue lightning floors, use <strong>Suspend</strong> to float above the floor and walk to the buttons in the middle to activate them.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Ranger</strong>
+              <strong data-i18n="hw-job-ranger">Ranger</strong>
               <ul class="mech-steps">
-                <li>When instructed, use <strong>Occult Falcon</strong> to disarm traps; clip the trap with only the <em>outer edge</em> of the AoE.</li>
-                <li>When disarming a Mega Trap, stand at <strong>maximum range</strong> and ensure everyone is well behind you first.</li>
-                <li>You may be assigned a marker (e.g. <strong>Bind 1</strong>) at the start of hallways for visibility.</li>
+                <li data-i18n-html="hw-rg-falcon">When instructed, use <strong>Occult Falcon</strong> to disarm traps; clip the trap with only the <em>outer edge</em> of the AoE.</li>
+                <li data-i18n-html="hw-rg-mega">When disarming a Mega Trap, stand at <strong>maximum range</strong> and ensure everyone is well behind you first.</li>
+                <li data-i18n-html="hw-rg-marker">You may be assigned a marker (e.g. <strong>Bind 1</strong>) at the start of hallways for visibility.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Thief</strong>
+              <strong data-i18n="hw-job-thief">Thief</strong>
               <ul class="mech-steps">
-                <li>Use <strong>Trap Detection</strong> to reveal traps. Take your time and run ahead of the group.</li>
-                <li>In the Thief Room, use <strong>Occult Sprint</strong> to dash through and press Trap Detection at the very end to open the hidden door.</li>
-                <li>You may be assigned a marker (e.g. <strong>Ignore 1</strong>) at the start of hallways for visibility.</li>
+                <li data-i18n-html="hw-th-detection">Use <strong>Trap Detection</strong> to reveal traps. Take your time and run ahead of the group.</li>
+                <li data-i18n-html="hw-th-sprint">In the Thief Room, use <strong>Occult Sprint</strong> to dash through and press Trap Detection at the very end to open the hidden door.</li>
+                <li data-i18n-html="hw-th-marker">You may be assigned a marker (e.g. <strong>Ignore 1</strong>) at the start of hallways for visibility.</li>
               </ul>
             </div>
           </div>
@@ -169,15 +176,15 @@
       <div class="section-nav">
         <a href="demon-tablet.html" class="nav-btn nav-prev">
           <div>
-            <span class="nav-label">Previous</span>
-            <span>← Demon Tablet</span>
+            <span class="nav-label" data-i18n="hw-nav-prev-label">Previous</span>
+            <span data-i18n="hw-nav-prev">← Demon Tablet</span>
           </div>
         </a>
-        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <a href="../index.html" class="nav-btn nav-home" data-i18n="hw-nav-home">⌂ Home</a>
         <a href="dead-stars.html" class="nav-btn nav-next">
           <div>
-            <span class="nav-label">Next</span>
-            <span>Dead Stars →</span>
+            <span class="nav-label" data-i18n="hw-nav-next-label">Next</span>
+            <span data-i18n="hw-nav-next">Dead Stars →</span>
           </div>
         </a>
       </div>
@@ -200,6 +207,7 @@
   <script src="../js/theme.js"></script>
   <script src="../js/stars.js"></script>
   <script src="../js/lightbox.js"></script>
+  <script src="../js/language.js"></script>
   <script src="../js/nav.js"></script>
 </body>
 </html>

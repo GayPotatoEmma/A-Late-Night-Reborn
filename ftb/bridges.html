@@ -30,6 +30,13 @@
           <span class="header-site-name">A Late Night Reborn</span>
         </a>
         <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+        <div class="language-selector">
+          <button class="language-toggle" id="language-toggle" aria-label="Select language" aria-expanded="false">EN</button>
+          <div class="language-dropdown" id="language-dropdown">
+            <div class="language-option selected" id="lang-en">English</div>
+            <div class="language-option" id="lang-de">Deutsch</div>
+          </div>
+        </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
         <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
       </div>
@@ -42,29 +49,29 @@
       <nav class="breadcrumb">
         <a href="../index.html">Home</a>
         <span class="breadcrumb-sep">/</span>
-        <span>Pronged Passages</span>
+        <span data-i18n="br-breadcrumb">Pronged Passages</span>
       </nav>
 
       <!-- Page Header -->
       <div class="page-header">
-        <div class="page-badge traversal">↗ Traversal</div>
-        <h1 class="page-title traversal-title">Pronged Passages</h1>
-        <p class="page-subtitle">The bridge section between Dead Stars and Marble Dragon. Also referred to as &ldquo;Bridges.&rdquo;</p>
+        <div class="page-badge traversal" data-i18n="br-badge">↗ Traversal</div>
+        <h1 class="page-title traversal-title" data-i18n="br-title">Pronged Passages</h1>
+        <p class="page-subtitle" data-i18n="br-subtitle">The bridge section between Dead Stars and Marble Dragon. Also referred to as &ldquo;Bridges.&rdquo;</p>
       </div>
 
       <!-- Overview -->
       <div class="content-card" id="overview">
-        <h2 class="card-heading teal">Overview</h2>
+        <h2 class="card-heading teal" data-i18n="br-overview-heading">Overview</h2>
         <div class="content-body">
-          <p>
+          <p data-i18n="br-overview-p1">
             After defeating Dead Stars, the raid splits into two groups: letter parties (A, B, C) take the left bridge, number parties (1, 2, 3) take the right. Both sides navigate four zones filled with hidden traps and enemies before converging at the Marble Dragon arena.
           </p>
-          <p>
+          <p data-i18n-html="br-overview-p2">
             <strong>Wild Charge</strong> fires in Zones 1, 2, and 4. It deals AoE damage with significantly increased damage to the player at the front. Always have a <strong>tank at the front</strong> and ensure everyone mitigates. A different tank must lead each subsequent Wild Charge as it applies <strong>Piercing Resistance Down</strong>. Wild Charge is taken on the two inner middle lines, so listen to your caller for positioning.
           </p>
           <div class="alert-box info">
             <span class="alert-icon">ℹ</span>
-            <span>Most of this encounter can be handled by listening to callouts.</span>
+            <span data-i18n="br-overview-info">Most of this encounter can be handled by listening to callouts.</span>
           </div>
           <div class="img-row single">
             <img src="assets/bridges/bridges.png" alt="Pronged Passages overview" class="section-img" />
@@ -74,123 +81,123 @@
 
       <!-- Zone 1 -->
       <div class="content-card" id="zone-1">
-        <h2 class="card-heading gold">Zone 1</h2>
+        <h2 class="card-heading gold" data-i18n="br-zone1-heading">Zone 1</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li><strong>Wild Charge</strong>: tank in front, everyone mitigate.</li>
-            <li>Interrupt casts from the <strong>Tower Bhoot</strong> (Paralyze III).</li>
-            <li>Damage down the <strong>Aetherial Ward</strong> in parallel with the other side.</li>
+            <li data-i18n-html="br-z1-wild"><strong>Wild Charge</strong>: tank in front, everyone mitigate.</li>
+            <li data-i18n-html="br-z1-interrupt">Interrupt casts from the <strong>Tower Bhoot</strong> (Paralyze III).</li>
+            <li data-i18n-html="br-z1-ward">Damage down the <strong>Aetherial Ward</strong> in parallel with the other side.</li>
           </ul>
         </div>
       </div>
 
       <!-- Zone 2 -->
       <div class="content-card" id="zone-2">
-        <h2 class="card-heading blue">Zone 2</h2>
+        <h2 class="card-heading blue" data-i18n="br-zone2-heading">Zone 2</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li><strong>Wild Charge</strong>: tank in front, everyone mitigate.</li>
-            <li>Thieves move ahead to find the trap near the Aetherial Ward. Rangers defuse when safe and the raid leader calls for it.</li>
-            <li>The <strong>Tower Abyss</strong> casts Diffuse Darkness, granting a buff. The <strong>Phantom Time Mage must Occult Dispel</strong> this before the second cast finishes.</li>
-            <li>Damage down the <strong>Aetherial Ward</strong> in parallel with the other side.</li>
-            <li>Rangers can fish for traps on the far side while the Ward is being attacked.</li>
+            <li data-i18n-html="br-z2-wild"><strong>Wild Charge</strong>: tank in front, everyone mitigate.</li>
+            <li data-i18n="br-z2-thieves">Thieves move ahead to find the trap near the Aetherial Ward. Rangers defuse when safe and the raid leader calls for it.</li>
+            <li data-i18n-html="br-z2-abyss">The <strong>Tower Abyss</strong> casts Diffuse Darkness, granting a buff. The <strong>Phantom Time Mage must Occult Dispel</strong> this before the second cast finishes.</li>
+            <li data-i18n-html="br-z2-ward">Damage down the <strong>Aetherial Ward</strong> in parallel with the other side.</li>
+            <li data-i18n="br-z2-fish">Rangers can fish for traps on the far side while the Ward is being attacked.</li>
           </ul>
           <div class="alert-box danger">
             <span class="alert-icon">☠</span>
-            <span>If the Diffuse Darkness buff is not dispelled before the second cast, the resulting damage will kill most of the bridge.</span>
+            <span data-i18n="br-z2-danger">If the Diffuse Darkness buff is not dispelled before the second cast, the resulting damage will kill most of the bridge.</span>
           </div>
         </div>
       </div>
 
       <!-- Zone 3 -->
       <div class="content-card" id="zone-3">
-        <h2 class="card-heading purple">Zone 3</h2>
+        <h2 class="card-heading purple" data-i18n="br-zone3-heading">Zone 3</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li><strong>Wild Charge</strong>: tank in front, everyone mitigate.</li>
-            <li>Thieves move ahead to find 2 traps near the Tower Idols. Rangers defuse when safe and called.</li>
-            <li>Once all 6 Tower Idols have begun casting, the <strong>Phantom Bard uses Romeo's Ballad</strong> to stop them all.</li>
-            <li>The <strong>Geomancer on the right side</strong> uses Suspend and presses the button on the blue walkway.</li>
+            <li data-i18n-html="br-z3-wild"><strong>Wild Charge</strong>: tank in front, everyone mitigate.</li>
+            <li data-i18n="br-z3-thieves">Thieves move ahead to find 2 traps near the Tower Idols. Rangers defuse when safe and called.</li>
+            <li data-i18n-html="br-z3-bard">Once all 6 Tower Idols have begun casting, the <strong>Phantom Bard uses Romeo's Ballad</strong> to stop them all.</li>
+            <li data-i18n-html="br-z3-geo">The <strong>Geomancer on the right side</strong> uses Suspend and presses the button on the blue walkway.</li>
           </ul>
           <div class="alert-box danger">
             <span class="alert-icon">☠</span>
-            <span>All 6 Tower Idols must be casting before Romeo's Ballad is used. Stopping any Idol before it begins its cast will cause it to resume after the freeze, leading to a wipe.</span>
+            <span data-i18n-html="br-z3-danger">All 6 Tower Idols must be casting before Romeo's Ballad is used. Stopping any Idol before it begins its cast will cause it to resume after the freeze, leading to a wipe.</span>
           </div>
-          <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);">Once the Tower Idols are killed and the right-side button is pressed, a walkway opens for the left team; both sides progress together:</p>
+          <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);" data-i18n="br-z3-after">Once the Tower Idols are killed and the right-side button is pressed, a walkway opens for the left team; both sides progress together:</p>
           <ul class="mech-steps">
-            <li>Thieves move ahead to find 2 traps (1 large, 1 small) near the Tower Bhoot. <strong>Do not defuse these</strong>.</li>
-            <li>Move enemies away from the traps and interrupt casts from the Tower Bhoot (Paralyze III).</li>
-            <li>The <strong>Geomancer on the left side</strong> uses Suspend and presses the button on the blue walkway, dodging traps on the way.</li>
-            <li>Thieves move ahead to find 2 traps (1 large, 1 small) on either side of the forked path.</li>
-            <li>Rangers defuse <em>only the small trap</em> on both sides.</li>
+            <li data-i18n-html="br-z3-thieves2">Thieves move ahead to find 2 traps (1 large, 1 small) near the Tower Bhoot. <strong>Do not defuse these</strong>.</li>
+            <li data-i18n="br-z3-interrupt">Move enemies away from the traps and interrupt casts from the Tower Bhoot (Paralyze III).</li>
+            <li data-i18n-html="br-z3-geo-left">The <strong>Geomancer on the left side</strong> uses Suspend and presses the button on the blue walkway, dodging traps on the way.</li>
+            <li data-i18n="br-z3-thieves3">Thieves move ahead to find 2 traps (1 large, 1 small) on either side of the forked path.</li>
+            <li data-i18n-html="br-z3-rangers">Rangers defuse <em>only the small trap</em> on both sides.</li>
           </ul>
         </div>
       </div>
 
       <!-- Zone 4 -->
       <div class="content-card" id="zone-4">
-        <h2 class="card-heading gold">Zone 4: Progenitor &amp; Progenitrix</h2>
+        <h2 class="card-heading gold" data-i18n="br-zone4-heading">Zone 4: Progenitor &amp; Progenitrix</h2>
         <div class="content-body">
           <div class="alert-box info">
             <span class="alert-icon">ℹ</span>
-            <span><strong>Tanks &amp; Healers:</strong> auto-attacks from both bosses hit hard. Maintain active mitigation throughout.</span>
+            <span data-i18n-html="br-z4-info"><strong>Tanks &amp; Healers:</strong> auto-attacks from both bosses hit hard. Maintain active mitigation throughout.</span>
           </div>
           <ul class="mech-steps">
-            <li>Thieves move ahead to find the large trap. <strong>Do not defuse it</strong>.</li>
-            <li>Wild Charge: Tanks in front</li>
-            <li>Mobs will periodically cast Close Call to Detonate or Far Cry to Detonate. Do the opposite of their cast:
+            <li data-i18n-html="br-z4-thieves">Thieves move ahead to find the large trap. <strong>Do not defuse it</strong>.</li>
+            <li data-i18n="br-z4-wild">Wild Charge: Tanks in front</li>
+            <li data-i18n="br-z4-detonate">Mobs will periodically cast Close Call to Detonate or Far Cry to Detonate. Do the opposite of their cast:
               <ul class="mech-sub">
-                <li><strong>Close Call to Detonate</strong> (blue tether): separate them by taking them to the outside edge of the bridges</li>
-                <li><strong>Far Cry to Detonate</strong> (green tether): bring them close to each other by taking them to the inside edge of the bridges</li>
+                <li data-i18n-html="br-z4-close"><strong>Close Call to Detonate</strong> (blue tether): separate them by taking them to the outside edge of the bridges</li>
+                <li data-i18n-html="br-z4-far"><strong>Far Cry to Detonate</strong> (green tether): bring them close to each other by taking them to the inside edge of the bridges</li>
               </ul>
             </li>
-            <li>Bombshell Drop summons 2 tethered Lava Bombs:
+            <li data-i18n="br-z4-bombshell">Bombshell Drop summons 2 tethered Lava Bombs:
               <ul class="mech-sub">
-                <li>The main tank moves the mob away from the Lava Bombs while everyone else damages them down</li>
-                <li>Once the first set of Lava Bombs are dead, keep the mob at the end of the bridge</li>
-                <li>After the second set, everyone stays and the tank brings the mob back</li>
+                <li data-i18n="br-z4-bomb1">The main tank moves the mob away from the Lava Bombs while everyone else damages them down</li>
+                <li data-i18n="br-z4-bomb2">Once the first set of Lava Bombs are dead, keep the mob at the end of the bridge</li>
+                <li data-i18n="br-z4-bomb3">After the second set, everyone stays and the tank brings the mob back</li>
               </ul>
             </li>
           </ul>
-          <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);">Mechanics will now loop. A firewall spawns from the south; dodge it. Repeating sequence:</p>
+          <p style="margin-top:.9rem;font-size:.875rem;color:var(--text-secondary);" data-i18n="br-z4-loop">Mechanics will now loop. A firewall spawns from the south; dodge it. Repeating sequence:</p>
           <ul class="mech-steps">
-            <li>Close or Far Cry to Detonate</li>
-            <li>Stack Marker: everybody stack together on the wall</li>
-            <li>Bombshell Drop</li>
+            <li data-i18n="br-z4-loop1">Close or Far Cry to Detonate</li>
+            <li data-i18n="br-z4-loop2">Stack Marker: everybody stack together on the wall</li>
+            <li data-i18n="br-z4-loop3">Bombshell Drop</li>
           </ul>
         </div>
       </div>
 
       <!-- Phantom Job Responsibilities -->
       <div class="content-card" id="phantom-jobs">
-        <h2 class="card-heading teal">Phantom Job Responsibilities</h2>
+        <h2 class="card-heading teal" data-i18n="br-jobs-heading">Phantom Job Responsibilities</h2>
         <div class="content-body">
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Thief</strong>
+              <strong data-i18n="br-job-thief">Thief</strong>
               <ul class="mech-steps">
-                <li>Communicate with your Ranger if they are going to blind-fish for traps.</li>
-                <li>Where the paths split: standing in the middle right before the split reveals both the large and the small trap.</li>
+                <li data-i18n="br-thief1">Communicate with your Ranger if they are going to blind-fish for traps.</li>
+                <li data-i18n="br-thief2">Where the paths split: standing in the middle right before the split reveals both the large and the small trap.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Ranger</strong>
+              <strong data-i18n="br-job-ranger">Ranger</strong>
               <ul class="mech-steps">
-                <li>Talk to your Thief if you want to blind-fish for traps.</li>
+                <li data-i18n="br-ranger1">Talk to your Thief if you want to blind-fish for traps.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">✦</span>
             <div>
-              <strong>Bard</strong>
+              <strong data-i18n="br-job-bard">Bard</strong>
               <ul class="mech-steps">
-                <li>Stand at the outer side of your bridge.</li>
-                <li>The AoE from Romeo's Ballad is massive, so do not stop the adds from the other bridge early.</li>
+                <li data-i18n="br-bard1">Stand at the outer side of your bridge.</li>
+                <li data-i18n-html="br-bard2">The AoE from Romeo's Ballad is massive, so do not stop the adds from the other bridge early.</li>
               </ul>
             </div>
           </div>
@@ -201,15 +208,15 @@
       <div class="section-nav">
         <a href="dead-stars.html" class="nav-btn nav-prev">
           <div>
-            <span class="nav-label">Previous</span>
-            <span>← Dead Stars</span>
+            <span class="nav-label" data-i18n="br-nav-prev-label">Previous</span>
+            <span data-i18n="br-nav-prev">← Dead Stars</span>
           </div>
         </a>
-        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <a href="../index.html" class="nav-btn nav-home" data-i18n="br-nav-home">⌂ Home</a>
         <a href="marble-dragon.html" class="nav-btn nav-next">
           <div>
-            <span class="nav-label">Next</span>
-            <span>Marble Dragon →</span>
+            <span class="nav-label" data-i18n="br-nav-next-label">Next</span>
+            <span data-i18n="br-nav-next">Marble Dragon →</span>
           </div>
         </a>
       </div>
@@ -232,6 +239,7 @@
   <script src="../js/theme.js"></script>
   <script src="../js/stars.js"></script>
   <script src="../js/lightbox.js"></script>
+  <script src="../js/language.js"></script>
   <script src="../js/nav.js"></script>
 </body>
 </html>

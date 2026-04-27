@@ -30,6 +30,13 @@
           <span class="header-site-name">A Late Night Reborn</span>
         </a>
         <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+        <div class="language-selector">
+          <button class="language-toggle" id="language-toggle" aria-label="Select language" aria-expanded="false">EN</button>
+          <div class="language-dropdown" id="language-dropdown">
+            <div class="language-option selected" id="lang-en">English</div>
+            <div class="language-option" id="lang-de">Deutsch</div>
+          </div>
+        </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
         <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
       </div>
@@ -42,36 +49,36 @@
       <nav class="breadcrumb">
         <a href="../index.html">Home</a>
         <span class="breadcrumb-sep">/</span>
-        <span>The Binding Lock</span>
+        <span data-i18n="lw-breadcrumb">The Binding Lock</span>
       </nav>
 
       <!-- Page Header -->
       <div class="page-header">
-        <div class="page-badge traversal">↗ Traversal</div>
-        <h1 class="page-title traversal-title">The Binding Lock</h1>
-        <p class="page-subtitle">The warded section between Marble Dragon and Magitaur. Also referred to as &ldquo;Lockwards.&rdquo;</p>
+        <div class="page-badge traversal" data-i18n="lw-badge">↗ Traversal</div>
+        <h1 class="page-title traversal-title" data-i18n="lw-title">The Binding Lock</h1>
+        <p class="page-subtitle" data-i18n="lw-subtitle">The warded section between Marble Dragon and Magitaur. Also referred to as &ldquo;Lockwards.&rdquo;</p>
       </div>
 
       <!-- Overview -->
       <div class="content-card" id="overview">
-        <h2 class="card-heading teal">Overview</h2>
+        <h2 class="card-heading teal" data-i18n="lw-overview-heading">Overview</h2>
         <div class="content-body">
-          <p>The Binding Lock is, in spirit, a continuation of the first hallways of the Forked Tower: Blood, featuring the return of small and large traps as well as enemies with mechanics. A lot of this section can be resolved by simply listening to callouts.</p>
+          <p data-i18n="lw-overview-p1">The Binding Lock is, in spirit, a continuation of the first hallways of the Forked Tower: Blood, featuring the return of small and large traps as well as enemies with mechanics. A lot of this section can be resolved by simply listening to callouts.</p>
           <div class="alert-box info">
             <span class="alert-icon">&#8505;</span>
-            <span>As before, traps need to be found by a Phantom Thief using Trap Detection.</span>
+            <span data-i18n="lw-overview-info">As before, traps need to be found by a Phantom Thief using Trap Detection.</span>
           </div>
-          <p>Once players teleport from the Marble Dragon arena they will be placed into a room with a red line marking the starting point for traps. At all times, the party should stay <strong>behind</strong> the Phantom Thieves who will be revealing traps. Traps will be detonated by the Phantom Rangers at the call of the host, and not any earlier.</p>
+          <p data-i18n-html="lw-overview-p2">Once players teleport from the Marble Dragon arena they will be placed into a room with a red line marking the starting point for traps. At all times, the party should stay <strong>behind</strong> the Phantom Thieves who will be revealing traps. Traps will be detonated by the Phantom Rangers at the call of the host, and not any earlier.</p>
           <div class="alert-box warning">
             <span class="alert-icon">&#9888;</span>
-            <span>There can be a trap just past the red line, so Phantom Thieves should start scanning before crossing over. There is usually plenty of time for this section, so play it safe and slow when finding traps.</span>
+            <span data-i18n="lw-overview-warning">There can be a trap just past the red line, so Phantom Thieves should start scanning before crossing over. There is usually plenty of time for this section, so play it safe and slow when finding traps.</span>
           </div>
-          <p>After the initial hallway with traps, the party will reach a room with 6 large pillars containing 4 different enemies that each use AoEs. All enemies should be slowed with the Phantom Time Mage's <strong>Slowga</strong> and everyone should be ready to dodge orange AoE indicators.</p>
+          <p data-i18n-html="lw-overview-p3">After the initial hallway with traps, the party will reach a room with 6 large pillars containing 4 different enemies that each use AoEs. All enemies should be slowed with the Phantom Time Mage's <strong>Slowga</strong> and everyone should be ready to dodge orange AoE indicators.</p>
           <ul class="mech-steps">
-            <li>The Tower Petroglyph uses an untelegraphed cone attack and should be kept <strong>facing away from the party</strong> at all times.</li>
-            <li>While enemies are being cleared, Phantom Thieves and Phantom Rangers should make their way to the West and East hallways to find and detonate traps safely.</li>
+            <li data-i18n-html="lw-overview-petroglyph">The Tower Petroglyph uses an untelegraphed cone attack and should be kept <strong>facing away from the party</strong> at all times.</li>
+            <li data-i18n="lw-overview-traps">While enemies are being cleared, Phantom Thieves and Phantom Rangers should make their way to the West and East hallways to find and detonate traps safely.</li>
           </ul>
-          <p style="margin-top:.9rem;">Once the enemies are dealt with and the traps are disarmed, the alliance moves to the west side and works through the 6 side rooms starting from the Northwest, going counter-clockwise. All enemies in these rooms should be slowed by the Phantom Time Mage's <strong>Slowga</strong> where possible to allow more time to dodge their attacks.</p>
+          <p style="margin-top:.9rem;" data-i18n-html="lw-overview-p4">Once the enemies are dealt with and the traps are disarmed, the alliance moves to the west side and works through the 6 side rooms starting from the Northwest, going counter-clockwise. All enemies in these rooms should be slowed by the Phantom Time Mage's <strong>Slowga</strong> where possible to allow more time to dodge their attacks.</p>
           <div class="img-row single">
             <img src="assets/lockwards/lockwards.png" alt="Binding Lock overview" class="section-img" />
           </div>
@@ -80,194 +87,194 @@
 
       <!-- NW: Guardian Golem -->
       <div class="content-card" id="nw-golem">
-        <h2 class="card-heading gold">Northwest: Guardian Golem</h2>
+        <h2 class="card-heading gold" data-i18n="lw-nw-heading">Northwest: Guardian Golem</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>Only one party should be sent to this room. Priority goes to any party that has a Phantom Oracle.</li>
+            <li data-i18n="lw-nw-step1">Only one party should be sent to this room. Priority goes to any party that has a Phantom Oracle.</li>
           </ul>
-          <p style="margin-top:.9rem;margin-bottom:.25rem;">Mechanics:</p>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;" data-i18n="lw-nw-mechs">Mechanics:</p>
           <ul class="mech-steps" style="margin-top:0;">
-            <li><strong>Toxic Minerals</strong>
-            <li><strong>Earthen Heart:</strong> Targeted AoE.</li>
-            <li><strong>Boulder Clap:</strong> Frontal cone AoE.</li>
-            <li><strong>Obliterate:</strong> Room-wide AoE. Tanks and Physical Ranged DPS should interrupt this cast.</li>
+            <li data-i18n-html="lw-nw-minerals"><strong>Toxic Minerals</strong></li>
+            <li data-i18n-html="lw-nw-heart"><strong>Earthen Heart:</strong> Targeted AoE.</li>
+            <li data-i18n-html="lw-nw-clap"><strong>Boulder Clap:</strong> Frontal cone AoE.</li>
+            <li data-i18n-html="lw-nw-obliterate"><strong>Obliterate:</strong> Room-wide AoE. Tanks and Physical Ranged DPS should interrupt this cast.</li>
           </ul>
           <div class="alert-box info">
             <span class="alert-icon">&#8505;</span>
-            <span>If the party has a Phantom Oracle, pressing Recuperation when Toxic Minerals drops below 20 seconds will cleanse the entire party. Without an Oracle, both healers need to coordinate an Esuna order to remove all debuffs in time. One healer works top to bottom down the party list while the other works bottom to top.</span>
+            <span data-i18n="lw-nw-info">If the party has a Phantom Oracle, pressing Recuperation when Toxic Minerals drops below 20 seconds will cleanse the entire party. Without an Oracle, both healers need to coordinate an Esuna order to remove all debuffs in time. One healer works top to bottom down the party list while the other works bottom to top.</span>
           </div>
         </div>
       </div>
 
       <!-- W: Guardian Berserker -->
       <div class="content-card" id="w-berserker">
-        <h2 class="card-heading gold">West: Guardian Berserker</h2>
+        <h2 class="card-heading gold" data-i18n="lw-w-heading">West: Guardian Berserker</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>Send 1 tank and every Phantom Cannoneer, Phantom Samurai, and Phantom Oracle (except the one assigned to the Golem room). Everyone else should stay outside.</li>
-            <li>The Berserker has 99% mitigation, making it effectively unkillable through normal attacks. It can only be killed through instant-kill abilities:
+            <li data-i18n="lw-w-step1">Send 1 tank and every Phantom Cannoneer, Phantom Samurai, and Phantom Oracle (except the one assigned to the Golem room). Everyone else should stay outside.</li>
+            <li data-i18n="lw-w-step2">The Berserker has 99% mitigation, making it effectively unkillable through normal attacks. It can only be killed through instant-kill abilities:
               <ul class="mech-sub">
-                <li><strong>Phantom Fire</strong> (Phantom Cannoneer)</li>
-                <li><strong>Iainuki</strong> (Phantom Samurai)</li>
-                <li><strong>Doom</strong> (Phantom Oracle)</li>
+                <li data-i18n-html="lw-w-fire"><strong>Phantom Fire</strong> (Phantom Cannoneer)</li>
+                <li data-i18n-html="lw-w-iainuki"><strong>Iainuki</strong> (Phantom Samurai)</li>
+                <li data-i18n-html="lw-w-doom"><strong>Doom</strong> (Phantom Oracle)</li>
               </ul>
             </li>
-            <li>Spam these abilities until it dies. The tank must hold aggro throughout as the Berserker auto attacks between mechanics.</li>
+            <li data-i18n="lw-w-step3">Spam these abilities until it dies. The tank must hold aggro throughout as the Berserker auto attacks between mechanics.</li>
           </ul>
-          <p style="margin-top:.9rem;margin-bottom:.25rem;">Mechanics:</p>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;" data-i18n="lw-w-mechs">Mechanics:</p>
           <ul class="mech-steps" style="margin-top:0;">
-            <li><strong>Raging Slice:</strong>
+            <li data-i18n-html="lw-w-slice"><strong>Raging Slice:</strong> A thin but very long line AoE to the front of the Berserker.</li>
           </ul>
           <div class="alert-box warning">
             <span class="alert-icon">&#9888;</span>
-            <span>Raging Slice cannot be line-of-sighted.</span>
+            <span data-i18n="lw-w-warning">Raging Slice cannot be line-of-sighted.</span>
           </div>
         </div>
       </div>
 
       <!-- SW: Guardian Wraith -->
       <div class="content-card" id="sw-wraith">
-        <h2 class="card-heading gold">Southwest: Guardian Wraith</h2>
+        <h2 class="card-heading gold" data-i18n="lw-sw-heading">Southwest: Guardian Wraith</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>Everyone not assigned to the Golem or Berserker rooms should head here.</li>
-            <li>The Phantom Time Mage's Slowga is strongly encouraged.</li>
-            <li>The Wraith is undead. Any Phantom Cannoneers present should use <strong>Holy Cannon</strong>.</li>
+            <li data-i18n="lw-sw-step1">Everyone not assigned to the Golem or Berserker rooms should head here.</li>
+            <li data-i18n="lw-sw-step2">The Phantom Time Mage's Slowga is strongly encouraged.</li>
+            <li data-i18n-html="lw-sw-step3">The Wraith is undead. Any Phantom Cannoneers present should use <strong>Holy Cannon</strong>.</li>
           </ul>
-          <p style="margin-top:.9rem;margin-bottom:.25rem;">Mechanics:</p>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;" data-i18n="lw-sw-mechs">Mechanics:</p>
           <ul class="mech-steps" style="margin-top:0;">
-            <li><strong>Scream:</strong>
-            <li><strong>Lingering Sentiment:</strong> Large targeted AoE on a random player.</li>
+            <li data-i18n-html="lw-sw-scream"><strong>Scream:</strong> A large point-blank AoE. If hit, players receive a Terror debuff, rendering them unable to move and dodge the next attack.</li>
+            <li data-i18n-html="lw-sw-resentment"><strong>Lingering Resentment:</strong> Large targeted AoE on a random player.</li>
           </ul>
         </div>
       </div>
 
       <!-- NE: Guardian Knight -->
       <div class="content-card" id="ne-knight">
-        <h2 class="card-heading gold">Northeast: Guardian Knight</h2>
+        <h2 class="card-heading gold" data-i18n="lw-ne-heading">Northeast: Guardian Knight</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>The entire alliance should be present here.</li>
-            <li>A Phantom Time Mage's <strong>Occult Dispel</strong> is required. <strong>Slowga</strong> is strongly encouraged.</li>
-            <li>The Knight has a persistent Invincibility buff that must be Dispelled before it can take damage. The buff reapplies throughout the fight and must be Dispelled each time.</li>
+            <li data-i18n="lw-ne-step1">The entire alliance should be present here.</li>
+            <li data-i18n-html="lw-ne-step2">A Phantom Time Mage's <strong>Occult Dispel</strong> is required. <strong>Slowga</strong> is strongly encouraged.</li>
+            <li data-i18n="lw-ne-step3">The Knight has a persistent Invincibility buff that must be Dispelled before it can take damage. The buff reapplies throughout the fight and must be Dispelled each time.</li>
           </ul>
-          <p style="margin-top:.9rem;margin-bottom:.25rem;">Mechanics:</p>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;" data-i18n="lw-ne-mechs">Mechanics:</p>
           <ul class="mech-steps" style="margin-top:0;">
-            <li><strong>Buster Knuckles:</strong> Large point-blank AoE.</li>
-            <li><strong>Earthquake:</strong> Large donut AoE. Has no cast bar and always follows up Buster Knuckles immediately.</li>
-            <li><strong>Line of Fire:</strong> Line AoE aimed at the front of the Knight.</li>
+            <li data-i18n-html="lw-ne-knuckles"><strong>Buster Knuckles:</strong> Large point-blank AoE.</li>
+            <li data-i18n-html="lw-ne-quake"><strong>Earthquake:</strong> Large donut AoE. Has no cast bar and always follows up Buster Knuckles immediately.</li>
+            <li data-i18n-html="lw-ne-line"><strong>Line of Fire:</strong> Line AoE aimed at the front of the Knight.</li>
           </ul>
           <div class="alert-box warning">
             <span class="alert-icon">&#9888;</span>
-            <span>Line of Fire cannot be line-of-sighted.</span>
+            <span data-i18n="lw-ne-warning">Line of Fire cannot be line-of-sighted.</span>
           </div>
         </div>
       </div>
 
       <!-- E: Guardian Bats -->
       <div class="content-card" id="e-bats">
-        <h2 class="card-heading gold">East: Guardian Bats</h2>
+        <h2 class="card-heading gold" data-i18n="lw-e-heading">East: Guardian Bats</h2>
         <div class="content-body">
-          <p>There are two main ways to handle the bat room.</p>
-          <p style="margin-bottom:.25rem;"><strong>Method 1: Caster Limit Break 2</strong></p>
+          <p data-i18n="lw-e-intro">There are two main ways to handle the bat room.</p>
+          <p style="margin-bottom:.25rem;" data-i18n-html="lw-e-method1"><strong>Method 1: Caster Limit Break 2</strong></p>
           <ul class="mech-steps" style="margin-top:0;">
-            <li>Send 1 tank and 1 caster per party. The run caller gives a countdown for all casters to use Limit Break simultaneously. Between 4 and 5 Level 2 Limit Breaks are needed to kill the bats.</li>
-            <li>The tank should pull the bats slightly before the countdown finishes to hold aggro and keep them grouped within the Limit Break.</li>
+            <li data-i18n="lw-e-m1-step1">Send 1 tank and 1 caster per party. The run caller gives a countdown for all casters to use Limit Break simultaneously. Between 4 and 5 Level 2 Limit Breaks are needed to kill the bats.</li>
+            <li data-i18n="lw-e-m1-step2">The tank should pull the bats slightly before the countdown finishes to hold aggro and keep them grouped within the Limit Break.</li>
           </ul>
           <div class="alert-box info">
             <span class="alert-icon">&#8505;</span>
             <div>
-              If there are not enough casters with Limit Break, everyone should be present instead.
+              <span data-i18n="lw-e-m1-info">If there are not enough casters with Limit Break, everyone should be present instead.</span>
               <ul class="mech-steps">
-                <li>Phantom Ranger can use <strong>Phantom Aim</strong> to guarantee hits.</li>
-                <li>Phantom Samurai can use <strong>Zeninage</strong>, which always lands.</li>
-                <li>Everyone else uses their attacks and hopes they land.</li>
+                <li data-i18n-html="lw-e-m1-ranger">Phantom Ranger can use <strong>Phantom Aim</strong> to guarantee hits.</li>
+                <li data-i18n-html="lw-e-m1-samurai">Phantom Samurai can use <strong>Zeninage</strong>, which always lands.</li>
+                <li data-i18n="lw-e-m1-else">Everyone else uses their attacks and hopes they land.</li>
               </ul>
             </div>
           </div>
-          <p style="margin-top:.9rem;margin-bottom:.25rem;"><strong>Method 2: Phantom Rangers Only</strong></p>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;" data-i18n-html="lw-e-method2"><strong>Method 2: Phantom Rangers Only</strong></p>
           <ul class="mech-steps" style="margin-top:0;">
-            <li>Both Phantom Rangers use Phantom Aim and burst the bats down together. Use <strong>Phantom Unicorn</strong> to shield the party from the bats' raidwides.</li>
-            <li>This only works if both Phantom Rangers are DPS or Tanks. Tank Rangers should use a stat potion.</li>
+            <li data-i18n-html="lw-e-m2-step1">Both Phantom Rangers use Phantom Aim and burst the bats down together. Use <strong>Phantom Unicorn</strong> to shield the party from the bats' raidwides.</li>
+            <li data-i18n="lw-e-m2-step2">This only works if both Phantom Rangers are DPS or Tanks. Tank Rangers should use a stat potion.</li>
           </ul>
-          <p style="margin-top:.9rem;margin-bottom:.25rem;">Mechanics:</p>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;" data-i18n="lw-e-mechs">Mechanics:</p>
           <ul class="mech-steps" style="margin-top:0;">
-            <li><strong>Ancient Aero III:</strong> Raidwide.</li>
-            <li><strong>Aero II:</strong> Targeted line AoE with a telegraph.</li>
-            <li><strong>Tornado:</strong> Targeted circle AoE.</li>
+            <li data-i18n-html="lw-e-aero3"><strong>Ancient Aero III:</strong> Raidwide.</li>
+            <li data-i18n-html="lw-e-aero2"><strong>Aero II:</strong> Targeted line AoE with a telegraph.</li>
+            <li data-i18n-html="lw-e-tornado"><strong>Tornado:</strong> Targeted circle AoE.</li>
           </ul>
         </div>
       </div>
 
       <!-- SE: Guardian Weapon -->
       <div class="content-card" id="se-weapon">
-        <h2 class="card-heading gold">Southeast: Guardian Weapon</h2>
+        <h2 class="card-heading gold" data-i18n="lw-se-heading">Southeast: Guardian Weapon</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>The entire alliance should be present here. If the Northwest room is not yet finished that is fine, proceed ahead.</li>
-            <li>A Phantom Thief must be present. Pulling the Weapon without one will result in a wipe, as <strong>Pilfer Weapon</strong> must be used immediately after the pull.</li>
-            <li>The Phantom Time Mage's Slowga is strongly encouraged.</li>
-            <li>A tank should pull using their invulnerability skill, as the Weapon deals exceptionally high damage at the start of the fight. As the pull happens, the Phantom Thief should approach and use Pilfer Weapon as soon as possible. This permanently disarms the Weapon and greatly reduces its threat.</li>
+            <li data-i18n="lw-se-step1">The entire alliance should be present here. If the Northwest room is not yet finished that is fine, proceed ahead.</li>
+            <li data-i18n-html="lw-se-step2">A Phantom Thief must be present. Pulling the Weapon without one will result in a wipe, as <strong>Pilfer Weapon</strong> must be used immediately after the pull.</li>
+            <li data-i18n="lw-se-step3">The Phantom Time Mage's Slowga is strongly encouraged.</li>
+            <li data-i18n="lw-se-step4">A tank should pull using their invulnerability skill, as the Weapon deals exceptionally high damage at the start of the fight. As the pull happens, the Phantom Thief should approach and use Pilfer Weapon as soon as possible. This permanently disarms the Weapon and greatly reduces its threat.</li>
           </ul>
           <div class="alert-box warning">
             <span class="alert-icon">&#9888;</span>
-            <span>Check that Pilfer Weapon is available before pulling, as it has a 30-second cooldown.</span>
+            <span data-i18n="lw-se-warning">Check that Pilfer Weapon is available before pulling, as it has a 30-second cooldown.</span>
           </div>
-          <p style="margin-top:.9rem;margin-bottom:.25rem;">Mechanics:</p>
+          <p style="margin-top:.9rem;margin-bottom:.25rem;" data-i18n="lw-se-mechs">Mechanics:</p>
           <ul class="mech-steps" style="margin-top:0;">
-            <li><strong>Whirl of Rage:</strong> Small point-blank AoE. Casts relatively quickly.</li>
-            <li><strong>Smite of Rage:</strong> Small frontal line AoE. Telegraphs very late.</li>
+            <li data-i18n-html="lw-se-whirl"><strong>Whirl of Rage:</strong> Small point-blank AoE. Casts relatively quickly.</li>
+            <li data-i18n-html="lw-se-smite"><strong>Smite of Rage:</strong> Small frontal line AoE. Telegraphs very late.</li>
           </ul>
         </div>
       </div>
 
       <!-- 6 Pillars Puzzle -->
       <div class="content-card" id="pillars">
-        <h2 class="card-heading purple">6 Pillars Puzzle</h2>
+        <h2 class="card-heading purple" data-i18n="lw-pillars-heading">6 Pillars Puzzle</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>Once all six rooms are cleared, everyone returns to the main room. Each of the 6 pillars has 3 segments with a red ring positioned above one of them.</li>
-            <li>Each pillar corresponds to one of the cleared side rooms. When the enemy in a room dies, the red platform in that room begins to glow. Stepping on the platform lowers the corresponding pillar by one segment.</li>
-            <li>The goal is to lower each pillar until its red ring reaches the floor. When all six are aligned, an orb activates in the centre. Interact with it to begin the next sequence.</li>
+            <li data-i18n="lw-pillars-step1">Once all six rooms are cleared, everyone returns to the main room. Each of the 6 pillars has 3 segments with a red ring positioned above one of them.</li>
+            <li data-i18n="lw-pillars-step2">Each pillar corresponds to one of the cleared side rooms. When the enemy in a room dies, the red platform in that room begins to glow. Stepping on the platform lowers the corresponding pillar by one segment.</li>
+            <li data-i18n="lw-pillars-step3">The goal is to lower each pillar until its red ring reaches the floor. When all six are aligned, an orb activates in the centre. Interact with it to begin the next sequence.</li>
           </ul>
         </div>
       </div>
 
       <!-- The actual Lockwards -->
       <div class="content-card" id="lockwards-section">
-        <h2 class="card-heading teal">The Lockwards</h2>
+        <h2 class="card-heading teal" data-i18n="lw-lockwards-heading">The Lockwards</h2>
         <div class="content-body">
-          <p>Waves of Lockward adds spawn in groups of 3. The raid gathers in front of the machine in the middle and works to repair the lock system.</p>
+          <p data-i18n="lw-lockwards-intro">Waves of Lockward adds spawn in groups of 3. The raid gathers in front of the machine in the middle and works to repair the lock system.</p>
           <ul class="mech-steps">
-            <li>Group the adds up in the middle to AoE them down, with each group focusing on their assigned add:
+            <li data-i18n="lw-lockwards-step1">Group the adds up in the middle to AoE them down, with each group focusing on their assigned add:
               <ul class="mech-sub">
-                <li><strong>Groups A and 1:</strong> leftmost add</li>
-                <li><strong>Groups B and 2:</strong> middle add</li>
-                <li><strong>Groups C and 3:</strong> rightmost add</li>
+                <li data-i18n-html="lw-lockwards-a1"><strong>Groups A and 1:</strong> leftmost add</li>
+                <li data-i18n-html="lw-lockwards-b2"><strong>Groups B and 2:</strong> middle add</li>
+                <li data-i18n-html="lw-lockwards-c3"><strong>Groups C and 3:</strong> rightmost add</li>
               </ul>
             </li>
-            <li>The adds cast <strong>Cunning Keywork</strong>, which must be interrupted. If an interrupt fails, the entire system resets. Suggested interrupt order:
+            <li data-i18n-html="lw-lockwards-step2">The adds cast <strong>Cunning Keywork</strong>, which must be interrupted. If an interrupt fails, the entire system resets. Suggested interrupt order:
               <ul class="mech-sub">
-                <li>Tank 1 (typically Phantom Knight)</li>
-                <li>Tank 2</li>
-                <li>Physical Ranged</li>
+                <li data-i18n="lw-lockwards-int1">Tank 1 (typically Phantom Knight)</li>
+                <li data-i18n="lw-lockwards-int2">Tank 2</li>
+                <li data-i18n="lw-lockwards-int3">Physical Ranged</li>
               </ul>
             </li>
-            <li>After a couple of waves, a Master Lockward spawns in the middle, identified by a strong blue glow.</li>
+            <li data-i18n="lw-lockwards-step3">After a couple of waves, a Master Lockward spawns in the middle, identified by a strong blue glow.</li>
           </ul>
           <div class="alert-box warning">
             <span class="alert-icon">&#9888;</span>
-            <span>Do not interrupt the Master Lockward. Letting the cast complete repairs the lock system.</span>
+            <span data-i18n="lw-lockwards-warning">Do not interrupt the Master Lockward. Letting the cast complete repairs the lock system.</span>
           </div>
           <ul class="mech-steps">
-            <li>Kill the remaining adds and redo the Pillar Puzzle.</li>
-            <li>Restart the encounter and continue killing and interrupting adds until authentication is completed. Once done, interact with the system. The doors open and all adds despawn.</li>
+            <li data-i18n="lw-lockwards-step4">Kill the remaining adds and redo the Pillar Puzzle.</li>
+            <li data-i18n="lw-lockwards-step5">Restart the encounter and continue killing and interrupting adds until authentication is completed. Once done, interact with the system. The doors open and all adds despawn.</li>
           </ul>
           <div class="alert-box info">
             <span class="alert-icon">&#8505;</span>
-            <span>Completing the full authentication sequence grants 10 extra Sanguinite and spawns a Support add in the instance for additional Sanguinite. You cannot leave the tower, kill the add, and re-join, so please stay inside.</span>
+            <span data-i18n="lw-lockwards-info">Completing the full authentication sequence grants 10 extra Sanguinite and spawns a Support add in the instance for additional Sanguinite. You cannot leave the tower, kill the add, and re-join, so please stay inside.</span>
           </div>
-          <p style="margin-top:.9rem;">Behind the door are two additional hallways containing optional loot. Traps are present here as well, so the party should stay behind the Phantom Thieves and Phantom Rangers as usual.</p>
+          <p style="margin-top:.9rem;" data-i18n="lw-lockwards-post">Behind the door are two additional hallways containing optional loot. Traps are present here as well, so the party should stay behind the Phantom Thieves and Phantom Rangers as usual.</p>
           <div class="img-row single">
             <img src="assets/lockwards/postlockwards.png" alt="Post-Lockwards hallways" class="section-img" />
           </div>
@@ -276,67 +283,67 @@
 
       <!-- Phantom Job Responsibilities -->
       <div class="content-card" id="phantom-jobs">
-        <h2 class="card-heading teal">Phantom Job Responsibilities</h2>
+        <h2 class="card-heading teal" data-i18n="lw-jobs-heading">Phantom Job Responsibilities</h2>
         <div class="content-body">
           <div class="alert-box tip">
             <span class="alert-icon">&#10022;</span>
             <div>
-              <strong>Time Mage</strong>
+              <strong data-i18n="lw-job-timemage">Time Mage</strong>
               <ul class="mech-steps">
-                <li>Use <strong>Slowga</strong> on all enemies where possible.</li>
-                <li>Use <strong>Occult Dispel</strong> on the Guardian Knight whenever its Invincibility buff reapplies. This is required to damage it. Make sure to also keep up <strong>Slowga</strong> on it.</li>
+                <li data-i18n-html="lw-tm-step1">Use <strong>Slowga</strong> on all enemies where possible.</li>
+                <li data-i18n-html="lw-tm-step2">Use <strong>Occult Dispel</strong> on the Guardian Knight whenever its Invincibility buff reapplies. This is required to damage it. Make sure to also keep up <strong>Slowga</strong> on it.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">&#10022;</span>
             <div>
-              <strong>Thief</strong>
+              <strong data-i18n="lw-job-thief">Thief</strong>
               <ul class="mech-steps">
-                <li>Use <strong>Trap Detection</strong> to reveal traps throughout the section. Stay ahead of the group at all times.</li>
-                <li>For the Guardian Weapon, use <strong>Pilfer Weapon</strong> immediately after the tank pulls. This is required.</li>
+                <li data-i18n-html="lw-thief-step1">Use <strong>Trap Detection</strong> to reveal traps throughout the section. Stay ahead of the group at all times.</li>
+                <li data-i18n-html="lw-thief-step2">For the Guardian Weapon, use <strong>Pilfer Weapon</strong> immediately after the tank pulls. This is required.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">&#10022;</span>
             <div>
-              <strong>Ranger</strong>
+              <strong data-i18n="lw-job-ranger">Ranger</strong>
               <ul class="mech-steps">
-                <li>Detonate traps only at the call of the host.</li>
-                <li>Head to the West and East hallways to find and detonate traps while the main room enemies are being cleared.</li>
-                <li>For the Guardian Bats (Method 2), use <strong>Phantom Aim</strong> to burst them down and <strong>Phantom Unicorn</strong> to shield the party from raidwides.</li>
+                <li data-i18n="lw-ranger-step1">Detonate traps only at the call of the host.</li>
+                <li data-i18n="lw-ranger-step2">Head to the West and East hallways to find and detonate traps while the main room enemies are being cleared.</li>
+                <li data-i18n-html="lw-ranger-step3">For the Guardian Bats (Method 2), use <strong>Phantom Aim</strong> to burst them down and <strong>Phantom Unicorn</strong> to shield the party from raidwides.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">&#10022;</span>
             <div>
-              <strong>Oracle</strong>
+              <strong data-i18n="lw-job-oracle">Oracle</strong>
               <ul class="mech-steps">
-                <li>For the Guardian Golem, use <strong>Recuperation</strong> before Toxic Minerals drops below 20 seconds to cleanse the entire party.</li>
-                <li>Use <strong>Doom</strong> on the Guardian Berserker.</li>
+                <li data-i18n-html="lw-oracle-step1">For the Guardian Golem, use <strong>Recuperation</strong> before Toxic Minerals drops below 20 seconds to cleanse the entire party.</li>
+                <li data-i18n-html="lw-oracle-step2">Use <strong>Doom</strong> on the Guardian Berserker.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">&#10022;</span>
             <div>
-              <strong>Cannoneer</strong>
+              <strong data-i18n="lw-job-cannoneer">Cannoneer</strong>
               <ul class="mech-steps">
-                <li>Use <strong>Phantom Fire</strong> on the Guardian Berserker.</li>
-                <li>Use <strong>Holy Cannon</strong> on the Guardian Wraith, as it is undead.</li>
-                <li>Do not use <strong>Dark Cannon</strong> on the Guardian Knight. Phantom Berserkers use its attack for extra damage.</li>
+                <li data-i18n-html="lw-cannon-step1">Use <strong>Phantom Fire</strong> on the Guardian Berserker.</li>
+                <li data-i18n-html="lw-cannon-step2">Use <strong>Holy Cannon</strong> on the Guardian Wraith, as it is undead.</li>
+                <li data-i18n-html="lw-cannon-step3">Do not use <strong>Dark Cannon</strong> on the Guardian Knight. Phantom Berserkers use its attack for extra damage.</li>
               </ul>
             </div>
           </div>
           <div class="alert-box tip">
             <span class="alert-icon">&#10022;</span>
             <div>
-              <strong>Samurai</strong>
+              <strong data-i18n="lw-job-samurai">Samurai</strong>
               <ul class="mech-steps">
-                <li>Use <strong>Iainuki</strong> on the Guardian Berserker.</li>
-                <li>Use <strong>Zeninage</strong> on the Guardian Bats if needed.</li>
+                <li data-i18n-html="lw-samurai-step1">Use <strong>Iainuki</strong> on the Guardian Berserker.</li>
+                <li data-i18n-html="lw-samurai-step2">Use <strong>Zeninage</strong> on the Guardian Bats if needed.</li>
               </ul>
             </div>
           </div>
@@ -347,15 +354,15 @@
       <div class="section-nav">
         <a href="marble-dragon.html" class="nav-btn nav-prev">
           <div>
-            <span class="nav-label">Previous</span>
-            <span>← Marble Dragon</span>
+            <span class="nav-label" data-i18n="lw-nav-prev-label">Previous</span>
+            <span data-i18n="lw-nav-prev">← Marble Dragon</span>
           </div>
         </a>
-        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <a href="../index.html" class="nav-btn nav-home" data-i18n="lw-nav-home">⌂ Home</a>
         <a href="magitaur.html" class="nav-btn nav-next">
           <div>
-            <span class="nav-label">Next</span>
-            <span>Magitaur →</span>
+            <span class="nav-label" data-i18n="lw-nav-next-label">Next</span>
+            <span data-i18n="lw-nav-next">Magitaur →</span>
           </div>
         </a>
       </div>
@@ -378,6 +385,7 @@
   <script src="../js/theme.js"></script>
   <script src="../js/stars.js"></script>
   <script src="../js/lightbox.js"></script>
+  <script src="../js/language.js"></script>
   <script src="../js/nav.js"></script>
 </body>
 </html>

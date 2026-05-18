@@ -129,6 +129,45 @@
               </ul>
             </li>
           </ul>
+          <p style="margin-top:.9rem;margin-bottom:.5rem;" data-i18n-html="pj-geo-macros-intro">These macros can be used to more easily put Battle Bell on any Phantom Berserkers. These people may not be in the same party so we use the Attack 7 &amp; 8 markers to make it easier to target them.</p>
+          <div class="accordion">
+            <details class="accordion-item">
+              <summary data-i18n="pj-geo-macro1-label">Bell Macro 1</summary>
+              <div class="accordion-body">
+                <div class="macro-box">
+                  <button class="macro-copy-btn">Copy</button>
+                  <pre>/ac "Phantom Action I" &lt;attack7&gt;
+/wait 1
+/echo ------------------------
+/echo Bell 1 Applied
+/echo --
+/wait 26
+/echo &lt;se.3&gt; use Bell on 2 soon
+/wait 3
+/echo &lt;se.2&gt; use Bell on 2!
+/micon "Phantom Action I"</pre>
+                </div>
+              </div>
+            </details>
+            <details class="accordion-item">
+              <summary data-i18n="pj-geo-macro2-label">Bell Macro 2</summary>
+              <div class="accordion-body">
+                <div class="macro-box">
+                  <button class="macro-copy-btn">Copy</button>
+                  <pre>/ac "Phantom Action I" &lt;attack8&gt;
+/wait 1
+/echo ------------------------
+/echo Bell 2 Applied
+/echo --
+/wait 26
+/echo &lt;se.3&gt; use Bell on 1 soon
+/wait 3
+/echo &lt;se.2&gt; use Bell on 1!
+/micon "Phantom Action I"</pre>
+                </div>
+              </div>
+            </details>
+          </div>
         </div>
       </div>
 
@@ -314,6 +353,30 @@
               </ul>
             </li>
           </ul>
+          <p style="margin-top:.9rem;margin-bottom:.5rem;" data-i18n-html="pj-chemist-macro-intro">We will usually mark Chemists in other parties with Bind markers. This macro will make it easier to raise dead Chemists as it is quite important that they are alive. If multiple Bind targets are dead, it will target the first one until it stops being a valid Raise target.</p>
+          <div class="accordion">
+            <details class="accordion-item">
+              <summary data-i18n="pj-chemist-macro-label">Revive Chemist Macro</summary>
+              <div class="accordion-body">
+                <div class="macro-box">
+                  <button class="macro-copy-btn">Copy</button>
+                  <pre>/ac "Phantom Action III" &lt;bind1&gt;
+/ac "Phantom Action III" &lt;bind2&gt;
+/ac "Phantom Action III" &lt;bind3&gt;
+/ac "Phantom Action III" &lt;bind1&gt;
+/ac "Phantom Action III" &lt;bind2&gt;
+/ac "Phantom Action III" &lt;bind3&gt;
+/ac "Phantom Action III" &lt;bind1&gt;
+/ac "Phantom Action III" &lt;bind2&gt;
+/ac "Phantom Action III" &lt;bind3&gt;
+/ac "Phantom Action III" &lt;bind1&gt;
+/ac "Phantom Action III" &lt;bind2&gt;
+/ac "Phantom Action III" &lt;bind3&gt;
+/micon "Phantom Action III"</pre>
+                </div>
+              </div>
+            </details>
+          </div>
         </div>
       </div>
 
@@ -335,5 +398,6 @@
   <script src="../js/stars.js"></script>
   <script src="../js/language.js"></script>
   <script src="../js/nav.js"></script>
+  <script src="../js/copy.js"></script>
 </body>
 </html>

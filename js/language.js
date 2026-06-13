@@ -828,7 +828,9 @@
       'pj-geo-bell-desc': 'Keep active on Phantom Berserkers.',
       'pj-geo-macros-intro': 'These macros can be used to more easily put Battle Bell on any Phantom Berserkers. These people may not be in the same party so we use the Attack 7 &amp; 8 markers <img src="../assets/attackmarker.png" alt="Attack marker" class="inline-icon" /> to make it easier to target them.',
       'pj-geo-macro1-label': 'Bell Macro 1',
+      'pj-geo-macro1-content': '/ac "Phantom Action I" <attack7>\n/wait 1\n/echo ------------------------\n/echo Bell 1 Applied\n/echo --\n/wait 26\n/echo <se.3> use Bell on 2 soon\n/wait 3\n/echo <se.2> use Bell on 2!\n/micon "Phantom Action I"',
       'pj-geo-macro2-label': 'Bell Macro 2',
+      'pj-geo-macro2-content': '/ac "Phantom Action I" <attack8>\n/wait 1\n/echo ------------------------\n/echo Bell 2 Applied\n/echo --\n/wait 26\n/echo <se.3> use Bell on 1 soon\n/wait 3\n/echo <se.2> use Bell on 1!\n/micon "Phantom Action I"',
       'pj-tm-heading': 'Time Mage',
       'pj-tm-slowga': 'Slowga',
       'pj-tm-slowga-desc': 'Apply to all trash packs to slow their cast times. This is your primary priority.',
@@ -879,6 +881,7 @@
       'pj-chemist-revive-desc': 'The only means of raising fallen players inside the Forked Tower. Reviving the dead should always be your top priority.',
       'pj-chemist-macro-intro': 'We will usually mark Chemists in other parties with Bind markers <img src="../assets/bindmarker.png" alt="Bind marker" class="inline-icon" />. This macro will make it easier to raise dead Chemists as it is quite important that they are alive. If multiple Bind targets are dead, it will target the first one until it stops being a valid Revive target.',
       'pj-chemist-macro-label': 'Revive Chemist Macro',
+      'pj-chemist-macro-content': '/ac "Phantom Action III" <bind1>\n/ac "Phantom Action III" <bind2>\n/ac "Phantom Action III" <bind3>\n/ac "Phantom Action III" <bind1>\n/ac "Phantom Action III" <bind2>\n/ac "Phantom Action III" <bind3>\n/ac "Phantom Action III" <bind1>\n/ac "Phantom Action III" <bind2>\n/ac "Phantom Action III" <bind3>\n/ac "Phantom Action III" <bind1>\n/ac "Phantom Action III" <bind2>\n/ac "Phantom Action III" <bind3>\n/micon "Phantom Action III"',
       'pj-nav-home': '⌂ Home',
 
       // Phantom Berserker Page
@@ -1793,7 +1796,9 @@
       'pj-geo-bell-desc': 'Halte es auf Phantom-Berserkern aktiv.',
       'pj-geo-macros-intro': 'Diese Makros können genutzt werden, um Phantom-Berserkern leichter die Kampfesglocke zu geben. Diese Spieler sind möglicherweise nicht in derselben Gruppe, daher verwenden wir die Angriff-7- &amp; 8-Markierungen <img src="../assets/attackmarker.png" alt="Angriffsmarkierung" class="inline-icon" />, um sie leichter anzuvisieren.',
       'pj-geo-macro1-label': 'Glocken-Makro 1',
+      'pj-geo-macro1-content': '/ac "Phantomkommando 1" <attack7>\n/wait 1\n/echo ------------------------\n/echo Glocke 1 ausgeteilt\n/echo --\n/wait 26\n/echo <se.3> Glocke 2 ist bald fällig\n/wait 3\n/echo <se.2> Teile Glocke 2 aus!\n/micon "Phantomkommando 1"',
       'pj-geo-macro2-label': 'Glocken-Makro 2',
+      'pj-geo-macro2-content': '/ac "Phantomkommando 1" <attack8>\n/wait 1\n/echo ------------------------\n/echo Glocke 2 ausgeteilt\n/echo --\n/wait 26\n/echo <se.3> Glocke 1 ist bald fällig\n/wait 3\n/echo <se.2> Teile Glocke 1 aus!\n/micon "Phantomkommando 1"',
       'pj-tm-heading': 'Zeitmagier',
       'pj-tm-slowga': 'Kreszentes Gemachga',
       'pj-tm-slowga-desc': 'Wende es auf alle Trash-Gruppen an, um ihre Castzeiten zu verlangsamen. Dies ist deine primäre Priorität.',
@@ -1844,6 +1849,7 @@
       'pj-chemist-revive-desc': 'Die einzige Möglichkeit, gefallene Spieler im Fork-Turm wiederzubeleben. Das Wiederbeleben der Toten sollte immer deine oberste Priorität sein.',
       'pj-chemist-macro-intro': 'Alchemisten in anderen Gruppen werden üblicherweise mit Fesselmarkierungen <img src="../assets/bindmarker.png" alt="Fesselmarkierung" class="inline-icon" /> markiert. Dieses Makro erleichtert das Wiederbeleben gefallener Alchemisten, da es sehr wichtig ist, dass sie am Leben sind. Wenn mehrere Fessselziele tot sind, visiert es das erste an, bis es kein gültiges Wiederbelebungsziel mehr ist.',
       'pj-chemist-macro-label': 'Alchemist-Wiederbeleben-Makro',
+      'pj-chemist-macro-content': '/ac "Phantomkommando 3" <bind1>\n/ac "Phantomkommando 3" <bind2>\n/ac "Phantomkommando 3" <bind3>\n/ac "Phantomkommando 3" <bind1>\n/ac "Phantomkommando 3" <bind2>\n/ac "Phantomkommando 3" <bind3>\n/ac "Phantomkommando 3" <bind1>\n/ac "Phantomkommando 3" <bind2>\n/ac "Phantomkommando 3" <bind3>\n/ac "Phantomkommando 3" <bind1>\n/ac "Phantomkommando 3" <bind2>\n/ac "Phantomkommando 3" <bind3>\n/micon "Phantomkommando 3"',
       'pj-nav-home': '⌂ Startseite',
 
       // Phantom Berserker Page

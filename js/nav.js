@@ -141,6 +141,7 @@
               <a href="ftb/phantom-berserker.html#remove-mit-macros" class="nav-sub-link"><span data-i18n="pb-macros-heading">Remove Mitigation Macros</span></a>\
               <a href="ftb/phantom-berserker.html#boss1" class="nav-sub-link"><span data-i18n="pb-b1-heading">Boss 1: Demon Tablet</span></a>\
               <a href="ftb/phantom-berserker.html#boss2" class="nav-sub-link"><span data-i18n="pb-b2-heading">Boss 2: Dead Stars</span></a>\
+              <a href="ftb/phantom-berserker.html#bridges" class="nav-sub-link"><span data-i18n="pb-bridges-heading">Bridges: Progenitor/Progenitrix</span></a>\
               <a href="ftb/phantom-berserker.html#boss3" class="nav-sub-link"><span data-i18n="pb-b3-heading">Boss 3: Marble Dragon</span></a>\
               <a href="ftb/phantom-berserker.html#boss4" class="nav-sub-link"><span data-i18n="pb-b4-heading">Boss 4: Magitaur</span></a>\
             </div>\

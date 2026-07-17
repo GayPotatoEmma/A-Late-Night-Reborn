@@ -1313,6 +1313,8 @@ details.accordion-item[open] > summary {
 /* ── Under Construction ─────────────────────────────────────── */
 .section-card.wip { position: relative; overflow: hidden; opacity: 0.55; pointer-events: none; }
 .section-card.wip::after { content: "W.I.P."; position: absolute; top: 0.6rem; right: -1.8rem; bottom: auto; left: auto; height: auto; width: 5.5rem; background: #f59e0b; color: #0f172a; font-size: .5rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; text-align: center; padding: .28rem 0; transform: rotate(45deg); border-radius: 0; box-shadow: 0 2px 5px rgba(0,0,0,.45); z-index: 2; white-space: nowrap; pointer-events: none; }
+.raid-choice.wip { position: relative; overflow: hidden; }
+.raid-choice.wip::after { content: "W.I.P."; position: absolute; top: 0.6rem; right: -1.8rem; height: auto; width: 5.5rem; background: #f59e0b; color: #0f172a; font-size: .5rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; text-align: center; padding: .28rem 0; transform: rotate(45deg); border-radius: 0; box-shadow: 0 2px 5px rgba(0,0,0,.45); z-index: 2; white-space: nowrap; pointer-events: none; }
 .nav-btn.wip { position: relative; overflow: hidden; opacity: 0.45; pointer-events: none; }
 .nav-btn.wip::after { content: "W.I.P."; position: absolute; top: 0.35rem; right: -1.5rem; width: 5rem; background: #f59e0b; color: #0f172a; font-size: .42rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; text-align: center; padding: .2rem 0; transform: rotate(45deg); z-index: 2; white-space: nowrap; }
 .nav-page-link.wip { opacity: 0.4; pointer-events: none; }

@@ -148,15 +148,41 @@
           </div>\
         </div>\
       </div>\
+      <div class="nav-divider"></div>\
+      <div class="nav-raid-group" id="nav-raid-ftm">\
+        <div class="nav-raid-header nav-raid-toggle"><span data-i18n="raid-ftm-name">Forked Tower: Magic</span><span class="nav-raid-chevron">&#9656;</span></div>\
+        <div class="nav-raid-pages">\
+          <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge additional" data-i18n="phantom-job">Phantom Job</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ftm/phantom-jobs.html" class="nav-page-link"><span data-i18n="pjm-title">Phantom Jobs</span></a>\
+            <div class="nav-sub-links">\
+              <a href="ftm/phantom-jobs.html#overview" class="nav-sub-link"><span data-i18n="pjm-overview-heading">Overview</span></a>\
+              <a href="ftm/phantom-jobs.html#knight" class="nav-sub-link"><span data-i18n="pj-knight-heading">Knight</span></a>\
+              <a href="ftm/phantom-jobs.html#bard" class="nav-sub-link"><span data-i18n="pj-bard-heading">Bard</span></a>\
+              <a href="ftm/phantom-jobs.html#time-mage" class="nav-sub-link"><span data-i18n="pj-tm-heading">Time Mage</span></a>\
+              <a href="ftm/phantom-jobs.html#thief" class="nav-sub-link"><span data-i18n="pj-thief-heading">Thief</span></a>\
+              <a href="ftm/phantom-jobs.html#ranger" class="nav-sub-link"><span data-i18n="pj-ranger-heading">Ranger</span></a>\
+              <a href="ftm/phantom-jobs.html#samurai" class="nav-sub-link"><span data-i18n="pj-samurai-heading">Samurai</span></a>\
+              <a href="ftm/phantom-jobs.html#cannoneer" class="nav-sub-link"><span data-i18n="pj-cannoneer-heading">Cannoneer</span></a>\
+              <a href="ftm/phantom-jobs.html#dancer" class="nav-sub-link"><span data-i18n="pj-dancer-heading">Dancer</span></a>\
+              <a href="ftm/phantom-jobs.html#mystic-knight" class="nav-sub-link"><span data-i18n="pj-mystic-heading">Mystic Knight</span></a>\
+              <a href="ftm/phantom-jobs.html#chemist" class="nav-sub-link"><span data-i18n="pj-chemist-heading">Chemist/White Mage</span></a>\
+              <a href="ftm/phantom-jobs.html#black-mage" class="nav-sub-link"><span data-i18n="pjm-bm-heading">Black Mage</span></a>\
+            </div>\
+          </div>\
+        </div>\
+      </div>\
     </div>\
   </nav>';
 
   var inFTB = window.location.pathname.indexOf('/ftb/') !== -1;
+  var inFTM = window.location.pathname.indexOf('/ftm/') !== -1;
   var inBA  = window.location.pathname.indexOf('/ba/')  !== -1;
-  if (inFTB || inBA) {
+  if (inFTB || inFTM || inBA) {
     navHTML = navHTML
       .replace('href="index.html" class="nav-home-link"', 'href="../index.html" class="nav-home-link"')
       .replace(/href="ftb\//g, 'href="../ftb/')
+      .replace(/href="ftm\//g, 'href="../ftm/')
       .replace(/href="ba\//g, 'href="../ba/');
   }
 

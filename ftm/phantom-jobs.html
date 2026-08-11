@@ -6,7 +6,7 @@
   <title>Phantom Jobs | A Late Night Reborn</title>
   <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
   <meta property="og:title" content="Phantom Jobs | A Late Night Reborn" />
-  <meta property="og:description" content="Phantom Job ability usage and responsibilities for the Forked Tower: Blood." />
+  <meta property="og:description" content="Phantom Job ability usage and responsibilities for the Forked Tower: Magic." />
   <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="A Late Night Reborn" />
@@ -49,22 +49,22 @@
       <nav class="breadcrumb">
         <a href="../index.html">Home</a>
         <span class="breadcrumb-sep">/</span>
-        <span data-i18n="pj-breadcrumb">Phantom Jobs</span>
+        <span data-i18n="pjm-breadcrumb">Phantom Jobs</span>
       </nav>
 
       <!-- Page Header -->
       <div class="page-header">
-        <div class="page-badge additional" data-i18n="pj-badge">Phantom Job</div>
-        <h1 class="page-title additional-title" data-i18n="pj-title">Phantom Jobs</h1>
-        <p class="page-subtitle" data-i18n="pj-subtitle">Ability usage and responsibilities for common Phantom Jobs across the Forked Tower: Blood.</p>
+        <div class="page-badge additional" data-i18n="pjm-badge">Phantom Job</div>
+        <h1 class="page-title additional-title" data-i18n="pjm-title">Phantom Jobs</h1>
+        <p class="page-subtitle" data-i18n="pjm-subtitle">Ability usage and responsibilities for common Phantom Jobs across the Forked Tower: Magic.</p>
       </div>
 
       <!-- Overview -->
       <div class="content-card" id="overview">
-        <h2 class="card-heading purple" data-i18n="pj-overview-heading">Overview</h2>
+        <h2 class="card-heading purple" data-i18n="pjm-overview-heading">Overview</h2>
         <div class="content-body">
-          <p data-i18n="pj-overview-text">
-            This guide covers the core abilities and responsibilities for each Phantom Job in the Forked Tower: Blood. Each job has specific roles in boss encounters, traversal sections, or both. Refer to your job's section below for detailed usage notes.
+          <p data-i18n="pjm-overview-text">
+            This guide covers the core abilities and responsibilities for each Phantom Job in the Forked Tower: Magic. Each job has specific roles in boss encounters, traversal sections, or both. Refer to your job's section below for detailed usage notes.
           </p>
         </div>
       </div>
@@ -79,12 +79,6 @@
                 <li data-i18n="pj-knight-pray-desc">A 30-minute buff that decreases party damage taken by 10%. Use at any available crystals.</li>
               </ul>
             </li>
-            <li><strong data-i18n="pj-knight-pledge">Pledge</strong>
-              <ul class="mech-sub">
-                <li data-i18n="pj-knight-pledge-b2">Can be used on the fireballs during Boss 2 to block 2 hits. Pledge cannot cover all 3, so mitigate the first hit normally and use Pledge for the remaining two.</li>
-                <li data-i18n="pj-knight-pledge-b4">Use on Conduits during Boss 4 to negate their damage while standing inside them.</li>
-              </ul>
-            </li>
           </ul>
         </div>
       </div>
@@ -96,7 +90,7 @@
           <ul class="mech-steps">
             <li><strong data-i18n="pj-bard-romeo">Romeo's Ballad</strong>
               <ul class="mech-sub">
-                <li data-i18n="pj-bard-romeo-desc">Use when the Tower Idols on Bridges have all begun casting. Position on the outside of the group beforehand to avoid clipping players on the opposite side, which may cause stun failures.</li>
+                <li data-i18n="pjm-bard-romeo-desc">Use when the Tower Slimes have all begun casting during the Storm Generators Mini-Boss.</li>
               </ul>
             </li>
             <li><strong data-i18n="pj-bard-hero">Hero's Rime</strong>
@@ -113,64 +107,6 @@
         </div>
       </div>
 
-      <!-- Geomancer -->
-      <div class="content-card" id="geomancer">
-        <h2 class="card-heading gold" data-i18n="pj-geo-heading">Geomancer</h2>
-        <div class="content-body">
-          <ul class="mech-steps">
-            <li><strong data-i18n="pj-geo-suspend">Suspend</strong>
-              <ul class="mech-sub">
-                <li data-i18n="pj-geo-suspend-desc">Use before crossing blue electric floor tiles in Hallways and Bridges. This allows you to float above the floor and reach the buttons that disable it.</li>
-              </ul>
-            </li>
-            <li><strong data-i18n="pj-geo-bell">Battle Bell</strong>
-              <ul class="mech-sub">
-                <li data-i18n="pj-geo-bell-desc">Keep active on Phantom Berserkers.</li>
-              </ul>
-            </li>
-          </ul>
-          <p style="margin-top:.9rem;margin-bottom:.5rem;" data-i18n-html="pj-geo-macros-intro">These macros can be used to more easily put Battle Bell on any Phantom Berserkers. These people may not be in the same party so we use the Attack 7 &amp; 8 markers to make it easier to target them.</p>
-          <div class="accordion">
-            <details class="accordion-item">
-              <summary data-i18n="pj-geo-macro1-label">Bell Macro 1</summary>
-              <div class="accordion-body">
-                <div class="macro-box">
-                  <button class="macro-copy-btn">Copy</button>
-                  <pre data-i18n="pj-geo-macro1-content">/ac "Phantom Action I" &lt;attack7&gt;
-/wait 1
-/echo ------------------------
-/echo Bell 1 Applied
-/echo --
-/wait 26
-/echo &lt;se.3&gt; use Bell on 2 soon
-/wait 3
-/echo &lt;se.2&gt; use Bell on 2!
-/micon "Phantom Action I"</pre>
-                </div>
-              </div>
-            </details>
-            <details class="accordion-item">
-              <summary data-i18n="pj-geo-macro2-label">Bell Macro 2</summary>
-              <div class="accordion-body">
-                <div class="macro-box">
-                  <button class="macro-copy-btn">Copy</button>
-                  <pre data-i18n="pj-geo-macro2-content">/ac "Phantom Action I" &lt;attack8&gt;
-/wait 1
-/echo ------------------------
-/echo Bell 2 Applied
-/echo --
-/wait 26
-/echo &lt;se.3&gt; use Bell on 1 soon
-/wait 3
-/echo &lt;se.2&gt; use Bell on 1!
-/micon "Phantom Action I"</pre>
-                </div>
-              </div>
-            </details>
-          </div>
-        </div>
-      </div>
-
       <!-- Time Mage -->
       <div class="content-card" id="time-mage">
         <h2 class="card-heading gold" data-i18n="pj-tm-heading">Time Mage</h2>
@@ -183,19 +119,7 @@
             </li>
             <li><strong data-i18n="pj-tm-dispel">Dispel</strong>
               <ul class="mech-sub">
-                <li data-i18n="pj-tm-dispel-desc">Required on specific enemies to remove buffs that would otherwise cause a wipe.
-                  <ul class="mech-sub">
-                    <li data-i18n-html="pj-tm-dispel-b1"><strong>Boss 1, Add Phase:</strong> Use on the large add.</li>
-                    <li data-i18n-html="pj-tm-dispel-hw"><strong>Hallways, Tower Scarab:</strong> Use after it casts Rhino Guard.</li>
-                    <li data-i18n-html="pj-tm-dispel-br"><strong>Bridges, Tower Abyss:</strong> Use after it casts Diffuse Darkness.
-                      <div class="alert-box danger" style="margin-top:.5rem;">
-                        <span class="alert-icon">&#9888;</span>
-                        <span data-i18n="pj-tm-dispel-br-warn">Failing to dispel Diffuse Darkness can wipe the raid.</span>
-                      </div>
-                    </li>
-                    <li data-i18n-html="pj-tm-dispel-lw"><strong>Lockwards, Guardian Knight:</strong> Use on pull and whenever it reapplies its invulnerability.</li>
-                  </ul>
-                </li>
+                <li data-i18n="pj-tm-dispel-desc">Required on specific enemies to remove buffs that would otherwise cause a wipe.</li>
               </ul>
             </li>
           </ul>
@@ -209,20 +133,10 @@
           <ul class="mech-steps">
             <li><strong data-i18n="pj-thief-detection">Trap Detection</strong>
               <ul class="mech-sub">
-                <li><span data-i18n="pj-thief-detection-desc">Reveals hidden traps in Hallways, Bridges, and Lockwards.</span>
+                <li><span data-i18n="pjm-thief-detection-desc">Reveals hidden traps in Bridgeways and Bridge 2.</span>
                   <div class="alert-box info" style="margin-top:.5rem;">
                     <span class="alert-icon">&#8505;</span>
                     <span data-i18n="pj-thief-detection-info">In some cases, Phantom Rangers may choose to blind-snipe traps instead. Your raid leader will inform you if this applies.</span>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <li><strong data-i18n="pj-thief-pilfer">Pilfer Weapon</strong>
-              <ul class="mech-sub">
-                <li><span data-i18n="pj-thief-pilfer-desc">Use on the Phantom Weapon in Lockwards.</span>
-                  <div class="alert-box warning" style="margin-top:.5rem;">
-                    <span class="alert-icon">&#9888;</span>
-                    <span data-i18n="pj-thief-pilfer-warn">If left unused, the Phantom Weapon's attacks become much larger and can easily wipe the raid.</span>
                   </div>
                 </li>
               </ul>
@@ -243,7 +157,7 @@
           <ul class="mech-steps">
             <li><strong data-i18n="pj-ranger-falcon">Occult Falcon</strong>
               <ul class="mech-sub">
-                <li><span data-i18n="pj-ranger-falcon-desc">Use to safely disarm traps in Hallways, Bridges, and Lockwards.</span>
+                <li><span data-i18n="pjm-ranger-falcon-desc">Use to safely disarm traps in Bridgeways and Bridge 2.</span>
                   <div class="alert-box warning" style="margin-top:.5rem;">
                     <span class="alert-icon">&#9888;</span>
                     <span data-i18n="pj-ranger-falcon-warn">Only disarm when it is safe to do so. If the raid leader calls to hold, do not disarm.</span>
@@ -312,11 +226,14 @@
             <li><strong data-i18n="pj-dancer-mesmerize">Mesmerize</strong>
               <ul class="mech-sub">
                 <li><span data-i18n="pj-dancer-mesmerize-desc">Keep active on the boss at all times to increase their damage taken. This is a significant gain for the raid.</span>
-                  <div class="alert-box info" style="margin-top:.5rem;">
-                    <span class="alert-icon">&#8505;</span>
-                    <span data-i18n="pj-dancer-mesmerize-info">Does not stack with Cannoneer's Silver Cannon.</span>
-                  </div>
+                  <ul class="mech-sub">
+                    <li data-i18n="pjm-dancer-mesmerize-index">This also applies a 40% damage reduction on the boss for 4 seconds. This is highly recommended to have during The Index.</li>
+                  </ul>
                 </li>
+                <div class="alert-box info" style="margin-top:.5rem;">
+                  <span class="alert-icon">&#8505;</span>
+                  <span data-i18n="pj-dancer-mesmerize-info">Does not stack with Cannoneer's Silver Cannon.</span>
+                </div>
               </ul>
             </li>
           </ul>
@@ -347,13 +264,13 @@
         <h2 class="card-heading gold" data-i18n="pj-chemist-heading">Chemist/White Mage</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li><strong data-i18n="pj-chemist-revive">Revive</strong>
+            <li><strong data-i18n="pj-chemist-revive">Revive / Occult Raise</strong>
               <ul class="mech-sub">
                 <li data-i18n="pj-chemist-revive-desc">The only means of raising fallen players inside the Forked Tower. Reviving the dead should always be your top priority.</li>
               </ul>
             </li>
           </ul>
-          <p style="margin-top:.9rem;margin-bottom:.5rem;" data-i18n-html="pj-chemist-macro-intro">We will usually mark Chemists in other parties with Bind markers. This macro will make it easier to raise dead Chemists as it is quite important that they are alive. If multiple Bind targets are dead, it will target the first one until it stops being a valid Raise target.</p>
+          <p style="margin-top:.9rem;margin-bottom:.5rem;" data-i18n-html="pj-chemist-macro-intro">We will usually mark Chemists and White Mages in other parties with Bind markers. These macros will make it easier to raise them as it is quite important that they are alive. If multiple Bind targets are dead, it will target the first one until it stops being a valid Revive target.</p>
           <div class="accordion">
             <details class="accordion-item">
               <summary data-i18n="pj-chemist-macro-label">Chemist Revive Macro</summary>
@@ -401,9 +318,23 @@
         </div>
       </div>
 
+      <!-- Black Mage -->
+      <div class="content-card" id="black-mage">
+        <h2 class="card-heading gold" data-i18n="pjm-bm-heading">Black Mage</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong data-i18n="pjm-bm-toad">Occult Toad</strong>
+              <ul class="mech-sub">
+                <li data-i18n="pjm-bm-toad-desc">Use on trash packs to temporarily turn them into Frogs. This prevents them from using attacks (except auto attacks) and reduces their damage dealt by 99%.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <!-- Section Nav -->
       <div class="section-nav">
-        <a href="../index.html" class="nav-btn nav-home" data-i18n="pj-nav-home">&#8962; Home</a>
+        <a href="../index.html" class="nav-btn nav-home" data-i18n="pjm-nav-home">&#8962; Home</a>
       </div>
 
     </main>
@@ -419,6 +350,6 @@
   <script src="../js/stars.js"></script>
   <script src="../js/language.js"></script>
   <script src="../js/nav.js"></script>
-  <script src="../js/copy.js"></script>
+
 </body>
 </html>

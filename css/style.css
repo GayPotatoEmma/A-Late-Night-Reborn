@@ -818,9 +818,9 @@ img { max-width: 100%; display: block; }
 /* ── Elemental Weakness ───────────────────────────── */
 
 .elemental-weakness {
-  margin-top: .95rem;
-  padding-top: .8rem;
-  border-top: 1px solid rgba(255, 255, 255, .08);
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   font-size: .9rem;
   color: var(--text-secondary);
   line-height: 1.65;
@@ -832,7 +832,7 @@ img { max-width: 100%; display: block; }
 }
 
 [data-theme="light"] .elemental-weakness {
-  border-top-color: rgba(0, 0, 0, .08);
+  border-top-color: rgba(0, 0, 0, 0.15);
 }
 
 /* ── Alert / Info Boxes ───────────────────────────── */

@@ -83,7 +83,7 @@
             </div>\
           </div>\
           <div class="nav-section">\
-            <div class="nav-section-label nav-section-toggle"><span class="nav-badge traversal" data-i18n="traversal">Traversal</span><span class="nav-chevron">&#9656;</span></div>\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge puzzle" data-i18n="puzzle">Puzzle</span><span class="nav-chevron">&#9656;</span></div>\
             <a href="ftb/lockwards.html" class="nav-page-link"><span data-i18n="binding-lock">The Binding Lock</span></a>\
             <div class="nav-sub-links">\
               <a href="ftb/lockwards.html#overview" class="nav-sub-link"><span data-i18n="lw-overview-heading">Overview</span></a>\

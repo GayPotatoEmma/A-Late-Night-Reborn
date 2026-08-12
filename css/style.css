@@ -801,19 +801,39 @@ img { max-width: 100%; display: block; }
 /* ── Element Colours ──────────────────────────────── */
 /* For use in enemy/mechanic element labels only      */
 
-.element-wind      { color: #71ff25; }
-.element-fire      { color: #f04d4a; }
-.element-ice       { color: #71ffff; }
-.element-lightning { color: #c446ff; }
-.element-earth     { color: #ffff7c; }
-.element-water     { color: #5ea5ff; }
+.element-wind      { color: #71ff25; font-weight: 600; text-shadow: 0 0 8px rgba(113, 255, 37, 0.45); }
+.element-fire      { color: #f04d4a; font-weight: 600; text-shadow: 0 0 8px rgba(240, 77, 74, 0.45); }
+.element-ice       { color: #71ffff; font-weight: 600; text-shadow: 0 0 8px rgba(113, 255, 255, 0.45); }
+.element-lightning { color: #c446ff; font-weight: 600; text-shadow: 0 0 8px rgba(196, 70, 255, 0.45); }
+.element-earth     { color: #ffff7c; font-weight: 600; text-shadow: 0 0 8px rgba(255, 255, 124, 0.45); }
+.element-water     { color: #5ea5ff; font-weight: 600; text-shadow: 0 0 8px rgba(94, 165, 255, 0.45); }
 
-[data-theme="light"] .element-wind      { color: #2d8a00; }
-[data-theme="light"] .element-fire      { color: #c0221f; }
-[data-theme="light"] .element-ice       { color: #0284c7; }
-[data-theme="light"] .element-lightning { color: #7e22ce; }
-[data-theme="light"] .element-earth     { color: #854d0e; }
-[data-theme="light"] .element-water     { color: #1d4ed8; }
+[data-theme="light"] .element-wind      { color: #2d8a00; text-shadow: 0 0 8px rgba(45, 138, 0, 0.25); }
+[data-theme="light"] .element-fire      { color: #c0221f; text-shadow: 0 0 8px rgba(192, 34, 31, 0.25); }
+[data-theme="light"] .element-ice       { color: #0284c7; text-shadow: 0 0 8px rgba(2, 132, 199, 0.25); }
+[data-theme="light"] .element-lightning { color: #7e22ce; text-shadow: 0 0 8px rgba(126, 34, 206, 0.25); }
+[data-theme="light"] .element-earth     { color: #854d0e; text-shadow: 0 0 8px rgba(133, 77, 14, 0.25); }
+[data-theme="light"] .element-water     { color: #1d4ed8; text-shadow: 0 0 8px rgba(29, 78, 216, 0.25); }
+
+/* ── Elemental Weakness ───────────────────────────── */
+
+.elemental-weakness {
+  margin-top: .95rem;
+  padding-top: .8rem;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  font-size: .9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.elemental-weakness strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+[data-theme="light"] .elemental-weakness {
+  border-top-color: rgba(0, 0, 0, .08);
+}
 
 /* ── Alert / Info Boxes ───────────────────────────── */
 

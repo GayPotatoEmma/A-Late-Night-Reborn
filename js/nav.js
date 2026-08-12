@@ -177,13 +177,11 @@
 
   var inFTB = window.location.pathname.indexOf('/ftb/') !== -1;
   var inFTM = window.location.pathname.indexOf('/ftm/') !== -1;
-  var inBA  = window.location.pathname.indexOf('/ba/')  !== -1;
-  if (inFTB || inFTM || inBA) {
+  if (inFTB || inFTM) {
     navHTML = navHTML
       .replace('href="index.html" class="nav-home-link"', 'href="../index.html" class="nav-home-link"')
       .replace(/href="ftb\//g, 'href="../ftb/')
-      .replace(/href="ftm\//g, 'href="../ftm/')
-      .replace(/href="ba\//g, 'href="../ba/');
+      .replace(/href="ftm\//g, 'href="../ftm/');
   }
 
   document.body.insertAdjacentHTML('beforeend', navHTML);

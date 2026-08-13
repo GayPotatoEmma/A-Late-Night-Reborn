@@ -153,6 +153,22 @@
         <div class="nav-raid-header nav-raid-toggle"><span>Forked Tower: Magic</span><span class="nav-raid-chevron">&#9656;</span></div>\
         <div class="nav-raid-pages">\
           <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 1</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ftm/twoheadedaevis.html" class="nav-page-link"><span>Two-headed Aevis</span></a>\
+            <div class="nav-sub-links">\
+              <a href="ftm/twoheadedaevis.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="ftm/twoheadedaevis.html#timeline" class="nav-sub-link"><span>Fight Timeline</span></a>\
+              <a href="ftm/twoheadedaevis.html#buffet" class="nav-sub-link"><span>Buffet</span></a>\
+              <a href="ftm/twoheadedaevis.html#breath-and-fugue" class="nav-sub-link"><span>Breath and Fugue</span></a>\
+              <a href="ftm/twoheadedaevis.html#blazeloop-and-crossblaze" class="nav-sub-link"><span>Blazeloop and Crossblaze</span></a>\
+              <a href="ftm/twoheadedaevis.html#arcane-revelation-1" class="nav-sub-link"><span>Arcane Revelation 1</span></a>\
+              <a href="ftm/twoheadedaevis.html#breathy-duet" class="nav-sub-link"><span>Summon &amp; Breathy Duet</span></a>\
+              <a href="ftm/twoheadedaevis.html#arcane-revelation-2" class="nav-sub-link"><span>Arcane Revelation 2</span></a>\
+              <a href="ftm/twoheadedaevis.html#hissing-resonance" class="nav-sub-link"><span>Hissing Resonance</span></a>\
+              <a href="ftm/twoheadedaevis.html#waymarks" class="nav-sub-link"><span>Waymarks</span></a>\
+            </div>\
+          </div>\
+          <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge additional">Phantom Job</span><span class="nav-chevron">&#9656;</span></div>\
             <a href="ftm/phantom-jobs.html" class="nav-page-link"><span>Phantom Jobs</span></a>\
             <div class="nav-sub-links">\

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Two-headed Aevis | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Two-headed Aevis | A Late Night Reborn" />
+  <meta property="og:description" content="Boss 1 guide for the Forked Tower: Magic." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Two-headed Aevis</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge boss">Boss 1</div>
+        <h1 class="page-title boss-title">Two-headed Aevis</h1>
+        <p class="page-subtitle"><em>"Given its powers of flight, this gargantuan serpent may seem a close relative of winged scalekin like the sanuwa. That its two heads have separate elemental affinities, however, would suggest it is in fact an arcane fusion of different creatures. One need not look so far as the ancient Allagans, known creators of chimeras like the minotaur, to find those with the ambition to produce ever more powerful life-forms. Thus it stands that the two-headed aevis was likely wrought by mages of the Fifth Astral Era in their quest for weapons of war."</em></p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p>
+            At the start, <strong>Buffet</strong> tethers every player to one boss head (Blue Head or Green Head). Each player can only deal damage to their assigned head for the remainder of the encounter.
+          </p>
+          <div class="elemental-weakness">
+            <strong>Elemental Weakness:</strong> <span class="element-fire">Fire</span> (Blue Head), <span class="element-wind">Wind</span> (Green Head)
+          </div>
+        </div>
+      </div>
+
+      <!-- Fight Timeline -->
+      <div class="content-card" id="timeline">
+        <h2 class="card-heading teal">Fight Timeline</h2>
+        <div class="content-body">
+          <div class="tl-legend">
+            <span class="tl-badge raidwide">Raidwide</span>
+            <span class="tl-badge tankbuster">Tankbuster</span>
+            <span class="tl-badge mechanic">Mechanic</span>
+            <span class="tl-badge enrage">Enrage</span>
+          </div>
+          <div class="timeline">
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Buffet</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Tethers players to the head on their side</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Breath and Fugue</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thunderfrost Tempest</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Blazeloop and Crossblaze</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Breath and Fugue</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Opposite from the first cast</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Archaeofury</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Arcane Revelation 1</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spawns portals, be lined up with the color that's not casting</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Two Terrors (Line Cleaves, one lane will be safe)</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Summon</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Breathy Duet</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Arcane Revelation 2</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spawns portals, combined with another Breath and Fugue</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thunderfrost Tempest</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Archaeofury</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Hissing Resonance</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Assigns personal colored knockback debuffs</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Blazeloop and Crossblaze</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thunderfrost Tempest</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Arcane Revelation 1</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spawns portals, be lined up with the color that's not casting</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Two Terrors (Line Cleaves, one lane will be safe)</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Arcane Revelation 2</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spawns portals, combined with another Breath and Fugue</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thunderfrost Tempest</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Summon</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Breathy Duet</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Archaeofury</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row enrage"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thunderfrost Tempest, 10s cast &nbsp;<em>(Resolves @ 6:35)</em></span><span class="tl-badge enrage">Enrage</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buffet -->
+      <div class="content-card" id="buffet">
+        <h2 class="card-heading gold">Buffet</h2>
+        <div class="content-body">
+          <p>Both heads tether to all players on their respective half of the arena, inflicting a debuff that restricts players to only attacking their tethered head.</p>
+          <p style="margin-top:.9rem;">Preposition the raid prior to the pull as follows:</p>
+          <ul class="mech-steps">
+            <li><strong>Parties A, B, and C:</strong> Start on the left side of the arena to tether to and attack the <strong>Blue Head</strong>.</li>
+            <li><strong>Parties 1, 2, and 3:</strong> Start on the right side of the arena to tether to and attack the <strong>Green Head</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Breath and Fugue -->
+      <div class="content-card" id="breath-and-fugue">
+        <h2 class="card-heading gold">Breath and Fugue</h2>
+        <div class="content-body">
+          <p>Both heads will start casting at the same time: one head casts <strong>Breath</strong> while the other casts <strong>Fugue</strong>. Whichever head is casting Breath will tether to the center of the arena, indicating which variation is happening.</p>
+          <ul class="mech-steps">
+            <li><strong>Blue Head casting Breath:</strong>
+              <ul class="mech-sub">
+                <li>Move close to the <strong>front corners</strong> of the arena.</li>
+                <li>Avoid the large <strong>circle AoE</strong> in the center and the giant <strong>donut AoE</strong> surrounding the boss.</li>
+              </ul>
+            </li>
+            <li><strong>Green Head casting Breath:</strong>
+              <ul class="mech-sub">
+                <li>Preposition near the <strong>center</strong> of the arena.</li>
+                <li>Ride the <strong>knockback</strong> to the back of the arena to avoid the large <strong>circle AoE</strong> centered on the boss.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Blazeloop and Crossblaze -->
+      <div class="content-card" id="blazeloop-and-crossblaze">
+        <h2 class="card-heading gold">Blazeloop and Crossblaze</h2>
+        <div class="content-body">
+          <p>One of the heads will tether to the ground and begin casting one of two patterns. Either head can start the pattern, and the other head will always cast the inverse follow-up:</p>
+          <ul class="mech-steps">
+            <li><strong>Same mechanic cast twice (Repeat):</strong> If the first head casts <strong>Blazeloop &amp; Repeat</strong>, the follow-up will be <strong>Crossblaze &amp; Repeat</strong> (or vice versa if starting with Crossblaze).</li>
+            <li><strong>Alternating mechanics:</strong> If the first head casts <strong>Blazeloop &amp; Crossblaze</strong>, the follow-up will be <strong>Crossblaze &amp; Blazeloop</strong> (or vice versa if starting with Crossblaze).</li>
+          </ul>
+          <p style="margin-top:.9rem;">Before each cast resolves, a small circular bait AoE will appear on the ground first. Do not get baited into premature dodges by this initial circle.</p>
+          <ul class="mech-steps" style="margin-top:.75rem;">
+            <li><strong>Blazeloop:</strong> Becomes a <strong>donut AoE</strong> immediately after the small circle resolves. Step inside the donut area once the initial circle vanishes.</li>
+            <li><strong>Crossblaze:</strong> Becomes a large <strong>cross AoE</strong> immediately after the small circle resolves. Ensure you are standing off-cardinal (out of line with the cross arms).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Arcane Revelation 1 -->
+      <div class="content-card" id="arcane-revelation-1">
+        <h2 class="card-heading gold">Arcane Revelation 1</h2>
+        <div class="content-body">
+          <p>A set of portals will spawn diagonally across the arena. When triggered, portals fire line AoEs both forward and backward. Each head lines up with the lanes on its respective half of the arena.</p>
+          <p style="margin-top:.9rem;">One of the two heads will display a <strong>glowing ring</strong> around it. This indicates that this head will cleave both of its lanes, and all portals matching its color will activate.</p>
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>How to resolve:</strong>
+              <ul class="mech-sub">
+                <li>Move over to the side of the <strong>non-glowing head</strong>.</li>
+                <li>Stand in the lane that the non-glowing head is <strong>not</strong> directly lined up with.</li>
+                <li>Line yourself up with the colored portals that are <strong>not activated</strong>.</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="alert-box warning" style="margin-top:1rem;">
+            <span class="alert-icon">&#9888;</span>
+            <span>Under certain portal patterns, the safe spot within melee range can be quite tight. Take extra care with your positioning.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summon & Breathy Duet -->
+      <div class="content-card" id="breathy-duet">
+        <h2 class="card-heading gold">Summon &amp; Breathy Duet</h2>
+        <div class="content-body">
+          <p>The boss will first cast <strong>Summon</strong>, spawning a set of four ice cones and four lightning cones around the arena. When triggered, each cone fires a large conal AoE.</p>
+          <p style="margin-top:.9rem;">The heads will then cast <strong>Breathy Duet</strong> and tether to various locations across the arena. The sequence resolves as follows:</p>
+          <ul class="mech-steps">
+            <li><strong>Telegraph Phase:</strong> The heads telegraph all tether locations in order. Use this time to identify your initial safe spot and start prepositioning there.</li>
+            <li><strong>Resolution Phase:</strong> Large circle AoEs explode at each telegraphed tether location in order, which also triggers their matching element cones to fire.</li>
+          </ul>
+          <div class="alert-box tip" style="margin-top:1rem;">
+            <span class="alert-icon">✦</span>
+            <span>Based on the order of the telegraphs, determine the sequence of safe spots. You will always move continuously in a circle from waymark to waymark to dodge each explosion.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arcane Revelation 2 -->
+      <div class="content-card" id="arcane-revelation-2">
+        <h2 class="card-heading gold">Arcane Revelation 2</h2>
+        <div class="content-body">
+          <p>Similar to the first Arcane Revelation, but with two lines of portals in a cross formation, combined with a Fugue attack from one of the heads.</p>
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Green Head casting Fulgurous Fugue:</strong>
+              <ul class="mech-sub">
+                <li>Line up with the <strong>Blue Portals</strong>.</li>
+                <li>Stay <strong>close</strong> to avoid the donut AoE.</li>
+              </ul>
+            </li>
+            <li><strong>Blue Head casting Freezing Fugue:</strong>
+              <ul class="mech-sub">
+                <li>Line up with the <strong>Green Portals</strong>.</li>
+                <li>Stay <strong>far</strong> away to avoid the circle AoE.</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="alert-box tip" style="margin-top:1rem;">
+            <span class="alert-icon">✦</span>
+            <span>Stay relatively close to the center of the arena while making your dodges, as the casts resolve quite quickly.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hissing Resonance -->
+      <div class="content-card" id="hissing-resonance">
+        <h2 class="card-heading gold">Hissing Resonance</h2>
+        <div class="content-body">
+          <p>The boss assigns personal debuffs to all players: <strong>Blue Noise</strong> or <strong>Green Noise</strong>, with a directional arrow of <strong>Westerly</strong> or <strong>Easterly</strong>. This mechanic is paired with another set of <strong>Blazeloop and Crossblaze</strong>.</p>
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Knockback Resolution:</strong>
+              <ul class="mech-sub">
+                <li>When the head matching your debuff color resolves its Blazeloop or Crossblaze, you will be knocked back in the direction of your debuff arrow.</li>
+                <li>The knockback distance is roughly equal to the width of one lane.</li>
+                <li>This knockback happens twice in total, once for each mechanic cast by your matched head.</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="alert-box tip" style="margin-top:1rem;">
+            <span class="alert-icon">✦</span>
+            <span>Knockback immunity abilities (such as Surecast or Arm's Length) can resist the knockback, but will only cover one of the two pushes.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Waymarks -->
+      <div class="content-card" id="waymarks">
+        <h2 class="card-heading teal">Waymarks</h2>
+        <div class="content-body">
+          <p>Below is the waymark setup used for this encounter, primarily to assist with callouts during <strong>Breathy Duet</strong>. The order of the waymarks will be called out for the safe route.</p>
+          <div class="img-row single" style="margin-top:1rem;">
+            <img src="assets/boss1/waymarks.png" alt="Two-headed Aevis Waymarks Setup" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <div class="nav-btn nav-next wip">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>Bridgeways →</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/nav.js"></script>
+
+</body>
+</html>

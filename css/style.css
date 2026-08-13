@@ -297,6 +297,7 @@ img { max-width: 100%; display: block; }
 
 .nav-badge.boss      { color: #fde68a; background: rgba(251,191,36,.1);  border: 1px solid rgba(251,191,36,.22); }
 .nav-badge.traversal { color: #6ee7b7; background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.2);  }
+.nav-badge.puzzle    { color: #fda4af; background: rgba(251,113,133,.08); border: 1px solid rgba(251,113,133,.2); }
 .nav-badge.additional { color: #c4b5fd; background: rgba(167,139,250,.1); border: 1px solid rgba(167,139,250,.22); }
 .nav-badge.fate      { color: #d8b4fe; background: rgba(192,86,253,.12);  border: 1px solid rgba(192,86,253,.3);   }
 .nav-badge.support   { color: #7dd3fc; background: rgba(56,189,248,.1);   border: 1px solid rgba(56,189,248,.22);  }
@@ -677,6 +678,12 @@ img { max-width: 100%; display: block; }
   border: 1px solid rgba(52,211,153,.2);
 }
 
+.page-badge.puzzle {
+  color: #fda4af;
+  background: rgba(251,113,133,.08);
+  border: 1px solid rgba(251,113,133,.2);
+}
+
 .page-badge.additional {
   color: #c4b5fd;
   background: rgba(167,139,250,.1);
@@ -712,6 +719,13 @@ img { max-width: 100%; display: block; }
 
 .page-title.traversal-title {
   background: linear-gradient(130deg, #f0fdf4 0%, #34d399 40%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-title.puzzle-title {
+  background: linear-gradient(130deg, #fff1f2 0%, #fb7185 40%, #c084fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1494,6 +1508,12 @@ html.theme-transitioning *::after {
   background-clip: text;
 }
 
+[data-theme="light"] .page-title.puzzle-title {
+  background: linear-gradient(130deg, #881337 0%, #e11d48 40%, #6d28d9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 [data-theme="light"] .page-title.additional-title {
   background: linear-gradient(130deg, #4c1d95 0%, #7c3aed 45%, #6d28d9 100%);
   -webkit-background-clip: text;
@@ -1536,6 +1556,10 @@ html.theme-transitioning *::after {
 [data-theme="light"] .card-badge.traversal,
 [data-theme="light"] .nav-badge.traversal,
 [data-theme="light"] .page-badge.traversal { color: #065f46; background: rgba(52,211,153,.15); border-color: rgba(52,211,153,.4); }
+
+[data-theme="light"] .card-badge.puzzle,
+[data-theme="light"] .nav-badge.puzzle,
+[data-theme="light"] .page-badge.puzzle    { color: #9f1239; background: rgba(251,113,133,.15); border-color: rgba(251,113,133,.4); }
 
 [data-theme="light"] .card-badge.additional,
 [data-theme="light"] .nav-badge.additional,

@@ -166,6 +166,20 @@
               <a href="ftm/two-headed-aevis.html#arcane-revelation-2" class="nav-sub-link"><span>Arcane Revelation 2</span></a>\
               <a href="ftm/two-headed-aevis.html#hissing-resonance" class="nav-sub-link"><span>Hissing Resonance</span></a>\
               <a href="ftm/two-headed-aevis.html#waymarks" class="nav-sub-link"><span>Waymarks</span></a>\
+          </div>\
+          <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 2</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ftm/sword-dancer.html" class="nav-page-link"><span>Sword Dancer</span></a>\
+            <div class="nav-sub-links">\
+              <a href="ftm/sword-dancer.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="ftm/sword-dancer.html#timeline" class="nav-sub-link"><span>Fight Timeline</span></a>\
+              <a href="ftm/sword-dancer.html#throwing-swords" class="nav-sub-link"><span>Throwing Swords &amp; Martial Mystique</span></a>\
+              <a href="ftm/sword-dancer.html#cycloswords-unsheathed-1" class="nav-sub-link"><span>Cycloswords Unsheathed 1</span></a>\
+              <a href="ftm/sword-dancer.html#sword-dance" class="nav-sub-link"><span>Sword Dance</span></a>\
+              <a href="ftm/sword-dancer.html#leaping-lift" class="nav-sub-link"><span>Leaping Lift</span></a>\
+              <a href="ftm/sword-dancer.html#cycloswords-unsheathed-2" class="nav-sub-link"><span>Cycloswords Unsheathed 2</span></a>\
+              <a href="ftm/sword-dancer.html#cycloswords-unsheathed-3" class="nav-sub-link"><span>Cycloswords Unsheathed 3</span></a>\
+              <a href="ftm/sword-dancer.html#waymarks" class="nav-sub-link"><span>Waymarks</span></a>\
             </div>\
           </div>\
           <div class="nav-section">\

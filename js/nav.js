@@ -166,6 +166,7 @@
               <a href="ftm/two-headed-aevis.html#arcane-revelation-2" class="nav-sub-link"><span>Arcane Revelation 2</span></a>\
               <a href="ftm/two-headed-aevis.html#hissing-resonance" class="nav-sub-link"><span>Hissing Resonance</span></a>\
               <a href="ftm/two-headed-aevis.html#waymarks" class="nav-sub-link"><span>Waymarks</span></a>\
+            </div>\
           </div>\
           <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 2</span><span class="nav-chevron">&#9656;</span></div>\
@@ -203,6 +204,23 @@
               <a href="ftm/clockwards.html#the-puzzle" class="nav-sub-link"><span>The Puzzle</span></a>\
               <a href="ftm/clockwards.html#lockward" class="nav-sub-link"><span>Lockward</span></a>\
               <a href="ftm/clockwards.html#calculator" class="nav-sub-link"><span>Calculator</span></a>\
+            </div>\
+          </div>\
+          <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 4</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ftm/the-index.html" class="nav-page-link"><span>The Index</span></a>\
+            <div class="nav-sub-links">\
+              <a href="ftm/the-index.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="ftm/the-index.html#timeline" class="nav-sub-link"><span>Fight Timeline</span></a>\
+              <a href="ftm/the-index.html#quadrilogy" class="nav-sub-link"><span>Quadrilogy of Implements</span></a>\
+              <a href="ftm/the-index.html#all-knowing-flames" class="nav-sub-link"><span>All-Knowing Flames</span></a>\
+              <a href="ftm/the-index.html#elemental-rings" class="nav-sub-link"><span>Elemental Rings</span></a>\
+              <a href="ftm/the-index.html#elementary-expansion" class="nav-sub-link"><span>Elementary Expansion</span></a>\
+              <a href="ftm/the-index.html#elementary-chemistry" class="nav-sub-link"><span>Elementary Chemistry</span></a>\
+              <a href="ftm/the-index.html#summon" class="nav-sub-link"><span>Summon</span></a>\
+              <a href="ftm/the-index.html#elementary-evocation" class="nav-sub-link"><span>Elementary Evocation</span></a>\
+              <a href="ftm/the-index.html#mitigation" class="nav-sub-link"><span>Mitigation</span></a>\
+              <a href="ftm/the-index.html#waymarks" class="nav-sub-link"><span>Waymarks</span></a>\
             </div>\
           </div>\
           <div class="nav-section">\
@@ -282,14 +300,18 @@
     });
   });
 
-  var pathParts = window.location.pathname.split('/').filter(Boolean);
-  var current = pathParts.length >= 2
-    ? pathParts[pathParts.length - 2] + '/' + pathParts[pathParts.length - 1]
-    : (pathParts.pop() || 'index.html');
+  var rawFile = window.location.pathname.split('/').filter(Boolean).pop() || 'index.html';
+  var currentFile = rawFile.endsWith('.html') ? rawFile : 'index.html';
+
+  var currentPath = currentFile;
+  if (inFTB) currentPath = 'ftb/' + currentFile;
+  if (inFTM) currentPath = 'ftm/' + currentFile;
 
   document.querySelectorAll('.nav-page-link, .nav-home-link').forEach(function (link) {
-    var href = link.getAttribute('href').split('#')[0].replace(/^\.\.\//, '');
-    if (href === current || href === current.split('/').pop()) {
+    var hrefAttr = link.getAttribute('href');
+    if (!hrefAttr) return;
+    var href = hrefAttr.split('#')[0].replace(/^\.\.\//, '');
+    if (href === currentPath || href === currentFile) {
       link.classList.add('nav-current');
       var section = link.closest('.nav-section');
       if (section) section.classList.add('expanded');

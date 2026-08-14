@@ -140,7 +140,7 @@
             <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Assassin's Dagger</span><span class="tl-badge mechanic">Mechanic</span></div></div>
             <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Random Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
             <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Other Critical Blow</span><span class="tl-badge mechanic">Mechanic</span></div></div>
-            <div class="tl-row enrage"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unsealed Aura, 10-second cast &nbsp;<em>(Resolves @ 8:00)</em></span><span class="tl-badge enrage">Enrage</span></div></div>
+            <div class="tl-row enrage"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unsealed Aura, 10s cast &nbsp;<em>(Resolves @ 8:00)</em></span><span class="tl-badge enrage">Enrage</span></div></div>
           </div>
         </div>
       </div>
@@ -150,26 +150,18 @@
         <h2 class="card-heading gold">Weapon Mechanics: Axe and Lance</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>Throughout the fight the boss will resolve mechanics based on the weapon he activated.</li>
-            <li>Activated weapons will also have a glow to them.
+            <li><strong>Weapons:</strong>
               <ul class="mech-sub">
-                <li><span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">Axe</span> will hit players or the area close to the boss.</li>
-                <li><span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">Lance</span> will hit players or the area furthest away from the boss.</li>
+                <li><span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">Axe</span> hits players or area close to the boss.</li>
+                <li><span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">Lance</span> hits players or area furthest away from the boss.</li>
               </ul>
             </li>
-          </ul>
-          <p style="margin-top:.9rem;margin-bottom:.25rem;">Unseal:</p>
-          <ul class="mech-steps" style="margin-top:0;">
-            <li>Determines where auto-attacks go, hitting 2 tanks per platform:
+            <li><strong>Unseal:</strong>
               <ul class="mech-sub">
-                <li>Tanks go inside the hitbox for <span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">Axe</span>, or outside the hitbox for <span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">Lance</span>.</li>
-                <li>The party stays on the hitbox ring.</li>
+                <li>Tanks go inside hitbox for <span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">Axe</span>, or outside for <span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">Lance</span>. Party stays on hitbox ring.</li>
               </ul>
             </li>
-          </ul>
-          <p style="margin-top:.9rem;margin-bottom:.25rem;">Critical Axe- or Lanceblow:</p>
-          <ul class="mech-steps" style="margin-top:0;">
-            <li>Spawns AoEs covering the majority of the arena. The safe spots are as follows:
+            <li><strong>Safe Spots:</strong>
               <ul class="mech-sub">
                 <li><span style="color:var(--accent-gold);text-shadow:0 0 8px rgba(251,191,36,.5);">Axe</span>: Stay on the platform, far away from the boss.</li>
                 <li><span style="color:var(--accent-blue);text-shadow:0 0 8px rgba(96,165,250,.5);">Lance</span>: Move off the platform, close to the boss.</li>
@@ -188,16 +180,13 @@
         <h2 class="card-heading gold">Assassin's Dagger</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>3 lines spawn in one of two patterns:
+            <li><strong>Daggers:</strong>
               <ul class="mech-sub">
-                <li>Going straight through each platform, or</li>
-                <li>Going through the spaces in between.</li>
+                <li>3 line AoEs (Daggers) spawn either straight through platforms or between them.</li>
+                <li>Daggers travel outward and shoot back in (2 hits per Dagger), rotating for 6 Daggers total (12 AoEs).</li>
+                <li>Critical Axe- or Lanceblow follows after the 3rd and 6th Daggers.</li>
               </ul>
             </li>
-            <li>These lines are referred to as <strong>Daggers</strong>.</li>
-            <li>Daggers always travel outward and then shoot back in, hitting twice per Dagger.</li>
-            <li>The lines rotate from their starting position for 6 Daggers total (12 AoEs).</li>
-            <li>A Critical Axe- or Lanceblow follows after the 3rd Dagger and again after the last.</li>
           </ul>
           <div class="img-row double">
             <img src="assets/boss4/daggers1.png" alt="Assassin's Dagger pattern 1" class="section-img" />
@@ -211,13 +200,12 @@
         <h2 class="card-heading gold">Forked Fury</h2>
         <div class="content-body">
           <ul class="mech-steps">
-            <li>Targets 2 players per platform: the closest and farthest player from the boss.
+            <li><strong>Positioning:</strong>
               <ul class="mech-sub">
-                <li>Tanks 1 stay inside the hitbox; Tanks 2 stay outside the hitbox.</li>
-                <li>The party stays on the hitbox ring.</li>
+                <li>Targets closest and farthest player per platform (Tanks 1 stay inside hitbox; Tanks 2 stay outside; party stays on ring).</li>
+                <li>Always followed by auto-attacks on tanks.</li>
               </ul>
             </li>
-            <li>Always followed by auto-attacks on tanks.</li>
           </ul>
           <div class="alert-box warning">
             <span class="alert-icon">&#9888;</span>

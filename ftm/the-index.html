@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Index | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="The Index | A Late Night Reborn" />
+  <meta name="description" content="The self-proclaimed knower of all things and former ruler of Shades' Triangle, wielding peerless command over the elements and sealed legendary weapons." />
+  <meta property="og:description" content="The self-proclaimed knower of all things and former ruler of Shades' Triangle, wielding peerless command over the elements and sealed legendary weapons." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>The Index</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge boss">Boss 4</div>
+        <h1 class="page-title boss-title">The Index</h1>
+        <p class="page-subtitle"><em>"This self-proclaimed "knower of all things" was once ruler of Shades' Triangle. Devoted to preserving the fallen civilizations of the Fifth Astral Era, and with an army of familiars at his command, the archmagus spent ages untold overseeing the Occult Crescent from within its central facility: the Tower of Magic. When intruders breached his chamber, he fought them valiantly, wielding peerless command over the elements and other legendary weapons long sealed, but ultimately met with defeat."</em></p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p>
+            Fought across three tri-platform sectors, <strong>The Index</strong> tests the raid with a relentless combination of elemental platform matching, rotating <strong>Predict</strong> AoEs, summoned adds, and extreme raidwide damage.
+          </p>
+          <div class="elemental-weakness">
+            <strong>Elemental Weakness:</strong> <span class="element-fire">Fire</span>, <span class="element-wind">Wind</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fight Timeline -->
+      <div class="content-card" id="timeline">
+        <h2 class="card-heading teal">Fight Timeline</h2>
+        <div class="content-body">
+          <div class="tl-legend">
+            <span class="tl-badge raidwide">Raidwide</span>
+            <span class="tl-badge tankbuster">Tankbuster</span>
+            <span class="tl-badge mechanic">Mechanic</span>
+            <span class="tl-badge enrage">Enrage</span>
+          </div>
+
+          <div class="timeline">
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dualcast</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Flare</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2x multihit raidwide</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Propulsive Prophecy</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Storing Knockback</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Quadrilogy of Implements</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Knockback</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">4 Weapon AoEs</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dualcast</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Flare</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2x multihit raidwide</span></div></div>
+
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">All Knowing Flames</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Set of 1 tankbuster and 3 spread AoEs per platform</span></div></div>
+
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Omni-Elements</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spawns Elemental Platforms</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elementary Expansion</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">6 Elemental Rings</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Predict (First set of Elemental Debuffs)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Sealed Implements (1 weapon AoE, either Bow or Harp)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Second set of Elemental Debuffs</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">6 Elemental Rings</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Sealed Implements (Third set of Elemental Debuffs)</span></div></div>
+
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elementary Chemistry</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">3 sets of soaks</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Extremely hard hitting raidwide</span></div></div>
+
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">All Knowing Flames</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Set of 1 tankbuster and 3 spread AoEs per platform</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Summon</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Bombs and Exaflares appear</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Sundering Spellblade (Exaflares start moving)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Bird adds spawn</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Bladeblitz (3 exploding lines per platform)</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Quadrilogy of Implements</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dualcast</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Flare</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2x raidwide</span></div></div>
+
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">All Knowing Flames</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Set of 1 tankbuster and 3 spread AoEs per platform</span></div></div>
+
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Omni-Elements</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spawns Elemental Platforms</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elementary Evocation</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">3 Elemental Tethers + 3 Elemental Rings</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Propulsive Prophecy (Storing Knockback)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Sealed Implements (Knockback + 1 weapon AoE, either Bow or Harp)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">3 Elemental Tethers + 3 Elemental Rings</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Predict (First set of Elemental Debuffs)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Sealed Implements (1 weapon AoE, either Bow or Harp)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Second set of Elemental Debuffs</span></div></div>
+
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elementary Chemistry</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">3 sets of soaks</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Extremely hard hitting raidwide</span></div></div>
+
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">All Knowing Flames</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Set of 1 tankbuster and 3 spread AoEs per platform</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Propulsive Prophecy</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Storing Knockback</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Quadrilogy of Implements</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Knockback</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">4 Weapon AoEs</span></div></div>
+
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dualcast</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Flare</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">2x raidwide</span></div></div>
+
+            <div class="tl-row enrage"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Elementary Chemistry, 10s cast &nbsp;<em>(Resolves @ 8:35)</em></span><span class="tl-badge enrage">Enrage</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quadrilogy of Implements -->
+      <div class="content-card" id="quadrilogy">
+        <h2 class="card-heading gold">Quadrilogy of Implements</h2>
+        <div class="content-body">
+          <p>The boss will start off by casting <strong>Propulsive Prophecy</strong>, which will store a knockback that goes off just before Quadrilogy of Implements. The boss will then telegraph the order the weapons will go off in (each weapon goes off once):</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Weapon AoEs:</strong>
+              <ul class="mech-sub">
+                <li><strong>Harp:</strong> Move out.</li>
+                <li><strong>Bow:</strong> Move in.</li>
+                <li><strong>Sword:</strong> Go to the Number waymarks (1, 2, 3).</li>
+                <li><strong>Bell:</strong> Go to the Letter waymarks (A, B, C).</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box tip" style="margin-top:1rem;">
+            <span class="alert-icon">✦</span>
+            <span>Watch out for the knockback before the weapon AoEs. It is recommended you anti-knockback this.</span>
+          </div>
+
+          <div class="img-row single" style="margin-top:1rem;">
+            <img src="assets/boss4/quadrilogy.png" alt="Quadrilogy of Implements Weapon Reference" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- All-Knowing Flames -->
+      <div class="content-card" id="all-knowing-flames">
+        <h2 class="card-heading gold">All-Knowing Flames</h2>
+        <div class="content-body">
+          <p>The platforms will start glowing during this. Each platform will be assigned 1 Tankbuster and 3 Spread AoEs. Stay on your platform while these are given out.</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Positioning:</strong>
+              <ul class="mech-sub">
+                <li><strong>Tankbuster:</strong> Goes to the front of the platform.</li>
+                <li><strong>Spread Targets:</strong> Simply spread out behind.</li>
+                <li><strong>Unmarked Players:</strong> Everyone who is not given anything will go off the main platforms onto the connecting sections.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box warning" style="margin-top:1rem;">
+            <span class="alert-icon">⚠</span>
+            <span>Do not go off early. If you do, there may be extra spreads given out.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elemental Rings -->
+      <div class="content-card" id="elemental-rings">
+        <h2 class="card-heading gold">Elemental Rings</h2>
+        <div class="content-body">
+          <p>During various mechanics, you may see a set of two Elemental Rings appear around your character along with a timer above your head. Once this timer expires, you need to be standing on the element that is <strong>not</strong> around you:</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Safe Platforms:</strong>
+              <ul class="mech-sub">
+                <li><strong>Fire &amp; Lightning Ring:</strong> Stand on an Ice platform.</li>
+                <li><strong>Fire &amp; Ice Ring:</strong> Stand on a Lightning platform.</li>
+                <li><strong>Ice &amp; Lightning Ring:</strong> Stand on a Fire platform.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box warning" style="margin-top:1rem;">
+            <span class="alert-icon">⚠</span>
+            <span>Watch out as these may go off at the same time as other mechanics. Always make sure you are on the correct platform to deal with your rings.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elementary Expansion -->
+      <div class="content-card" id="elementary-expansion">
+        <h2 class="card-heading gold">Elementary Expansion</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Ring Set 1:</strong>
+              <ul class="mech-sub">
+                <li><strong>Expanding Rings:</strong> The boss spawns 6 expanding rings around himself (2 Fire, 2 Ice, 2 Lightning in random order). As each ring reaches the outer element, all matching elemental platforms explode.</li>
+                <li><strong>Predict:</strong> Near the end of the 1st ring set, the boss casts Predict, spawning 1 Donut AoE and 2 Circle AoEs. Each AoE rotates to the adjacent <strong>clockwise</strong> platform before detonating.</li>
+                <li><strong>1st Player Rings:</strong> The 1st set of player Elemental Rings expires simultaneously with Predict. Ensure you are on the safe element platform that dodges the rotating Predict AoEs.</li>
+              </ul>
+            </li>
+            <li><strong>Ring Set 2:</strong>
+              <ul class="mech-sub">
+                <li><strong>Expanding Rings:</strong> A 2nd set of 6 expanding elemental rings travels outward across the arena.</li>
+                <li><strong>Sealed Implements:</strong> The boss executes a weapon AoE (either <strong>Harp</strong> = Move Out, or <strong>Bow</strong> = Move In).</li>
+                <li><strong>2nd Player Rings:</strong> The 2nd set of player Elemental Rings expires at the exact same time as this weapon AoE.</li>
+              </ul>
+            </li>
+            <li><strong>Ring Set 3:</strong>
+              <ul class="mech-sub">
+                <li><strong>Sealed Implements:</strong> Near the end of the 2nd ring set, the boss executes another weapon AoE (Harp or Bow).</li>
+                <li><strong>3rd Player Rings:</strong> The 3rd set of player Elemental Rings resolves simultaneously with this final weapon attack.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box tip" style="margin-top:1rem;">
+            <span class="alert-icon">✦</span>
+            <span>Always prioritize positioning on the correct platform required by your personal Elemental Ring before adjusting for Predict's clockwise shift or Harp/Bow weapon safe spots.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elementary Chemistry -->
+      <div class="content-card" id="elementary-chemistry">
+        <h2 class="card-heading gold">Elementary Chemistry</h2>
+        <div class="content-body">
+          <p>Blue puddles appear at the front of each platform while all players receive 3 stacks of the <img src="assets/boss4/echemdebuff.png" alt="Elementary Deficiency debuff" class="lightbox-trigger" style="display:inline-block;height:1.2em;vertical-align:-3px;margin:0 2px;cursor:pointer;" /> <strong>Elementary Deficiency</strong> debuff.</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Puddles:</strong>
+              <ul class="mech-sub">
+                <li>Each puddle soak decreases your debuff count by 1 stack. You must cleanse all 3 stacks completely.</li>
+                <li>Start on your home platform. If the first element arrives on the Number platforms, rotate clockwise early.</li>
+                <li>After soaking a puddle, rotate clockwise to the next platform for each subsequent soak until your debuff is fully cleansed.</li>
+              </ul>
+            </li>
+            <li><strong>Raidwide:</strong>
+              <ul class="mech-sub">
+                <li>Immediately following the puddle soaks, the boss casts an extremely heavy-hitting raidwide.</li>
+                <li>Mitigate heavily using <strong>Phantom Dancer's Mesmerize</strong>, <strong>Tank Limit Breaks</strong>, party mitigations, and shields.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box warning" style="margin-top:1rem;">
+            <span class="alert-icon">⚠</span>
+            <span>Unmitigated, this raidwide can hit for upwards of 700k damage and can kill your entire party or even the entire raid. Additionally, failing to fully cleanse all 3 stacks will result in instant death from the raidwide.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summon -->
+      <div class="content-card" id="summon">
+        <h2 class="card-heading gold">Summon</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Bombs &amp; Exaflares:</strong>
+              <ul class="mech-sub">
+                <li><strong>Summoned Bombs:</strong> Adds spawn across both main platforms and connecting sections. Kill the Bombs on the Number waymarks first as they are closest to the boss.</li>
+                <li><strong>Initial Preposition:</strong> Parties start on the Number waymark section immediately <strong>clockwise</strong> of their home platform.</li>
+                <li><strong>Sundering Spellblade:</strong> Exaflares spawn at the end of each platform and travel either clockwise or counter-clockwise across the arena.</li>
+                <li><strong>Letter Bombs:</strong> Follow behind the Exaflares onto the adjacent Letter platform and burn down the Bomb stationed there.</li>
+              </ul>
+            </li>
+            <li><strong>Bird Adds:</strong>
+              <ul class="mech-sub">
+                <li><strong>Summoned Birds:</strong> The boss spawns 3 bird adds (1 per main platform). Tanks must pick up their assigned bird and face it <strong>out of the arena</strong> to direct its large conal AoE away from the party.</li>
+              </ul>
+            </li>
+            <li><strong>Bladeblitz:</strong>
+              <ul class="mech-sub">
+                <li><strong>Line AoE Waves:</strong> Line AoEs telegraph across the floor in 3 sequential waves (2 on each half of every main platform square, and 1 on each inner section).</li>
+                <li><strong>Dodge Sequence:</strong> Preposition safely outside the 1st wave of line telegraphs. As soon as the 1st wave explodes, step immediately into the safe area left behind.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Elementary Evocation -->
+      <div class="content-card" id="elementary-evocation">
+        <h2 class="card-heading gold">Elementary Evocation</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Evocation Wave 1:</strong>
+              <ul class="mech-sub">
+                <li><strong>Tethers &amp; Rings:</strong> The boss spawns 3 Elemental Tethers (rotating clockwise) and 3 arena Elemental Rings. The tethers identify the 1st initial unsafe element, while the rings identify the 2nd.</li>
+                <li><strong>Rotation Rule:</strong> Preposition on the remaining safe element. After each explosion, rotate <strong>counter-clockwise</strong> to the next platform.</li>
+                <li><strong>Propulsive Prophecy:</strong> During this wave, the boss casts Propulsive Prophecy to store a knockback.</li>
+                <li><strong>Sealed Implements:</strong> The stored knockback detonates simultaneously with a weapon attack (<strong>Harp</strong> = Move Out, or <strong>Bow</strong> = Move In).</li>
+              </ul>
+            </li>
+            <li><strong>Evocation Wave 2:</strong>
+              <ul class="mech-sub">
+                <li><strong>Tethers &amp; Rings:</strong> A 2nd set of 3 Elemental Tethers and 3 Elemental Rings spawns. Resolve using the exact same initial safe element positioning and counter-clockwise rotation.</li>
+              </ul>
+            </li>
+            <li><strong>Player Rings &amp; Weapons:</strong>
+              <ul class="mech-sub">
+                <li><strong>Predict:</strong> The boss casts Predict (1 Donut, 2 Circles rotating clockwise). The 1st set of personal Elemental Rings resolves simultaneously with Predict.</li>
+                <li><strong>Sealed Implements:</strong> The boss casts another weapon AoE (Harp or Bow). The 2nd set of personal Elemental Rings resolves at the exact same time.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Mitigation -->
+      <div class="content-card" id="mitigation">
+        <h2 class="card-heading gold">Mitigation</h2>
+        <div class="content-body">
+          <p>As this is a very mitigation-heavy fight, we will be providing a rough mitigation plan below.</p>
+
+          <div class="accordion" style="margin-top:1rem;">
+            <details class="accordion-item">
+              <summary>Flare 1</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li>Addle / Feint / Reprisal (Letter Parties)</li>
+                  <li>Tank 1 party mitigations</li>
+                  <li>Phantom Dancer 1's Mesmerize</li>
+                  <li>Sacred Soil / Kerachole</li>
+                  <li>Plenary Indulgence / Collective Unconscious</li>
+                  <li>Panhaima / Summon Seraph</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary>Flare 2</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li>Addle / Feint / Reprisal (Number Parties)</li>
+                  <li>Tank 2 party mitigations</li>
+                  <li>Phantom Dancer 2's Mesmerize</li>
+                  <li>Sacred Soil / Kerachole</li>
+                  <li>Shield Samba / Troubadour / Tactician</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary>Omni-Elements 1</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li>Addle / Feint / Reprisal (Letter Parties)</li>
+                  <li>Sacred Soil / Kerachole</li>
+                  <li>Plenary Indulgence / Collective Unconscious</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary>Elemental Chemistry 1 Soaks</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li><strong>All Soaks:</strong>
+                    <ul class="mech-sub">
+                      <li>Liturgy of the Bell / Macrocosmos</li>
+                      <li>Panhaima / Summon Seraph</li>
+                      <li>Temperance / Neutral Sect</li>
+                    </ul>
+                  </li>
+                  <li><strong>Second Soak:</strong>
+                    <ul class="mech-sub">
+                      <li>Aspected Helios / Medica III</li>
+                      <li>Kerachole / Sacred Soil</li>
+                      <li>Shield Samba / Troubadour / Tactician</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary>Elemental Chemistry 1</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li>Addle / Feint / Reprisal (Number Parties)</li>
+                  <li>Tank 1 and 2 party mitigations</li>
+                  <li>Phantom Dancer 1's Mesmerize</li>
+                  <li>Sacred Soil / Kerachole</li>
+                  <li>Shield Samba / Troubadour / Tactician</li>
+                  <li>Zoe / Recitation &amp; Spreadlo</li>
+                  <li>Tank Limit Breaks</li>
+                  <li>Holos / Expedient</li>
+                  <li>Plenary Indulgence / Collective Unconscious</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary>Flare 3</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li>Addle / Feint / Reprisal (Letter Parties)</li>
+                  <li>Phantom Dancer 2's Mesmerize</li>
+                  <li>Sacred Soil / Kerachole</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary>Omni-Elements 2</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li>Addle / Feint / Reprisal (Number Parties)</li>
+                  <li>Sacred Soil / Kerachole</li>
+                  <li>Plenary Indulgence / Collective Unconscious</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary>Elemental Chemistry 2 Soaks</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li><strong>All Soaks:</strong>
+                    <ul class="mech-sub">
+                      <li>Liturgy of the Bell / Macrocosmos</li>
+                      <li>Panhaima / Summon Seraph</li>
+                      <li>Temperance / Neutral Sect</li>
+                    </ul>
+                  </li>
+                  <li><strong>Second Soak:</strong>
+                    <ul class="mech-sub">
+                      <li>Aspected Helios / Medica III</li>
+                      <li>Kerachole / Sacred Soil</li>
+                      <li>Shield Samba / Troubadour / Tactician</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary>Elemental Chemistry 2</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li>Addle / Feint / Reprisal (Letter Parties)</li>
+                  <li>Tank 1 and 2 party mitigations</li>
+                  <li>Phantom Dancer 1's Mesmerize</li>
+                  <li>Sacred Soil / Kerachole</li>
+                  <li>Shield Samba / Troubadour / Tactician</li>
+                  <li>Zoe / Recitation &amp; Spreadlo</li>
+                  <li>Tank Limit Breaks</li>
+                  <li>Holos / Expedient</li>
+                  <li>Plenary Indulgence / Collective Unconscious</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="accordion-item">
+              <summary>Flare 4</summary>
+              <div class="accordion-body">
+                <ul class="mech-steps">
+                  <li>Addle / Feint / Reprisal (Number Parties)</li>
+                  <li>Phantom Dancer 2's Mesmerize</li>
+                  <li>Sacred Soil / Kerachole</li>
+                  <li>Plenary Indulgence / Collective Unconscious</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- Waymarks -->
+      <div class="content-card" id="waymarks">
+        <h2 class="card-heading teal">Waymarks</h2>
+        <div class="content-body">
+          <p>Below is the waymark setup used for this encounter.</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Assignments:</strong>
+              <ul class="mech-sub">
+                <li><strong>Parties A &amp; 1:</strong> A platform (Northwest)</li>
+                <li><strong>Parties B &amp; 2:</strong> B platform (South)</li>
+                <li><strong>Parties C &amp; 3:</strong> C platform (Northeast)</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="img-row single" style="margin-top:1rem;">
+            <img src="assets/boss4/waymarks.png" alt="The Index Waymarks Setup" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="clockwards.html" class="nav-btn nav-prev">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← Tower Curseclocks</span>
+          </div>
+        </a>
+        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/nav.js"></script>
+
+</body>
+</html>

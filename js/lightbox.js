@@ -18,7 +18,7 @@
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('.section-img').forEach(function (el) {
+  document.querySelectorAll('.section-img, .lightbox-trigger').forEach(function (el) {
     el.addEventListener('click', function () { open(el.src, el.alt); });
   });
 

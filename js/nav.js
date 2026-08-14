@@ -183,6 +183,15 @@
             </div>\
           </div>\
           <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge mini-boss">Mini Boss</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ftm/storm-generators.html" class="nav-page-link"><span>Storm Generators</span></a>\
+            <div class="nav-sub-links">\
+              <a href="ftm/storm-generators.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="ftm/storm-generators.html#cyclops" class="nav-sub-link"><span>Cyclops</span></a>\
+              <a href="ftm/storm-generators.html#slimes" class="nav-sub-link"><span>Slimes</span></a>\
+            </div>\
+          </div>\
+          <div class="nav-section">\
             <div class="nav-section-label"><span class="nav-badge boss">Boss 3</span></div>\
             <a class="nav-page-link wip"><span>Necrophobia</span></a>\
           </div>\

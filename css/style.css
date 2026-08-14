@@ -295,7 +295,8 @@ img { max-width: 100%; display: block; }
   padding: .15rem .5rem;
 }
 
-.nav-badge.boss      { color: #fde68a; background: rgba(251,191,36,.1);  border: 1px solid rgba(251,191,36,.22); }
+.nav-badge.boss,
+.nav-badge.mini-boss { color: #fde68a; background: rgba(251,191,36,.1);  border: 1px solid rgba(251,191,36,.22); }
 .nav-badge.traversal { color: #6ee7b7; background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.2);  }
 .nav-badge.puzzle    { color: #fda4af; background: rgba(251,113,133,.08); border: 1px solid rgba(251,113,133,.2); }
 .nav-badge.additional { color: #c4b5fd; background: rgba(167,139,250,.1); border: 1px solid rgba(167,139,250,.22); }
@@ -682,6 +683,12 @@ img { max-width: 100%; display: block; }
   color: #fda4af;
   background: rgba(251,113,133,.08);
   border: 1px solid rgba(251,113,133,.2);
+}
+
+.page-badge.mini-boss {
+  color: #fcd34d;
+  background: rgba(251,191,36,.08);
+  border: 1px solid rgba(251,191,36,.2);
 }
 
 .page-badge.additional {
@@ -1551,7 +1558,10 @@ html.theme-transitioning *::after {
 
 [data-theme="light"] .card-badge.boss,
 [data-theme="light"] .nav-badge.boss,
-[data-theme="light"] .page-badge.boss      { color: #92400e; background: rgba(251,191,36,.18); border-color: rgba(251,191,36,.45); }
+[data-theme="light"] .page-badge.boss,
+[data-theme="light"] .card-badge.mini-boss,
+[data-theme="light"] .nav-badge.mini-boss,
+[data-theme="light"] .page-badge.mini-boss { color: #92400e; background: rgba(251,191,36,.18); border-color: rgba(251,191,36,.45); }
 
 [data-theme="light"] .card-badge.traversal,
 [data-theme="light"] .nav-badge.traversal,

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storm Generators | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Storm Generators | A Late Night Reborn" />
+  <meta name="description" content="Split the raid across three platforms via teleportation sigils to disable the barrier generators powering the tower." />
+  <meta property="og:description" content="Split the raid across three platforms via teleportation sigils to disable the barrier generators powering the tower." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Storm Generators</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge mini-boss">Mini Boss</div>
+        <h1 class="page-title boss-title">Storm Generators</h1>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p>Three Teleportation Sigils at the entrance transport players up to three separate elevated platforms. Each platform contains a <strong>Storm Generator</strong> that must be destroyed.</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Raid Split Assignments:</strong>
+              <ul class="mech-sub">
+                <li><strong>Parties A &amp; 1:</strong> Left Platform</li>
+                <li><strong>Parties B &amp; 2:</strong> Middle Platform</li>
+                <li><strong>Parties C &amp; 3:</strong> Right Platform</li>
+              </ul>
+            </li>
+            <li><strong>Thunderclap Concerto:</strong>
+              <ul class="mech-sub">
+                <li>The Storm Generator periodically casts <strong>Thunderclap Concerto</strong>. Interrupt this spell every single time it is cast.</li>
+              </ul>
+            </li>
+            <li><strong>Enrage:</strong>
+              <ul class="mech-sub">
+                <li>Hold DPS once your Storm Generator reaches <strong>5% HP</strong>. All three Generators must die at roughly the same time.</li>
+                <li>When the first Generator dies, the remaining Generators trigger a <strong>15-second enrage cast</strong> that will wipe the entire raid if allowed to finish.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cyclops -->
+      <div class="content-card" id="cyclops">
+        <h2 class="card-heading gold">Cyclops</h2>
+        <div class="content-body">
+          <p>During the encounter, two Cyclops add spawns appear on both the Left and Right platforms.</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Circle AoEs:</strong>
+              <ul class="mech-sub">
+                <li>Players on the Left and Right platforms cannot see the Cyclops adds until they begin attacking with massive circle AoEs.</li>
+                <li>The AoEs leave only a small cardinal safe spot (either <strong>North/South</strong> or <strong>East/West</strong>).</li>
+              </ul>
+            </li>
+            <li><strong>Safe Spot Callouts:</strong>
+              <ul class="mech-sub">
+                <li>Players on the Middle platform can see the Cyclops adds from the moment they spawn.</li>
+                <li>Middle platform players must immediately call out the safe spots for the Left and Right teams. Because safe spots may differ between platforms, listen closely to your assigned callout.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Slimes -->
+      <div class="content-card" id="slimes">
+        <h2 class="card-heading gold">Slimes</h2>
+        <div class="content-body">
+          <p>Tower Slimes periodically spawn along the North edge of each platform.</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Tower Slimes:</strong>
+              <ul class="mech-sub">
+                <li>Tanks must grab the Tower Slimes and drag them onto the Storm Generator so they can be cleaved down alongside the main target.</li>
+                <li>Tanks should use strong defensive cooldowns, as the slimes hit surprisingly hard.</li>
+              </ul>
+            </li>
+            <li><strong>The First Song:</strong>
+              <ul class="mech-sub">
+                <li>Tower Slimes on the Middle platform cast <strong>The First Song</strong>.</li>
+                <li>A <strong>Phantom Bard</strong> must interrupt this cast using <strong>Romeo's Ballad</strong> to stun the slimes. If the cast finishes, it will result in a raid wipe.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <div class="nav-btn nav-prev wip">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← Bridge 2</span>
+          </div>
+        </div>
+        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <div class="nav-btn nav-next wip">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>Necrophobia →</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/nav.js"></script>
+
+</body>
+</html>

@@ -201,8 +201,18 @@
             </div>\
           </div>\
           <div class="nav-section">\
-            <div class="nav-section-label"><span class="nav-badge boss">Boss 3</span></div>\
-            <a class="nav-page-link wip"><span>Necrophobia</span></a>\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 3</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ftm/necrophobia.html" class="nav-page-link"><span>Necrophobia</span></a>\
+            <div class="nav-sub-links">\
+              <a href="ftm/necrophobia.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="ftm/necrophobia.html#simulator" class="nav-sub-link"><span>Simulator</span></a>\
+              <a href="ftm/necrophobia.html#timeline" class="nav-sub-link"><span>Fight Timeline</span></a>\
+              <a href="ftm/necrophobia.html#death-shroud-1" class="nav-sub-link"><span>Death Shroud 1</span></a>\
+              <a href="ftm/necrophobia.html#dark-current" class="nav-sub-link"><span>Dark Current &amp; Vacuum Wave</span></a>\
+              <a href="ftm/necrophobia.html#death-shroud-2" class="nav-sub-link"><span>Death Shroud 2</span></a>\
+              <a href="ftm/necrophobia.html#fertile-ground" class="nav-sub-link"><span>Fertile Ground</span></a>\
+              <a href="ftm/necrophobia.html#waymarks" class="nav-sub-link"><span>Waymarks</span></a>\
+            </div>\
           </div>\
           <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge puzzle">Puzzle</span><span class="nav-chevron">&#9656;</span></div>\

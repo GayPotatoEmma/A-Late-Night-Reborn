@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tower Curseclocks | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Tower Curseclocks | A Late Night Reborn" />
+  <meta name="description" content="The second puzzle of the Forked Tower. Match the floor clock with the air clock within 3 minutes by pulling the correct series of Curseclocks." />
+  <meta property="og:description" content="The second puzzle of the Forked Tower. Match the floor clock with the air clock within 3 minutes by pulling the correct series of Curseclocks." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Tower Curseclocks</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge puzzle">Puzzle</div>
+        <h1 class="page-title boss-title">Tower Curseclocks</h1>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p>The Tower Curseclocks (commonly referred to as Clockwards) is the second puzzle of the Forked Tower. After activating the puzzle, you will have 3 minutes to solve it. Failing to solve it within the time limit will end the run and remove everyone from the Tower.</p>
+        </div>
+      </div>
+
+      <!-- The Puzzle -->
+      <div class="content-card" id="the-puzzle">
+        <h2 class="card-heading gold">The Puzzle</h2>
+        <div class="content-body">
+          <p>The floor is made up of a large clock set to 0:00. Once you activate the puzzle, another large clock will appear before you in the air set to a specific target time. You must pull a specific series of Curseclocks to advance the ground clock until it matches the air clock.</p>
+
+          <p style="margin-top:.75rem;">Curseclocks spawn in an assortment of sizes, each setting the clock forward by a specific amount of time:</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Curseclock Sizes &amp; Time Values:</strong>
+              <ul class="mech-sub">
+                <li><strong>Large:</strong> 3 Hours</li>
+                <li><strong>Medium:</strong> 1 Hour</li>
+                <li><strong>Small:</strong> 15 Minutes</li>
+                <li><strong>Tiny:</strong> 5 Minutes</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box warning" style="margin-top:1rem;">
+            <span class="alert-icon">⚠</span>
+            <span>Do not use any large AoEs in this arena. You are likely to pull additional Curseclocks, which can easily ruin the puzzle solution. Stick strictly to your 1-2-3 single-target combo. If you are unsure whether an ability's radius is too large, do not use it.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lockward -->
+      <div class="content-card" id="lockward">
+        <h2 class="card-heading gold">Lockward</h2>
+        <div class="content-body">
+          <p>After a short duration, a Lockward add will spawn in the arena.</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li>One of the tanks should grab the Lockward and tank it close to the middle to avoid pulling extra Curseclocks. It also periodically deals heavy raidwide damage, mitigate this as needed.</li>
+            <li>Killing the Lockward is not required; it despawns automatically once the puzzle is solved. The group should remain focused exclusively on pulling the correct Curseclocks.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Calculator -->
+      <div class="content-card" id="calculator">
+        <h2 class="card-heading teal">Calculator</h2>
+        <div class="content-body">
+          <p>In case you need extra help solving the clock solution quickly, you can use the <a href="https://gaypotatoemma.github.io/Clockwards-Calculator/" target="_blank" rel="noopener" class="content-link">Calculator</a> to see which Curseclocks need to be pulled.</p>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <div class="nav-btn nav-prev wip">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← Necrophobia</span>
+          </div>
+        </div>
+        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <div class="nav-btn nav-next wip">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>The Index →</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/nav.js"></script>
+
+</body>
+</html>

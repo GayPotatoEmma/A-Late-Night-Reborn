@@ -196,6 +196,16 @@
             <a class="nav-page-link wip"><span>Necrophobia</span></a>\
           </div>\
           <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge puzzle">Puzzle</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ftm/clockwards.html" class="nav-page-link"><span>Tower Curseclocks</span></a>\
+            <div class="nav-sub-links">\
+              <a href="ftm/clockwards.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="ftm/clockwards.html#the-puzzle" class="nav-sub-link"><span>The Puzzle</span></a>\
+              <a href="ftm/clockwards.html#lockward" class="nav-sub-link"><span>Lockward</span></a>\
+              <a href="ftm/clockwards.html#calculator" class="nav-sub-link"><span>Calculator</span></a>\
+            </div>\
+          </div>\
+          <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge additional">Phantom Job</span><span class="nav-chevron">&#9656;</span></div>\
             <a href="ftm/phantom-jobs.html" class="nav-page-link"><span>Phantom Jobs</span></a>\
             <div class="nav-sub-links">\

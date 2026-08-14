@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Necrophobia | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Necrophobia | A Late Night Reborn" />
+  <meta name="description" content="A mindless automaton of the Fifth Astral Era seeking eternal life through forbidden necromancy, driven by the fear of death to destroy all living beings." />
+  <meta property="og:description" content="A mindless automaton of the Fifth Astral Era seeking eternal life through forbidden necromancy, driven by the fear of death to destroy all living beings." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Necrophobia</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge boss">Boss 3</div>
+        <h1 class="page-title boss-title">Necrophobia</h1>
+        <p class="page-subtitle"><em>"The nature of immortality has been studied throughout history, dating as far back as the Allagan Empire, and the Fifth Astral Era was no exception. Surviving records detail myriad experimental approaches based not just in healing magicks, but even the forbidden art of necromancy. It would seem this entity was one of countless mages driven by the fear of death to seek eternal life. Yet in exchange for physical resilience, the soul was lost, producing little more than a mindless automaton bent on destroying all living beings."</em></p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p>
+            The encounter centers around reading elemental head patterns and debuff colors: position opposite the Intercardinal Ice head during Death Shroud, stack near C to bait Dark Current Exa-lines, and continuously step into opposite-color half-cleaves during Fertile Ground to alternate debuffs and prevent Ruin stacks.
+          </p>
+          <div class="elemental-weakness">
+            <strong>Elemental Weakness:</strong> <span class="element-ice">Ice</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulator -->
+      <div class="content-card" id="simulator">
+        <h2 class="card-heading teal">Simulator</h2>
+        <div class="content-body">
+          <p>You can find a simulator for the core mechanics <a href="https://ftmex.kaia.tools/necrophobia-simulator/" target="_blank" rel="noopener" class="content-link">here</a>.</p>
+          <div class="alert-box info">
+            <span class="alert-icon">&#8505;</span>
+            <span>Please use your desktop browser for the best experience.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fight Timeline -->
+      <div class="content-card" id="timeline">
+        <h2 class="card-heading teal">Fight Timeline</h2>
+        <div class="content-body">
+          <div class="tl-legend">
+            <span class="tl-badge raidwide">Raidwide</span>
+            <span class="tl-badge tankbuster">Tankbuster</span>
+            <span class="tl-badge mechanic">Mechanic</span>
+            <span class="tl-badge enrage">Enrage</span>
+          </div>
+          <div class="timeline">
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Hail of Hellflares</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">5x multihit raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Death Shroud 1</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Death Shroud</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Heads Roll</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Severed Fire / Blizzard / Thunder III (each element goes off once)</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Hail of Hellflares</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">5x multihit raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dark Current</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Vacuum Wave</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Corpse Mangler</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Death Shroud 2</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Death Shroud</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Heads Roll</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dig Three Graves (telegraphs element order, then resolves in order)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Severed Dark Current</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Vacuum Wave</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Hail of Hellflares</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">5x multihit raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Fertile Ground</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Death Shroud</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Heads Roll</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spell Procession</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Ancient Fire / Blizzard / Thunder III (each element goes off once)</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Hail of Hellflares</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">5x multihit raidwide</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dark Current</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Vacuum Wave</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row tankbuster"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Corpse Mangler</span><span class="tl-badge tankbuster">Tankbuster</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Death Shroud 2</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Death Shroud</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Heads Roll</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dig Three Graves (telegraphs element order, then resolves in order)</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Severed Dark Current</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Vacuum Wave</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Hail of Hellflares</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">5x multihit raidwide</span></div></div>
+            <div class="tl-row enrage"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Nihility, 10s cast &nbsp;<em>(Resolves @ 7:05)</em></span><span class="tl-badge enrage">Enrage</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Death Shroud 1 -->
+      <div class="content-card" id="death-shroud-1">
+        <h2 class="card-heading gold">Death Shroud 1</h2>
+        <div class="content-body">
+          <p>The boss spawns six heads around himself (two Ice, two Lightning, and two Fire) that travel to fixed spots across the arena in order: Ice heads first, Lightning heads second, and Fire heads last. The boss then cycles through all three elements, triggering matching heads to unleash AoEs simultaneously with the boss.</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Elemental AoE Shapes:</strong>
+              <ul class="mech-sub">
+                <li><strong>Ice:</strong> Plus-shaped AoE extending along cardinal directions from the head.</li>
+                <li><strong>Lightning:</strong> Intercardinal cone AoE.</li>
+                <li><strong>Fire:</strong> Large circle AoE.</li>
+              </ul>
+            </li>
+            <li><strong>Finding Your Home Base:</strong>
+              <ul class="mech-sub">
+                <li>Locate the <strong>Intercardinal Ice head</strong> (there will also always be an Ice head directly North or South).</li>
+                <li>Move directly <strong>opposite</strong> the Intercardinal Ice head. This location is your home base for the mechanic.</li>
+                <li>Identify whether the head arriving at your home base is <strong>Fire</strong> or <strong>Lightning</strong>.</li>
+              </ul>
+            </li>
+            <li><strong>Dodging Each Wave:</strong>
+              <ul class="mech-sub">
+                <li><strong>Ice Phase:</strong> Stand on the head at your home base or tightly against its sides. Keep as close to the side of the head as possible, as the safe zone is a very narrow slice. Avoid standing directly in front of or behind the head.</li>
+                <li><strong>Fire Phase:</strong> Move behind the head immediately to your left or right. If your home head is Fire, step a bit further out to clear the large circle explosion.</li>
+                <li><strong>Lightning Phase:</strong>
+                  <ul class="mech-sub">
+                    <li><em>If your home head is Lightning:</em> Move to the nearest cardinal with a head and stand directly in front of it.</li>
+                    <li><em>If your home head is Fire:</em> Move to the nearest cardinal without a head.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box tip" style="margin-top:1rem;">
+            <span class="alert-icon">✦</span>
+            <span>Always locate the Intercardinal Ice head first. Prepositioning directly opposite of it establishes a consistent home base, making it much easier to dodge all three elemental waves.</span>
+          </div>
+          <div class="img-row single" style="margin-top:1rem;">
+            <img src="assets/boss3/deathshroud1.png" alt="Death Shroud 1 diagram" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Dark Current & Vacuum Wave -->
+      <div class="content-card" id="dark-current">
+        <h2 class="card-heading gold">Dark Current &amp; Vacuum Wave</h2>
+        <div class="content-body">
+          <p>The boss combines traveling Exa-line AoEs with a frontal cleave and center line head attacks across the arena.</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Dark Current (Exa-lines):</strong>
+              <ul class="mech-sub">
+                <li>Dark Current spawns initial line AoEs that continuously step forward in sequence.</li>
+                <li>Dodge the initial line telegraph, then step into the space left behind as the wave moves outward.</li>
+                <li>These lines are baited on a random player. Stacking together near the <strong>C waymark</strong> keeps the bait predictable and easy to dodge.</li>
+              </ul>
+            </li>
+            <li><strong>Center Line Heads:</strong>
+              <ul class="mech-sub">
+                <li>A row of heads spawns across the middle of the arena, executing line AoEs directly in front of them.</li>
+                <li>Position yourself directly <strong>behind a head</strong> to remain safe while dodging Dark Current waves.</li>
+              </ul>
+            </li>
+            <li><strong>Vacuum Wave:</strong>
+              <ul class="mech-sub">
+                <li>Directly following Dark Current, the boss unleashes a large <strong>frontal cleave AoE</strong>. Step behind the boss to dodge it.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box tip" style="margin-top:1rem;">
+            <span class="alert-icon">✦</span>
+            <span>Stacking near the C waymark prior to Dark Current keeps the initial Exa-line baits concentrated, making it much easier to dodge into the first line while positioning behind a center head.</span>
+          </div>
+        </div>
+      </div>
+      <!-- Death Shroud 2 -->
+      <div class="content-card" id="death-shroud-2">
+        <h2 class="card-heading gold">Death Shroud 2</h2>
+        <div class="content-body">
+          <p>[placeholder]</p>
+        </div>
+      </div>
+
+      <!-- Fertile Ground -->
+      <div class="content-card" id="fertile-ground">
+        <h2 class="card-heading gold">Fertile Ground</h2>
+        <div class="content-body">
+          <p>The boss deals a heavy raidwide and inflicts each player with one of two debuffs that must be continuously swapped across eight sequential head cleaves:</p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Initial Debuffs:</strong>
+              <ul class="mech-sub">
+                <li><img src="assets/boss3/growingdread.png" alt="Growing Dread icon" class="section-img" style="display:inline-block; height:1.3em; width:auto; vertical-align:middle; margin-right:6px; cursor:zoom-in;" /><strong>Growing Dread:</strong> Blue triangle debuff.</li>
+                <li><img src="assets/boss3/growingpanic.png" alt="Growing Panic icon" class="section-img" style="display:inline-block; height:1.3em; width:auto; vertical-align:middle; margin-right:6px; cursor:zoom-in;" /><strong>Growing Panic:</strong> Pink hexagon debuff.</li>
+              </ul>
+            </li>
+            <li><strong>Head Spawn &amp; Resolution Order:</strong>
+              <ul class="mech-sub">
+                <li>Eight heads travel one by one to the outer perimeter, defining their exact explosion order:
+                  <ul class="mech-sub">
+                    <li><em>Heads 1 to 4:</em> The 1st head goes to a cardinal or intercardinal position. Heads 2 through 4 follow sequentially clockwise or counter-clockwise.</li>
+                    <li><em>Heads 5 to 8:</em> The 5th head goes to the opposite position type (intercardinal if 1st was cardinal, or vice versa). Heads 6 through 8 follow clockwise or counter-clockwise.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><strong>Debuff Swapping Rule:</strong>
+              <ul class="mech-sub">
+                <li>Each head cleaves its respective half of the room with a <strong>Blue</strong> and a <strong>Pink</strong> element.</li>
+                <li>Stand on the side displaying the <strong>opposite color</strong> of your current debuff (e.g. if holding Blue, get hit by Pink).</li>
+                <li>Getting hit by the opposite color successfully swaps your debuff to the other color. Repeat this process for all eight heads. Getting hit by matching colors inflicts Ruin stacks.</li>
+              </ul>
+            </li>
+            <li><strong>Simultaneous Elemental Attacks:</strong>
+              <ul class="mech-sub">
+                <li>On the <strong>3rd, 5th, and 7th head explosions</strong>, the boss simultaneously casts Ancient Fire, Blizzard, or Thunder III AoEs.</li>
+                <li>Adjust your position to dodge these elemental spells while maintaining correct debuff color positioning.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box tip" style="margin-top:1rem;">
+            <span class="alert-icon">✦</span>
+            <span>Position yourself close to the boss near the center of the arena. Staying near the center drastically reduces the distance you need to travel to step into the correct color half for each head.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Waymarks -->
+      <div class="content-card" id="waymarks">
+        <h2 class="card-heading teal">Waymarks</h2>
+        <div class="content-body">
+          <p>Below is the waymark setup used for this encounter.</p>
+          <div class="img-row single" style="margin-top:1rem;">
+            <img src="assets/boss3/waymarks.png" alt="Necrophobia Waymarks Setup" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <div class="nav-btn nav-prev wip">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← Storm Generators</span>
+          </div>
+        </div>
+        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <div class="nav-btn nav-next wip">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>Tower Curseclocks →</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/nav.js"></script>
+
+</body>
+</html>

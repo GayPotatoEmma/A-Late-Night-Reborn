@@ -183,6 +183,10 @@
             </div>\
           </div>\
           <div class="nav-section">\
+            <div class="nav-section-label"><span class="nav-badge boss">Boss 3</span></div>\
+            <a class="nav-page-link wip"><span>Necrophobia</span></a>\
+          </div>\
+          <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge additional">Phantom Job</span><span class="nav-chevron">&#9656;</span></div>\
             <a href="ftm/phantom-jobs.html" class="nav-page-link"><span>Phantom Jobs</span></a>\
             <div class="nav-sub-links">\

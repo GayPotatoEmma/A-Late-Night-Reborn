@@ -169,6 +169,10 @@
             </div>\
           </div>\
           <div class="nav-section">\
+            <div class="nav-section-label"><span class="nav-badge traversal">Traversal</span></div>\
+            <a class="nav-page-link wip"><span>Lower Passages</span></a>\
+          </div>\
+          <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 2</span><span class="nav-chevron">&#9656;</span></div>\
             <a href="ftm/sword-dancer.html" class="nav-page-link"><span>Sword Dancer</span></a>\
             <div class="nav-sub-links">\
@@ -182,6 +186,10 @@
               <a href="ftm/sword-dancer.html#cycloswords-unsheathed-3" class="nav-sub-link"><span>Cycloswords Unsheathed 3</span></a>\
               <a href="ftm/sword-dancer.html#waymarks" class="nav-sub-link"><span>Waymarks</span></a>\
             </div>\
+          </div>\
+          <div class="nav-section">\
+            <div class="nav-section-label"><span class="nav-badge traversal">Traversal</span></div>\
+            <a class="nav-page-link wip"><span>Central Mezzanine</span></a>\
           </div>\
           <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge mini-boss">Mini Boss</span><span class="nav-chevron">&#9656;</span></div>\

@@ -23,14 +23,14 @@
 
     for (var i = 0; i < count; i++) {
       var tinted = Math.random() > 0.65;
-      var hueVal = 32;
+      var hueVal = 35;
       var randHue = Math.random();
       if (randHue < 0.35) {
-        hueVal = 32;   // warm peach gold
+        hueVal = 35;   // warm star gold (#e4c090)
       } else if (randHue < 0.70) {
-        hueVal = 255;  // periwinkle lavender
+        hueVal = 272;  // periwinkle purple (#a078c0)
       } else {
-        hueVal = 345;  // blush rose
+        hueVal = 355;  // pastel peach rose (#fcd4c8)
       }
 
       stars.push({

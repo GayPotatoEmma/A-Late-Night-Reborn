@@ -36,9 +36,11 @@
       stars.push({
         x:    Math.random() * W,
         y:    Math.random() * H,
-        r:    Math.random() * 1.5 + 0.4,
+        r:    Math.random() * 1.6 + 0.4,
         a:    Math.random() * 0.75 + 0.15,
         da:   (Math.random() * 0.008 + 0.003) * (Math.random() > 0.5 ? 1 : -1),
+        dy:   -(Math.random() * 0.15 + 0.04), // gentle upward float
+        dx:   (Math.random() - 0.5) * 0.08,
         hue:  tinted ? hueVal : -1
       });
     }
@@ -53,13 +55,19 @@
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       ctx.fillStyle = s.hue >= 0
-        ? 'hsla(' + s.hue + ', 75%, 82%, ' + s.a.toFixed(3) + ')'
+        ? 'hsla(' + s.hue + ', 80%, 84%, ' + s.a.toFixed(3) + ')'
         : 'rgba(255, 255, 255, ' + s.a.toFixed(3) + ')';
       ctx.fill();
 
       s.a += s.da;
       if (s.a > 0.95) { s.a = 0.95; s.da = -Math.abs(s.da); }
       if (s.a < 0.12) { s.a = 0.12; s.da =  Math.abs(s.da); }
+
+      s.x += s.dx;
+      s.y += s.dy;
+      if (s.y < -5) { s.y = H + 5; s.x = Math.random() * W; }
+      if (s.x < -5) { s.x = W + 5; }
+      if (s.x > W + 5) { s.x = -5; }
     }
 
     raf = requestAnimationFrame(draw);

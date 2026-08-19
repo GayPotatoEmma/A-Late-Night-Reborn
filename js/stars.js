@@ -1,10 +1,12 @@
-/* Twinkling star field — pure vanilla JS, no dependencies */
+/* Twinkling star field with infrequent shooting star — pure vanilla JS */
 (function () {
   var canvas = document.getElementById('stars-canvas');
   if (!canvas) return;
 
   var ctx = canvas.getContext('2d');
   var W, H, stars = [], raf;
+  var shootingStar = null;
+  var nextShootingStarTime = Date.now() + Math.random() * 4000 + 3000;
 
   function init() {
     var dpr = window.devicePixelRatio || 1;
@@ -19,6 +21,7 @@
     ctx.scale(dpr, dpr);
 
     stars = [];
+    shootingStar = null;
     var count = Math.min(350, Math.floor((W * H) / 4500));
 
     for (var i = 0; i < count; i++) {
@@ -46,6 +49,82 @@
     }
   }
 
+  function spawnShootingStar() {
+    var startX = Math.random() * (W * 0.6) + (W * 0.1);
+    var startY = Math.random() * (H * 0.35);
+    var angle = (Math.random() * 20 + 25) * (Math.PI / 180); // 25-45 deg slope
+    var speed = Math.random() * 8 + 11;
+    var len = Math.random() * 70 + 75;
+    var lifeMax = Math.random() * 35 + 40;
+
+    var isGold = Math.random() > 0.4;
+    var headColor = isGold ? 'rgba(252, 224, 180, ' : 'rgba(252, 212, 200, ';
+
+    shootingStar = {
+      x: startX,
+      y: startY,
+      dx: Math.cos(angle) * speed,
+      dy: Math.sin(angle) * speed,
+      len: len,
+      life: 0,
+      lifeMax: lifeMax,
+      headColor: headColor
+    };
+  }
+
+  function updateAndDrawShootingStar() {
+    var now = Date.now();
+    if (!shootingStar && now > nextShootingStarTime) {
+      spawnShootingStar();
+      nextShootingStarTime = now + Math.random() * 10000 + 8000; // Spawns every 8 to 18 sec
+    }
+
+    if (!shootingStar) return;
+
+    shootingStar.life++;
+    shootingStar.x += shootingStar.dx;
+    shootingStar.y += shootingStar.dy;
+
+    var progress = shootingStar.life / shootingStar.lifeMax;
+    var alpha = 1;
+    if (progress < 0.22) {
+      alpha = progress / 0.22;
+    } else if (progress > 0.68) {
+      alpha = (1 - progress) / 0.32;
+    }
+
+    if (shootingStar.life >= shootingStar.lifeMax || shootingStar.x > W + 100 || shootingStar.y > H + 100) {
+      shootingStar = null;
+      return;
+    }
+
+    var speedMag = Math.hypot(shootingStar.dx, shootingStar.dy);
+    var tailX = shootingStar.x - (shootingStar.dx / speedMag) * shootingStar.len;
+    var tailY = shootingStar.y - (shootingStar.dy / speedMag) * shootingStar.len;
+
+    var grad = ctx.createLinearGradient(shootingStar.x, shootingStar.y, tailX, tailY);
+    grad.addColorStop(0, shootingStar.headColor + (alpha * 0.95).toFixed(3) + ')');
+    grad.addColorStop(0.35, shootingStar.headColor + (alpha * 0.35).toFixed(3) + ')');
+    grad.addColorStop(1, shootingStar.headColor + '0)');
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(shootingStar.x, shootingStar.y);
+    ctx.lineTo(tailX, tailY);
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 1.8;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(shootingStar.x, shootingStar.y, 2.2, 0, Math.PI * 2);
+    ctx.fillStyle = shootingStar.headColor + alpha.toFixed(3) + ')';
+    ctx.shadowColor = 'rgba(252, 212, 200, 0.85)';
+    ctx.shadowBlur = 9;
+    ctx.fill();
+    ctx.restore();
+  }
+
   function draw() {
     ctx.clearRect(0, 0, W, H);
 
@@ -69,6 +148,8 @@
       if (s.x < -5) { s.x = W + 5; }
       if (s.x > W + 5) { s.x = -5; }
     }
+
+    updateAndDrawShootingStar();
 
     raf = requestAnimationFrame(draw);
   }

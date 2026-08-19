@@ -7,21 +7,39 @@
   var W, H, stars = [], raf;
 
   function init() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    stars = [];
+    var dpr = window.devicePixelRatio || 1;
+    W = window.innerWidth;
+    H = window.innerHeight;
 
-    var count = Math.min(320, Math.floor((W * H) / 5800));
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+
+    ctx.scale(dpr, dpr);
+
+    stars = [];
+    var count = Math.min(350, Math.floor((W * H) / 4500));
 
     for (var i = 0; i < count; i++) {
-      var tinted = Math.random() > 0.88;
+      var tinted = Math.random() > 0.65;
+      var hueVal = 32;
+      var randHue = Math.random();
+      if (randHue < 0.35) {
+        hueVal = 32;   // warm peach gold
+      } else if (randHue < 0.70) {
+        hueVal = 255;  // periwinkle lavender
+      } else {
+        hueVal = 345;  // blush rose
+      }
+
       stars.push({
         x:    Math.random() * W,
         y:    Math.random() * H,
-        r:    Math.random() * 1.2 + 0.15,
-        a:    Math.random(),
-        da:   (Math.random() * 0.007 + 0.002) * (Math.random() > 0.5 ? 1 : -1),
-        hue:  tinted ? (Math.random() > 0.5 ? 215 : 268) : -1
+        r:    Math.random() * 1.5 + 0.4,
+        a:    Math.random() * 0.75 + 0.15,
+        da:   (Math.random() * 0.008 + 0.003) * (Math.random() > 0.5 ? 1 : -1),
+        hue:  tinted ? hueVal : -1
       });
     }
   }
@@ -35,13 +53,13 @@
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       ctx.fillStyle = s.hue >= 0
-        ? 'hsla(' + s.hue + ',65%,82%,' + s.a.toFixed(3) + ')'
-        : 'rgba(255,255,255,' + s.a.toFixed(3) + ')';
+        ? 'hsla(' + s.hue + ', 75%, 82%, ' + s.a.toFixed(3) + ')'
+        : 'rgba(255, 255, 255, ' + s.a.toFixed(3) + ')';
       ctx.fill();
 
       s.a += s.da;
-      if (s.a > 1)    { s.a = 1;    s.da = -Math.abs(s.da); }
-      if (s.a < 0.04) { s.a = 0.04; s.da =  Math.abs(s.da); }
+      if (s.a > 0.95) { s.a = 0.95; s.da = -Math.abs(s.da); }
+      if (s.a < 0.12) { s.a = 0.12; s.da =  Math.abs(s.da); }
     }
 
     raf = requestAnimationFrame(draw);

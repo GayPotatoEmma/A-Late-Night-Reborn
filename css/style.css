@@ -1460,14 +1460,13 @@ html.theme-transitioning *::after {
 }
 
 [data-theme="light"] body { background: var(--bg-deep); }
-[data-theme="light"] #stars-canvas { display: none; }
 
 [data-theme="light"] .bg-nebula {
   background:
-    radial-gradient(ellipse 90% 55% at 12% 8%,  rgba(227,154,150,.20) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 50% at 88% 88%,  rgba(168,146,238,.16) 0%, transparent 55%),
-    radial-gradient(ellipse 55% 65% at 55% 38%,  rgba(230,184,138,.12) 0%, transparent 65%),
-    linear-gradient(168deg, #f7f3f6 0%, #f0eaf3 45%, #f5eef4 100%);
+    radial-gradient(ellipse 90% 55% at 12% 8%,  rgba(252,212,200,.28) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 88% 88%,  rgba(160,120,192,.20) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 65% at 55% 38%,  rgba(228,192,144,.18) 0%, transparent 65%),
+    linear-gradient(168deg, #f9f5f7 0%, #f2ebf4 45%, #f6f0f5 100%);
 }
 
 [data-theme="light"] .site-header {
@@ -1636,3 +1635,19 @@ html.theme-transitioning *::after {
 [data-theme="light"] .tl-badge.tankbuster { color: #92400e; background: rgba(245,158,11,.12);  border-color: rgba(245,158,11,.35); }
 [data-theme="light"] .tl-badge.mechanic   { color: #4c1d95; background: rgba(139,92,246,.12);  border-color: rgba(139,92,246,.35); }
 [data-theme="light"] .tl-badge.enrage     { color: #9f1239; background: rgba(239,68,68,.15);   border-color: rgba(239,68,68,.4); }
+
+/* ── Accessibility: Reduced Motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .section-card:hover,
+  .raid-choice:not(.locked):not(.active):hover {
+    transform: none !important;
+  }
+}

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Quicksand:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 /* =====================================================
    A Late Night Reborn — Whimsical Liquid Glass Theme
@@ -1636,6 +1637,58 @@ html.theme-transitioning *::after {
 [data-theme="light"] .tl-badge.mechanic   { color: #4c1d95; background: rgba(139,92,246,.12);  border-color: rgba(139,92,246,.35); }
 [data-theme="light"] .tl-badge.enrage     { color: #9f1239; background: rgba(239,68,68,.15);   border-color: rgba(239,68,68,.4); }
 
+[data-theme="light"] .public-run-card::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+}
+
+[data-theme="light"] .public-run-tag.tag-ftb {
+  color: #9f1239;
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+[data-theme="light"] .public-run-tag.tag-ftm {
+  color: #4c1d95;
+  background: rgba(167, 139, 250, 0.2);
+  border-color: rgba(167, 139, 250, 0.45);
+}
+
+[data-theme="light"] .public-run-tag.tag-ba {
+  color: #0369a1;
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+[data-theme="light"] .public-run-tag.tag-chaotic {
+  color: #6b21a8;
+  background: rgba(192, 86, 253, 0.15);
+  border-color: rgba(192, 86, 253, 0.4);
+}
+
+[data-theme="light"] .public-run-tag.tag-default {
+  color: #92400e;
+  background: rgba(251, 191, 36, 0.18);
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+[data-theme="light"] .public-nav-btn:hover:not(:disabled) {
+  background: rgba(124, 58, 237, 0.15);
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: 0 4px 12px rgba(108, 99, 158, 0.15);
+}
+
+[data-theme="light"] .section-divider {
+  background: linear-gradient(90deg, transparent 0%, rgba(227, 154, 150, 0.35) 20%, rgba(124, 58, 237, 0.4) 50%, rgba(227, 154, 150, 0.35) 80%, transparent 100%);
+}
+
+/* ── Section Divider ────────────────────────────────────── */
+.section-divider {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(252, 212, 200, 0.28) 20%, rgba(178, 145, 247, 0.4) 50%, rgba(252, 212, 200, 0.28) 80%, transparent 100%);
+  margin: 2.25rem 0 1.75rem;
+}
+
 /* ── Accessibility: Reduced Motion ───────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -1647,7 +1700,185 @@ html.theme-transitioning *::after {
   }
 
   .section-card:hover,
-  .raid-choice:not(.locked):not(.active):hover {
+  .raid-choice:not(.locked):not(.active):hover,
+  .public-run-card:hover {
     transform: none !important;
   }
+}
+
+/* ── 1x3 Upcoming Runs Card Grid (Homepage Only) ───── */
+.upcoming-runs-widget {
+  margin-bottom: 2.25rem;
+}
+
+.upcoming-runs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.upcoming-runs-label {
+  flex: 1;
+  margin-bottom: 0 !important;
+}
+
+.public-runs-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.public-runs-page-info {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.public-runs-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.15rem;
+}
+
+@media (max-width: 820px) {
+  .public-runs-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.public-run-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  box-shadow: var(--shadow-glass);
+  color: inherit;
+  cursor: default;
+}
+
+.public-run-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(252, 212, 200, .38), transparent);
+  pointer-events: none;
+}
+
+.public-run-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+}
+
+.public-run-tag {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 100px;
+  padding: 0.15rem 0.5rem;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.public-run-tag.tag-ftb {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+}
+
+.public-run-tag.tag-ftm {
+  color: #c4b5fd;
+  background: rgba(167, 139, 250, 0.12);
+  border: 1px solid rgba(167, 139, 250, 0.28);
+}
+
+.public-run-tag.tag-ba {
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+.public-run-tag.tag-chaotic {
+  color: #d8b4fe;
+  background: rgba(192, 86, 253, 0.12);
+  border: 1px solid rgba(192, 86, 253, 0.3);
+}
+
+.public-run-tag.tag-default {
+  color: #fde68a;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.public-run-type {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.public-run-time {
+  font-size: 0.73rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+  font-weight: 400;
+}
+
+.public-run-time-icon {
+  font-size: 0.85rem;
+  color: var(--accent-gold);
+}
+
+.public-nav-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.public-nav-btn:hover:not(:disabled) {
+  background: rgba(178, 145, 247, 0.2);
+  border-color: var(--accent-purple);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(178, 145, 247, 0.25);
+}
+
+.public-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
 }

@@ -47,6 +47,26 @@
                 </p>
             </section>
 
+            <!-- ── 1x3 Upcoming Runs Display (Homepage Only) ── -->
+            <div class="upcoming-runs-widget" id="public-upcoming-runs-widget" style="display: none;">
+                <div class="upcoming-runs-header">
+                    <div class="sections-label upcoming-runs-label">
+                        <span>Upcoming Community Runs</span>
+                    </div>
+                    <div class="public-runs-nav" id="public-runs-nav">
+                        <span id="public-runs-page-info" class="public-runs-page-info"></span>
+                        <button id="public-runs-prev-btn" class="public-nav-btn" aria-label="Previous Page" disabled>
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button id="public-runs-next-btn" class="public-nav-btn" aria-label="Next Page" disabled>
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="public-runs-container" class="public-runs-grid-3"></div>
+                <div class="section-divider"></div>
+            </div>
+
             <!-- ── Raid Selector ── -->
             <div class="raid-selector">
                 <button class="raid-choice active" data-raid="ftb">
@@ -241,5 +261,6 @@
         })();
     </script>
     <script src="js/nav.js"></script>
+    <script src="js/public-schedule.js"></script>
 </body>
 </html>

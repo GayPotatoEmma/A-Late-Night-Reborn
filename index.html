@@ -67,19 +67,19 @@
                 <div class="section-divider"></div>
             </div>
 
-            <!-- ── Raid Selector ── -->
-            <div class="raid-selector">
-                <button class="raid-choice active" data-raid="ftb">
-                    <span class="raid-tag available">✦ Available</span>
-                    <div class="raid-name">Forked Tower: Blood</div>
-                    <div class="raid-subtitle"><span>Occult Crescent: South Horn</span> &nbsp;·&nbsp; Patch 7.25</div>
-                    <div class="raid-desc">An ominous tower looms on the horizon of the isle's south horn, twisted spires shimmering in the haze. What revelations await within its uppermost chambers?</div>
+            <!-- ── Sleek Raid Tab Navigation ── -->
+            <div class="raid-tab-bar">
+                <button class="raid-tab active" data-raid="ftb">
+                    <span class="tab-dot blood"></span>
+                    <span class="tab-title">Forked Tower: Blood</span>
                 </button>
-                <button class="raid-choice wip" data-raid="ftm">
-                    <span class="raid-tag available">❖ Available</span>
-                    <div class="raid-name">Forked Tower: Magic</div>
-                    <div class="raid-subtitle"><span>Occult Crescent: North Horn</span> &nbsp;·&nbsp; Patch 7.55</div>
-                    <div class="raid-desc">A shimmering spire presides over the warped landscape of the North Horn. Has the time come for your long-awaited encounter with the isle’s architect?</div>
+                <button class="raid-tab" data-raid="ftm">
+                    <span class="tab-dot magic"></span>
+                    <span class="tab-title">Forked Tower: Magic (Extreme)</span>
+                </button>
+                <button class="raid-tab" data-raid="cod">
+                    <span class="tab-dot chaotic"></span>
+                    <span class="tab-title">Cloud of Darkness (Chaotic)</span>
                 </button>
             </div>
 
@@ -235,6 +235,32 @@
                 </div>
             </div>
 
+            <!-- ── COD: Cloud of Darkness (Chaotic) Content ── -->
+            <div id="cod-content" class="raid-content" hidden>
+                <div class="sections-label">Main Guides</div>
+                <div class="section-grid">
+
+                    <a href="chaotic/phase-0.html" class="section-card is-boss">
+                        <div class="card-title">Phase 0</div>
+                        <div class="card-desc">An introduction to the encounter and essential opening mechanics.</div>
+                        <div class="card-cta">→</div>
+                    </a>
+
+                    <a href="chaotic/phase-1.html" class="section-card is-boss">
+                        <div class="card-title">Phase 1 (Diamond)</div>
+                        <div class="card-desc">Comprehensive breakdown of mechanics across both Phase 1 timeline variants.</div>
+                        <div class="card-cta">→</div>
+                    </a>
+
+                    <a href="chaotic/phase-2.html" class="section-card is-boss">
+                        <div class="card-title">Phase 2 (Tiles)</div>
+                        <div class="card-desc">Detailed mechanics for both central tiles and side platforms.</div>
+                        <div class="card-cta">→</div>
+                    </a>
+
+                </div>
+            </div>
+
         </main>
 
         <!-- ── Footer ── -->
@@ -248,16 +274,43 @@
     <script src="js/stars.js"></script>
     <script>
         (function () {
-            var choices = document.querySelectorAll('.raid-choice:not(.locked)');
-            choices.forEach(function (btn) {
+            var tabs = document.querySelectorAll('.raid-tab');
+            
+            function switchRaid(raidId, updateUrl) {
+                var targetBtn = document.querySelector('.raid-tab[data-raid="' + raidId + '"]');
+                var targetContent = document.getElementById(raidId + '-content');
+                if (!targetBtn || !targetContent) return;
+
+                tabs.forEach(function (b) { b.classList.remove('active'); });
+                targetBtn.classList.add('active');
+
+                document.querySelectorAll('.raid-content').forEach(function (c) { c.hidden = true; });
+                targetContent.hidden = false;
+
+                if (updateUrl && history.replaceState) {
+                    history.replaceState(null, '', '#' + raidId);
+                }
+            }
+
+            tabs.forEach(function (btn) {
                 btn.addEventListener('click', function () {
-                    document.querySelectorAll('.raid-choice').forEach(function (b) { b.classList.remove('active'); });
-                    this.classList.add('active');
-                    var raidId = this.dataset.raid;
-                    document.querySelectorAll('.raid-content').forEach(function (c) { c.hidden = true; });
-                    document.getElementById(raidId + '-content').hidden = false;
+                    switchRaid(this.dataset.raid, true);
                 });
             });
+
+            function checkUrlForRaid() {
+                var hash = window.location.hash.replace('#', '').toLowerCase();
+                var params = new URLSearchParams(window.location.search);
+                var queryRaid = (params.get('raid') || '').toLowerCase();
+                var activeRaid = hash || queryRaid;
+                
+                if (activeRaid && document.querySelector('.raid-tab[data-raid="' + activeRaid + '"]')) {
+                    switchRaid(activeRaid, false);
+                }
+            }
+
+            checkUrlForRaid();
+            window.addEventListener('hashchange', checkUrlForRaid);
         })();
     </script>
     <script src="js/nav.js"></script>

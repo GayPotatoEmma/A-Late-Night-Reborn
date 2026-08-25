@@ -150,7 +150,7 @@
       </div>\
       <div class="nav-divider"></div>\
       <div class="nav-raid-group" id="nav-raid-ftm">\
-        <div class="nav-raid-header nav-raid-toggle"><span>Forked Tower: Magic</span><span class="nav-raid-chevron">&#9656;</span></div>\
+        <div class="nav-raid-header nav-raid-toggle"><span>Forked Tower: Magic (Extreme)</span><span class="nav-raid-chevron">&#9656;</span></div>\
         <div class="nav-raid-pages">\
           <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 1</span><span class="nav-chevron">&#9656;</span></div>\
@@ -261,16 +261,68 @@
           </div>\
         </div>\
       </div>\
+      <div class="nav-divider"></div>\
+      <div class="nav-raid-group" id="nav-raid-cod">\
+        <div class="nav-raid-header nav-raid-toggle"><span>Cloud of Darkness (Chaotic)</span><span class="nav-raid-chevron">&#9656;</span></div>\
+        <div class="nav-raid-pages">\
+          <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Phase 0</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="chaotic/phase-0.html" class="nav-page-link"><span>Phase 0</span></a>\
+            <div class="nav-sub-links">\
+              <a href="chaotic/phase-0.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="chaotic/phase-0.html#timeline" class="nav-sub-link"><span>Phase Timeline</span></a>\
+              <a href="chaotic/phase-0.html#blade-of-darkness" class="nav-sub-link"><span>Blade of Darkness</span></a>\
+              <a href="chaotic/phase-0.html#deluge-of-darkness" class="nav-sub-link"><span>Deluge of Darkness</span></a>\
+            </div>\
+          </div>\
+          <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Phase 1</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="chaotic/phase-1.html" class="nav-page-link"><span>Phase 1 (Diamond)</span></a>\
+            <div class="nav-sub-links">\
+              <a href="chaotic/phase-1.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="chaotic/phase-1.html#timeline" class="nav-sub-link"><span>Phase Timeline</span></a>\
+              <a href="chaotic/phase-1.html#auto-attacks" class="nav-sub-link"><span>Auto-Attacks & Tank Swap</span></a>\
+              <a href="chaotic/phase-1.html#grim-embrace" class="nav-sub-link"><span>Grim Embrace</span></a>\
+              <a href="chaotic/phase-1.html#cloudlets" class="nav-sub-link"><span>Cloudlets & Lasers</span></a>\
+              <a href="chaotic/phase-1.html#flares-and-unholy" class="nav-sub-link"><span>Flares & Unholy Darkness</span></a>\
+              <a href="chaotic/phase-1.html#rapid-sequence" class="nav-sub-link"><span>Rapid-Sequence Particle Beam</span></a>\
+              <a href="chaotic/phase-1.html#break-iv" class="nav-sub-link"><span>Break IV (Sinister Eyes)</span></a>\
+              <a href="chaotic/phase-1.html#stored-spells" class="nav-sub-link"><span>Stored Enaero & Endeath</span></a>\
+            </div>\
+          </div>\
+          <div class="nav-section">\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Phase 2</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="chaotic/phase-2.html" class="nav-page-link"><span>Phase 2 (Tiles)</span></a>\
+            <div class="nav-sub-links">\
+              <a href="chaotic/phase-2.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="chaotic/phase-2.html#timeline" class="nav-sub-link"><span>Phase Timeline</span></a>\
+              <a href="chaotic/phase-2.html#tile-rules" class="nav-sub-link"><span>Tiles</span></a>\
+              <a href="chaotic/phase-2.html#third-art-of-darkness" class="nav-sub-link"><span>The Third Art of Darkness</span></a>\
+              <a href="chaotic/phase-2.html#particle-concentration" class="nav-sub-link"><span>Particle Concentration</span></a>\
+              <a href="chaotic/phase-2.html#ghastly-gloom" class="nav-sub-link"><span>Ghastly Gloom</span></a>\
+              <a href="chaotic/phase-2.html#curse-of-darkness" class="nav-sub-link"><span>Curse of Darkness</span></a>\
+              <a href="chaotic/phase-2.html#seeds-and-vines" class="nav-sub-link"><span>Evil Seeds & Thorny Vine</span></a>\
+              <a href="chaotic/phase-2.html#spread-and-stacks" class="nav-sub-link"><span>Spread AoEs & Line Stacks</span></a>\
+              <a href="chaotic/phase-2.html#active-pivot" class="nav-sub-link"><span>Active-Pivot Particle Beam</span></a>\
+              <a href="chaotic/phase-2.html#looming-chaos" class="nav-sub-link"><span>Looming Chaos (Swap)</span></a>\
+              <a href="chaotic/phase-2.html#feint-particle-beam" class="nav-sub-link"><span>Feint Particle Beam</span></a>\
+              <a href="chaotic/phase-2.html#evaporation" class="nav-sub-link"><span>Evaporation</span></a>\
+            </div>\
+          </div>\
+        </div>\
+      </div>\
     </div>\
   </nav>';
 
   var inFTB = window.location.pathname.indexOf('/ftb/') !== -1;
   var inFTM = window.location.pathname.indexOf('/ftm/') !== -1;
-  if (inFTB || inFTM) {
+  var inCOD = window.location.pathname.indexOf('/chaotic/') !== -1;
+  if (inFTB || inFTM || inCOD) {
     navHTML = navHTML
       .replace('href="index.html" class="nav-home-link"', 'href="../index.html" class="nav-home-link"')
       .replace(/href="ftb\//g, 'href="../ftb/')
-      .replace(/href="ftm\//g, 'href="../ftm/');
+      .replace(/href="ftm\//g, 'href="../ftm/')
+      .replace(/href="chaotic\//g, 'href="../chaotic/');
   }
 
   document.body.insertAdjacentHTML('beforeend', navHTML);
@@ -324,6 +376,7 @@
   var currentPath = currentFile;
   if (inFTB) currentPath = 'ftb/' + currentFile;
   if (inFTM) currentPath = 'ftm/' + currentFile;
+  if (inCOD) currentPath = 'chaotic/' + currentFile;
 
   document.querySelectorAll('.nav-page-link, .nav-home-link').forEach(function (link) {
     var hrefAttr = link.getAttribute('href');

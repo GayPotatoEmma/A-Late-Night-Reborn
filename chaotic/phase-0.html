@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phase 0 | Cloud of Darkness (Chaotic) | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Phase 0 | Cloud of Darkness (Chaotic)" />
+  <meta name="description" content="Phase 0 guide for The Cloud of Darkness (Chaotic)." />
+  <meta property="og:description" content="Phase 0 guide for The Cloud of Darkness (Chaotic)." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Phase 0</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-title boss-title">Phase 0</h1>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p>
+            <strong>Phase 0</strong> serves as the brief opening sequence of The Cloud of Darkness (Chaotic). The raid handles two initial <strong>Blade of Darkness</strong> casts before mitigating a heavy raidwide hit from <strong>Deluge of Darkness</strong>, which transitions the encounter directly into Phase 1.
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase Timeline -->
+      <div class="content-card" id="timeline">
+        <h2 class="card-heading teal">Phase Timeline</h2>
+        <div class="content-body">
+          <div class="timeline">
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Blade of Darkness <em>(2×)</em></span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Deluge of Darkness &nbsp;<em>(Raidwide, transition into Phase 1)</em></span><span class="tl-badge raidwide">Raidwide</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blade of Darkness -->
+      <div class="content-card" id="blade-of-darkness">
+        <h2 class="card-heading gold">Blade of Darkness</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            At the start of the encounter, the boss delivers a single auto-attack before immediately casting <strong>Blade of Darkness</strong>.
+          </p>
+
+          <ul class="mech-steps">
+            <li><strong>Raised Hand:</strong> If she raises one of her hands, move to the opposite side of the arena to avoid a large donut-shaped AoE.</li>
+            <li><strong>Dual Blades:</strong> If she braces herself and summons two blades directly in front of her, move away from the boss to avoid a point-blank AoE.</li>
+          </ul>
+
+          <p style="margin-top: 0.75rem;">
+            Getting hit by either variation inflicts a 15-second physical <strong>Bleed</strong> debuff. Tanks take minimal direct damage.
+          </p>
+
+          <div class="alert-box tip" style="margin-top: 1.25rem;">
+            <span class="alert-icon">✦</span>
+            <div>Tanks and melee players can use personal mitigation and defensive cooldowns to comfortably maximize uptime during these casts.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deluge of Darkness -->
+      <div class="content-card" id="deluge-of-darkness">
+        <h2 class="card-heading gold">Deluge of Darkness</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            Following the two casts of Blade of Darkness, the boss casts <strong>Deluge of Darkness</strong>, a massive raidwide attack that inflicts a heavy Bleed debuff across the entire raid.
+          </p>
+
+          <ul class="mech-steps">
+            <li><strong>Target Mitigation:</strong> Ensure at least <strong>Reprisal</strong>, <strong>Feint</strong>, and <strong>Addle</strong> are applied to the boss before the cast finishes.</li>
+            <li><strong>Party Mitigation:</strong> Individual parties should supplement with additional party-wide mitigation and shields to survive the initial hit and tick damage.</li>
+          </ul>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide</p>
+    </footer>
+
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

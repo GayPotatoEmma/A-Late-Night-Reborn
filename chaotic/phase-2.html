@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phase 2 (Tiles) | Cloud of Darkness (Chaotic) | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Phase 2 (Tiles) | Cloud of Darkness (Chaotic)" />
+  <meta name="description" content="Phase 2 (Tiles) guide for The Cloud of Darkness (Chaotic)." />
+  <meta property="og:description" content="Phase 2 (Tiles) guide for The Cloud of Darkness (Chaotic)." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Phase 2 (Tiles)</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-title boss-title">Phase 2 (Tiles)</h1>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 0.75rem;">
+            <strong>Phase 2 (Tiles)</strong> features two parallel timeline sequences depending on your team's positioning in the arena between the main Cloud of Darkness boss and the Adds. Both groups handle mechanics simultaneously until the phase concludes.
+          </p>
+
+          <p style="margin-bottom: 0.5rem;">
+            You can verify your positions using the WTFDIG position checker <a href="https://wtfdig.info/71/chaotic#healerout" target="_blank" rel="noopener" class="content-link">here</a>.
+          </p>
+          <p style="margin-bottom: 1rem;">
+            You can view the full HealerOut raid plan <a href="https://raidplan.io/plan/5XlSGpRBykZUGyjg" target="_blank" rel="noopener" class="content-link">here</a>.
+          </p>
+
+          <ul class="mech-steps">
+            <li><strong>Adds &amp; Damage Transfer:</strong> 2 Stygian Shadows spawn on the East and West platforms. All damage dealt to adds transfers directly to the boss at the end of Phase 2 via <strong>Evaporation</strong>.</li>
+            <li><strong>Atomos Priority:</strong> 4 Atomos spawn on the outer ring with low HP (~150k). Defeat them within 10–15 seconds or they tether to players, dealing ticking damage and healing the boss for 300,000 HP every 2 seconds!</li>
+            <li><strong>Interrupt Flood of Darkness:</strong> Platform players MUST use <strong>Interject</strong> (or Head Graze) to interrupt the add's Flood of Darkness cast to prevent a wipe!</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase Timeline -->
+      <div class="content-card" id="timeline">
+        <h2 class="card-heading teal">Phase Timeline</h2>
+        <div class="content-body">
+          <div class="tl-branch-wrapper" style="margin-left: 0; border-left: none; padding-left: 0;">
+            <div class="tl-branch-grid">
+
+              <!-- Cloud of Darkness Timeline -->
+              <div class="tl-branch-box">
+                <div class="tl-branch-title">Cloud of Darkness Timeline</div>
+                <div class="timeline">
+                  <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Deluge of Darkness</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Transition into Phase 2</span></div></div>
+                  <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dark Dominion</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Particle Concentration</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Ghastly Gloom</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Donut / Plus</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Ghastly Gloom</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Donut / Plus</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thorny Vine</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spread AoEs / Line Stacks</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Active-Pivot Particle Beam</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Looming Chaos</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Forced Swap</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Particle Concentration</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Dark Dominion</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Feint Particle Beam</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Ghastly Gloom</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Spread AoEs / Line Stacks</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Transition back to Diamond Phase</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                </div>
+              </div>
+
+              <!-- Adds Timeline -->
+              <div class="tl-branch-box">
+                <div class="tl-branch-title">Adds Timeline</div>
+                <div class="timeline">
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">The Third Art of Darkness</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Adds spawn</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Particle Concentration</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Curse of Darkness</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Adds raidwide</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Evil Seeds</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Brambles</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Thorny Vine</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Flood of Darkness</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Needs to be interrupted</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Core-lateral / Lateral-core Phasers</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Excruciate</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Looming Chaos</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Forced Swap</span></div></div>
+                  <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Curse of Darkness</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Core-lateral / Lateral-core Phasers</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">The Third Art of Darkness</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Core-lateral / Lateral-core Phasers</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Flood of Darkness</span><span class="tl-badge raidwide">Raidwide</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Needs to be interrupted</span></div></div>
+                  <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Evaporation</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Adds disappear</span></div></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tiles -->
+      <div class="content-card" id="tile-rules">
+        <h2 class="card-heading gold">Tiles</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            In Phase 2, the arena transforms into central tiles (16 tiles), two side platforms (East/West), and an outer ring. Players on the inside tiles must strictly manage tile mechanics.
+          </p>
+
+          <ul class="mech-steps">
+            <li><strong>Single Occupancy:</strong> Only 1 player can occupy a tile at a time. If two players stand on the same tile, it immediately disappears for 5 seconds, causing affected players to fall to their death and respawn on a side platform.</li>
+            <li><strong>37-Second Tile Lifetime:</strong> A tile begins glowing dark purple after 30 seconds and disappears 7 seconds later. Players must refresh their tile lifetime by moving to an empty tile between mechanics whenever possible.</li>
+            <li><strong>Movement Priority:</strong> When resolving mechanics or refreshing tiles, always move in strict order: <strong>Tanks &rarr; Melee DPS &rarr; Ranged DPS</strong>.</li>
+            <li><strong>Tank Aggro:</strong> The boss auto-attacks the top 4 players on the aggro list. All tanks on the inside platform must use <strong>Provoke</strong> to prevent auto-attacks from hitting side platform tanks or DPS.</li>
+          </ul>
+
+          <p style="margin-top: 1rem;">
+            Players can see where they have to position themselves in the picture below:
+          </p>
+
+          <div class="img-row single" style="margin-top: .75rem;">
+            <img src="assets/phase2/positions.png" alt="Tiles positioning layout" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- The Third Art of Darkness -->
+      <div class="content-card" id="third-art-of-darkness">
+        <h2 class="card-heading gold">The Third Art of Darkness (Adds Memory)</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            The Stygian Shadows perform 3 telegraph motions in sequence that players must resolve in order.
+          </p>
+
+          <ul class="mech-steps">
+            <li><strong>Cleaves:</strong> Large cleave directed towards the side displaying a glowing orb.</li>
+            <li><strong>Spread:</strong> Long line AoEs shot at the 6 closest players.</li>
+            <li><strong>Pairs:</strong> 2-player stack AoE shot at the 3 closest players.</li>
+            <li>The sequence pattern will be either <strong>Cleave &rarr; Spread/Pairs &rarr; Cleave</strong> or <strong>Cleave &rarr; Cleave &rarr; Spread/Pairs</strong>.</li>
+          </ul>
+
+          <div class="img-row single" style="margin-top: 1.25rem;">
+            <img src="assets/phase2/pairspread.png" alt="The Third Art of Darkness pair and spread positions" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Particle Concentration (Towers) -->
+      <div class="content-card" id="particle-concentration">
+        <h2 class="card-heading gold">Particle Concentration (Towers)</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            12 towers spawn across the arena that must be soaked with the correct number of players.
+          </p>
+
+          <ul class="mech-steps">
+            <li><strong>Side Platforms:</strong> 2 towers per side platform (requiring 3 players each).</li>
+            <li><strong>Inside Tile Corners:</strong> Handle corner towers using <strong>Tanks &gt; Melee DPS &gt; Ranged DPS</strong> priority.</li>
+            <li>Unsoaked towers deal massive raidwide damage to the entire raid.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Ghastly Gloom -->
+      <div class="content-card" id="ghastly-gloom">
+        <h2 class="card-heading gold">Ghastly Gloom (Plus / Donut)</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Plus (Lightning tell):</strong> Inside players stand on the 3 furthest squares from the boss. Outside players stand near Atomos puddles (do not touch!).</li>
+            <li><strong>Donut (Swirling cloud tell):</strong> Stand as close to the boss as possible.</li>
+          </ul>
+
+          <div class="img-row single" style="margin-top: 1.25rem;">
+            <img src="assets/phase2/ghastlygloom.png" alt="Ghastly Gloom Plus and Donut telegraphs" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Curse of Darkness -->
+      <div class="content-card" id="curse-of-darkness">
+        <h2 class="card-heading gold">Curse of Darkness</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            The platform adds cast small raidwides that apply a <img src="assets/phase2/curseofdarkness.png" alt="Curse of Darkness debuff icon" class="section-img" style="display:inline-block; height:1.3em; width:auto; vertical-align:middle; margin-right:4px; margin-left:2px; cursor:zoom-in;" /><strong>Curse of Darkness</strong> debuff to outer platform players with staggered timers.
+          </p>
+
+          <ul class="mech-steps">
+            <li>When this debuff expires, your character will shoot a wide conal cleave AoE in the direction your character is facing.</li>
+            <li>Point your character <strong>outwards</strong> away from all other players before the debuff timer runs out to avoid cleaving the group.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Evil Seeds & Thorny Vine (Tethers) -->
+      <div class="content-card" id="seeds-and-vines">
+        <h2 class="card-heading gold">Evil Seeds &amp; Thorny Vine (Tethers)</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Evil Seeds (Brambles):</strong> 8 players get seed markers (4 inside, 2 on each side platform). Place seeds on designated spots and walk back carefully without stepping on occupied tiles.</li>
+            <li><strong>Thorny Vine (Tethers):</strong> Purple circles tether players to seeds or other players. Baiters on the outside platforms run along the outer ring to stretch and break tethers.</li>
+          </ul>
+
+          <div class="alert-box warning" style="margin-top: 1rem;">
+            <span class="alert-icon">⚠</span>
+            <div>Seed placement slightly differs from the linked raidplan. Waymarks will be placed in the arena to clearly indicate where to drop seeds.</div>
+          </div>
+
+          <p style="margin-top: 1rem;">
+            Players can see where to position the seeds in the image below:
+          </p>
+
+          <div class="img-row single" style="margin-top: .75rem;">
+            <img src="assets/phase2/seeds.png" alt="Evil Seeds placement layout" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Spread AoEs & Line Stacks -->
+      <div class="content-card" id="spread-and-stacks">
+        <h2 class="card-heading gold">Spread AoEs &amp; Line Stacks</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Golden Glow (Line Stacks):</strong> 6 corner/side lasers shot at designated stack groups.</li>
+            <li><strong>Purple Orbs (Spread AoEs):</strong> 12 spread AoEs shot at individual players.</li>
+          </ul>
+
+          <div class="img-row single" style="margin-top: 1.25rem;">
+            <img src="assets/phase2/linespread.png" alt="Spread AoEs and Line Stacks positions" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Pivot Particle Beam -->
+      <div class="content-card" id="active-pivot">
+        <h2 class="card-heading gold">Active-Pivot Particle Beam</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            The boss channels a 5-hit rotating laser beam starting from East or West and pivoting 90° (Clockwise or Counter-Clockwise) to finish North or South.
+          </p>
+
+          <ul class="mech-steps">
+            <li><strong>Rotation Dodging:</strong>
+              <ul class="mech-sub">
+                <li><strong>Clockwise Rotation:</strong> NW and SE corners are unsafe and must rotate with the beam.</li>
+                <li><strong>Counter-Clockwise Rotation:</strong> NE and SW corners are unsafe and must rotate with the beam.</li>
+              </ul>
+            </li>
+            <li><strong>Platform Groups (Outside):</strong> Step onto the safe side of the <strong>Outer Ring</strong>. Once the laser sequence begins, move back onto your side platforms.</li>
+            <li><strong>Middle Tiles (Inside):</strong>
+              <ul class="mech-sub">
+                <li><strong>Pre-Refresh:</strong> Refresh tile lifetimes immediately before the mechanic starts so your tile stays solid throughout the 5 hits.</li>
+                <li><strong>Tile Priority:</strong> Move in strict priority order: <strong>Tanks &rarr; Melee DPS &rarr; Ranged DPS</strong>.</li>
+                <li><strong>Safe Corners:</strong> DPS on safe corners remain in place. Tanks create space for incoming players from unsafe corners.</li>
+                <li>Once in a safe corner, you only need to move 1 tile after rotation begins. Return to your original starting corners when the laser sequence ends.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box warning" style="margin-top: 1rem;">
+            <span class="alert-icon">⚠</span>
+            <div>Staggered <strong>Curse of Darkness</strong> debuffs expire near the end of this mechanic! Outside players must stay mindful of character facing direction to avoid cleaving the group.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Looming Chaos (Forced Swap) -->
+      <div class="content-card" id="looming-chaos">
+        <h2 class="card-heading gold">Looming Chaos (Forced Swap)</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            Tethers swap player positions between side platforms and inside tiles.
+          </p>
+
+          <div class="alert-box warning" style="margin-bottom: 1rem;">
+            <span class="alert-icon">⚠</span>
+            <div>Aggro resets after the swap! Every tank MUST immediately <strong>Provoke</strong> their new target to prevent lethal auto-attacks on DPS or healers.</div>
+          </div>
+
+          <ul class="mech-steps">
+            <li>Side platform players swap with the opposite side platform or inner corners based on proximity.</li>
+            <li>Re-establish tank aggro immediately upon landing in your new position.</li>
+          </ul>
+
+          <p style="margin-top: 1rem;">
+            Players can see the positions they have to preposition themselves in below:
+          </p>
+
+          <div class="img-row single" style="margin-top: .75rem;">
+            <img src="assets/phase2/swaps.png" alt="Looming Chaos swap positions" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Feint Particle Beam -->
+      <div class="content-card" id="feint-particle-beam">
+        <h2 class="card-heading gold">Feint Particle Beam</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            After the cast is completed, a tracking AoE will appear under a random player in each corner on the inside platform.
+          </p>
+
+          <ul class="mech-steps">
+            <li>Run 180° clockwise around the inner platform to outrun the tracking AoE.</li>
+            <li><strong>Tank Adjustment:</strong> If a DPS is targeted, the Tank should wait until they have moved before sliding into their spot to clear the path for the other corners.</li>
+            <li>After moving 180° around the middle platform, carefully walk forward another 180° clockwise to return to your original corner.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Evaporation -->
+      <div class="content-card" id="evaporation">
+        <h2 class="card-heading gold">Evaporation</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li>Adds transfer all damage taken to the boss (5% add HP = 1% boss HP).</li>
+            <li>Boss resets the arena back to Phase 0 and proceeds into the opposite Phase 1 sequence for the victory lap.</li>
+          </ul>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

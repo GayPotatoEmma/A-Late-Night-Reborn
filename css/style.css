@@ -1157,52 +1157,105 @@ details.accordion-item[open] > summary {
 
 /* ── Raid Selector ────────────────────────────────────── */
 
-.raid-selector {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.15rem;
-  margin-bottom: 2.75rem;
+/* ── Sleek Raid Tab Bar ── */
+.raid-tab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  margin-bottom: 2rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: .5rem;
+  box-shadow: var(--shadow-glass);
 }
 
-.raid-choice {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  padding: 1.65rem 1.75rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(22px) saturate(170%);
-  -webkit-backdrop-filter: blur(22px) saturate(170%);
-  border: 2px solid var(--glass-border);
-  box-shadow: var(--shadow-glass);
+.raid-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  padding: .75rem 1.2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: .92rem;
   cursor: pointer;
   transition: all var(--transition);
-  text-align: left;
+  white-space: nowrap;
+}
+
+.raid-tab:hover {
   color: var(--text-primary);
-  font-family: inherit;
-  width: 100%;
+  background: rgba(255, 255, 255, .05);
 }
 
-.raid-choice::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 10%; right: 10%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(227, 154, 150, .35), transparent);
-  pointer-events: none;
+.raid-tab.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(255, 255, 255, .15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, .2);
 }
 
-.raid-choice.active {
-  border-color: rgba(227, 154, 150, .55);
-  box-shadow: var(--shadow-glass), 0 0 40px rgba(227, 154, 150, .22);
-  background: rgba(26, 27, 60, 0.75);
+.raid-tab[data-raid="ftb"].active {
+  border-color: rgba(244, 63, 94, .45);
+  background: rgba(244, 63, 94, .12);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(244, 63, 94, .2);
 }
 
-.raid-choice.locked { cursor: not-allowed; opacity: .52; }
+.raid-tab[data-raid="ftm"].active {
+  border-color: rgba(168, 85, 247, .45);
+  background: rgba(168, 85, 247, .12);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(168, 85, 247, .2);
+}
 
-.raid-choice:not(.locked):not(.active):hover {
-  border-color: rgba(227, 154, 150, .32);
-  background: rgba(26, 27, 60, .55);
-  transform: translateY(-2px);
+.raid-tab[data-raid="cod"].active {
+  border-color: rgba(251, 191, 36, .45);
+  background: rgba(251, 191, 36, .12);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(251, 191, 36, .2);
+}
+
+.tab-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: transform var(--transition), background var(--transition);
+}
+
+.raid-tab.active .tab-dot.blood { background: #f43f5e; box-shadow: 0 0 8px #f43f5e; transform: scale(1.25); }
+.raid-tab.active .tab-dot.magic { background: #a855f7; box-shadow: 0 0 8px #a855f7; transform: scale(1.25); }
+.raid-tab.active .tab-dot.chaotic { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; transform: scale(1.25); }
+
+.tab-title {
+  letter-spacing: .02em;
+}
+
+.tab-patch {
+  font-size: .7rem;
+  font-weight: 600;
+  opacity: .65;
+  background: rgba(255, 255, 255, .1);
+  padding: .15rem .45rem;
+  border-radius: 100px;
+}
+
+.raid-choice-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-bottom: .9rem;
 }
 
 .raid-tag {
@@ -1215,7 +1268,34 @@ details.accordion-item[open] > summary {
   text-transform: uppercase;
   border-radius: 100px;
   padding: .2rem .75rem;
-  margin-bottom: .9rem;
+}
+
+.raid-type-badge {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-radius: 100px;
+  padding: .2rem .65rem;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.raid-type-badge.blood {
+  color: #f43f5e;
+  background: rgba(244, 63, 94, .12);
+  border: 1px solid rgba(244, 63, 94, .25);
+}
+
+.raid-type-badge.magic {
+  color: #a855f7;
+  background: rgba(168, 85, 247, .12);
+  border: 1px solid rgba(168, 85, 247, .25);
+}
+
+.raid-type-badge.chaotic {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, .12);
+  border: 1px solid rgba(251, 191, 36, .25);
 }
 
 .raid-tag.available {
@@ -1228,6 +1308,22 @@ details.accordion-item[open] > summary {
   color: var(--text-muted);
   background: rgba(71,85,105,.15);
   border: 1px solid rgba(71,85,105,.3);
+}
+
+/* Custom Per-Raid Active Glows */
+.raid-choice[data-raid="ftb"].active {
+  border-color: rgba(244, 63, 94, .55);
+  box-shadow: var(--shadow-glass), 0 0 35px rgba(244, 63, 94, .20);
+}
+
+.raid-choice[data-raid="ftm"].active {
+  border-color: rgba(168, 85, 247, .55);
+  box-shadow: var(--shadow-glass), 0 0 35px rgba(168, 85, 247, .20);
+}
+
+.raid-choice[data-raid="cod"].active {
+  border-color: rgba(251, 191, 36, .55);
+  box-shadow: var(--shadow-glass), 0 0 35px rgba(251, 191, 36, .20);
 }
 
 .raid-name {
@@ -1328,7 +1424,7 @@ details.accordion-item[open] > summary {
   line-height: 1.65;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .raid-selector { grid-template-columns: 1fr; }
 }
 
@@ -1360,6 +1456,56 @@ details.accordion-item[open] > summary {
 .tl-loop-label { font-size: .72rem; font-style: italic; color: rgba(167,139,250,.5); padding: .5rem 0 .3rem 2.25rem; letter-spacing: .02em; }
 .tl-loop-box { border: 1px dashed rgba(167,139,250,.22); border-radius: var(--radius-md); padding: .35rem 0; background: rgba(167,139,250,.03); }
 .tl-time { font-size: .7rem; color: rgba(148,163,184,.45); font-variant-numeric: tabular-nums; min-width: 2.6rem; flex-shrink: 0; letter-spacing: .01em; }
+
+/* ── Timeline Branching ────────────────────────────────── */
+.tl-branch-wrapper {
+  margin: 0.85rem 0 0.85rem 0.5rem;
+  border-left: 2px dashed rgba(167, 139, 250, 0.35);
+  padding-left: 0.85rem;
+}
+
+.tl-branch-header {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 0.75rem;
+}
+
+.tl-branch-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .tl-branch-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tl-branch-box {
+  background: rgba(167, 139, 250, 0.04);
+  border: 1px dashed rgba(167, 139, 250, 0.22);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+}
+
+.tl-branch-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-purple);
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.15);
+}
+
+[data-theme="light"] .tl-branch-wrapper { border-left-color: rgba(124, 58, 237, 0.35); }
+[data-theme="light"] .tl-branch-box { background: rgba(124, 58, 237, 0.04); border-color: rgba(124, 58, 237, 0.22); }
+[data-theme="light"] .tl-branch-title { border-bottom-color: rgba(124, 58, 237, 0.15); }
 
 /* ── Mechanic Steps ──────────────────────────────────────── */
 .mech-steps { list-style: none; padding: 0; margin: .5rem 0 0; display: flex; flex-direction: column; gap: .3rem; }
@@ -1396,6 +1542,8 @@ details.accordion-item[open] > summary {
 
 .nav-page-link.wip { opacity: 0.4; pointer-events: none; }
 .nav-page-link.wip::after { content: " W.I.P."; font-size: .6em; font-weight: 800; color: #f59e0b !important; opacity: 1 !important; letter-spacing: .04em; vertical-align: middle; }
+a.section-card.wip[href], a.nav-page-link.wip[href] { pointer-events: auto !important; opacity: 0.88; cursor: pointer; }
+a.section-card.wip[href] > * { opacity: 0.88; }
 .page-wip-banner { display: flex; align-items: center; gap: .7rem; background: rgba(245,158,11,.14); border: 1px solid rgba(245,158,11,.40); border-radius: var(--radius-lg); padding: .85rem 1.2rem; color: #f59e0b !important; font-size: .875rem; font-weight: 600; margin-bottom: 1.5rem; }
 
 /* ── Lightbox ──────────────────────────────────────────────── */

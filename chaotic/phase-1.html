@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phase 1 (Diamond) | Cloud of Darkness (Chaotic) | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Phase 1 (Diamond) | Cloud of Darkness (Chaotic)" />
+  <meta name="description" content="Phase 1 (Diamond) guide for The Cloud of Darkness (Chaotic)." />
+  <meta property="og:description" content="Phase 1 (Diamond) guide for The Cloud of Darkness (Chaotic)." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Phase 1 (Diamond)</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-title boss-title">Phase 1 (Diamond)</h1>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 0.75rem;">
+            <strong>Phase 1 (Diamond)</strong> features two distinct timeline variations depending on the sequence of mechanics chosen by the boss. Both variations share an identical opening sequence through the initial Grim Embrace debuffs and wall Lasers, after which the fight branches into Variation 1 or Variation 2 before transitioning into Phase 2.
+          </p>
+          <p>
+            Upon completing Phase 2, the encounter returns to Phase 1 to execute the <strong>opposite variation</strong> before casting a final <strong>Deluge of Darkness</strong> enrage. Note that on unsynced runs, parties typically defeat the boss during the transition and will skip this repeat phase entirely.
+          </p>
+        </div>
+      </div>
+
+      <!-- Phase Timeline -->
+      <div class="content-card" id="timeline">
+        <h2 class="card-heading teal">Phase Timeline</h2>
+        <div class="content-body">
+          <div class="timeline">
+            <!-- Shared Opening -->
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Diamond Phase Begins</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Grim Embrace</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Applies 4x staggered Grim Embrace debuffs</span></div></div>
+            <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Lasers</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+            <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">From the outside walls</span></div></div>
+
+            <!-- Branching Section -->
+            <div class="tl-branch-wrapper">
+              <div class="tl-branch-grid">
+
+                <!-- Variation 1 -->
+                <div class="tl-branch-box">
+                  <div class="tl-branch-title"><span>Variation 1:</span> Flares &amp; Light Party Stacks</div>
+                  <div class="timeline">
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Flares</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Unholy Darkness</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Light Party Stacks</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Blade of Darkness</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Grim Embrace Debuffs Expire (1st)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Endeath / Enaero</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Grim Embrace Debuffs Expire (2nd)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Grim Embrace Debuffs Expire (3rd)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Break IV</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Blade of Darkness</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Stored Endeath / Enaero</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Lasers</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">From the outside walls</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Grim Embrace Debuffs Expire (4th)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Death / Aero</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  </div>
+                </div>
+
+                <!-- Variation 2 -->
+                <div class="tl-branch-box">
+                  <div class="tl-branch-title"><span>Variation 2:</span> Aero / Death &amp; Wild Charge</div>
+                  <div class="timeline">
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Aero / Death</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Grim Embrace Debuffs Expire (1st)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Endeath / Enaero</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Rapid-Sequence Particle Beam</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Wild Charge</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Grim Embrace Debuffs Expire (2nd)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Lasers</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">From the outside walls</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Blade of Darkness</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Stored Endeath / Enaero</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Lasers</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row sub"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">From the outside walls</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Grim Embrace Debuffs Expire (3rd)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Flares</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                    <div class="tl-row mechanic"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Grim Embrace Debuffs Expire (4th)</span><span class="tl-badge mechanic">Mechanic</span></div></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+      <!-- Shared Closing -->
+            <div class="tl-row raidwide"><div class="tl-dot"></div><div class="tl-body"><span class="tl-text">Flood of Darkness &nbsp;<em>(AoE, transition to Phase 2)</em></span><span class="tl-badge raidwide">Raidwide</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auto-Attacks & Tank Swap -->
+      <div class="content-card" id="auto-attacks">
+        <h2 class="card-heading gold">Lightning Auto-Attacks &amp; Tank Swap</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            Throughout Phase 1, the boss performs 24 auto-attacks that inflict a stackable <img src="assets/phase1/lightningresistance.png" alt="Lightning Resistance Down debuff" class="section-img" style="display:inline-block; height:1.3em; width:auto; vertical-align:middle; margin-right:4px; margin-left:2px; cursor:zoom-in;" /><strong>Lightning Resistance Down</strong> debuff on her target.
+          </p>
+
+          <ul class="mech-steps">
+            <li><strong>Aggro Priority:</strong> All tanks must have tank stance enabled. The main tank opens with <strong>Provoke</strong> at the start of the phase to secure initial aggro.</li>
+            <li><strong>Tank Swap:</strong> Tanks must swap aggro at <strong>6 stacks</strong> of Lightning Resistance Down to prevent lethal damage from combined mechanics and auto-attacks.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Grim Embrace -->
+      <div class="content-card" id="grim-embrace">
+        <h2 class="card-heading gold">Grim Embrace (Hand Debuffs)</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            The boss tethers 12 random players first, then the remaining 12 players, applying delayed hand debuffs. The boss's hand motion indicates the direction of the AoE upon expiry.
+          </p>
+
+          <ul class="mech-steps">
+            <li><strong>Grim Embrace (Forward):</strong> The slap AoE will spawn <strong>behind</strong> you. Move forward / away from your back.</li>
+            <li><strong>Grim Embrace (Backward):</strong> The slap AoE will spawn <strong>in front of</strong> you. Move backward / away from your front.</li>
+            <li>Getting hit by a hand AoE inflicts a 25% Damage Down stack and <strong>Doom</strong> (cleansable with Esuna).</li>
+            <li>A countdown timer (5 to 0) appears above your character right before expiry, accompanied by a Heavy movement slow.</li>
+            <li>Always resolve your debuff at the <strong>outer edge</strong> of the arena with the hand pointed outwards!</li>
+          </ul>
+
+          <div class="alert-box tip" style="margin-top: 1.25rem;">
+            <span class="alert-icon">✦</span>
+            <div>If you forget which debuff you have, disengage from the boss and use a gap-closer right before the timer reaches 0 to dodge the hand attack!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cloudlets & Lasers -->
+      <div class="content-card" id="cloudlets">
+        <h2 class="card-heading gold">Cloudlets (Outside Wall Lasers)</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            The boss summons two sets of 5 Cloudlets along the arena walls that fire straight-line lasers in alternating sets of 2 and 3 per side.
+          </p>
+
+          <ul class="mech-steps">
+            <li>Identify a tile that is <strong>safe</strong> from the 1st laser set, but adjacent to a tile currently being targeted by the 1st set.</li>
+            <li>Immediately after the 1st laser set fires, step onto the freshly cleared tile to safely dodge the 2nd laser set.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Flares & Unholy Darkness -->
+      <div class="content-card" id="flares-and-unholy">
+        <h2 class="card-heading gold">Flares &amp; Unholy Darkness</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Flares:</strong> Proximity AoEs. 3 designated players run to their assigned alliance corners. All non-marked players stack tightly under the boss.</li>
+            <li><strong>Unholy Darkness:</strong> 4-man stack AoE on each healer. Position Healer 1 close to the boss and Healer 2 behind. Do not overlap stacks.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Rapid-Sequence Particle Beam -->
+      <div class="content-card" id="rapid-sequence">
+        <h2 class="card-heading gold">Rapid-Sequence Particle Beam (Wild Charge)</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            The boss fires four sets of three laser beams dealing heavy raidwide damage.
+          </p>
+
+          <ul class="mech-steps">
+            <li>Preposition in designated alliance lines.</li>
+            <li><strong>Tanks in front:</strong> The first two players hit take extra damage, so tanks must stand in front to soak for the party.</li>
+            <li>Stay in your group until the mechanic concludes.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Break IV -->
+      <div class="content-card" id="break-iv">
+        <h2 class="card-heading gold">Break IV (Sinister Eyes)</h2>
+        <div class="content-body">
+          <p style="margin-bottom: 1rem;">
+            The boss and 2 Sinister Eyes channel a petrifying gaze.
+          </p>
+
+          <ul class="mech-steps">
+            <li>Turn your character's facing direction away from the boss and both Sinister Eyes before the cast completes.</li>
+            <li>Failure results in Petrify.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Stored Enaero / Endeath -->
+      <div class="content-card" id="stored-spells">
+        <h2 class="card-heading gold">Stored Enaero &amp; Endeath (Aero / Death)</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Enaero (Aero):</strong> Massive middle knockback. Use <strong>Arm's Length / Surecast</strong> and stay out of the center blue killzone.</li>
+            <li><strong>Enddeath (Death):</strong> Massive middle pull. Use <strong>Arm's Length / Surecast</strong> and stay close enough to step in after the initial proximity hit.</li>
+          </ul>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

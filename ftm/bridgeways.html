@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lower Passages | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Lower Passages | A Late Night Reborn" />
+  <meta name="description" content="Traversal guide for the Lower Passages of the Forked Tower: Magic. Mirrored hallways with hidden landmines, lasers, and arcane sigil puzzles." />
+  <meta property="og:description" content="Traversal guide for the Lower Passages of the Forked Tower: Magic. Mirrored hallways with hidden landmines, lasers, and arcane sigil puzzles." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Lower Passages</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge traversal">Traversal</div>
+        <h1 class="page-title traversal-title">Lower Passages</h1>
+        <p class="page-subtitle">The hallway section between Two-headed Aevis and Sword Dancer. Also referred to as &ldquo;Bridgeways.&rdquo;</p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p>
+            After defeating the Two-headed Aevis, the raid splits into two groups: letter parties (<strong>A, B, C</strong>) take the left passage, and number parties (<strong>1, 2, 3</strong>) take the right passage. Both sides navigate mirrored layouts filled with hidden landmines, lasers, and Arcane Sigil sacrifice puzzles before converging at the Sword Dancer arena.
+          </p>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span>All colored trap sets appear symmetrically on both the left and right sides. Only one trap per colored group will be live, while the other spots remain empty.</span>
+          </div>
+          <div class="img-row single">
+            <img src="assets/bridgeways/map.png" alt="Lower Passages Map Overview" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Explosive Traps & Hazards -->
+      <div class="content-card" id="explosive-traps">
+        <h2 class="card-heading gold">Explosive Traps &amp; Hazards</h2>
+        <div class="content-body">
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Small Landmine:</strong> Detonates with a lethal AoE affecting the trigger and nearby players. The Phantom Ranger disarms these using <strong>Occult Falcon</strong>.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Mega Landmine:</strong> Explodes with a massive radius that may cause a full wipe. The Phantom Ranger must disarm at <em>maximum range</em> with everyone positioned far behind.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Lasers:</strong> The blue glowing laser barriers across the hallways are lethal. Stepping into them causes immediate death. Navigate around them carefully.</span>
+          </div>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Never disarm a trap without the raid leader's permission.</strong> Confirm the trap type and ensure the entire party is safe first.</span>
+          </div>
+
+          <ul class="mech-steps" style="margin-top:1.2rem;">
+            <li><strong>Trap Distribution:</strong>
+              <ul class="mech-sub">
+                <li><strong>Initial Hallway:</strong> 1x Small Landmine in the starting corridor (red set or blue set).</li>
+                <li><strong>Passageways:</strong> 1x Small (linked south / linked north), 1x Mega in the inner corridors, and 1x Small in the outer loops.</li>
+                <li><strong>Rejoining Corridor:</strong> The final trap set before rejoining (1x Small) can appear on <em>either</em> the left or the right side.</li>
+                <li><strong>Final Room:</strong> 1x Mega and 1x Small Landmine (these two can swap positions).</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Mechanics & Progression -->
+      <div class="content-card" id="mechanics">
+        <h2 class="card-heading blue">Mechanics &amp; Progression</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Arcane Sigils (Sacrifice Puzzles):</strong>
+              <ul class="mech-sub">
+                <li>Each side features a glowing cyan <strong>Arcane Sigil</strong>.</li>
+                <li>Tanks must pull enemies directly onto the sigil. <strong>Kill 4 of any add on top of the Arcane Sigil</strong> to solve the puzzle and break the barrier.</li>
+              </ul>
+            </li>
+            <li><strong>Dispel Barmuus:</strong>
+              <ul class="mech-sub">
+                <li>When the <strong>Tower Barmuus</strong> appears, a <strong>Phantom Time Mage</strong> must immediately cast <strong>Occult Dispel</strong> to strip its lethal buff.</li>
+              </ul>
+            </li>
+            <li><strong>Hidden Chests &amp; Tower Crusaders:</strong>
+              <ul class="mech-sub">
+                <li>Phantom Thieves can use Trap Detection to uncover hidden chests in the side chambers.</li>
+                <li><strong>Tower Crusader Spawn:</strong> All hidden chest spots have a chance to spawn an aggressive <strong>Tower Crusader</strong> add instead of a chest when percepted. Be prepared to pick it up and burn it down immediately.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phantom Job Responsibilities -->
+      <div class="content-card" id="phantom-jobs">
+        <h2 class="card-heading teal">Phantom Job Responsibilities</h2>
+        <div class="content-body">
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Thief</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Trap Detection</strong> to reveal hidden landmines and side chests. Move ahead carefully with the raid leader's call.</li>
+                <li>Alert the party when percepting hidden chest locations, as a <strong>Tower Crusader</strong> may spawn.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Ranger</strong>
+              <ul class="mech-steps">
+                <li>When instructed, use <strong>Occult Falcon</strong> to disarm traps.</li>
+                <li>When disarming a Mega Landmine, stand at <strong>maximum range</strong> and ensure the party is completely clear behind you.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Time Mage</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Occult Slowga</strong> on trash packs to slow down their casts and attacks.</li>
+                <li>Cast <strong>Occult Dispel</strong> immediately on the <strong>Tower Barmuus</strong>.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Samurai</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Iainuki</strong> on enemy packs for a chance to instantly kill enemies.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Black Mage</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Occult Toad</strong> to transform enemies into frogs, rendering them near harmless and reducing their damage dealt by 99%.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="two-headed-aevis.html" class="nav-btn nav-prev">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← Two-headed Aevis</span>
+          </div>
+        </a>
+        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <a href="sword-dancer.html" class="nav-btn nav-next">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>Sword Dancer →</span>
+          </div>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

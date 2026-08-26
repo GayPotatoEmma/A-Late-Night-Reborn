@@ -169,8 +169,14 @@
             </div>\
           </div>\
           <div class="nav-section">\
-            <div class="nav-section-label"><span class="nav-badge traversal">Traversal</span></div>\
-            <a class="nav-page-link wip"><span>Lower Passages</span></a>\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge traversal">Traversal</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ftm/bridgeways.html" class="nav-page-link"><span>Lower Passages</span></a>\
+            <div class="nav-sub-links">\
+              <a href="ftm/bridgeways.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="ftm/bridgeways.html#explosive-traps" class="nav-sub-link"><span>Explosive Traps &amp; Hazards</span></a>\
+              <a href="ftm/bridgeways.html#mechanics" class="nav-sub-link"><span>Mechanics &amp; Progression</span></a>\
+              <a href="ftm/bridgeways.html#phantom-jobs" class="nav-sub-link"><span>Phantom Job Responsibilities</span></a>\
+            </div>\
           </div>\
           <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge boss">Boss 2</span><span class="nav-chevron">&#9656;</span></div>\
@@ -188,8 +194,15 @@
             </div>\
           </div>\
           <div class="nav-section">\
-            <div class="nav-section-label"><span class="nav-badge traversal">Traversal</span></div>\
-            <a class="nav-page-link wip"><span>Central Mezzanine</span></a>\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge traversal">Traversal</span><span class="nav-chevron">&#9656;</span></div>\
+            <a href="ftm/bridge.html" class="nav-page-link"><span>Central Mezzanine</span></a>\
+            <div class="nav-sub-links">\
+              <a href="ftm/bridge.html#overview" class="nav-sub-link"><span>Overview</span></a>\
+              <a href="ftm/bridge.html#explosive-traps" class="nav-sub-link"><span>Explosive Traps</span></a>\
+              <a href="ftm/bridge.html#secret-nook" class="nav-sub-link"><span>Secret Nook &amp; Entrap</span></a>\
+              <a href="ftm/bridge.html#mechanics" class="nav-sub-link"><span>Mechanics &amp; Progression</span></a>\
+              <a href="ftm/bridge.html#phantom-jobs" class="nav-sub-link"><span>Phantom Job Responsibilities</span></a>\
+            </div>\
           </div>\
           <div class="nav-section">\
             <div class="nav-section-label nav-section-toggle"><span class="nav-badge mini-boss">Mini Boss</span><span class="nav-chevron">&#9656;</span></div>\

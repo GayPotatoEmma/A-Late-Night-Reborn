@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central Mezzanine | A Late Night Reborn</title>
+  <link rel="icon" href="../assets/alnr%20logo.png" type="image/png" />
+  <meta property="og:title" content="Central Mezzanine | A Late Night Reborn" />
+  <meta name="description" content="Traversal guide for the Central Mezzanine of the Forked Tower: Magic. Traps, Lockward Entrap resets, and the Secret Nook portal leading to Storm Generators." />
+  <meta property="og:description" content="Traversal guide for the Central Mezzanine of the Forked Tower: Magic. Traps, Lockward Entrap resets, and the Secret Nook portal leading to Storm Generators." />
+  <meta property="og:image" content="https://gaypotatoemma.github.io/A-Late-Night-Reborn/assets/alnr%20logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="A Late Night Reborn" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+  <div class="bg-nebula"></div>
+
+  <div class="site-wrapper">
+
+    <!-- ── Header ── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="../index.html" class="header-logo-link">
+          <img src="../assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+        </a>
+        <a href="../index.html">
+          <span class="header-site-name">A Late Night Reborn</span>
+        </a>
+        <a href="https://discord.gg/psuzsjEZWR" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      </div>
+    </header>
+
+    <!-- ── Main ── -->
+    <main class="main-content">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Central Mezzanine</span>
+      </nav>
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-badge traversal">Traversal</div>
+        <h1 class="page-title traversal-title">Central Mezzanine</h1>
+        <p class="page-subtitle">The bridge and mezzanine section between Sword Dancer and Storm Generators. Also referred to as &ldquo;Bridge.&rdquo;</p>
+      </div>
+
+      <!-- Overview -->
+      <div class="content-card" id="overview">
+        <h2 class="card-heading purple">Overview</h2>
+        <div class="content-body">
+          <p>
+            After defeating Sword Dancer, the raid advances into the <strong>Central Mezzanine</strong>. This section features a trap-dense Main Area arranged around a central circular hub with branching cardinal corridors, leading northward to the Storm Generators. It also contains an optional <strong>Secret Nook</strong> area accessed through a one-time hidden teleportation portal.
+          </p>
+          <div class="alert-box info">
+            <span class="alert-icon">ℹ</span>
+            <span>Trap spots spawn in colour-coded groups. Only one trap per colored cluster will be active. Listen closely to your raid leader before moving or disarming.</span>
+          </div>
+          <div class="img-row single">
+            <img src="assets/bridge/map.png" alt="Central Mezzanine Map Overview" class="section-img" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Explosive Traps -->
+      <div class="content-card" id="explosive-traps">
+        <h2 class="card-heading gold">Explosive Traps</h2>
+        <div class="content-body">
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Small Landmines:</strong> Detonates with a lethal AoE affecting the trigger and nearby players. The Phantom Ranger disarms these using <strong>Occult Falcon</strong>.</span>
+          </div>
+          <div class="alert-box danger">
+            <span class="alert-icon">☠</span>
+            <span><strong>Mega Landmines:</strong> Massive explosion radius that may cause a full wipe. The Phantom Ranger must disarm at <em>maximum range</em> with everyone waiting far behind.</span>
+          </div>
+          <div class="alert-box warning">
+            <span class="alert-icon">⚠</span>
+            <span><strong>Never disarm a trap without the raid leader's permission.</strong> Always confirm positioning before executing any disarm.</span>
+          </div>
+
+          <ul class="mech-steps" style="margin-top:1.2rem;">
+            <li><strong>Trap Distribution:</strong>
+              <ul class="mech-sub">
+                <li><strong>Eastern Entrance Corridor:</strong> Two 6-trap clusters, each containing <strong>1x Mega Landmine</strong>.</li>
+                <li><strong>Central Circular Hub:</strong> Contains <strong>1x Small Landmine in each of 7 color groups</strong> (7 live traps total around the ring).</li>
+                <li><strong>North Corridor:</strong> 1x Small Landmine (pink set) leading to the northern chest/portal spot.</li>
+                <li><strong>West Corridor:</strong> 1x Small Landmine (red set), 1x Mega Landmine (yellow set), and 1x Small Landmine (green set).</li>
+                <li><strong>South Corridor:</strong> 1x Small Landmine (purple set) leading to the southern chest/portal spot.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Secret Nook & Entrap -->
+      <div class="content-card" id="secret-nook">
+        <h2 class="card-heading teal">Secret Nook &amp; Lockward Entrap</h2>
+        <div class="content-body">
+          <p>
+            The <strong>Secret Nook</strong> is an isolated side area that contains additional rewards and an Arcane Sigil puzzle.
+          </p>
+
+          <ul class="mech-steps" style="margin-top:.9rem;">
+            <li><strong>Lockward 'Entrap' Requirement:</strong>
+              <ul class="mech-sub">
+                <li>The Lockward enemy in the mezzanine <strong>must finish casting 'Entrap' at least once</strong> for the Secret Nook portal to spawn.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="alert-box danger" style="margin-top:1rem;">
+            <span class="alert-icon">☠</span>
+            <span><strong>Trap Reset Warning:</strong> When the Lockward finishes casting 'Entrap', <strong>ALL traps across the entire main area reset</strong> (including Mega Landmines!). Do not wander back into previously cleared corridors without redetecting and redisarming.</span>
+          </div>
+
+          <ul class="mech-steps" style="margin-top:1rem;">
+            <li><strong>Secret Nook Portal Rules:</strong>
+              <ul class="mech-sub">
+                <li>The hidden portal spawns in one of three possible spots at the end of the <strong>North</strong>, <strong>West</strong>, or <strong>South</strong> corridors.</li>
+                <li><strong>Single-Use Only:</strong> The hidden portal can only be used once! Ensure everyone who needs to teleport gathers at the portal before anyone clicks it.</li>
+                <li><strong>Secret Nook Area:</strong> Arrive at the Secret Entrance, drag adds to the cyan <strong>Arcane Sigil</strong>, kill 4 adds on top of the sigil, and proceed to the Secret Exit.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Mechanics & Progression -->
+      <div class="content-card" id="mechanics">
+        <h2 class="card-heading blue">Mechanics &amp; Progression</h2>
+        <div class="content-body">
+          <ul class="mech-steps">
+            <li><strong>Arcane Sigils:</strong>
+              <ul class="mech-sub">
+                <li>Kill <strong>4 of any add on top of the Arcane Sigils</strong> to clear barriers and progress the puzzle.</li>
+              </ul>
+            </li>
+            <li><strong>Hidden Chests &amp; Tower Crusaders:</strong>
+              <ul class="mech-sub">
+                <li>Phantom Thieves can reveal hidden chest locations at the ends of the corridors.</li>
+                <li><strong>Tower Crusader:</strong> All hidden chest locations carry a chance of spawning an aggressive <strong>Tower Crusader</strong> add instead of a chest when percepted. Be prepared to immediately tank and burn it down.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phantom Job Responsibilities -->
+      <div class="content-card" id="phantom-jobs">
+        <h2 class="card-heading purple">Phantom Job Responsibilities</h2>
+        <div class="content-body">
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Thief</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Trap Detection</strong> to reveal landmines throughout the hub and cardinal paths.</li>
+                <li>Be ready to redetect traps after the Lockward casts <strong>Entrap</strong>.</li>
+                <li>Locate the <strong>Secret Nook Portal</strong> and percept hidden chests, watching for potential Tower Crusader spawns.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Ranger</strong>
+              <ul class="mech-steps">
+                <li>Disarm small landmines using <strong>Occult Falcon</strong> when called.</li>
+                <li>Disarm Mega Landmines at <strong>maximum range</strong> only when everyone is safely positioned behind you.</li>
+                <li>Remain alert for newly reset traps after <strong>Entrap</strong> finishes.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Time Mage</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Occult Slowga</strong> on trash packs to reduce incoming damage and delay abilities.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Samurai</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Iainuki</strong> on enemy packs for a chance to instantly kill enemies.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box tip">
+            <span class="alert-icon">✦</span>
+            <div>
+              <strong>Black Mage</strong>
+              <ul class="mech-steps">
+                <li>Use <strong>Occult Toad</strong> to transform enemies into frogs, rendering them near harmless and reducing their damage dealt by 99%.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Nav -->
+      <div class="section-nav">
+        <a href="sword-dancer.html" class="nav-btn nav-prev">
+          <div>
+            <span class="nav-label">Previous</span>
+            <span>← Sword Dancer</span>
+          </div>
+        </a>
+        <a href="../index.html" class="nav-btn nav-home">⌂ Home</a>
+        <a href="storm-generators.html" class="nav-btn nav-next">
+          <div>
+            <span class="nav-label">Next</span>
+            <span>Storm Generators →</span>
+          </div>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <p>A Late Night Reborn</p>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/stars.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

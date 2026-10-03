@@ -129,9 +129,9 @@
 
     if (!shootingStar) return;
 
-    shootingStar.life++;
-    shootingStar.x += shootingStar.dx;
-    shootingStar.y += shootingStar.dy;
+    shootingStar.life += 1.5;
+    shootingStar.x += shootingStar.dx * 1.5;
+    shootingStar.y += shootingStar.dy * 1.5;
 
     var progress = shootingStar.life / shootingStar.lifeMax;
     var alpha = 1;
@@ -264,11 +264,21 @@
     }
   }
 
-  function draw() {
-    drawStaticFrame();
+  var TARGET_FPS = 30;
+  var FRAME_INTERVAL = 1000 / TARGET_FPS;
+  var lastFrameTime = 0;
 
-    if (!isReducedMotion) {
-      raf = requestAnimationFrame(draw);
+  function draw(timestamp) {
+    if (isReducedMotion) return;
+
+    raf = requestAnimationFrame(draw);
+
+    var now = timestamp || performance.now();
+    var elapsed = now - lastFrameTime;
+
+    if (elapsed >= FRAME_INTERVAL) {
+      lastFrameTime = elapsed > 1000 ? now : now - (elapsed % FRAME_INTERVAL);
+      drawStaticFrame();
     }
   }
 
@@ -278,6 +288,17 @@
   window.addEventListener('resize', function () {
     cancelAnimationFrame(raf);
     init();
+    lastFrameTime = performance.now();
     draw();
+  });
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      cancelAnimationFrame(raf);
+    } else if (!isReducedMotion) {
+      cancelAnimationFrame(raf);
+      lastFrameTime = performance.now();
+      draw();
+    }
   });
 })();

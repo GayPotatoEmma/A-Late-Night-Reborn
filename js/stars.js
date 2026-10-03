@@ -254,9 +254,16 @@
     }
   }
 
+  function isLiteTheme() {
+    var theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    return theme.indexOf('lite') !== -1;
+  }
+
   function drawStaticFrame() {
     ctx.clearRect(0, 0, W, H);
-    var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLiteTheme()) return;
+    var theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    var isLight = theme.indexOf('light') === 0;
     if (isLight) {
       drawLightMode();
     } else {
@@ -269,7 +276,11 @@
   var lastFrameTime = 0;
 
   function draw(timestamp) {
-    if (isReducedMotion) return;
+    if (isReducedMotion || isLiteTheme()) {
+      cancelAnimationFrame(raf);
+      ctx.clearRect(0, 0, W, H);
+      return;
+    }
 
     raf = requestAnimationFrame(draw);
 
@@ -295,10 +306,30 @@
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
       cancelAnimationFrame(raf);
-    } else if (!isReducedMotion) {
+    } else if (!isReducedMotion && !isLiteTheme()) {
       cancelAnimationFrame(raf);
       lastFrameTime = performance.now();
       draw();
     }
   });
+
+  if (window.MutationObserver) {
+    var themeObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        if (m.attributeName === 'data-theme') {
+          cancelAnimationFrame(raf);
+          if (isLiteTheme()) {
+            ctx.clearRect(0, 0, W, H);
+          } else if (isReducedMotion) {
+            shootingStar = null;
+            drawStaticFrame();
+          } else {
+            lastFrameTime = performance.now();
+            draw();
+          }
+        }
+      });
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
 })();

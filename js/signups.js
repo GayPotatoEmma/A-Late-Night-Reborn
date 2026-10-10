@@ -43,10 +43,11 @@
     };
 
     const PHANTOM_JOBS = [
-        'Knight', 'Monk', 'Thief', 'Samurai', 'Berserker', 'Ranger', 'Time Mage', 
-        'Chemist', 'Geomancer', 'Bard', 'Oracle', 'Cannoneer', 'Mystic Knight', 
-        'Gladiator', 'Dancer', 'Black Mage', 'Blue Mage', 'Dragoon', 'Necromancer', 
-        'Ninja', 'Red Mage', 'Summoner', 'White Mage'
+        'Bard', 'Berserker', 'Black Mage', 'Blue Mage', 'Cannoneer', 
+        'Chemist', 'Dancer', 'Dragoon', 'Geomancer', 'Gladiator', 
+        'Knight', 'Monk', 'Mystic Knight', 'Necromancer', 'Ninja', 
+        'Oracle', 'Ranger', 'Red Mage', 'Samurai', 'Summoner', 
+        'Thief', 'Time Mage', 'White Mage'
     ];
 
     const PROG_OPTIONS = {

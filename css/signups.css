@@ -1,0 +1,598 @@
+/* =====================================================
+   A Late Night Reborn — Run Signups Styles
+   ===================================================== */
+
+.signups-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 5rem 1.5rem;
+}
+
+/* ── Hero & Subtitle ──────────────────────────────── */
+.signups-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.signups-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-rose);
+  margin-bottom: 0.5rem;
+}
+
+.signups-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  background: linear-gradient(125deg, #ffffff 0%, #fcd4c8 32%, #b291f7 65%, #e4c090 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.6rem;
+}
+
+.signups-desc {
+  max-width: 620px;
+  margin: 0 auto;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+/* ── Glassmorphic Cards ────────────────────────────── */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow: var(--shadow-glass);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.glass-card:hover {
+  border-color: rgba(252, 212, 200, 0.35);
+}
+
+.card-heading {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(252, 212, 200, 0.12);
+}
+
+.card-heading .material-symbols-outlined {
+  font-size: 1.45rem;
+  color: var(--accent-purple);
+}
+
+/* ── Discord Auth Banner ──────────────────────────── */
+.auth-banner-unauthed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, rgba(88, 101, 242, 0.15) 0%, rgba(20, 21, 50, 0.6) 100%);
+  border: 1px solid rgba(88, 101, 242, 0.4);
+}
+
+.auth-info-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.discord-logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #5865F2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(88, 101, 242, 0.4);
+  flex-shrink: 0;
+}
+
+.discord-logo-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: #ffffff;
+}
+
+.auth-btn-discord {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #5865F2;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 4px 16px rgba(88, 101, 242, 0.4);
+}
+
+.auth-btn-discord:hover {
+  background: #4752c4;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(88, 101, 242, 0.6);
+}
+
+.auth-banner-authed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.12) 0%, rgba(20, 21, 50, 0.6) 100%);
+  border: 1px solid rgba(46, 204, 113, 0.35);
+}
+
+.user-profile-strip {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-avatar-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-purple);
+  box-shadow: 0 0 14px rgba(178, 145, 247, 0.4);
+}
+
+.user-details-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-display-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-verified {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-unverified {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: rgba(241, 196, 15, 0.2);
+  color: #f1c40f;
+  border: 1px solid rgba(241, 196, 15, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-signout {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-signout:hover {
+  background: rgba(231, 76, 60, 0.2);
+  color: #ff6b6b;
+  border-color: rgba(231, 76, 60, 0.4);
+}
+
+/* ── Content Type Filters & Run Selector ──────────── */
+.content-filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(252, 212, 200, 0.15);
+  color: var(--text-secondary);
+  padding: 0.5rem 1.15rem;
+  border-radius: 30px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.filter-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.filter-pill.active {
+  background: var(--accent-purple);
+  color: #0a0b1c;
+  border-color: var(--accent-purple);
+  box-shadow: 0 4px 14px rgba(178, 145, 247, 0.4);
+}
+
+.runs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 1.25rem;
+}
+
+.run-select-card {
+  background: rgba(10, 11, 28, 0.45);
+  border: 1px solid rgba(252, 212, 200, 0.14);
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.run-select-card:hover {
+  border-color: rgba(178, 145, 247, 0.5);
+  transform: translateY(-2px);
+  background: rgba(20, 21, 50, 0.7);
+}
+
+.run-select-card.selected {
+  border-color: var(--accent-rose);
+  background: rgba(252, 212, 200, 0.08);
+  box-shadow: 0 0 20px rgba(252, 212, 200, 0.2);
+}
+
+.run-select-card.is-closed {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border-color: rgba(231, 76, 60, 0.3);
+  background: rgba(10, 11, 28, 0.3);
+}
+
+.run-select-card.is-closed:hover {
+  transform: none;
+  background: rgba(10, 11, 28, 0.3);
+  border-color: rgba(231, 76, 60, 0.4);
+}
+
+.run-closed-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(231, 76, 60, 0.2);
+  color: #ff6b6b;
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.run-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.run-type-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.run-type-badge.ftb { background: rgba(231, 76, 60, 0.2); color: #ff6b6b; border: 1px solid rgba(231, 76, 60, 0.4); }
+.run-type-badge.ftm { background: rgba(178, 145, 247, 0.2); color: #b291f7; border: 1px solid rgba(178, 145, 247, 0.4); }
+.run-type-badge.chaotic { background: rgba(155, 89, 182, 0.25); color: #d291ff; border: 1px solid rgba(155, 89, 182, 0.5); }
+.run-type-badge.ba { background: rgba(52, 152, 219, 0.2); color: #80a4f8; border: 1px solid rgba(52, 152, 219, 0.4); }
+
+.run-card-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.run-card-time {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.run-card-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-teal);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── Form Controls & Layout ───────────────────────── */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 680px) {
+  .form-grid-2 { grid-template-columns: 1fr; }
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.form-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.input-text, .input-select, .input-textarea {
+  width: 100%;
+  background: rgba(10, 11, 28, 0.6);
+  border: 1px solid rgba(252, 212, 200, 0.18);
+  border-radius: var(--radius-sm);
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all var(--transition);
+  outline: none;
+}
+
+.input-text:focus, .input-select:focus, .input-textarea:focus {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 14px rgba(178, 145, 247, 0.3);
+  background: rgba(15, 17, 40, 0.8);
+}
+
+.input-text:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.input-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* ── Interactive Role & Job Chips ─────────────────── */
+.chips-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(252, 212, 200, 0.16);
+  border-radius: 10px;
+  color: var(--text-secondary);
+  padding: 0.55rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+
+.chip-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(252, 212, 200, 0.35);
+}
+
+.chip-btn.selected {
+  background: rgba(178, 145, 247, 0.22);
+  color: #ffffff;
+  border-color: var(--accent-purple);
+  box-shadow: 0 2px 10px rgba(178, 145, 247, 0.25);
+  font-weight: 600;
+}
+
+/* Role Specific Accent Colors */
+.chip-btn.role-tank.selected {
+  background: rgba(52, 152, 219, 0.25);
+  border-color: #3498db;
+  color: #85c1e9;
+}
+
+.chip-btn.role-healer.selected {
+  background: rgba(46, 204, 113, 0.25);
+  border-color: #2ecc71;
+  color: #a3e4d7;
+}
+
+.chip-btn.role-dps.selected {
+  background: rgba(231, 76, 60, 0.25);
+  border-color: #e74c3c;
+  color: #f1948a;
+}
+
+/* ── Dynamic Job Accordion Box ────────────────────── */
+.dynamic-jobs-box {
+  background: rgba(10, 11, 28, 0.5);
+  border: 1px solid rgba(178, 145, 247, 0.22);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-top: 1rem;
+  animation: fadeInDown 0.25s ease-out;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.jobs-role-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-rose);
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quick-toggle-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.btn-mini-toggle {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-mini-toggle:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+/* ── Submit Controls & Feedback ───────────────────── */
+.form-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(252, 212, 200, 0.12);
+  flex-wrap: wrap;
+}
+
+.btn-submit-signup {
+  background: linear-gradient(135deg, #b291f7 0%, #a078c0 100%);
+  color: #0a0b1c;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 0.85rem 2.2rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(178, 145, 247, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition);
+}
+
+.btn-submit-signup:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(178, 145, 247, 0.6);
+  background: linear-gradient(135deg, #cbbcf6 0%, #b291f7 100%);
+}
+
+.btn-submit-signup:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.status-alert {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  animation: fadeInDown 0.3s ease;
+}
+
+.status-alert.success {
+  background: rgba(46, 204, 113, 0.15);
+  border: 1px solid rgba(46, 204, 113, 0.4);
+  color: #2ecc71;
+}
+
+.status-alert.error {
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  color: #ff6b6b;
+}
+
+/* ── "My Signups" List ────────────────────────────── */
+.my-signups-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.my-signup-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 11, 28, 0.5);
+  border: 1px solid rgba(252, 212, 200, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1.25rem;
+  flex-wrap: wrap;
+  gap: 8px;
+}

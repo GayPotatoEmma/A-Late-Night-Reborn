@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Run Signups — A Late Night Reborn</title>
+    <link rel="icon" href="assets/alnr%20logo.png" type="image/png" />
+    <meta property="og:title" content="Run Signups — A Late Night Reborn" />
+    <meta property="og:description" content="Sign up for community raids with automatic Discord verification and dynamic role selection." />
+    <meta property="og:image" content="https://alatenightreborn.com/assets/alnr%20logo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="A Late Night Reborn" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/signups.css" />
+    <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
+</head>
+<body>
+
+    <canvas id="stars-canvas"></canvas>
+    <div class="bg-nebula"></div>
+
+    <div class="site-wrapper">
+
+        <!-- ── Header ── -->
+        <header class="site-header">
+            <div class="header-inner">
+                <a href="/" class="header-logo-link">
+                    <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+                </a>
+                <a href="/">
+                    <span class="header-site-name">A Late Night Reborn</span>
+                </a>
+                <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+                <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+            </div>
+        </header>
+
+        <!-- ── Main ── -->
+        <main class="main-content">
+            <div class="signups-container">
+
+                <!-- ── Hero ── -->
+                <div class="signups-hero">
+                    <div class="signups-eyebrow">✦ Community Raids ✦</div>
+                    <h1 class="signups-title">Run Signups</h1>
+                    <p class="signups-desc">
+                        Select an upcoming run below to sign up. Connect your Discord account to automatically link your verified character name and Discord handle.
+                    </p>
+                </div>
+
+                <!-- ── Discord Authentication Banner ── -->
+                <div id="auth-banner-container"></div>
+
+                <!-- ── Step 1: Select Upcoming Run ── -->
+                <div class="glass-card" id="runs-selection-container">
+                    <div class="card-heading">
+                        <span class="material-symbols-outlined">event_available</span>
+                        <span>1. Select an Upcoming Run</span>
+                    </div>
+
+                    <div class="content-filter-bar">
+                        <button type="button" class="filter-pill active" data-filter="all">All Runs</button>
+                        <button type="button" class="filter-pill" data-filter="chaotic">Cloud of Darkness (Chaotic)</button>
+                        <button type="button" class="filter-pill" data-filter="ftb">Forked Tower: Blood</button>
+                        <button type="button" class="filter-pill" data-filter="ftm">Forked Tower: Magic</button>
+                        <button type="button" class="filter-pill" data-filter="ba">Baldesion Arsenal</button>
+                    </div>
+
+                    <div class="runs-grid" id="runs-grid">
+                        <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">
+                            Loading upcoming runs from ALNR Bot...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── Step 2: Signup Form (Appears when run is selected) ── -->
+                <div class="glass-card" id="signup-form-card" style="display: none;">
+                    <div class="card-heading">
+                        <span class="material-symbols-outlined">how_to_reg</span>
+                        <span>2. Raider Details & Role Preferences</span>
+                    </div>
+
+                    <div style="background: rgba(178, 145, 247, 0.1); border: 1px solid rgba(178, 145, 247, 0.3); border-radius: var(--radius-sm); padding: 0.75rem 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+                        <span class="material-symbols-outlined" style="color: var(--accent-purple);">shield</span>
+                        <span style="font-size: 0.92rem; color: var(--text-primary);">Signing up for: <strong id="selected-run-banner" style="color: var(--accent-rose);"></strong></span>
+                    </div>
+
+                    <!-- Character & Discord Information -->
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label" for="input-char-name">FFXIV Character Name</label>
+                            <input type="text" id="input-char-name" class="input-text" placeholder="e.g. Emmalynn Raenlight" required />
+                            <div class="form-hint">Full in-game character name (Firstname Lastname).</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-discord-name">Discord Username</label>
+                            <input type="text" id="input-discord-name" class="input-text" placeholder="e.g. emmalynn" required />
+                            <div class="form-hint">Your Discord handle without leading '@'.</div>
+                        </div>
+                    </div>
+
+                    <!-- Preferred Role -->
+                    <div class="form-group">
+                        <label class="form-label">What is your preferred role?</label>
+                        <div class="chips-group" id="preferred-role-chips"></div>
+                    </div>
+
+                    <!-- Playable Roles -->
+                    <div class="form-group">
+                        <label class="form-label">What roles can you play?</label>
+                        <div class="chips-group" id="playable-roles-chips"></div>
+                        <div class="form-hint">Selecting a role reveals only the jobs associated with that role below.</div>
+                    </div>
+
+                    <!-- Dynamic Role & Job Selection Area (Only shows relevant jobs!) -->
+                    <div id="dynamic-jobs-container"></div>
+
+                    <!-- Progression Point & Party Preference -->
+                    <div class="form-grid-2" style="margin-top: 1.5rem;">
+                        <div class="form-group">
+                            <label class="form-label" for="input-prog-point">Furthest Progression Point</label>
+                            <select id="input-prog-point" class="input-select"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-party-pref">Party Preference</label>
+                            <select id="input-party-pref" class="input-select">
+                                <option value="Any">Any Party</option>
+                                <option value="A">Party A</option>
+                                <option value="B">Party B</option>
+                                <option value="C">Party C</option>
+                                <option value="1">Party 1</option>
+                                <option value="2">Party 2</option>
+                                <option value="3">Party 3</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Friend Group & Additional Notes -->
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label class="form-label" for="input-friend-group">Friend Group (Optional)</label>
+                            <input type="text" id="input-friend-group" class="input-text" placeholder="e.g. Team Potato" />
+                            <div class="form-hint">Enter your friend group name if you wish to be placed together.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-notes">Additional Notes (Optional)</label>
+                            <textarea id="input-notes" class="input-textarea" placeholder="Any special notes or scheduling requests..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Status Notification Alert -->
+                    <div id="signup-status-alert" class="status-alert" style="display: none;"></div>
+
+                    <!-- Form Action Buttons -->
+                    <div class="form-actions-bar">
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">
+                            Rosters will be posted in Discord before the run.
+                        </div>
+                        <button type="button" class="btn-submit-signup" id="btn-submit-form">
+                            <span>Submit Signup</span>
+                            <span class="material-symbols-outlined">send</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ── "My Active Signups" Section ── -->
+                <div class="glass-card" id="my-signups-card" style="display: none;">
+                    <div class="card-heading">
+                        <span class="material-symbols-outlined">bookmark_check</span>
+                        <span>Your Active Signups</span>
+                    </div>
+                    <div class="my-signups-list" id="my-signups-list"></div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- ── Footer ── -->
+        <footer class="site-footer">
+            <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide</p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/stars.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/signups.js"></script>
+</body>
+</html>

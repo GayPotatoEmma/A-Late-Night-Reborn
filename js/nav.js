@@ -8,6 +8,7 @@
     </div>\
     <div class="nav-panel-body">\
       <a href="/" class="nav-home-link"><span>⌂ Home</span></a>\
+      <a href="/signups" class="nav-home-link" style="margin-top: 4px;"><span class="material-symbols-outlined" style="font-size: 1.15rem; vertical-align: middle; margin-right: 6px; color: var(--accent-rose);">how_to_reg</span><span>Run Signups</span></a>\
       <div class="nav-divider"></div>\
       <div class="nav-raid-group" id="nav-raid-ftb">\
         <div class="nav-raid-header nav-raid-toggle"><span>Forked Tower: Blood</span><span class="nav-raid-chevron">&#9656;</span></div>\

@@ -148,27 +148,35 @@
         if (!container) return;
 
         if (!currentUser) {
+            container.innerHTML = '';
+            container.style.display = 'none';
+        } else if (!currentUser.is_in_guild) {
+            container.style.display = 'block';
             container.innerHTML = `
-                <div class="glass-card auth-banner-unauthed">
+                <div class="glass-card" style="border-color: rgba(245, 158, 11, 0.4); background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(20, 21, 50, 0.6) 100%); display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; flex-wrap: wrap;">
                     <div class="auth-info-left">
-                        <div class="discord-logo-icon">
-                            <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        <div style="width: 44px; height: 44px; border-radius: 12px; background: #f59e0b; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <span class="material-symbols-outlined" style="color: #ffffff; font-size: 26px;">group_add</span>
                         </div>
                         <div>
-                            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Sign in with Discord</div>
-                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px;">
-                                Auto-fills your verified FFXIV character name & Discord username.
+                            <div style="font-weight: 700; font-size: 1.05rem; color: var(--text-primary);">Join the ALNR Discord to Sign Up</div>
+                            <div style="font-size: 0.86rem; color: var(--text-secondary); margin-top: 2px;">
+                                You are connected as @${escapeHtml(currentUser.username)}, but not in the server. Please join <strong style="color: var(--accent-rose);">discord.gg/alnr</strong> to sign up.
                             </div>
                         </div>
                     </div>
-                    <button class="auth-btn-discord" id="btn-discord-login" type="button">
-                        <span>Connect Discord</span>
-                        <span class="material-symbols-outlined" style="font-size: 1.2rem;">login</span>
-                    </button>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="auth-btn-discord" style="padding: 0.65rem 1.25rem;">
+                            <span>Join Discord</span>
+                            <span class="material-symbols-outlined" style="font-size: 1.1rem;">open_in_new</span>
+                        </a>
+                        <button class="btn-signout" id="btn-discord-signout" type="button">Sign Out</button>
+                    </div>
                 </div>
             `;
-            document.getElementById('btn-discord-login').onclick = initiateDiscordLogin;
+            document.getElementById('btn-discord-signout').onclick = signOut;
         } else {
+            container.style.display = 'block';
             const verifiedBadge = currentUser.is_verified 
                 ? `<span class="badge-verified"><span class="material-symbols-outlined" style="font-size: 1rem;">verified</span> Verified</span>`
                 : `<span class="badge-unverified"><span class="material-symbols-outlined" style="font-size: 1rem;">warning</span> Unverified in Discord</span>`;
@@ -203,16 +211,70 @@
     function updateSignupAuthVisibility() {
         const fieldsSection = document.getElementById('signup-fields-section');
         const connectPrompt = document.getElementById('signup-connect-prompt');
-        const inlineLoginBtn = document.getElementById('btn-discord-login-inline');
+        const promptIcon = connectPrompt ? connectPrompt.querySelector('.signup-connect-icon') : null;
+        const promptTitle = document.getElementById('signup-connect-title');
+        const promptDesc = document.getElementById('signup-connect-desc');
+        const promptAction = document.getElementById('signup-connect-action');
 
-        if (currentUser) {
+        if (currentUser && currentUser.is_in_guild) {
             if (fieldsSection) fieldsSection.style.display = 'block';
             if (connectPrompt) connectPrompt.style.display = 'none';
+        } else if (currentUser && !currentUser.is_in_guild) {
+            if (fieldsSection) fieldsSection.style.display = 'none';
+            if (connectPrompt) {
+                connectPrompt.style.display = 'flex';
+                if (promptIcon) {
+                    promptIcon.style.background = '#f59e0b';
+                    promptIcon.innerHTML = `<span class="material-symbols-outlined" style="color: #ffffff; font-size: 28px;">group_add</span>`;
+                }
+                if (promptTitle) promptTitle.textContent = 'Join the ALNR Discord to Sign Up';
+                if (promptDesc) {
+                    promptDesc.innerHTML = `You are signed in as <strong>@${escapeHtml(currentUser.username)}</strong>, but you must be a member of the A Late Night Reborn Discord server so raid leads can contact you for rosters.`;
+                }
+                if (promptAction) {
+                    promptAction.innerHTML = `
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center;">
+                            <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="auth-btn-discord">
+                                <span>Join discord.gg/alnr</span>
+                                <span class="material-symbols-outlined" style="font-size: 1.1rem;">open_in_new</span>
+                            </a>
+                            <button type="button" class="btn-signout" id="btn-recheck-guild">Re-check Status</button>
+                        </div>
+                    `;
+                    const recheckBtn = document.getElementById('btn-recheck-guild');
+                    if (recheckBtn) {
+                        recheckBtn.onclick = async () => {
+                            recheckBtn.disabled = true;
+                            recheckBtn.textContent = 'Checking...';
+                            await verifyExistingSession();
+                            renderAuthBanner();
+                            if (currentUser && currentUser.is_in_guild) {
+                                renderFormInputs();
+                            }
+                        };
+                    }
+                }
+            }
         } else {
             if (fieldsSection) fieldsSection.style.display = 'none';
             if (connectPrompt) {
                 connectPrompt.style.display = 'flex';
-                if (inlineLoginBtn) inlineLoginBtn.onclick = initiateDiscordLogin;
+                if (promptIcon) {
+                    promptIcon.style.background = '#5865F2';
+                    promptIcon.innerHTML = `<svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>`;
+                }
+                if (promptTitle) promptTitle.textContent = 'Connect Discord to Sign Up';
+                if (promptDesc) promptDesc.textContent = 'Please connect your Discord account to continue with your signup.';
+                if (promptAction) {
+                    promptAction.innerHTML = `
+                        <button type="button" class="auth-btn-discord" id="btn-discord-login-inline">
+                            <span>Connect Discord</span>
+                            <span class="material-symbols-outlined" style="font-size: 1.2rem;">login</span>
+                        </button>
+                    `;
+                    const inlineBtn = document.getElementById('btn-discord-login-inline');
+                    if (inlineBtn) inlineBtn.onclick = initiateDiscordLogin;
+                }
             }
         }
     }
@@ -720,6 +782,11 @@
 
         if (!currentUser) {
             showStatusAlert('Please connect your Discord account before submitting your signup.', 'error');
+            return;
+        }
+
+        if (!currentUser.is_in_guild) {
+            showStatusAlert('You must join the A Late Night Reborn Discord server (https://discord.gg/alnr) before submitting a signup.', 'error');
             return;
         }
 

@@ -5,7 +5,11 @@
     
     // Auto-detect API URL: use local port 5000 if testing on localhost, otherwise fallback to worker/api
     function getApiUrl() {
-        const stored = localStorage.getItem('alnr_api_url');
+        let stored = localStorage.getItem('alnr_api_url');
+        if (stored && (stored.includes('workers.dev') || (!window.location.hostname.includes('localhost') && stored.includes('localhost')))) {
+            localStorage.removeItem('alnr_api_url');
+            stored = null;
+        }
         if (stored) return stored.replace(/\/+$/, '');
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
             return 'http://127.0.0.1:5000';

@@ -170,7 +170,7 @@
             document.getElementById('btn-discord-login').onclick = initiateDiscordLogin;
         } else {
             const verifiedBadge = currentUser.is_verified 
-                ? `<span class="badge-verified"><span class="material-symbols-outlined" style="font-size: 1rem;">verified</span> Verified Raider</span>`
+                ? `<span class="badge-verified"><span class="material-symbols-outlined" style="font-size: 1rem;">verified</span> Verified</span>`
                 : `<span class="badge-unverified"><span class="material-symbols-outlined" style="font-size: 1rem;">warning</span> Unverified in Discord</span>`;
 
             const charInfo = currentUser.character_name 
@@ -353,9 +353,10 @@
                 const target = allEvents.find(e => e.id === runId);
                 if (!target) return;
                 if (target.is_closed) {
-                    showStatusAlert(`🔒 Signups for "${cleanRunTitle(target.name)}" have been closed by the hosts.`, 'error');
+                    showRunsSelectionAlert(`🔒 Signups for "${cleanRunTitle(target.name)}" have been closed by the hosts.`, 'error');
                     return;
                 }
+                hideRunsSelectionAlert();
                 selectRun(target);
             };
         });
@@ -363,9 +364,11 @@
 
     function selectRun(ev) {
         if (ev.is_closed) {
-            showStatusAlert(`🔒 Signups for "${cleanRunTitle(ev.name)}" are closed.`, 'error');
+            showRunsSelectionAlert(`🔒 Signups for "${cleanRunTitle(ev.name)}" are closed.`, 'error');
             return;
         }
+        hideRunsSelectionAlert();
+        hideStatusAlert();
         selectedEvent = ev;
         renderEventsGrid();
         
@@ -382,10 +385,24 @@
 
     function checkUrlPreselection() {
         const params = new URLSearchParams(window.location.search);
-        const runId = params.get('run');
+        const runId = params.get('event') || params.get('run');
         if (runId && allEvents.length > 0) {
             const target = allEvents.find(e => e.id === runId);
-            if (target) selectRun(target);
+            if (target) {
+                if (target.is_closed) {
+                    showRunsSelectionAlert(`🔒 Signups for "${cleanRunTitle(target.name)}" have been closed by the hosts.`, 'error');
+                } else {
+                    hideRunsSelectionAlert();
+                    if (target.category_key && activeFilter !== target.category_key) {
+                        activeFilter = target.category_key;
+                        document.querySelectorAll('.filter-pill').forEach(p => {
+                            p.classList.toggle('active', p.getAttribute('data-filter') === target.category_key);
+                        });
+                        renderEventsGrid();
+                    }
+                    selectRun(target);
+                }
+            }
         }
     }
 
@@ -752,7 +769,9 @@
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || 'Submission failed');
 
-            showStatusAlert(`🎉 ${data.message || 'Signup recorded successfully!'}`, 'success');
+            const cleanType = cleanRunTitle(selectedEvent.name);
+            const runDisplayName = `${selectedEvent.content_type} ${cleanType}`;
+            showStatusAlert(`🎉 Successfully signed up for ${runDisplayName} as ${charName}!`, 'success');
             loadMySignups();
             loadEvents(); // Refresh signup counts
 
@@ -811,6 +830,32 @@
         `;
         alertBox.style.display = 'flex';
         alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function hideStatusAlert() {
+        const alertBox = document.getElementById('signup-status-alert');
+        if (!alertBox) return;
+        alertBox.style.display = 'none';
+        alertBox.innerHTML = '';
+    }
+
+    function showRunsSelectionAlert(msg, type = 'error') {
+        const alertBox = document.getElementById('runs-selection-alert');
+        if (!alertBox) return;
+        alertBox.className = `status-alert ${type}`;
+        alertBox.innerHTML = `
+            <span class="material-symbols-outlined">${type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info'}</span>
+            <span>${escapeHtml(msg)}</span>
+        `;
+        alertBox.style.display = 'flex';
+        alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function hideRunsSelectionAlert() {
+        const alertBox = document.getElementById('runs-selection-alert');
+        if (!alertBox) return;
+        alertBox.style.display = 'none';
+        alertBox.innerHTML = '';
     }
 
     function escapeHtml(str) {

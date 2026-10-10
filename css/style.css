@@ -2300,3 +2300,95 @@ html.theme-transitioning *::after {
   cursor: not-allowed;
   transform: none;
 }
+
+/* ── Upcoming Runs Header Controls & Action Buttons ── */
+.public-runs-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.public-widget-signup-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff !important;
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.4), rgba(168, 85, 247, 0.35));
+  border: 1px solid rgba(244, 63, 94, 0.5);
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all var(--transition);
+  backdrop-filter: blur(8px);
+}
+
+.public-widget-signup-btn:hover {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.6), rgba(168, 85, 247, 0.55));
+  box-shadow: 0 0 14px rgba(244, 63, 94, 0.35);
+  transform: translateY(-1px);
+}
+
+.public-run-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.public-run-card.is-open {
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.public-run-card.is-open:hover {
+  border-color: rgba(244, 63, 94, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(244, 63, 94, 0.15);
+}
+
+.public-run-card.is-closed {
+  opacity: 0.75;
+}
+
+.public-run-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 9px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fff !important;
+  background: rgba(244, 63, 94, 0.25);
+  border: 1px solid rgba(244, 63, 94, 0.45);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.public-run-action-btn:hover {
+  background: rgba(244, 63, 94, 0.5);
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
+  transform: scale(1.02);
+}
+
+.public-run-action-badge.closed {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}

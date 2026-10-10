@@ -89,15 +89,25 @@
             var info = parseRunName(ev.name);
             var dateStr = formatRunDate(ev.start_time);
             var safeType = (info.type || '').replace(/"/g, '&quot;');
+            var isClosed = Boolean(ev.is_closed);
+
+            var actionHtml = isClosed
+                ? '<span class="public-run-action-badge closed"><span class="material-symbols-outlined" style="font-size: 0.85rem;">lock</span> Closed</span>'
+                : '<a href="signups.html?event=' + encodeURIComponent(ev.id) + '" class="public-run-action-btn" onclick="event.stopPropagation();"><span>Sign Up</span> <span class="material-symbols-outlined" style="font-size: 0.85rem;">arrow_forward</span></a>';
+
+            var cardClickAttr = isClosed ? '' : ' onclick="window.location.href=\'signups.html?event=' + encodeURIComponent(ev.id) + '\'" style="cursor: pointer;"';
 
             html += '\
-            <div class="public-run-card" title="' + safeType + '">\
+            <div class="public-run-card' + (isClosed ? ' is-closed' : ' is-open') + '" title="' + safeType + '"' + cardClickAttr + '>\
                 <div class="public-run-left">\
                     <span class="public-run-tag ' + info.tagClass + '">' + info.tag + '</span>\
                     <span class="public-run-type">' + info.type + '</span>\
                 </div>\
-                <div class="public-run-time">\
-                    <span class="material-symbols-outlined public-run-time-icon">schedule</span> ' + dateStr + '\
+                <div class="public-run-meta">\
+                    <div class="public-run-time">\
+                        <span class="material-symbols-outlined public-run-time-icon">schedule</span> ' + dateStr + '\
+                    </div>\
+                    <div class="public-run-action">' + actionHtml + '</div>\
                 </div>\
             </div>';
         });

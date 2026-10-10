@@ -92,8 +92,8 @@
             var isClosed = Boolean(ev.is_closed);
 
             var actionHtml = isClosed
-                ? '<span class="public-run-action-badge closed"><span class="material-symbols-outlined" style="font-size: 0.85rem;">lock</span> Closed</span>'
-                : '<a href="signups.html?event=' + encodeURIComponent(ev.id) + '" class="public-run-action-btn" onclick="event.stopPropagation();"><span>Sign Up</span> <span class="material-symbols-outlined" style="font-size: 0.85rem;">arrow_forward</span></a>';
+                ? '<span class="public-run-action-badge closed" title="Signups Closed" aria-label="Closed"><span class="material-symbols-outlined">lock</span></span>'
+                : '<a href="signups.html?event=' + encodeURIComponent(ev.id) + '" class="public-run-action-btn" onclick="event.stopPropagation();" title="Sign Up" aria-label="Sign Up"><span class="material-symbols-outlined">how_to_reg</span></a>';
 
             var cardClickAttr = isClosed ? '' : ' onclick="window.location.href=\'signups.html?event=' + encodeURIComponent(ev.id) + '\'" style="cursor: pointer;"';
 

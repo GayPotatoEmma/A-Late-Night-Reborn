@@ -2356,39 +2356,114 @@ html.theme-transitioning *::after {
 .public-run-action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  padding: 3px 9px;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 700;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
   color: #fff !important;
-  background: rgba(244, 63, 94, 0.25);
-  border: 1px solid rgba(244, 63, 94, 0.45);
-  border-radius: 12px;
+  background: rgba(244, 63, 94, 0.3);
+  border: 1px solid rgba(244, 63, 94, 0.5);
+  border-radius: 50%;
   text-decoration: none;
   transition: all var(--transition);
-  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.public-run-action-btn .material-symbols-outlined {
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .public-run-action-btn:hover {
-  background: rgba(244, 63, 94, 0.5);
-  box-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
-  transform: scale(1.02);
+  background: rgba(244, 63, 94, 0.65);
+  border-color: rgba(244, 63, 94, 0.85);
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.45);
+  transform: scale(1.1);
 }
 
 .public-run-action-badge.closed {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  padding: 2px 7px;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 600;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
   color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.public-run-action-badge.closed .material-symbols-outlined {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* ── Light Mode Overrides for Upcoming Runs ── */
+[data-theme^="light"] .public-widget-signup-btn {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #e11d48, #7c3aed);
+  border-color: transparent;
+  box-shadow: 0 2px 10px rgba(124, 58, 237, 0.25);
+}
+
+[data-theme^="light"] .public-widget-signup-btn:hover {
+  background: linear-gradient(135deg, #be123c, #6d28d9);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+  transform: translateY(-1px);
+}
+
+[data-theme^="light"] .public-run-action-btn {
+  color: #e11d48 !important;
+  background: rgba(244, 63, 94, 0.12);
+  border-color: rgba(244, 63, 94, 0.35);
+}
+
+[data-theme^="light"] .public-run-action-btn:hover {
+  background: rgba(244, 63, 94, 0.25);
+  border-color: rgba(244, 63, 94, 0.6);
+  color: #be123c !important;
+  box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
+}
+
+[data-theme^="light"] .public-run-action-badge.closed {
+  color: #94a3b8;
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme^="light"] .public-run-card.is-open:hover {
+  border-color: rgba(244, 63, 94, 0.5);
+  box-shadow: 0 4px 16px rgba(108, 99, 158, 0.15);
+}
+
+[data-theme^="light"] .public-run-tag.tag-ftb {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme^="light"] .public-run-tag.tag-ftm {
+  color: #6d28d9;
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+[data-theme^="light"] .public-run-tag.tag-ba {
+  color: #0369a1;
+  background: rgba(14, 165, 233, 0.1);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+[data-theme^="light"] .public-run-tag.tag-chaotic {
+  color: #7e22ce;
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+[data-theme^="light"] .public-run-tag.tag-default {
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
 }

@@ -553,7 +553,7 @@
         renderPartyPreferences(contentType);
 
         // Render Dynamic Role / Job Sections
-        updateDynamicRoleSections();
+        renderDynamicJobSections();
     }
 
     function renderPreferredRoles() {
@@ -600,7 +600,7 @@
                 } else {
                     btn.classList.toggle('selected');
                 }
-                updateDynamicRoleSections();
+                syncChaoticRoleVisibility();
             };
         });
     }
@@ -649,7 +649,7 @@
 
     // ── Dynamic Jobs Sections (Chaotic / FT / BA) ────────────────────────────────
 
-    function updateDynamicRoleSections() {
+    function renderDynamicJobSections() {
         if (!selectedEvent) return;
         const contentType = selectedEvent.content_type;
         const container = document.getElementById('dynamic-jobs-container');
@@ -663,32 +663,16 @@
         container.innerHTML = '';
 
         if (contentType === 'Chaotic') {
-            const selectedRoles = getSelectedPlayableRoles();
             let html = '';
-
-            // 1. Tanks
-            if (selectedRoles.includes('Tank') || selectedRoles.includes('Any')) {
-                html += createJobChipsGroup('tanks', 'Tanks You Can Play', JOBS_BY_ROLE['Tank'], 'role-tank');
-            }
-            // 2. Healers
-            if (selectedRoles.includes('Regen Healer') || selectedRoles.includes('Shield Healer') || selectedRoles.includes('Any')) {
-                html += createJobChipsGroup('healers', 'Healers You Can Play', JOBS_BY_ROLE['Healer'], 'role-healer');
-            }
-            // 3. Melee DPS
-            if (selectedRoles.includes('Melee DPS') || selectedRoles.includes('Any')) {
-                html += createJobChipsGroup('melee_dps', 'Melee DPS You Can Play', JOBS_BY_ROLE['Melee DPS'], 'role-dps');
-            }
-            // 4. Magical DPS
-            if (selectedRoles.includes('Magical DPS') || selectedRoles.includes('Any')) {
-                html += createJobChipsGroup('magical_dps', 'Magical DPS You Can Play', JOBS_BY_ROLE['Magical DPS'], 'role-dps');
-            }
-            // 5. Physical Ranged DPS
-            if (selectedRoles.includes('Physical Ranged DPS') || selectedRoles.includes('Any')) {
-                html += createJobChipsGroup('phys_ranged_dps', 'Physical Ranged You Can Play', JOBS_BY_ROLE['Physical Ranged DPS'], 'role-dps');
-            }
+            html += createJobChipsGroup('tanks', 'Tanks You Can Play', JOBS_BY_ROLE['Tank'], 'role-tank');
+            html += createJobChipsGroup('healers', 'Healers You Can Play', JOBS_BY_ROLE['Healer'], 'role-healer');
+            html += createJobChipsGroup('melee_dps', 'Melee DPS You Can Play', JOBS_BY_ROLE['Melee DPS'], 'role-dps');
+            html += createJobChipsGroup('magical_dps', 'Magical DPS You Can Play', JOBS_BY_ROLE['Magical DPS'], 'role-dps');
+            html += createJobChipsGroup('phys_ranged_dps', 'Physical Ranged You Can Play', JOBS_BY_ROLE['Physical Ranged DPS'], 'role-dps');
 
             container.innerHTML = html;
             attachJobChipHandlers();
+            syncChaoticRoleVisibility();
 
         } else if (contentType === 'FT:B' || contentType === 'FT:M') {
             container.innerHTML = `
@@ -756,9 +740,29 @@
         }
     }
 
+    function syncChaoticRoleVisibility() {
+        if (!selectedEvent || selectedEvent.content_type !== 'Chaotic') return;
+        const selectedRoles = getSelectedPlayableRoles();
+
+        const groups = [
+            { id: 'tanks', active: selectedRoles.includes('Tank') || selectedRoles.includes('Any') },
+            { id: 'healers', active: selectedRoles.includes('Regen Healer') || selectedRoles.includes('Shield Healer') || selectedRoles.includes('Any') },
+            { id: 'melee_dps', active: selectedRoles.includes('Melee DPS') || selectedRoles.includes('Any') },
+            { id: 'magical_dps', active: selectedRoles.includes('Magical DPS') || selectedRoles.includes('Any') },
+            { id: 'phys_ranged_dps', active: selectedRoles.includes('Physical Ranged DPS') || selectedRoles.includes('Any') }
+        ];
+
+        groups.forEach(g => {
+            const el = document.querySelector(`.dynamic-jobs-box[data-role-group="${g.id}"]`);
+            if (el) {
+                el.style.display = g.active ? 'block' : 'none';
+            }
+        });
+    }
+
     function createJobChipsGroup(groupId, title, jobs, roleClass) {
         return `
-            <div class="dynamic-jobs-box">
+            <div class="dynamic-jobs-box" data-role-group="${groupId}">
                 <div class="jobs-role-title">${escapeHtml(title)}</div>
                 <div class="quick-toggle-actions">
                     <button type="button" class="btn-mini-toggle" onclick="toggleAllJobGroup('${groupId}', true)">Select All</button>
@@ -866,6 +870,7 @@
             start_time: selectedEvent.start_time,
             content_type: selectedEvent.content_type,
             day: selectedEvent.day,
+            tab_name: selectedEvent.tab_name,
             ingame_name: charName,
             discord_username: discordName,
             preferred_role: preferredRole,
@@ -882,11 +887,11 @@
                 return Array.from(document.querySelectorAll(`.chips-group[data-group="${group}"] .chip-btn.selected`))
                     .map(b => b.getAttribute('data-job'));
             }
-            payload.tanks = getGroupJobs('tanks');
-            payload.healers = getGroupJobs('healers');
-            payload.melee_dps = getGroupJobs('melee_dps');
-            payload.magical_dps = getGroupJobs('magical_dps');
-            payload.phys_ranged_dps = getGroupJobs('phys_ranged_dps');
+            payload.tanks = (playableRoles.includes('Tank') || playableRoles.includes('Any')) ? getGroupJobs('tanks') : [];
+            payload.healers = (playableRoles.includes('Regen Healer') || playableRoles.includes('Shield Healer') || playableRoles.includes('Any')) ? getGroupJobs('healers') : [];
+            payload.melee_dps = (playableRoles.includes('Melee DPS') || playableRoles.includes('Any')) ? getGroupJobs('melee_dps') : [];
+            payload.magical_dps = (playableRoles.includes('Magical DPS') || playableRoles.includes('Any')) ? getGroupJobs('magical_dps') : [];
+            payload.phys_ranged_dps = (playableRoles.includes('Physical Ranged DPS') || playableRoles.includes('Any')) ? getGroupJobs('phys_ranged_dps') : [];
 
             if ((playableRoles.includes('Tank') || playableRoles.includes('Any')) && payload.tanks.length === 0) {
                 showStatusAlert('Please select at least one job you can play for Tanks.', 'error');

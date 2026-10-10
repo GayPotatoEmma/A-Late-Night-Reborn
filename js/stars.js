@@ -1,4 +1,4 @@
-/* Whimsical Canvas Background — Night-time Stars & Daytime Clouds / Sun Motes */
+/* Whimsical Canvas Background - Night-time Stars & Daytime Clouds / Sun Motes */
 (function () {
   var canvas = document.getElementById('stars-canvas');
   if (!canvas) return;

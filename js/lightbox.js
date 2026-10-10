@@ -1,4 +1,4 @@
-/* Lightbox — click any .section-img to enlarge */
+/* Lightbox - click any .section-img to enlarge */
 (function () {
   var overlay  = document.getElementById('lightbox');
   if (!overlay) return;

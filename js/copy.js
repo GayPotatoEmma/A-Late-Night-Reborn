@@ -1,4 +1,4 @@
-/* Macro copy buttons — click to copy pre content to clipboard */
+/* Macro copy buttons - click to copy pre content to clipboard */
 (function () {
   document.querySelectorAll('.macro-copy-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {

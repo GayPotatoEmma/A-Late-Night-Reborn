@@ -196,6 +196,25 @@
             `;
             document.getElementById('btn-discord-signout').onclick = signOut;
         }
+
+        updateSignupAuthVisibility();
+    }
+
+    function updateSignupAuthVisibility() {
+        const fieldsSection = document.getElementById('signup-fields-section');
+        const connectPrompt = document.getElementById('signup-connect-prompt');
+        const inlineLoginBtn = document.getElementById('btn-discord-login-inline');
+
+        if (currentUser) {
+            if (fieldsSection) fieldsSection.style.display = 'block';
+            if (connectPrompt) connectPrompt.style.display = 'none';
+        } else {
+            if (fieldsSection) fieldsSection.style.display = 'none';
+            if (connectPrompt) {
+                connectPrompt.style.display = 'flex';
+                if (inlineLoginBtn) inlineLoginBtn.onclick = initiateDiscordLogin;
+            }
+        }
     }
 
     // ── Fetching & Rendering Events ──────────────────────────────────────────────
@@ -379,8 +398,9 @@
             formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        document.getElementById('selected-run-banner').textContent = `${ev.content_type} — ${cleanRunTitle(ev.name)} (${formatRunDateTime(ev)})`;
+        document.getElementById('selected-run-banner').textContent = `${ev.content_type} | ${cleanRunTitle(ev.name)} (${formatRunDateTime(ev)})`;
         renderFormInputs();
+        updateSignupAuthVisibility();
     }
 
     function checkUrlPreselection() {
@@ -695,6 +715,11 @@
 
         if (selectedEvent.is_closed) {
             showStatusAlert(`🔒 Cannot submit: signups for "${selectedEvent.name}" have been closed by the hosts.`, 'error');
+            return;
+        }
+
+        if (!currentUser) {
+            showStatusAlert('Please connect your Discord account before submitting your signup.', 'error');
             return;
         }
 

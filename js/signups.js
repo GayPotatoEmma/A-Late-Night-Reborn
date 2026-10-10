@@ -710,6 +710,7 @@
                     <div class="jobs-role-title">
                         <span class="material-symbols-outlined">military_tech</span> Phantom Jobs Fully Leveled
                     </div>
+                    <div class="form-hint" style="margin-bottom: 0.75rem;">You are required to have at least 6 phantom jobs leveled.</div>
                     <div class="quick-toggle-actions">
                         <button type="button" class="btn-mini-toggle" onclick="toggleAllJobs('phantom_lvl', true)">Select All</button>
                         <button type="button" class="btn-mini-toggle" onclick="toggleAllJobs('phantom_lvl', false)">Clear</button>
@@ -835,11 +836,27 @@
         }
 
         const preferredRoleBtn = document.querySelector('#preferred-role-chips .chip-btn.selected');
-        const preferredRole = preferredRoleBtn ? preferredRoleBtn.getAttribute('data-role') : 'Any';
+        if (!preferredRoleBtn) {
+            showStatusAlert('Please select your preferred role.', 'error');
+            return;
+        }
+        const preferredRole = preferredRoleBtn.getAttribute('data-role');
 
         const playableRoles = getSelectedPlayableRoles();
         if (playableRoles.length === 0) {
             showStatusAlert('Please select at least one playable role.', 'error');
+            return;
+        }
+
+        const partyPref = document.getElementById('input-party-pref').value;
+        if (!partyPref) {
+            showStatusAlert('Please select your party preference.', 'error');
+            return;
+        }
+
+        const progPoint = document.getElementById('input-prog-point').value;
+        if (!progPoint) {
+            showStatusAlert('Please select your furthest progression point.', 'error');
             return;
         }
 
@@ -853,13 +870,13 @@
             discord_username: discordName,
             preferred_role: preferredRole,
             playable_roles: playableRoles,
-            party_preference: document.getElementById('input-party-pref').value,
-            prog_point: document.getElementById('input-prog-point').value,
+            party_preference: partyPref,
+            prog_point: progPoint,
             friend_group: document.getElementById('input-friend-group').value.trim(),
             notes: document.getElementById('input-notes').value.trim()
         };
 
-        // Collect Content-Specific Fields
+        // Collect & Validate Content-Specific Fields
         if (selectedEvent.content_type === 'Chaotic') {
             function getGroupJobs(group) {
                 return Array.from(document.querySelectorAll(`.chips-group[data-group="${group}"] .chip-btn.selected`))
@@ -871,9 +888,35 @@
             payload.magical_dps = getGroupJobs('magical_dps');
             payload.phys_ranged_dps = getGroupJobs('phys_ranged_dps');
 
+            if ((playableRoles.includes('Tank') || playableRoles.includes('Any')) && payload.tanks.length === 0) {
+                showStatusAlert('Please select at least one job you can play for Tanks.', 'error');
+                return;
+            }
+            if ((playableRoles.includes('Regen Healer') || playableRoles.includes('Shield Healer') || playableRoles.includes('Any')) && payload.healers.length === 0) {
+                showStatusAlert('Please select at least one job you can play for Healers.', 'error');
+                return;
+            }
+            if ((playableRoles.includes('Melee DPS') || playableRoles.includes('Any')) && payload.melee_dps.length === 0) {
+                showStatusAlert('Please select at least one job you can play for Melee DPS.', 'error');
+                return;
+            }
+            if ((playableRoles.includes('Magical DPS') || playableRoles.includes('Any')) && payload.magical_dps.length === 0) {
+                showStatusAlert('Please select at least one job you can play for Magical DPS.', 'error');
+                return;
+            }
+            if ((playableRoles.includes('Physical Ranged DPS') || playableRoles.includes('Any')) && payload.phys_ranged_dps.length === 0) {
+                showStatusAlert('Please select at least one job you can play for Physical Ranged DPS.', 'error');
+                return;
+            }
+
         } else if (selectedEvent.content_type === 'FT:B' || selectedEvent.content_type === 'FT:M') {
             payload.phantom_jobs_exp = Array.from(document.querySelectorAll('#chips-phantom-exp .chip-btn.selected')).map(b => b.getAttribute('data-job'));
             payload.phantom_jobs_lvl = Array.from(document.querySelectorAll('#chips-phantom-lvl .chip-btn.selected')).map(b => b.getAttribute('data-job'));
+
+            if (payload.phantom_jobs_lvl.length < 6) {
+                showStatusAlert('You are required to have at least 6 phantom jobs leveled. Please select at least 6 leveled jobs.', 'error');
+                return;
+            }
 
         } else if (selectedEvent.content_type === 'BA') {
             payload.logos_actions_exp = Array.from(document.querySelectorAll('#chips-logos-exp .chip-btn.selected')).map(b => b.getAttribute('data-action'));

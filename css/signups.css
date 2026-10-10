@@ -525,6 +525,21 @@
   animation: fadeInDown 0.25s ease-out;
 }
 
+.dynamic-jobs-box[data-role-group="tanks"] {
+  border-left: 3px solid #3498db;
+}
+.dynamic-jobs-box[data-role-group="healers"] {
+  border-left: 3px solid #2ecc71;
+}
+.dynamic-jobs-box[data-role-group="melee_dps"],
+.dynamic-jobs-box[data-role-group="magical_dps"],
+.dynamic-jobs-box[data-role-group="phys_ranged_dps"] {
+  border-left: 3px solid #e74c3c;
+}
+.dynamic-jobs-box:not([data-role-group]) {
+  border-left: 3px solid var(--accent-purple);
+}
+
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: translateY(0); }
@@ -786,23 +801,137 @@
   color: #544a62;
 }
 
-[data-theme^="light"] .chip-btn {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.1);
+/* ── Dynamic Job Box & Accordion Light Mode ───────── */
+[data-theme^="light"] .dynamic-jobs-box {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 18px rgba(108, 99, 158, 0.06);
+}
+
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="tanks"] {
+  border-left: 3px solid #2563eb;
+}
+
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="healers"] {
+  border-left: 3px solid #059669;
+}
+
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="melee_dps"],
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="magical_dps"],
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="phys_ranged_dps"] {
+  border-left: 3px solid #dc2626;
+}
+
+[data-theme^="light"] .dynamic-jobs-box:not([data-role-group]) {
+  border-left: 3px solid #7c3aed;
+}
+
+[data-theme^="light"] .jobs-role-title {
+  color: #221e2a;
+  font-weight: 700;
+}
+
+[data-theme^="light"] .jobs-role-title .material-symbols-outlined {
+  color: #7c3aed;
+}
+
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="tanks"] .jobs-role-title {
+  color: #1e40af;
+}
+
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="healers"] .jobs-role-title {
+  color: #065f46;
+}
+
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="melee_dps"] .jobs-role-title,
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="magical_dps"] .jobs-role-title,
+[data-theme^="light"] .dynamic-jobs-box[data-role-group="phys_ranged_dps"] .jobs-role-title {
+  color: #991b1b;
+}
+
+[data-theme^="light"] .form-hint {
   color: #544a62;
 }
 
+[data-theme^="light"] .btn-mini-toggle {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #544a62;
+  font-weight: 500;
+}
+
+[data-theme^="light"] .btn-mini-toggle:hover {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.35);
+  color: #6d28d9;
+}
+
+/* ── Light Mode Interactive Chips ─────────────────── */
+[data-theme^="light"] .chip-btn {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  color: #2e263b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  font-weight: 500;
+}
+
 [data-theme^="light"] .chip-btn:hover {
-  background: rgba(124, 58, 237, 0.08);
+  background: rgba(124, 58, 237, 0.06);
   color: #221e2a;
-  border-color: rgba(124, 58, 237, 0.3);
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.1);
 }
 
 [data-theme^="light"] .chip-btn.selected {
-  background: rgba(124, 58, 237, 0.15);
+  background: rgba(124, 58, 237, 0.14);
   color: #6d28d9;
   border-color: #7c3aed;
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.22);
+  font-weight: 600;
+}
+
+/* Role Specific Accent Colors - Light Mode (High Contrast) */
+[data-theme^="light"] .chip-btn.role-tank.selected {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: #2563eb;
+  color: #1d4ed8;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.22);
+  font-weight: 600;
+}
+
+[data-theme^="light"] .chip-btn.role-healer.selected {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: #059669;
+  color: #065f46;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.22);
+  font-weight: 600;
+}
+
+[data-theme^="light"] .chip-btn.role-dps.selected {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: #dc2626;
+  color: #b91c1c;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.22);
+  font-weight: 600;
+}
+
+[data-theme^="light"] .chip-btn.role-tank:hover:not(.selected) {
+  background: rgba(37, 99, 235, 0.06);
+  border-color: rgba(37, 99, 235, 0.35);
+  color: #1d4ed8;
+}
+
+[data-theme^="light"] .chip-btn.role-healer:hover:not(.selected) {
+  background: rgba(16, 185, 129, 0.06);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: #065f46;
+}
+
+[data-theme^="light"] .chip-btn.role-dps:hover:not(.selected) {
+  background: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #b91c1c;
 }
 
 [data-theme^="light"] .btn-submit-signup {

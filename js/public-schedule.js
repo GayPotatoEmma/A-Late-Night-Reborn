@@ -1,7 +1,7 @@
 // Compact Upcoming Runs Widget Script for Public Homepage (A-Late-Night-Reborn)
 
 (function () {
-    var defaultUrl = 'https://alnr-upcoming-runs.gaypotatoemma.workers.dev';
+    var defaultUrl = 'https://api.alatenightreborn.com/api/events';
     var storedUrl = localStorage.getItem('alnr_api_url');
     if (storedUrl && (storedUrl.includes('localhost') || storedUrl.includes('127.0.0.1'))) {
         localStorage.removeItem('alnr_api_url');

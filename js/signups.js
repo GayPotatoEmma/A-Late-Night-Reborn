@@ -995,12 +995,22 @@
             });
             if (res.ok) {
                 const data = await res.json();
-                mySignupsList = data.signups || [];
+                const rawSignups = data.signups || [];
+                // Only keep signups that have an active upcoming event attached
+                mySignupsList = rawSignups.filter(s => {
+                    if (s.event_id) {
+                        return allEvents.some(e => e.id === s.event_id);
+                    }
+                    if (s.tab_name) {
+                        return allEvents.some(e => e.tab_name === s.tab_name);
+                    }
+                    return false;
+                });
+
                 if (mySignupsList.length > 0) {
                     container.style.display = 'block';
                     list.innerHTML = mySignupsList.map(s => {
-                        const matchedEvent = allEvents.find(e => e.tab_name === s.tab_name) ||
-                                             (s.event_id ? allEvents.find(e => e.id === s.event_id) : null);
+                        const matchedEvent = allEvents.find(e => (s.event_id && e.id === s.event_id) || (s.tab_name && e.tab_name === s.tab_name));
                         
                         const contentType = (matchedEvent && matchedEvent.content_type) || s.content_type || (
                             s.tab_name.includes('[FT:M]') ? 'FT:M' :

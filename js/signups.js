@@ -864,6 +864,25 @@
             return;
         }
 
+        const friendGroupInput = document.getElementById('input-friend-group');
+        const notesInput = document.getElementById('input-notes');
+        const friendGroupVal = friendGroupInput ? friendGroupInput.value.trim() : '';
+        const notesVal = notesInput ? notesInput.value.trim() : '';
+
+        if (!validateFriendGroup() || friendGroupVal.length > 30) {
+            showStatusAlert('Friend group name cannot exceed 30 characters.', 'error');
+            validateFriendGroup();
+            if (friendGroupInput) friendGroupInput.focus();
+            return;
+        }
+
+        if (!validateNotes() || notesVal.length > 200) {
+            showStatusAlert('Additional notes cannot exceed 200 characters.', 'error');
+            validateNotes();
+            if (notesInput) notesInput.focus();
+            return;
+        }
+
         const payload = {
             event_id: selectedEvent.id,
             run_name: selectedEvent.name,
@@ -877,8 +896,8 @@
             playable_roles: playableRoles,
             party_preference: partyPref,
             prog_point: progPoint,
-            friend_group: document.getElementById('input-friend-group').value.trim(),
-            notes: document.getElementById('input-notes').value.trim()
+            friend_group: friendGroupVal,
+            notes: notesVal
         };
 
         // Collect & Validate Content-Specific Fields
@@ -1076,6 +1095,66 @@
             .replace(/'/g, '&#039;');
     }
 
+    // ── Field Character Limit Validations ────────────────────────────────────────
+
+    function validateFriendGroup() {
+        const input = document.getElementById('input-friend-group');
+        const errEl = document.getElementById('error-friend-group');
+        if (!input) return true;
+
+        const len = input.value.length;
+        if (len > 30) {
+            input.classList.add('has-error');
+            if (errEl) {
+                errEl.style.display = 'flex';
+                errEl.innerHTML = `<span class="material-symbols-outlined" style="font-size: 1rem; vertical-align: middle;">error</span> Friend group name cannot exceed 30 characters (${len}/30).`;
+            }
+            return false;
+        } else {
+            input.classList.remove('has-error');
+            if (errEl) {
+                errEl.style.display = 'none';
+                errEl.innerHTML = '';
+            }
+            return true;
+        }
+    }
+
+    function validateNotes() {
+        const input = document.getElementById('input-notes');
+        const errEl = document.getElementById('error-notes');
+        if (!input) return true;
+
+        const len = input.value.length;
+        if (len > 200) {
+            input.classList.add('has-error');
+            if (errEl) {
+                errEl.style.display = 'flex';
+                errEl.innerHTML = `<span class="material-symbols-outlined" style="font-size: 1rem; vertical-align: middle;">error</span> Additional notes cannot exceed 200 characters (${len}/200).`;
+            }
+            return false;
+        } else {
+            input.classList.remove('has-error');
+            if (errEl) {
+                errEl.style.display = 'none';
+                errEl.innerHTML = '';
+            }
+            return true;
+        }
+    }
+
+    function setupCharacterLimitValidations() {
+        const friendGroupInput = document.getElementById('input-friend-group');
+        const notesInput = document.getElementById('input-notes');
+
+        if (friendGroupInput) {
+            friendGroupInput.addEventListener('input', validateFriendGroup);
+        }
+        if (notesInput) {
+            notesInput.addEventListener('input', validateNotes);
+        }
+    }
+
     // ── Init on DOM Ready ────────────────────────────────────────────────────────
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -1100,7 +1179,10 @@
             };
         });
 
-        // 4. Submit button
+        // 4. Character limit validation listeners
+        setupCharacterLimitValidations();
+
+        // 5. Submit button
         const submitBtn = document.getElementById('btn-submit-form');
         if (submitBtn) {
             submitBtn.onclick = submitSignup;

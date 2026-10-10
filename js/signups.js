@@ -542,6 +542,11 @@
         const container = document.getElementById('dynamic-jobs-container');
         if (!container) return;
 
+        const playableHint = document.getElementById('playable-roles-hint');
+        if (playableHint) {
+            playableHint.style.display = (contentType === 'Chaotic') ? 'block' : 'none';
+        }
+
         container.innerHTML = '';
 
         if (contentType === 'Chaotic') {
@@ -578,6 +583,7 @@
                     <div class="jobs-role-title">
                         <span class="material-symbols-outlined">auto_fix_high</span> Phantom Jobs Experience
                     </div>
+                    <div class="form-hint" style="margin-bottom: 0.75rem;">Select the phantom jobs you have previously played in Forked Tower and feel experienced on.</div>
                     <div class="quick-toggle-actions">
                         <button type="button" class="btn-mini-toggle" onclick="toggleAllJobs('phantom_exp', true)">Select All</button>
                         <button type="button" class="btn-mini-toggle" onclick="toggleAllJobs('phantom_exp', false)">Clear</button>

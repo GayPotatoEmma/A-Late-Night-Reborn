@@ -107,7 +107,24 @@
                         </div>
                     </div>
 
-                    <!-- Signup Input Fields Section (Only revealed once connected) -->
+                    <!-- Already Registered Notice (Shown when user is already signed up for this run) -->
+                    <div id="signup-already-registered-box" class="signup-connect-box" style="display: none;">
+                        <div class="signup-connect-icon" style="background: rgba(46, 204, 113, 0.18); border: 1px solid rgba(46, 204, 113, 0.35);">
+                            <span class="material-symbols-outlined" style="color: #2ecc71; font-size: 28px;">task_alt</span>
+                        </div>
+                        <div class="signup-connect-title" id="already-registered-title">You're already signed up for this run.</div>
+                        <div class="signup-connect-desc" id="already-registered-desc">
+                            Need to change something? Please make a ticket in our <a href="https://discord.gg/alnr" target="_blank" rel="noopener" style="color: var(--accent-rose); font-weight: 600; text-decoration: underline;">Discord</a>.
+                        </div>
+                        <div style="margin-top: 0.85rem;">
+                            <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="auth-btn-discord" style="padding: 0.65rem 1.25rem;">
+                                <span>Open Discord</span>
+                                <span class="material-symbols-outlined" style="font-size: 1.1rem;">open_in_new</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Signup Input Fields Section (Only revealed once connected and not already signed up) -->
                     <div id="signup-fields-section" style="display: none;">
                         <!-- Character & Discord Information -->
                         <div class="form-grid-2">

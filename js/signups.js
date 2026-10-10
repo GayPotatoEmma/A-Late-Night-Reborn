@@ -212,16 +212,44 @@
     function updateSignupAuthVisibility() {
         const fieldsSection = document.getElementById('signup-fields-section');
         const connectPrompt = document.getElementById('signup-connect-prompt');
+        const alreadyRegisteredBox = document.getElementById('signup-already-registered-box');
         const promptIcon = connectPrompt ? connectPrompt.querySelector('.signup-connect-icon') : null;
         const promptTitle = document.getElementById('signup-connect-title');
         const promptDesc = document.getElementById('signup-connect-desc');
         const promptAction = document.getElementById('signup-connect-action');
 
         if (currentUser && currentUser.is_in_guild) {
-            if (fieldsSection) fieldsSection.style.display = 'block';
             if (connectPrompt) connectPrompt.style.display = 'none';
+
+            // Check if user is already signed up for the selected run
+            const existingSignup = selectedEvent ? mySignupsList.find(s => {
+                if (s.tab_name && selectedEvent.tab_name && s.tab_name === selectedEvent.tab_name) return true;
+                if (s.event_id && selectedEvent.id && s.event_id === selectedEvent.id) return true;
+                return false;
+            }) : null;
+
+            if (existingSignup) {
+                if (fieldsSection) fieldsSection.style.display = 'none';
+                if (alreadyRegisteredBox) {
+                    alreadyRegisteredBox.style.display = 'flex';
+                    const titleEl = document.getElementById('already-registered-title');
+                    const descEl = document.getElementById('already-registered-desc');
+                    const charText = existingSignup.character_name ? ` as <strong>${escapeHtml(existingSignup.character_name)}</strong>` : '';
+                    if (titleEl) {
+                        titleEl.innerHTML = `You're already signed up for this run${charText}.`;
+                    }
+                    if (descEl) {
+                        descEl.innerHTML = `Need to change something? Please make a ticket in our <a href="https://discord.gg/alnr" target="_blank" rel="noopener" style="color: var(--accent-rose); font-weight: 600; text-decoration: underline;">Discord</a>.`;
+                    }
+                }
+            } else {
+                if (alreadyRegisteredBox) alreadyRegisteredBox.style.display = 'none';
+                if (fieldsSection) fieldsSection.style.display = 'block';
+            }
+
         } else if (currentUser && !currentUser.is_in_guild) {
             if (fieldsSection) fieldsSection.style.display = 'none';
+            if (alreadyRegisteredBox) alreadyRegisteredBox.style.display = 'none';
             if (connectPrompt) {
                 connectPrompt.style.display = 'flex';
                 if (promptIcon) {
@@ -258,6 +286,7 @@
             }
         } else {
             if (fieldsSection) fieldsSection.style.display = 'none';
+            if (alreadyRegisteredBox) alreadyRegisteredBox.style.display = 'none';
             if (connectPrompt) {
                 connectPrompt.style.display = 'flex';
                 if (promptIcon) {
@@ -464,35 +493,6 @@
         document.getElementById('selected-run-banner').textContent = `${ev.content_type} | ${cleanRunTitle(ev.name)} (${formatRunDateTime(ev)})`;
         renderFormInputs();
         updateSignupAuthVisibility();
-        checkExistingSignupForSelectedRun();
-    }
-
-    function checkExistingSignupForSelectedRun() {
-        const submitBtn = document.getElementById('btn-submit-form');
-        if (!submitBtn || !selectedEvent) return;
-
-        const isAlreadySignedUp = mySignupsList.some(s => {
-            if (s.tab_name && selectedEvent.tab_name && s.tab_name === selectedEvent.tab_name) return true;
-            if (s.event_id && selectedEvent.id && s.event_id === selectedEvent.id) return true;
-            return false;
-        });
-
-        if (isAlreadySignedUp) {
-            const existing = mySignupsList.find(s => 
-                (s.tab_name && s.tab_name === selectedEvent.tab_name) ||
-                (s.event_id && s.event_id === selectedEvent.id)
-            );
-            const charText = (existing && existing.character_name) ? ` as ${existing.character_name}` : '';
-            showStatusAlert(
-                `You are already signed up for ${selectedEvent.content_type} ${cleanRunTitle(selectedEvent.name)}${charText}! If you need to update your roles or cancel, please open a Cancellation Ticket in Discord (discord.gg/alnr).`,
-                'info'
-            );
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<span>Already Signed Up</span><span class="material-symbols-outlined">check_circle</span>`;
-        } else {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `<span>Submit Signup</span><span class="material-symbols-outlined">send</span>`;
-        }
     }
 
     function checkUrlPreselection() {
@@ -907,7 +907,9 @@
             console.error('[Signups Submit Error]', err);
             showStatusAlert(err.message || 'Submission failed', 'error');
         } finally {
-            checkExistingSignupForSelectedRun();
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<span>Submit Signup</span><span class="material-symbols-outlined">send</span>`;
+            updateSignupAuthVisibility();
         }
     }
 
@@ -970,7 +972,7 @@
                 } else {
                     container.style.display = 'none';
                 }
-                checkExistingSignupForSelectedRun();
+                updateSignupAuthVisibility();
             }
         } catch (e) {
             console.warn('[My Signups]', e);

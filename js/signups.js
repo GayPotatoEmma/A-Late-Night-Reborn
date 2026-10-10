@@ -21,6 +21,7 @@
     let allEvents = [];
     let selectedEvent = null;
     let activeFilter = 'all';
+    let mySignupsList = [];
 
     // ── Pre-defined Lists ────────────────────────────────────────────────────────
     const ALL_ROLES = [
@@ -463,6 +464,35 @@
         document.getElementById('selected-run-banner').textContent = `${ev.content_type} | ${cleanRunTitle(ev.name)} (${formatRunDateTime(ev)})`;
         renderFormInputs();
         updateSignupAuthVisibility();
+        checkExistingSignupForSelectedRun();
+    }
+
+    function checkExistingSignupForSelectedRun() {
+        const submitBtn = document.getElementById('btn-submit-form');
+        if (!submitBtn || !selectedEvent) return;
+
+        const isAlreadySignedUp = mySignupsList.some(s => {
+            if (s.tab_name && selectedEvent.tab_name && s.tab_name === selectedEvent.tab_name) return true;
+            if (s.event_id && selectedEvent.id && s.event_id === selectedEvent.id) return true;
+            return false;
+        });
+
+        if (isAlreadySignedUp) {
+            const existing = mySignupsList.find(s => 
+                (s.tab_name && s.tab_name === selectedEvent.tab_name) ||
+                (s.event_id && s.event_id === selectedEvent.id)
+            );
+            const charText = (existing && existing.character_name) ? ` as ${existing.character_name}` : '';
+            showStatusAlert(
+                `You are already signed up for ${selectedEvent.content_type} ${cleanRunTitle(selectedEvent.name)}${charText}! If you need to update your roles or cancel, please open a Cancellation Ticket in Discord (discord.gg/alnr).`,
+                'info'
+            );
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span>Already Signed Up</span><span class="material-symbols-outlined">check_circle</span>`;
+        } else {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<span>Submit Signup</span><span class="material-symbols-outlined">send</span>`;
+        }
     }
 
     function checkUrlPreselection() {
@@ -870,15 +900,14 @@
             const cleanType = cleanRunTitle(selectedEvent.name);
             const runDisplayName = `${selectedEvent.content_type} ${cleanType}`;
             showStatusAlert(`🎉 Successfully signed up for ${runDisplayName} as ${charName}!`, 'success');
-            loadMySignups();
+            await loadMySignups();
             loadEvents(); // Refresh signup counts
 
         } catch (err) {
             console.error('[Signups Submit Error]', err);
-            showStatusAlert(`Submission Error: ${err.message}`, 'error');
+            showStatusAlert(err.message || 'Submission failed', 'error');
         } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = `<span>Submit Signup</span><span class="material-symbols-outlined">send</span>`;
+            checkExistingSignupForSelectedRun();
         }
     }
 
@@ -896,22 +925,52 @@
             });
             if (res.ok) {
                 const data = await res.json();
-                if (data.signups && data.signups.length > 0) {
+                mySignupsList = data.signups || [];
+                if (mySignupsList.length > 0) {
                     container.style.display = 'block';
-                    list.innerHTML = data.signups.map(s => `
-                        <div class="my-signup-item">
-                            <div>
-                                <strong style="color: var(--accent-rose);">${escapeHtml(s.tab_name)}</strong>
-                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 8px;">Character: ${escapeHtml(s.character_name)}</span>
+                    list.innerHTML = mySignupsList.map(s => {
+                        const matchedEvent = allEvents.find(e => e.tab_name === s.tab_name) ||
+                                             (s.event_id ? allEvents.find(e => e.id === s.event_id) : null);
+                        
+                        const contentType = (matchedEvent && matchedEvent.content_type) || s.content_type || (
+                            s.tab_name.includes('[FT:M]') ? 'FT:M' :
+                            s.tab_name.includes('[C]') ? 'Chaotic' :
+                            s.tab_name.includes('[BA]') ? 'BA' : 'FT:B'
+                        );
+
+                        const rawName = (matchedEvent && matchedEvent.name) || s.run_name || s.tab_name;
+                        const runTitle = cleanRunTitle(rawName);
+
+                        let typeBadgeClass = 'ftb';
+                        let badgeLabel = 'FT:B';
+                        if (contentType === 'FT:M') {
+                            typeBadgeClass = 'ftm';
+                            badgeLabel = 'FT:M';
+                        } else if (contentType === 'Chaotic') {
+                            typeBadgeClass = 'chaotic';
+                            badgeLabel = 'Chaotic';
+                        } else if (contentType === 'BA') {
+                            typeBadgeClass = 'ba';
+                            badgeLabel = 'BA';
+                        }
+
+                        return `
+                            <div class="my-signup-item">
+                                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                    <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
+                                    <strong style="color: var(--text-primary); font-weight: 700;">${escapeHtml(runTitle)}</strong>
+                                    <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 4px;">Character: ${escapeHtml(s.character_name)}</span>
+                                </div>
+                                <div style="font-size: 0.82rem; color: var(--accent-teal);">
+                                    Preferred: ${escapeHtml(s.preferred_role || 'Any')}
+                                </div>
                             </div>
-                            <div style="font-size: 0.82rem; color: var(--accent-teal);">
-                                Preferred: ${escapeHtml(s.preferred_role || 'Any')}
-                            </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 } else {
                     container.style.display = 'none';
                 }
+                checkExistingSignupForSelectedRun();
             }
         } catch (e) {
             console.warn('[My Signups]', e);
@@ -977,8 +1036,8 @@
         renderAuthBanner();
 
         // 2. Load events
-        loadEvents();
-        loadMySignups();
+        await loadEvents();
+        await loadMySignups();
 
         // 3. Category Filter Buttons
         document.querySelectorAll('.filter-pill').forEach(pill => {

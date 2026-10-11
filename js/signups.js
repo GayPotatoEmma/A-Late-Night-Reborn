@@ -1051,7 +1051,7 @@
 
                 if (mySignupsList.length > 0) {
                     container.style.display = 'block';
-                    list.innerHTML = mySignupsList.map(s => {
+                    list.innerHTML = mySignupsList.map((s, idx) => {
                         const matchedEvent = allEvents.find(e => (s.event_id && e.id === s.event_id) || (s.tab_name && e.tab_name === s.tab_name));
                         
                         const contentType = (matchedEvent && matchedEvent.content_type) || s.content_type || (
@@ -1077,18 +1077,43 @@
                         }
 
                         return `
-                            <div class="my-signup-item">
-                                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                                    <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
-                                    <strong style="color: var(--text-primary); font-weight: 700;">${escapeHtml(runTitle)}</strong>
-                                    <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 4px;">Character: ${escapeHtml(s.character_name)}</span>
+                            <div class="my-signup-item" data-signup-idx="${idx}" role="button" tabindex="0" title="Click to view full application details">
+                                <div class="my-signup-item-main">
+                                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                        <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
+                                        <strong style="color: var(--text-primary); font-weight: 700;">${escapeHtml(runTitle)}</strong>
+                                        <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 4px;">Character: ${escapeHtml(s.character_name)}</span>
+                                    </div>
+                                    <div style="font-size: 0.82rem; color: var(--accent-teal); margin-top: 3px;">
+                                        Preferred: ${escapeHtml(s.preferred_role || 'Any')} | Party: ${escapeHtml(s.party_preference || 'Any')}
+                                    </div>
                                 </div>
-                                <div style="font-size: 0.82rem; color: var(--accent-teal);">
-                                    Preferred: ${escapeHtml(s.preferred_role || 'Any')}
+                                <div class="my-signup-item-action">
+                                    <span class="btn-view-application">
+                                        <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
+                                        <span>View Details</span>
+                                    </span>
                                 </div>
                             </div>
                         `;
                     }).join('');
+
+                    list.querySelectorAll('.my-signup-item').forEach(item => {
+                        const idx = parseInt(item.getAttribute('data-signup-idx'), 10);
+                        item.onclick = () => {
+                            if (mySignupsList[idx]) {
+                                openApplicationModal(mySignupsList[idx]);
+                            }
+                        };
+                        item.onkeydown = (e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                if (mySignupsList[idx]) {
+                                    openApplicationModal(mySignupsList[idx]);
+                                }
+                            }
+                        };
+                    });
                 } else {
                     container.style.display = 'none';
                 }
@@ -1097,6 +1122,171 @@
         } catch (e) {
             console.warn('[My Signups]', e);
         }
+    }
+
+    // ── Application Details Modal ────────────────────────────────────────────────
+
+    function openApplicationModal(signup) {
+        const modalBackdrop = document.getElementById('application-modal-backdrop');
+        const modalBody = document.getElementById('modal-details-body');
+        const runTitle = document.getElementById('modal-run-title');
+        const runSubtitle = document.getElementById('modal-run-subtitle');
+        if (!modalBackdrop || !modalBody) return;
+
+        const matchedEvent = allEvents.find(e => (signup.event_id && e.id === signup.event_id) || (signup.tab_name && e.tab_name === signup.tab_name));
+        const rawName = (matchedEvent && matchedEvent.name) || signup.run_name || signup.tab_name;
+        const cleanName = cleanRunTitle(rawName);
+        const contentType = (matchedEvent && matchedEvent.content_type) || signup.content_type || 'FT:B';
+
+        let badgeClass = 'ftb';
+        let badgeLabel = 'FT:B';
+        if (contentType === 'FT:M') { badgeClass = 'ftm'; badgeLabel = 'FT:M'; }
+        else if (contentType === 'Chaotic') { badgeClass = 'chaotic'; badgeLabel = 'Chaotic'; }
+        else if (contentType === 'BA') { badgeClass = 'ba'; badgeLabel = 'BA'; }
+
+        runTitle.textContent = cleanName;
+        const eventTimeStr = matchedEvent ? formatRunDateTime(matchedEvent) : (signup.tab_name || '');
+        runSubtitle.innerHTML = `<span class="run-type-badge ${badgeClass}">${badgeLabel}</span> <span>${escapeHtml(eventTimeStr)}</span>`;
+
+        let contentSpecificHtml = '';
+
+        if (contentType === 'Chaotic') {
+            const roleJobs = [
+                { label: 'Tanks', val: signup.tanks },
+                { label: 'Healers', val: signup.healers },
+                { label: 'Melee DPS', val: signup.melee },
+                { label: 'Magical DPS', val: signup.magical },
+                { label: 'Phys Ranged DPS', val: signup.phys_ranged }
+            ].filter(j => j.val);
+
+            if (roleJobs.length > 0) {
+                contentSpecificHtml = `
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <span class="material-symbols-outlined">swords</span> Job Selections
+                        </div>
+                        <div class="modal-jobs-grid">
+                            ${roleJobs.map(j => `
+                                <div class="modal-job-group">
+                                    <span class="modal-sublabel">${escapeHtml(j.label)}:</span>
+                                    <span class="modal-subvalue">${escapeHtml(j.val)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+        } else if (contentType === 'FT:B' || contentType === 'FT:M') {
+            contentSpecificHtml = `
+                <div class="modal-section">
+                    <div class="modal-section-title">
+                        <span class="material-symbols-outlined">auto_fix_high</span> Phantom Jobs
+                    </div>
+                    <div class="modal-key-val">
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Experience On:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.phantom_exp || 'None specified')}</span>
+                        </div>
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Fully Leveled:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.phantom_level || 'None')}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (contentType === 'BA') {
+            contentSpecificHtml = `
+                <div class="modal-section">
+                    <div class="modal-section-title">
+                        <span class="material-symbols-outlined">magic_button</span> Logos Actions
+                    </div>
+                    <div class="modal-key-val">
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Special Logos Experience:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.logos_actions_exp || 'None specified')}</span>
+                        </div>
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Try New Special Logos:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.logos_try_new || 'No')}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        modalBody.innerHTML = `
+            <!-- Player Info -->
+            <div class="modal-grid-2">
+                <div class="modal-info-box">
+                    <span class="modal-sublabel">Character Name</span>
+                    <strong class="modal-subvalue-lg">${escapeHtml(signup.character_name || 'N/A')}</strong>
+                </div>
+                <div class="modal-info-box">
+                    <span class="modal-sublabel">Discord Username</span>
+                    <span class="modal-subvalue-lg">@${escapeHtml(signup.discord_username || 'N/A')}</span>
+                </div>
+            </div>
+
+            <!-- Role & Party Info -->
+            <div class="modal-section">
+                <div class="modal-section-title">
+                    <span class="material-symbols-outlined">group</span> Roles & Parties
+                </div>
+                <div class="modal-key-val">
+                    <div class="modal-row">
+                        <span class="modal-sublabel">Preferred Role:</span>
+                        <span class="modal-subvalue"><span class="badge-role-highlight">${escapeHtml(signup.preferred_role || 'Any')}</span></span>
+                    </div>
+                    <div class="modal-row">
+                        <span class="modal-sublabel">Playable Roles:</span>
+                        <span class="modal-subvalue">${escapeHtml(signup.playable_roles || 'Any')}</span>
+                    </div>
+                    <div class="modal-row">
+                        <span class="modal-sublabel">Party Preference:</span>
+                        <span class="modal-subvalue">${escapeHtml(signup.party_preference || 'Any')}</span>
+                    </div>
+                    <div class="modal-row">
+                        <span class="modal-sublabel">Progression Point:</span>
+                        <span class="modal-subvalue">${escapeHtml(signup.prog_point || 'Not specified')}</span>
+                    </div>
+                </div>
+            </div>
+
+            ${contentSpecificHtml}
+
+            <!-- Team & Notes -->
+            <div class="modal-section">
+                <div class="modal-section-title">
+                    <span class="material-symbols-outlined">chat</span> Additional Info
+                </div>
+                <div class="modal-key-val">
+                    <div class="modal-row">
+                        <span class="modal-sublabel">Friend Group:</span>
+                        <span class="modal-subvalue">${escapeHtml(signup.friend_group || 'None specified')}</span>
+                    </div>
+                    <div class="modal-row" style="align-items: flex-start;">
+                        <span class="modal-sublabel">Notes:</span>
+                        <span class="modal-subvalue" style="white-space: pre-wrap;">${escapeHtml(signup.notes || 'None')}</span>
+                    </div>
+                    ${signup.timestamp ? `
+                    <div class="modal-row">
+                        <span class="modal-sublabel">Signed Up At:</span>
+                        <span class="modal-subvalue" style="color: var(--text-muted); font-size: 0.85rem;">${escapeHtml(signup.timestamp)} UTC</span>
+                    </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+
+        modalBackdrop.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeApplicationModal() {
+        const modalBackdrop = document.getElementById('application-modal-backdrop');
+        if (!modalBackdrop) return;
+        modalBackdrop.style.display = 'none';
+        document.body.style.overflow = '';
     }
 
     function showStatusAlert(msg, type) {
@@ -1239,5 +1429,20 @@
         if (submitBtn) {
             submitBtn.onclick = submitSignup;
         }
+
+        // 6. Application modal close listeners
+        const modalBackdrop = document.getElementById('application-modal-backdrop');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalDismissBtn = document.getElementById('modal-dismiss-btn');
+        if (modalCloseBtn) modalCloseBtn.onclick = closeApplicationModal;
+        if (modalDismissBtn) modalDismissBtn.onclick = closeApplicationModal;
+        if (modalBackdrop) {
+            modalBackdrop.onclick = (e) => {
+                if (e.target === modalBackdrop) closeApplicationModal();
+            };
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeApplicationModal();
+        });
     });
 })();

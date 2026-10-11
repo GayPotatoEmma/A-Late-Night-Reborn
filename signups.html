@@ -222,6 +222,30 @@
 
     </div>
 
+    <!-- ── Application Details Modal Popup ── -->
+    <div class="modal-backdrop" id="application-modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-run-title">
+        <div class="modal-box" id="application-modal-box">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="material-symbols-outlined modal-header-icon">assignment</span>
+                    <div>
+                        <h3 class="modal-title" id="modal-run-title">Application Details</h3>
+                        <div class="modal-subtitle" id="modal-run-subtitle">Run Details</div>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close details modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-details-body"></div>
+            <div class="modal-footer">
+                <div class="modal-cancellation-hint">
+                    <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">help_outline</span>
+                    <span>Need to update roles or withdraw? Open a Cancellation Ticket on <a href="https://discord.gg/alnr" target="_blank" rel="noopener">Discord</a>.</span>
+                </div>
+                <button type="button" class="modal-btn-dismiss" id="modal-dismiss-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/theme.js"></script>
     <script src="js/stars.js"></script>

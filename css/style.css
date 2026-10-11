@@ -1169,6 +1169,21 @@ details.accordion-item[open] > summary {
   backdrop-filter: blur(12px);
 }
 
+.footer-privacy-link {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition);
+}
+
+.footer-privacy-link:hover {
+  color: var(--accent-rose);
+}
+
+[data-theme^="light"] .footer-privacy-link:hover {
+  color: #e11d48;
+}
+
 /* ── Scrollbar ────────────────────────────────────── */
 
 ::-webkit-scrollbar { width: 5px; }

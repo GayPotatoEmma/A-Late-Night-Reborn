@@ -76,15 +76,83 @@
         return window.location.origin + window.location.pathname;
     }
 
+    function generateOAuthState() {
+        try {
+            const array = new Uint8Array(16);
+            window.crypto.getRandomValues(array);
+            return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+        } catch (e) {
+            return Math.random().toString(36).substring(2) + Date.now().toString(36);
+        }
+    }
+
     function initiateDiscordLogin() {
         const redirect = encodeURIComponent(getRedirectUri());
-        const oauthUrl = `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&response_type=code&redirect_uri=${redirect}&scope=identify`;
+        const state = generateOAuthState();
+        try {
+            sessionStorage.setItem('alnr_oauth_state', state);
+        } catch (e) {
+            console.warn('[Signups Auth] Could not store oauth state:', e);
+        }
+        const oauthUrl = `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&response_type=code&redirect_uri=${redirect}&scope=identify&state=${encodeURIComponent(state)}`;
         window.location.href = oauthUrl;
     }
 
-    function signOut() {
+    async function signOut() {
+        const token = localStorage.getItem('alnr_session_token');
+
+        // 1. Invalidate session token on server and clear session cookies
+        try {
+            await fetch(`${getApiUrl()}/api/public/auth/logout`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                },
+                credentials: 'include'
+            });
+        } catch (err) {
+            console.warn('[Signups Auth] Logout request error:', err);
+        }
+
+        // 2. Wipe client storage & in-memory session
         localStorage.removeItem('alnr_session_token');
+        try {
+            sessionStorage.removeItem('alnr_oauth_state');
+        } catch (e) {}
         currentUser = null;
+        mySignupsList = [];
+
+        // 3. Clear and hide "My Active Signups" list
+        const mySignupsCard = document.getElementById('my-signups-card');
+        const mySignupsListEl = document.getElementById('my-signups-list');
+        if (mySignupsCard) mySignupsCard.style.display = 'none';
+        if (mySignupsListEl) mySignupsListEl.innerHTML = '';
+
+        // 4. Close any open Application Details modal & wipe body
+        closeApplicationModal();
+        const modalBody = document.getElementById('modal-details-body');
+        if (modalBody) modalBody.innerHTML = '';
+
+        // 5. Reset user input fields
+        const charNameInput = document.getElementById('input-char-name');
+        const discordInput = document.getElementById('input-discord-name');
+        const friendGroupInput = document.getElementById('input-friend-group');
+        const notesInput = document.getElementById('input-notes');
+        if (charNameInput) charNameInput.value = '';
+        if (discordInput) {
+            discordInput.value = '';
+            discordInput.disabled = false;
+        }
+        if (friendGroupInput) friendGroupInput.value = '';
+        if (notesInput) notesInput.value = '';
+
+        // 6. Reset already registered notice & status alerts
+        const alreadyRegisteredBox = document.getElementById('signup-already-registered-box');
+        if (alreadyRegisteredBox) alreadyRegisteredBox.style.display = 'none';
+        hideStatusAlert();
+
+        // 7. Re-render UI
         renderAuthBanner();
         renderFormInputs();
     }
@@ -92,11 +160,25 @@
     async function handleAuthCodeIfPresent() {
         const params = new URLSearchParams(window.location.search);
         const code = params.get('code');
+        const state = params.get('state');
         if (!code) return;
 
-        // Clean query params from browser URL bar
+        // Clean query params from browser URL bar immediately
         const cleanUrl = window.location.origin + window.location.pathname + (params.get('run') ? `?run=${params.get('run')}` : '');
         window.history.replaceState({}, document.title, cleanUrl);
+
+        // Verify OAuth state to prevent Login CSRF
+        let storedState = null;
+        try {
+            storedState = sessionStorage.getItem('alnr_oauth_state');
+            sessionStorage.removeItem('alnr_oauth_state');
+        } catch (e) {}
+
+        if (!state || !storedState || state !== storedState) {
+            console.error('[Signups Auth] OAuth state verification failed.');
+            showStatusAlert('Authentication failed: Security state verification mismatch. Please try signing in again.', 'error');
+            return;
+        }
 
         showStatusAlert('Authenticating with Discord...', 'info');
 
@@ -104,6 +186,7 @@
             const res = await fetch(`${getApiUrl()}/api/public/auth/discord`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({ code: code, redirect_uri: getRedirectUri() })
             });
 
@@ -124,11 +207,14 @@
 
     async function verifyExistingSession() {
         const token = localStorage.getItem('alnr_session_token');
-        if (!token) return;
 
         try {
+            const headers = {};
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+
             const res = await fetch(`${getApiUrl()}/api/public/auth/me`, {
-                headers: { 'Authorization': `Bearer ${token}` }
+                headers: headers,
+                credentials: 'include'
             });
             if (res.ok) {
                 const data = await res.json();
@@ -998,6 +1084,7 @@
                     'Content-Type': 'application/json',
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
                 },
+                credentials: 'include',
                 body: JSON.stringify(payload)
             });
 
@@ -1022,15 +1109,19 @@
 
     async function loadMySignups() {
         const token = localStorage.getItem('alnr_session_token');
-        if (!token) return;
+        if (!token && !currentUser) return;
 
         const container = document.getElementById('my-signups-card');
         const list = document.getElementById('my-signups-list');
         if (!container || !list) return;
 
         try {
+            const headers = {};
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+
             const res = await fetch(`${getApiUrl()}/api/public/signups/my`, {
-                headers: { 'Authorization': `Bearer ${token}` }
+                headers: headers,
+                credentials: 'include'
             });
             if (res.ok) {
                 const data = await res.json();

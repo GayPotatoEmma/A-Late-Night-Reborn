@@ -248,8 +248,56 @@
                             <li><strong>Right to Lodge a Complaint:</strong> If you believe your data has been handled improperly under GDPR or applicable data protection regulations, you have the right to lodge a complaint with your local Data Protection Authority (such as the UK ICO or your national EU/EEA regulator).</li>
                         </ul>
                         <div class="privacy-highlight-box" style="margin-top: 1.25rem;">
-                            <strong>How to Request Changes or Deletion:</strong> Simply open a Ticket on our Discord server at <a href="https://discord.gg/alnr" target="_blank" rel="noopener" style="color: var(--accent-rose); font-weight: 700; text-decoration: underline;">https://discord.gg/alnr</a>. Our staff will take care of it right away.
+                            <strong>How to Request Changes or Deletion:</strong>
+                            <ul style="margin: 0.5rem 0 0 1.25rem; padding: 0; display: flex; flex-direction: column; gap: 0.35rem;">
+                                <li><strong>On Discord:</strong> Open a Ticket on our server at <a href="https://discord.gg/alnr" target="_blank" rel="noopener" style="color: var(--accent-rose); font-weight: 700; text-decoration: underline;">https://discord.gg/alnr</a>.</li>
+                                <li><strong>Outside Discord:</strong> Submit a direct request using our <a href="#contact-section" style="color: var(--accent-purple); font-weight: 700; text-decoration: underline;">Contact Form</a> below (no Discord account required).</li>
+                            </ul>
                         </div>
+                    </div>
+
+                    <!-- Section 8 -->
+                    <div id="contact-section" class="privacy-section" style="margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                        <h2>
+                            <span class="material-symbols-outlined">mail</span>
+                            8. Contact Us
+                        </h2>
+                        <p>
+                            If you do not use Discord or prefer to reach our administration team directly regarding privacy requests, data deletion, or questions, you can send us a message below. Messages are delivered directly to community leadership.
+                        </p>
+
+                        <form id="contact-form" class="contact-form" style="margin-top: 1.25rem;">
+                            <div class="form-grid-2">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" for="contact-name">Name <span style="color: var(--accent-rose);">*</span></label>
+                                    <input type="text" id="contact-name" name="name" class="input-text" required maxlength="60" />
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" for="contact-info">Contact Info <span style="color: var(--text-muted); font-size: 0.8rem; font-weight: normal;">(Optional)</span></label>
+                                    <input type="text" id="contact-info" name="contact_info" class="input-text" maxlength="120" />
+                                    <div class="form-hint">Leave a way to reach you if you would like a direct reply.</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top: 1.15rem; margin-bottom: 0;">
+                                <label class="form-label" for="contact-message">Message <span style="color: var(--accent-rose);">*</span></label>
+                                <textarea id="contact-message" name="message" class="input-textarea" rows="4" required minlength="5" maxlength="2000"></textarea>
+                            </div>
+
+                            <!-- Bot honeypot (hidden from humans) -->
+                            <div style="display: none;" aria-hidden="true">
+                                <input type="text" id="contact-hp" name="hp" tabindex="-1" autocomplete="off" />
+                            </div>
+
+                            <div style="margin-top: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                                <button type="submit" id="contact-submit-btn" class="btn-submit-signup">
+                                    <span class="material-symbols-outlined">send</span> Send Message
+                                </button>
+                                <span style="font-size: 0.82rem; color: var(--text-muted);">Sent directly to community administration.</span>
+                            </div>
+
+                            <div id="contact-status" class="contact-status" style="display: none; margin-top: 1.25rem;"></div>
+                        </form>
                     </div>
 
                 </div>
@@ -259,7 +307,7 @@
 
         <!-- ── Footer ── -->
         <footer class="site-footer">
-            <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide &middot; <a href="privacy.html" class="footer-privacy-link">Privacy Notice</a></p>
+            <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide &middot; <a href="privacy.html" class="footer-privacy-link">Privacy Notice</a> &middot; <a href="privacy.html#contact-section" class="footer-privacy-link">Contact</a></p>
         </footer>
 
     </div>
@@ -267,5 +315,6 @@
     <!-- Scripts -->
     <script src="js/theme.js"></script>
     <script src="js/stars.js"></script>
+    <script src="js/contact.js"></script>
 </body>
 </html>

@@ -170,7 +170,7 @@
                             The website server only passes the form submission straight to the sheet and does not store copies of your submissions.
                         </p>
                         <p>
-                            Your login session uses a lightweight, signed token that confirms your Discord identity while you're using the site, and it automatically expires after 7 days.
+                            Your login session uses a lightweight, signed token that confirms your Discord identity while you're using the site. Active sessions use a rolling 7-day window that automatically renews when you visit the site, so active raiders do not get logged out unexpectedly. If you don't visit for 7 days, your session automatically expires.
                         </p>
                     </div>
 
@@ -212,8 +212,8 @@
                             We only use a few basic browser items to keep you signed in and remember your settings:
                         </p>
                         <ul class="privacy-list">
-                            <li><strong>Session Cookie (<code>alnr_session</code>):</strong> A secure, <code>HttpOnly</code> cookie that keeps you logged in for up to 7 days. It is cleared as soon as you click "Sign Out".</li>
-                            <li><strong>Local Token (<code>alnr_session_token</code>):</strong> Stored in your browser's <code>localStorage</code> so the site can authenticate your signup requests. Cleared immediately upon logging out.</li>
+                            <li><strong>Session Cookie (<code>alnr_session</code>):</strong> A secure, <code>HttpOnly</code> cookie that maintains your login session. It automatically refreshes for another 7 days whenever you visit the site while active, and is cleared as soon as you click "Sign Out".</li>
+                            <li><strong>Local Token (<code>alnr_session_token</code>):</strong> Stored in your browser's <code>localStorage</code> so the site can authenticate your signup requests, rolling forward alongside your session. Cleared immediately upon logging out.</li>
                             <li><strong>Login Security Check (<code>alnr_oauth_state</code>):</strong> A temporary random code kept in <code>sessionStorage</code> while you log in through Discord to protect against login tampering (CSRF). It is deleted right after you log in.</li>
                             <li><strong>Theme Preference (<code>alnr-theme</code>):</strong> Remembers whether you prefer dark or light mode.</li>
                         </ul>

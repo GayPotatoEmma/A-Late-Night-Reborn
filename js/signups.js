@@ -220,6 +220,9 @@
                 const data = await res.json();
                 if (data.authenticated) {
                     currentUser = data.user;
+                    if (data.token) {
+                        localStorage.setItem('alnr_session_token', data.token);
+                    }
                 }
             } else {
                 localStorage.removeItem('alnr_session_token');

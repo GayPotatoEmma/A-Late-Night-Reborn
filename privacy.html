@@ -122,6 +122,10 @@
                 <!-- ── Policy Content Card ── -->
                 <div class="glass-card" style="padding: 2.2rem;">
 
+                    <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 1.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
+                        Data Controller: A Late Night Reborn community administration &amp; raid leadership team
+                    </p>
+
                     <!-- Section 1 -->
                     <div class="privacy-section">
                         <h2>
@@ -153,7 +157,7 @@
                             <li>Checking that you are in our Discord server so hosts have a way to contact you for your run.</li>
                         </ul>
                         <p>
-                            We will never sell, rent, or share your details with anyone, and we don't do any tracking or marketing.
+                            We will never sell, rent, trade, or share your personal data with commercial third parties, advertisers, or marketing agencies.
                         </p>
                     </div>
 
@@ -170,7 +174,7 @@
                             The website server only passes the form submission straight to the sheet and does not store copies of your submissions.
                         </p>
                         <p>
-                            Your login session uses a lightweight, signed token that confirms your Discord identity while you're using the site. Active sessions use a rolling 7-day window that automatically renews when you visit the site, so active raiders do not get logged out unexpectedly. If you don't visit for 7 days, your session automatically expires.
+                            Your login session confirms your Discord identity while you're using the site. It stays active as long as you visit regularly, and automatically expires after 7 days of inactivity.
                         </p>
                     </div>
 
@@ -178,14 +182,21 @@
                     <div class="privacy-section">
                         <h2>
                             <span class="material-symbols-outlined">group</span>
-                            4. Who Can See Your Information
+                            4. Who Can See Your Information &amp; Technical Services
                         </h2>
                         <p>
-                            Access to submitted signup details is limited to our raid lead team.
+                            Access to submitted signup details is limited strictly to our raid lead team. Final rosters posted publicly in Discord channels only show the character names, assigned jobs, and parties needed for the raid.
+                        </p>
+                        <p style="margin-top: 0.85rem; font-weight: 600; color: var(--text-primary);">
+                            Technical Infrastructure Providers:
                         </p>
                         <p>
-                            Final rosters posted publicly in Discord channels only show the character names, assigned jobs, and parties needed for the raid.
+                            To run community signups and coordinate events, we rely on two trusted services acting as technical infrastructure processors on our behalf:
                         </p>
+                        <ul class="privacy-list">
+                            <li><strong>Discord Inc.:</strong> For user authentication (OAuth2 identity) and event announcements / run pings.</li>
+                            <li><strong>Google LLC (Google Workspace):</strong> Provides the secure cloud spreadsheet (Google Sheets) where event rosters are compiled and balanced by raid leaders.</li>
+                        </ul>
                     </div>
 
                     <!-- Section 5 -->
@@ -212,10 +223,9 @@
                             We only use a few basic browser items to keep you signed in and remember your settings:
                         </p>
                         <ul class="privacy-list">
-                            <li><strong>Session Cookie (<code>alnr_session</code>):</strong> A secure, <code>HttpOnly</code> cookie that maintains your login session. It automatically refreshes for another 7 days whenever you visit the site while active, and is cleared as soon as you click "Sign Out".</li>
-                            <li><strong>Local Token (<code>alnr_session_token</code>):</strong> Stored in your browser's <code>localStorage</code> so the site can authenticate your signup requests, rolling forward alongside your session. Cleared immediately upon logging out.</li>
-                            <li><strong>Login Security Check (<code>alnr_oauth_state</code>):</strong> A temporary random code kept in <code>sessionStorage</code> while you log in through Discord to protect against login tampering (CSRF). It is deleted right after you log in.</li>
-                            <li><strong>Theme Preference (<code>alnr-theme</code>):</strong> Remembers whether you prefer dark or light mode.</li>
+                            <li><strong>Login Session:</strong> An encrypted cookie that keeps you logged in while using the site. It automatically stays active as long as you visit regularly, and is cleared immediately when you sign out.</li>
+                            <li><strong>Discord Login Security:</strong> A temporary security code stored in your browser while logging in through Discord to protect against login tampering. It is automatically deleted once you are signed in.</li>
+                            <li><strong>Theme Preference:</strong> Remembers whether you prefer dark or light mode across visits.</li>
                         </ul>
                         <p>
                             There are zero advertising cookies, third-party analytics trackers, or surveillance scripts on this website.
@@ -235,6 +245,7 @@
                             <li><strong>Check Your Signups:</strong> You can view all your active signups right on the website whenever you are signed in.</li>
                             <li><strong>Update Your Details:</strong> If your job, role, or availability changes, let your hosts know or update your signup before rosters lock.</li>
                             <li><strong>Delete Your Data:</strong> You can request complete removal of your signup submissions from our planning sheets at any time.</li>
+                            <li><strong>Right to Lodge a Complaint:</strong> If you believe your data has been handled improperly under GDPR or applicable data protection regulations, you have the right to lodge a complaint with your local Data Protection Authority (such as the UK ICO or your national EU/EEA regulator).</li>
                         </ul>
                         <div class="privacy-highlight-box" style="margin-top: 1.25rem;">
                             <strong>How to Request Changes or Deletion:</strong> Simply open a Ticket on our Discord server at <a href="https://discord.gg/alnr" target="_blank" rel="noopener" style="color: var(--accent-rose); font-weight: 700; text-decoration: underline;">https://discord.gg/alnr</a>. Our staff will take care of it right away.

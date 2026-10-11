@@ -99,15 +99,13 @@
     }
 
     async function signOut() {
-        const token = localStorage.getItem('alnr_session_token');
-
         // 1. Invalidate session token on server and clear session cookies
         try {
             await fetch(`${getApiUrl()}/api/public/auth/logout`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 credentials: 'include'
             });
@@ -185,7 +183,10 @@
         try {
             const res = await fetch(`${getApiUrl()}/api/public/auth/discord`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
                 credentials: 'include',
                 body: JSON.stringify({ code: code, redirect_uri: getRedirectUri() })
             });
@@ -196,7 +197,6 @@
             }
 
             const data = await res.json();
-            localStorage.setItem('alnr_session_token', data.token);
             currentUser = data.user;
             showStatusAlert(`Welcome back, ${currentUser.global_name || currentUser.username}!`, 'success');
         } catch (err) {
@@ -206,23 +206,14 @@
     }
 
     async function verifyExistingSession() {
-        const token = localStorage.getItem('alnr_session_token');
-
         try {
-            const headers = {};
-            if (token) headers['Authorization'] = `Bearer ${token}`;
-
             const res = await fetch(`${getApiUrl()}/api/public/auth/me`, {
-                headers: headers,
                 credentials: 'include'
             });
             if (res.ok) {
                 const data = await res.json();
                 if (data.authenticated) {
                     currentUser = data.user;
-                    if (data.token) {
-                        localStorage.setItem('alnr_session_token', data.token);
-                    }
                 }
             } else {
                 localStorage.removeItem('alnr_session_token');
@@ -1078,14 +1069,12 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = `<span class="material-symbols-outlined" style="animation: spin 1s infinite linear;">sync</span> Submitting...`;
 
-        const token = localStorage.getItem('alnr_session_token');
-
         try {
             const res = await fetch(`${getApiUrl()}/api/public/signups/submit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 credentials: 'include',
                 body: JSON.stringify(payload)
@@ -1111,19 +1100,14 @@
     }
 
     async function loadMySignups() {
-        const token = localStorage.getItem('alnr_session_token');
-        if (!token && !currentUser) return;
+        if (!currentUser) return;
 
         const container = document.getElementById('my-signups-card');
         const list = document.getElementById('my-signups-list');
         if (!container || !list) return;
 
         try {
-            const headers = {};
-            if (token) headers['Authorization'] = `Bearer ${token}`;
-
             const res = await fetch(`${getApiUrl()}/api/public/signups/my`, {
-                headers: headers,
                 credentials: 'include'
             });
             if (res.ok) {

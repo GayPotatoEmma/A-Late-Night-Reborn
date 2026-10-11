@@ -467,9 +467,52 @@ img { max-width: 100%; display: block; }
   font-size: 1rem;
   color: var(--text-secondary);
   max-width: 520px;
-  margin: 0 auto 3rem;
+  margin: 0 auto 1.5rem;
   font-weight: 300;
   letter-spacing: .01em;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2.75rem;
+}
+
+.hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.7rem 1.6rem;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(178, 145, 247, 0.35), rgba(244, 63, 94, 0.35));
+  border: 1px solid rgba(252, 212, 200, 0.3);
+  border-radius: 999px;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(178, 145, 247, 0.2);
+  transition: all var(--transition);
+}
+
+.hero-cta-btn:hover {
+  background: linear-gradient(135deg, rgba(178, 145, 247, 0.55), rgba(244, 63, 94, 0.55));
+  border-color: rgba(252, 212, 200, 0.6);
+  box-shadow: 0 6px 26px rgba(178, 145, 247, 0.35);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.hero-cta-btn .material-symbols-outlined {
+  font-size: 1.25rem;
+  color: #fcd4c8;
+  transition: transform var(--transition);
+}
+
+.hero-cta-btn:hover .material-symbols-outlined {
+  transform: scale(1.1);
 }
 
 /* ── Section Grid (Landing) ───────────────────────── */
@@ -1819,6 +1862,24 @@ html.theme-transitioning *::after {
   background: linear-gradient(140deg, #221e2a 0%, #b85b56 48%, #6c5a9e 88%);
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+[data-theme^="light"] .hero-cta-btn {
+  color: #221e2a;
+  background: linear-gradient(135deg, rgba(178, 145, 247, 0.25), rgba(244, 63, 94, 0.2));
+  border-color: rgba(108, 90, 158, 0.25);
+  box-shadow: 0 4px 16px rgba(108, 90, 158, 0.12);
+}
+
+[data-theme^="light"] .hero-cta-btn:hover {
+  background: linear-gradient(135deg, rgba(178, 145, 247, 0.38), rgba(244, 63, 94, 0.3));
+  border-color: rgba(108, 90, 158, 0.45);
+  box-shadow: 0 6px 22px rgba(108, 90, 158, 0.2);
+  color: #1a1622;
+}
+
+[data-theme^="light"] .hero-cta-btn .material-symbols-outlined {
+  color: #9b4f58;
 }
 
 [data-theme^="light"] .section-card::before,

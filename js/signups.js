@@ -621,8 +621,8 @@
     }
 
     function renderPartyPreferences(contentType) {
-        const select = document.getElementById('input-party-pref');
-        if (!select) return;
+        const container = document.getElementById('party-pref-chips');
+        if (!container) return;
 
         let options = [];
         if (contentType === 'Chaotic') {
@@ -644,7 +644,49 @@
             ];
         }
 
-        select.innerHTML = options.map(o => `<option value="${escapeHtml(o.value)}">${escapeHtml(o.label)}</option>`).join('');
+        container.innerHTML = options.map(o => `
+            <button type="button" class="chip-btn ${o.value === 'Any' ? 'selected' : ''}" data-party="${escapeHtml(o.value)}">
+                ${escapeHtml(o.label)}
+            </button>
+        `).join('');
+
+        container.querySelectorAll('.chip-btn').forEach(btn => {
+            btn.onclick = () => {
+                const partyVal = btn.getAttribute('data-party');
+                const anyBtn = container.querySelector('[data-party="Any"]');
+                const specificBtns = Array.from(container.querySelectorAll('.chip-btn:not([data-party="Any"])'));
+
+                if (partyVal === 'Any') {
+                    // Selecting Any Party deselects all specific party chips
+                    anyBtn.classList.add('selected');
+                    specificBtns.forEach(b => b.classList.remove('selected'));
+                } else {
+                    btn.classList.toggle('selected');
+                    const anySpecificSelected = specificBtns.some(b => b.classList.contains('selected'));
+                    if (anySpecificSelected) {
+                        if (anyBtn) anyBtn.classList.remove('selected');
+                    } else {
+                        // If all specific chips were deselected, fall back to Any Party
+                        if (anyBtn) anyBtn.classList.add('selected');
+                    }
+                }
+            };
+        });
+    }
+
+    function getSelectedPartyPreferences() {
+        const container = document.getElementById('party-pref-chips');
+        if (!container) return 'Any';
+
+        const anyBtn = container.querySelector('[data-party="Any"]');
+        if (anyBtn && anyBtn.classList.contains('selected')) {
+            return 'Any';
+        }
+
+        const selected = Array.from(container.querySelectorAll('.chip-btn.selected:not([data-party="Any"])'))
+            .map(b => b.getAttribute('data-party'));
+
+        return selected.length > 0 ? selected.join(', ') : 'Any';
     }
 
     // ── Dynamic Jobs Sections (Chaotic / FT / BA) ────────────────────────────────
@@ -852,7 +894,7 @@
             return;
         }
 
-        const partyPref = document.getElementById('input-party-pref').value;
+        const partyPref = getSelectedPartyPreferences();
         if (!partyPref) {
             showStatusAlert('Please select your party preference.', 'error');
             return;

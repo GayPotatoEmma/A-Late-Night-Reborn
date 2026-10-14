@@ -1,4 +1,4 @@
-/* Lightbox - click any .section-img to enlarge */
+/* Lightbox - click any .section-img to enlarge, click image inside lightbox to toggle full zoom */
 (function () {
   var overlay  = document.getElementById('lightbox');
   if (!overlay) return;
@@ -7,6 +7,7 @@
   var closeBtn = document.getElementById('lightbox-close');
 
   function open(src, alt) {
+    lbImg.classList.remove('zoomed');
     lbImg.src = src;
     lbImg.alt = alt || '';
     overlay.classList.add('active');
@@ -15,11 +16,18 @@
 
   function close() {
     overlay.classList.remove('active');
+    lbImg.classList.remove('zoomed');
+    lbImg.removeAttribute('src');
     document.body.style.overflow = '';
   }
 
   document.querySelectorAll('.section-img, .lightbox-trigger').forEach(function (el) {
     el.addEventListener('click', function () { open(el.src, el.alt); });
+  });
+
+  lbImg.addEventListener('click', function (e) {
+    e.stopPropagation();
+    lbImg.classList.toggle('zoomed');
   });
 
   closeBtn.addEventListener('click', function (e) {

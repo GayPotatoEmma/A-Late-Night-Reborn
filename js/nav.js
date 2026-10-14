@@ -342,9 +342,17 @@
     var prefix = (inFTB || inFTM || inCOD) ? '../' : './';
     navHTML = navHTML
       .replace('href="/" class="nav-home-link"', 'href="' + prefix + 'index.html" class="nav-home-link"')
+      .replace('href="/signups" class="nav-home-link"', 'href="' + prefix + 'signups.html" class="nav-home-link"')
       .replace(/href="\/(ftb|ftm|chaotic)\/([^"#]+)(#[^"]*)?"/g, function (m, folder, page, hash) {
         return 'href="' + prefix + folder + '/' + page + '.html' + (hash || '') + '"';
       });
+
+    document.querySelectorAll('.header-inner a[href="/"], .breadcrumb a[href^="/"], .section-nav a.nav-home[href^="/"]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      var hashIdx = href.indexOf('#');
+      var hashPart = hashIdx !== -1 ? href.slice(hashIdx) : '';
+      a.setAttribute('href', prefix + 'index.html' + hashPart);
+    });
   }
 
   document.body.insertAdjacentHTML('beforeend', navHTML);
@@ -381,14 +389,38 @@
   });
 
   document.querySelectorAll('.nav-section-toggle').forEach(function (el) {
-    el.addEventListener('click', function () {
-      this.closest('.nav-section').classList.toggle('expanded');
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-expanded', 'false');
+    function toggleSection() {
+      var section = el.closest('.nav-section');
+      var isExpanded = section.classList.toggle('expanded');
+      el.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+    }
+    el.addEventListener('click', toggleSection);
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection();
+      }
     });
   });
 
   document.querySelectorAll('.nav-raid-toggle').forEach(function (el) {
-    el.addEventListener('click', function () {
-      this.closest('.nav-raid-group').classList.toggle('expanded');
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-expanded', 'false');
+    function toggleRaid() {
+      var group = el.closest('.nav-raid-group');
+      var isExpanded = group.classList.toggle('expanded');
+      el.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+    }
+    el.addEventListener('click', toggleRaid);
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleRaid();
+      }
     });
   });
 
@@ -401,6 +433,7 @@
     if (!hrefAttr) return;
     var linkPath = hrefAttr.split('#')[0]
       .replace(/^\.\.\//, '/')
+      .replace(/^\.\//, '/')
       .replace(/^[^\/]/, '/$&')
       .replace(/\/index\.html$|\/index$|\.html$/, '')
       .replace(/\/$/, '') || '/';
@@ -408,9 +441,17 @@
     if (linkPath === currentPath) {
       link.classList.add('nav-current');
       var section = link.closest('.nav-section');
-      if (section) section.classList.add('expanded');
+      if (section) {
+        section.classList.add('expanded');
+        var secToggle = section.querySelector('.nav-section-toggle');
+        if (secToggle) secToggle.setAttribute('aria-expanded', 'true');
+      }
       var raidGroup = link.closest('.nav-raid-group');
-      if (raidGroup) raidGroup.classList.add('expanded');
+      if (raidGroup) {
+        raidGroup.classList.add('expanded');
+        var raidToggle = raidGroup.querySelector('.nav-raid-toggle');
+        if (raidToggle) raidToggle.setAttribute('aria-expanded', 'true');
+      }
     }
   });
 })();

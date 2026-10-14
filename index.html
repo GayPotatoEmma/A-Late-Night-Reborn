@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A Late Night Reborn</title>
     <link rel="icon" href="assets/alnr%20logo.png" type="image/png" />
+    <meta name="description" content="A Late Night Reborn's guides for Field Operation Raids, covering how our community clears each section." />
     <meta property="og:title" content="A Late Night Reborn" />
     <meta property="og:description" content="A Late Night Reborn's guides for Field Operation Raids, covering how our community clears each section." />
     <meta property="og:image" content="https://alatenightreborn.com/assets/alnr%20logo.png" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="A Late Night Reborn" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Quicksand:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
     <link rel="stylesheet" href="css/style.css" />
     <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
 </head>
@@ -24,7 +28,7 @@
         <header class="site-header">
             <div class="header-inner">
                 <a href="/" class="header-logo-link">
-                    <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+                    <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" width="1024" height="1024" />
                 </a>
                 <a href="/">
                     <span class="header-site-name">A Late Night Reborn</span>
@@ -53,16 +57,16 @@
             </section>
 
             <!-- ── Sleek Raid Tab Navigation ── -->
-            <div class="raid-tab-bar">
-                <button class="raid-tab active" data-raid="ftb">
+            <div class="raid-tab-bar" role="tablist" aria-label="Raid Guides">
+                <button class="raid-tab active" data-raid="ftb" role="tab" aria-selected="true" aria-controls="ftb-content">
                     <span class="tab-dot blood"></span>
                     <span class="tab-title">Forked Tower: Blood</span>
                 </button>
-                <button class="raid-tab" data-raid="ftm">
+                <button class="raid-tab" data-raid="ftm" role="tab" aria-selected="false" aria-controls="ftm-content">
                     <span class="tab-dot magic"></span>
                     <span class="tab-title">Forked Tower: Magic (Extreme)</span>
                 </button>
-                <button class="raid-tab" data-raid="cod">
+                <button class="raid-tab" data-raid="cod" role="tab" aria-selected="false" aria-controls="cod-content">
                     <span class="tab-dot chaotic"></span>
                     <span class="tab-title">Cloud of Darkness (Chaotic)</span>
                 </button>
@@ -266,8 +270,12 @@
                 var targetContent = document.getElementById(raidId + '-content');
                 if (!targetBtn || !targetContent) return;
 
-                tabs.forEach(function (b) { b.classList.remove('active'); });
+                tabs.forEach(function (b) {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
                 targetBtn.classList.add('active');
+                targetBtn.setAttribute('aria-selected', 'true');
 
                 document.querySelectorAll('.raid-content').forEach(function (c) { c.hidden = true; });
                 targetContent.hidden = false;

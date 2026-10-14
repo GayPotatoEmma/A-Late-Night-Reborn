@@ -91,6 +91,11 @@
         const state = generateOAuthState();
         try {
             sessionStorage.setItem('alnr_oauth_state', state);
+            const params = new URLSearchParams(window.location.search);
+            const runToSave = (selectedEvent && selectedEvent.id) || params.get('event') || params.get('run');
+            if (runToSave) {
+                sessionStorage.setItem('alnr_oauth_run', runToSave);
+            }
         } catch (e) {
             console.warn('[Signups Auth] Could not store oauth state:', e);
         }
@@ -117,6 +122,7 @@
         localStorage.removeItem('alnr_session_token');
         try {
             sessionStorage.removeItem('alnr_oauth_state');
+            sessionStorage.removeItem('alnr_oauth_run');
         } catch (e) {}
         currentUser = null;
         mySignupsList = [];
@@ -161,8 +167,14 @@
         const state = params.get('state');
         if (!code) return;
 
-        // Clean query params from browser URL bar immediately
-        const cleanUrl = window.location.origin + window.location.pathname + (params.get('run') ? `?run=${params.get('run')}` : '');
+        // Clean query params from browser URL bar immediately while preserving run/event if present
+        let preservedRun = params.get('event') || params.get('run');
+        try {
+            if (!preservedRun) {
+                preservedRun = sessionStorage.getItem('alnr_oauth_run');
+            }
+        } catch (e) {}
+        const cleanUrl = window.location.origin + window.location.pathname + (preservedRun ? `?run=${encodeURIComponent(preservedRun)}` : '');
         window.history.replaceState({}, document.title, cleanUrl);
 
         // Verify OAuth state to prevent Login CSRF
@@ -521,7 +533,7 @@
                 : `<span class="run-card-count"><span class="material-symbols-outlined" style="font-size: 1rem;">group</span> ${ev.signup_count} signed up</span>`;
 
             return `
-                <div class="run-select-card ${isSelected ? 'selected' : ''} ${ev.is_closed ? 'is-closed' : ''}" data-run-id="${ev.id}" title="${ev.is_closed ? 'Signups for this run are closed' : ''}">
+                <div class="run-select-card ${isSelected ? 'selected' : ''} ${ev.is_closed ? 'is-closed' : ''}" data-run-id="${ev.id}" role="button" tabindex="${ev.is_closed ? '-1' : '0'}" aria-disabled="${ev.is_closed ? 'true' : 'false'}" aria-pressed="${isSelected ? 'true' : 'false'}" title="${ev.is_closed ? 'Signups for this run are closed' : ''}">
                     <div class="run-card-top">
                         <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
                         ${statusBadge}
@@ -535,9 +547,9 @@
             `;
         }).join('');
 
-        // Attach click handlers
+        // Attach click & keyboard handlers
         grid.querySelectorAll('.run-select-card').forEach(card => {
-            card.onclick = () => {
+            function activateCard() {
                 const runId = card.getAttribute('data-run-id');
                 const target = allEvents.find(e => e.id === runId);
                 if (!target) return;
@@ -547,6 +559,13 @@
                 }
                 hideRunsSelectionAlert();
                 selectRun(target);
+            }
+            card.onclick = activateCard;
+            card.onkeydown = (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    activateCard();
+                }
             };
         });
     }
@@ -575,7 +594,14 @@
 
     function checkUrlPreselection() {
         const params = new URLSearchParams(window.location.search);
-        const runId = params.get('event') || params.get('run');
+        let runId = params.get('event') || params.get('run');
+        try {
+            if (!runId) {
+                runId = sessionStorage.getItem('alnr_oauth_run');
+            }
+            sessionStorage.removeItem('alnr_oauth_run');
+        } catch (e) {}
+
         if (runId && allEvents.length > 0) {
             const target = allEvents.find(e => e.id === runId);
             if (target) {
@@ -597,6 +623,17 @@
     }
 
     // ── Dynamic Form Rendering ───────────────────────────────────────────────────
+
+    function setChipSelected(btn, state) {
+        btn.classList.toggle('selected', state);
+        btn.setAttribute('aria-pressed', state ? 'true' : 'false');
+    }
+
+    function toggleChipSelected(btn) {
+        const state = btn.classList.toggle('selected');
+        btn.setAttribute('aria-pressed', state ? 'true' : 'false');
+        return state;
+    }
 
     function renderFormInputs() {
         if (!selectedEvent) return;
@@ -638,21 +675,21 @@
         if (!container) return;
 
         container.innerHTML = ALL_ROLES.map(r => `
-            <button type="button" class="chip-btn ${r.class}" data-role="${r.id}">
+            <button type="button" class="chip-btn ${r.class}" data-role="${r.id}" aria-pressed="false">
                 ${r.label}
             </button>
         `).join('');
 
         container.querySelectorAll('.chip-btn').forEach(btn => {
             btn.onclick = () => {
-                container.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
+                container.querySelectorAll('.chip-btn').forEach(b => setChipSelected(b, false));
+                setChipSelected(btn, true);
             };
         });
 
         // Default select 'Any'
         const defaultBtn = container.querySelector('[data-role="Any"]');
-        if (defaultBtn) defaultBtn.classList.add('selected');
+        if (defaultBtn) setChipSelected(defaultBtn, true);
     }
 
     function renderPlayableRoles() {
@@ -660,7 +697,7 @@
         if (!container) return;
 
         container.innerHTML = ALL_ROLES.map(r => `
-            <button type="button" class="chip-btn ${r.class}" data-role="${r.id}">
+            <button type="button" class="chip-btn ${r.class}" data-role="${r.id}" aria-pressed="false">
                 ${r.label}
             </button>
         `).join('');
@@ -670,12 +707,12 @@
                 const roleId = btn.getAttribute('data-role');
                 if (roleId === 'Any') {
                     // Toggle Any
-                    const isSelected = btn.classList.toggle('selected');
+                    const isSelected = toggleChipSelected(btn);
                     if (isSelected) {
-                        container.querySelectorAll('.chip-btn:not([data-role="Any"])').forEach(b => b.classList.add('selected'));
+                        container.querySelectorAll('.chip-btn:not([data-role="Any"])').forEach(b => setChipSelected(b, true));
                     }
                 } else {
-                    btn.classList.toggle('selected');
+                    toggleChipSelected(btn);
                 }
                 syncChaoticRoleVisibility();
             };
@@ -722,7 +759,7 @@
         }
 
         container.innerHTML = options.map(o => `
-            <button type="button" class="chip-btn ${o.value === 'Any' ? 'selected' : ''}" data-party="${escapeHtml(o.value)}">
+            <button type="button" class="chip-btn ${o.value === 'Any' ? 'selected' : ''}" data-party="${escapeHtml(o.value)}" aria-pressed="${o.value === 'Any' ? 'true' : 'false'}">
                 ${escapeHtml(o.label)}
             </button>
         `).join('');
@@ -735,16 +772,16 @@
 
                 if (partyVal === 'Any') {
                     // Selecting Any Party deselects all specific party chips
-                    anyBtn.classList.add('selected');
-                    specificBtns.forEach(b => b.classList.remove('selected'));
+                    if (anyBtn) setChipSelected(anyBtn, true);
+                    specificBtns.forEach(b => setChipSelected(b, false));
                 } else {
-                    btn.classList.toggle('selected');
+                    toggleChipSelected(btn);
                     const anySpecificSelected = specificBtns.some(b => b.classList.contains('selected'));
                     if (anySpecificSelected) {
-                        if (anyBtn) anyBtn.classList.remove('selected');
+                        if (anyBtn) setChipSelected(anyBtn, false);
                     } else {
                         // If all specific chips were deselected, fall back to Any Party
-                        if (anyBtn) anyBtn.classList.add('selected');
+                        if (anyBtn) setChipSelected(anyBtn, true);
                     }
                 }
             };
@@ -801,11 +838,11 @@
                     </div>
                     <div class="form-hint" style="margin-bottom: 0.75rem;">Select the phantom jobs you have previously played in Forked Tower and feel experienced on.</div>
                     <div class="quick-toggle-actions">
-                        <button type="button" class="btn-mini-toggle" onclick="toggleAllJobs('phantom_exp', true)">Select All</button>
-                        <button type="button" class="btn-mini-toggle" onclick="toggleAllJobs('phantom_exp', false)">Clear</button>
+                        <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-exp" data-toggle-state="true">Select All</button>
+                        <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-exp" data-toggle-state="false">Clear</button>
                     </div>
                     <div class="chips-group" id="chips-phantom-exp">
-                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}">${escapeHtml(j)}</button>`).join('')}
+                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
                     </div>
                 </div>
 
@@ -815,11 +852,11 @@
                     </div>
                     <div class="form-hint" style="margin-bottom: 0.75rem;">You are required to have at least 6 phantom jobs leveled.</div>
                     <div class="quick-toggle-actions">
-                        <button type="button" class="btn-mini-toggle" onclick="toggleAllJobs('phantom_lvl', true)">Select All</button>
-                        <button type="button" class="btn-mini-toggle" onclick="toggleAllJobs('phantom_lvl', false)">Clear</button>
+                        <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-lvl" data-toggle-state="true">Select All</button>
+                        <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-lvl" data-toggle-state="false">Clear</button>
                     </div>
                     <div class="chips-group" id="chips-phantom-lvl">
-                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}">${escapeHtml(j)}</button>`).join('')}
+                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
                     </div>
                 </div>
             `;
@@ -841,11 +878,11 @@
                         <span class="material-symbols-outlined">magic_button</span> Logos Actions Experience
                     </div>
                     <div class="chips-group" id="chips-logos-exp">
-                        ${logosActions.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}">${escapeHtml(a)}</button>`).join('')}
+                        ${logosActions.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}" aria-pressed="false">${escapeHtml(a)}</button>`).join('')}
                     </div>
                     
                     <div class="form-group" style="margin-top: 1.25rem; margin-bottom: 0;">
-                        <label class="form-label">Would you like to try any new special Logos Actions?</label>
+                        <label class="form-label" for="input-logos-try">Would you like to try any new special Logos Actions?</label>
                         <select id="input-logos-try" class="input-select" style="max-width: 200px;">
                             <option value="No">No</option>
                             <option value="Yes">Yes</option>
@@ -854,7 +891,7 @@
                 </div>
             `;
             document.querySelectorAll('#chips-logos-exp .chip-btn').forEach(b => {
-                b.onclick = () => b.classList.toggle('selected');
+                b.onclick = () => toggleChipSelected(b);
             });
         }
     }
@@ -884,11 +921,11 @@
             <div class="dynamic-jobs-box" data-role-group="${groupId}">
                 <div class="jobs-role-title">${escapeHtml(title)}</div>
                 <div class="quick-toggle-actions">
-                    <button type="button" class="btn-mini-toggle" onclick="toggleAllJobGroup('${groupId}', true)">Select All</button>
-                    <button type="button" class="btn-mini-toggle" onclick="toggleAllJobGroup('${groupId}', false)">Clear</button>
+                    <button type="button" class="btn-mini-toggle" data-toggle-group="${groupId}" data-toggle-state="true">Select All</button>
+                    <button type="button" class="btn-mini-toggle" data-toggle-group="${groupId}" data-toggle-state="false">Clear</button>
                 </div>
                 <div class="chips-group" data-group="${groupId}">
-                    ${jobs.map(j => `<button type="button" class="chip-btn ${roleClass}" data-job="${escapeHtml(j)}">${escapeHtml(j)}</button>`).join('')}
+                    ${jobs.map(j => `<button type="button" class="chip-btn ${roleClass}" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
                 </div>
             </div>
         `;
@@ -896,28 +933,33 @@
 
     function attachJobChipHandlers() {
         document.querySelectorAll('.dynamic-jobs-box .chips-group .chip-btn').forEach(btn => {
-            btn.onclick = () => btn.classList.toggle('selected');
+            btn.onclick = () => toggleChipSelected(btn);
+        });
+        document.querySelectorAll('.dynamic-jobs-box .btn-mini-toggle[data-toggle-group]').forEach(btn => {
+            btn.onclick = () => {
+                const groupId = btn.getAttribute('data-toggle-group');
+                const state = btn.getAttribute('data-toggle-state') === 'true';
+                document.querySelectorAll(`.chips-group[data-group="${groupId}"] .chip-btn`).forEach(b => {
+                    setChipSelected(b, state);
+                });
+            };
         });
     }
 
     function attachPhantomChipHandlers() {
         document.querySelectorAll('#chips-phantom-exp .chip-btn, #chips-phantom-lvl .chip-btn').forEach(btn => {
-            btn.onclick = () => btn.classList.toggle('selected');
+            btn.onclick = () => toggleChipSelected(btn);
+        });
+        document.querySelectorAll('.dynamic-jobs-box .btn-mini-toggle[data-toggle-target]').forEach(btn => {
+            btn.onclick = () => {
+                const targetId = btn.getAttribute('data-toggle-target');
+                const state = btn.getAttribute('data-toggle-state') === 'true';
+                document.querySelectorAll(`#${targetId} .chip-btn`).forEach(b => {
+                    setChipSelected(b, state);
+                });
+            };
         });
     }
-
-    window.toggleAllJobGroup = function (groupId, state) {
-        document.querySelectorAll(`.chips-group[data-group="${groupId}"] .chip-btn`).forEach(b => {
-            b.classList.toggle('selected', state);
-        });
-    };
-
-    window.toggleAllJobs = function (type, state) {
-        const id = type === 'phantom_exp' ? 'chips-phantom-exp' : 'chips-phantom-lvl';
-        document.querySelectorAll(`#${id} .chip-btn`).forEach(b => {
-            b.classList.toggle('selected', state);
-        });
-    };
 
     // ── Form Submission ──────────────────────────────────────────────────────────
 

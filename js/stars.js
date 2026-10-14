@@ -254,16 +254,27 @@
     }
   }
 
+  var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  var resizeTimer = null;
+
   function isLiteTheme() {
-    var theme = document.documentElement.getAttribute('data-theme') || 'dark';
-    return theme.indexOf('lite') !== -1;
+    return currentTheme.indexOf('lite') !== -1;
+  }
+
+  function resizeCanvasOnly() {
+    var dpr = window.devicePixelRatio || 1;
+    H = window.innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.scale(dpr, dpr);
   }
 
   function drawStaticFrame() {
     ctx.clearRect(0, 0, W, H);
     if (isLiteTheme()) return;
-    var theme = document.documentElement.getAttribute('data-theme') || 'dark';
-    var isLight = theme.indexOf('light') === 0;
+    var isLight = currentTheme.indexOf('light') === 0;
     if (isLight) {
       drawLightMode();
     } else {
@@ -294,13 +305,28 @@
   }
 
   init();
-  draw();
+  if (isReducedMotion) {
+    drawStaticFrame();
+  } else {
+    draw();
+  }
 
   window.addEventListener('resize', function () {
-    cancelAnimationFrame(raf);
-    init();
-    lastFrameTime = performance.now();
-    draw();
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      cancelAnimationFrame(raf);
+      if (window.innerWidth === W) {
+        resizeCanvasOnly();
+      } else {
+        init();
+      }
+      lastFrameTime = performance.now();
+      if (isReducedMotion) {
+        drawStaticFrame();
+      } else {
+        draw();
+      }
+    }, 120);
   });
 
   document.addEventListener('visibilitychange', function () {
@@ -317,6 +343,7 @@
     var themeObserver = new MutationObserver(function (mutations) {
       mutations.forEach(function (m) {
         if (m.attributeName === 'data-theme') {
+          currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
           cancelAnimationFrame(raf);
           if (isLiteTheme()) {
             ctx.clearRect(0, 0, W, H);

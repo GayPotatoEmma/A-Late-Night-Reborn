@@ -11,9 +11,11 @@
     <meta property="og:image" content="https://alatenightreborn.com/assets/alnr%20logo.png" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="A Late Night Reborn" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Quicksand:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/signups.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
     <style>
         .privacy-section {
@@ -96,7 +98,7 @@
         <header class="site-header">
             <div class="header-inner">
                 <a href="/" class="header-logo-link">
-                    <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" />
+                    <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" width="1024" height="1024" />
                 </a>
                 <a href="/">
                     <span class="header-site-name">A Late Night Reborn</span>
@@ -104,6 +106,7 @@
                 <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="header-discord">Discord</a>
 
                 <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
             </div>
         </header>
 
@@ -307,7 +310,7 @@
 
         <!-- ── Footer ── -->
         <footer class="site-footer">
-            <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide &middot; <a href="privacy.html" class="footer-privacy-link">Privacy Notice</a> &middot; <a href="privacy.html#contact-section" class="footer-privacy-link">Contact</a></p>
+            <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide &middot; <a href="privacy.html" class="footer-privacy-link">Privacy Notice</a> &middot; <a href="contact.html" class="footer-privacy-link">Contact</a></p>
         </footer>
 
     </div>
@@ -315,6 +318,7 @@
     <!-- Scripts -->
     <script src="js/theme.js"></script>
     <script src="js/stars.js"></script>
+    <script src="js/nav.js"></script>
     <script src="js/contact.js"></script>
 </body>
 </html>

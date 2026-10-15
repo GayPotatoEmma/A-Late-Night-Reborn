@@ -1179,6 +1179,7 @@
 
                         const rawName = (matchedEvent && matchedEvent.name) || s.run_name || s.tab_name;
                         const runTitle = cleanRunTitle(rawName);
+                        const runTimeStr = formatRunDateTime(matchedEvent || s);
 
                         let typeBadgeClass = 'ftb';
                         let badgeLabel = 'FT:B';
@@ -1201,6 +1202,11 @@
                                         <strong style="color: var(--text-primary); font-weight: 700;">${escapeHtml(runTitle)}</strong>
                                         <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 4px;">Character: ${escapeHtml(s.character_name)}</span>
                                     </div>
+                                    ${runTimeStr ? `
+                                    <div style="display: flex; align-items: center; gap: 5px; font-size: 0.83rem; color: var(--text-secondary); margin-top: 4px;">
+                                        <span class="material-symbols-outlined" style="font-size: 0.95rem; color: var(--accent-purple);">schedule</span>
+                                        <span>${escapeHtml(runTimeStr)}</span>
+                                    </div>` : ''}
                                     <div style="font-size: 0.82rem; color: var(--accent-teal); margin-top: 3px;">
                                         Preferred: ${escapeHtml(s.preferred_role || 'Any')} | Party: ${escapeHtml(s.party_preference || 'Any')}
                                     </div>
@@ -1262,7 +1268,7 @@
         else if (contentType === 'BA') { badgeClass = 'ba'; badgeLabel = 'BA'; }
 
         runTitle.textContent = cleanName;
-        const eventTimeStr = matchedEvent ? formatRunDateTime(matchedEvent) : (signup.tab_name || '');
+        const eventTimeStr = formatRunDateTime(matchedEvent || signup) || (signup.tab_name || '');
         runSubtitle.innerHTML = `<span class="run-type-badge ${badgeClass}">${badgeLabel}</span> <span>${escapeHtml(eventTimeStr)}</span>`;
 
         let contentSpecificHtml = '';

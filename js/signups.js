@@ -688,11 +688,18 @@
                 const roleId = btn.getAttribute('data-role');
                 const playableContainer = document.getElementById('playable-roles-chips');
                 if (playableContainer && roleId) {
-                    if (roleId === 'Any') {
-                        playableContainer.querySelectorAll('.chip-btn').forEach(b => setChipSelected(b, true));
-                    } else {
+                    // Clear any playable role that was only active because of the previous preferred role
+                    playableContainer.querySelectorAll('.chip-btn[data-auto-preferred="true"]').forEach(b => {
+                        b.removeAttribute('data-auto-preferred');
+                        setChipSelected(b, false);
+                    });
+
+                    if (roleId !== 'Any') {
                         const matchBtn = playableContainer.querySelector(`.chip-btn[data-role="${roleId}"]`);
-                        if (matchBtn) setChipSelected(matchBtn, true);
+                        if (matchBtn && !matchBtn.classList.contains('selected')) {
+                            setChipSelected(matchBtn, true);
+                            matchBtn.setAttribute('data-auto-preferred', 'true');
+                        }
                     }
                     syncChaoticRoleVisibility();
                 }
@@ -717,11 +724,15 @@
         container.querySelectorAll('.chip-btn').forEach(btn => {
             btn.onclick = () => {
                 const roleId = btn.getAttribute('data-role');
+                btn.removeAttribute('data-auto-preferred');
                 if (roleId === 'Any') {
                     // Toggle Any
                     const isSelected = toggleChipSelected(btn);
                     if (isSelected) {
-                        container.querySelectorAll('.chip-btn:not([data-role="Any"])').forEach(b => setChipSelected(b, true));
+                        container.querySelectorAll('.chip-btn:not([data-role="Any"])').forEach(b => {
+                            b.removeAttribute('data-auto-preferred');
+                            setChipSelected(b, true);
+                        });
                     }
                 } else {
                     toggleChipSelected(btn);

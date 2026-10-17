@@ -684,6 +684,18 @@
             btn.onclick = () => {
                 container.querySelectorAll('.chip-btn').forEach(b => setChipSelected(b, false));
                 setChipSelected(btn, true);
+
+                const roleId = btn.getAttribute('data-role');
+                const playableContainer = document.getElementById('playable-roles-chips');
+                if (playableContainer && roleId) {
+                    if (roleId === 'Any') {
+                        playableContainer.querySelectorAll('.chip-btn').forEach(b => setChipSelected(b, true));
+                    } else {
+                        const matchBtn = playableContainer.querySelector(`.chip-btn[data-role="${roleId}"]`);
+                        if (matchBtn) setChipSelected(matchBtn, true);
+                    }
+                    syncChaoticRoleVisibility();
+                }
             };
         });
 

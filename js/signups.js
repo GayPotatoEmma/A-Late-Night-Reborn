@@ -654,6 +654,18 @@
             discordInput.disabled = false;
         }
 
+        // Reset Friend Group and Additional Notes
+        const friendGroupInput = document.getElementById('input-friend-group');
+        const notesInput = document.getElementById('input-notes');
+        if (friendGroupInput) {
+            friendGroupInput.value = '';
+            validateFriendGroup();
+        }
+        if (notesInput) {
+            notesInput.value = '';
+            validateNotes();
+        }
+
         // Render Preferred Role Chips
         renderPreferredRoles();
 

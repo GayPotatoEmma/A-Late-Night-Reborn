@@ -528,12 +528,19 @@
                 badgeLabel = 'BA';
             }
 
-            const statusBadge = ev.is_closed
-                ? `<span class="run-closed-badge"><span class="material-symbols-outlined" style="font-size: 0.95rem;">lock</span> Closed (${ev.signup_count})</span>`
-                : `<span class="run-card-count"><span class="material-symbols-outlined" style="font-size: 1rem;">group</span> ${ev.signup_count} signed up</span>`;
+            const isDisabled = Boolean(ev.is_closed || ev.is_cancelled);
+            const statusBadge = ev.is_cancelled
+                ? `<span class="run-cancelled-badge"><span class="material-symbols-outlined" style="font-size: 0.95rem;">cancel</span> Cancelled</span>`
+                : ev.is_closed
+                    ? `<span class="run-closed-badge"><span class="material-symbols-outlined" style="font-size: 0.95rem;">lock</span> Closed (${ev.signup_count})</span>`
+                    : `<span class="run-card-count"><span class="material-symbols-outlined" style="font-size: 1rem;">group</span> ${ev.signup_count} signed up</span>`;
+
+            const cardTitleAttr = ev.is_cancelled
+                ? 'This run has been cancelled'
+                : (ev.is_closed ? 'Signups for this run are closed' : '');
 
             return `
-                <div class="run-select-card ${isSelected ? 'selected' : ''} ${ev.is_closed ? 'is-closed' : ''}" data-run-id="${ev.id}" role="button" tabindex="${ev.is_closed ? '-1' : '0'}" aria-disabled="${ev.is_closed ? 'true' : 'false'}" aria-pressed="${isSelected ? 'true' : 'false'}" title="${ev.is_closed ? 'Signups for this run are closed' : ''}">
+                <div class="run-select-card ${isSelected ? 'selected' : ''} ${isDisabled ? 'is-closed' : ''} ${ev.is_cancelled ? 'is-cancelled' : ''}" data-run-id="${ev.id}" role="button" tabindex="${isDisabled ? '-1' : '0'}" aria-disabled="${isDisabled ? 'true' : 'false'}" aria-pressed="${isSelected ? 'true' : 'false'}" title="${cardTitleAttr}">
                     <div class="run-card-top">
                         <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
                         ${statusBadge}
@@ -553,6 +560,10 @@
                 const runId = card.getAttribute('data-run-id');
                 const target = allEvents.find(e => e.id === runId);
                 if (!target) return;
+                if (target.is_cancelled) {
+                    showRunsSelectionAlert(`🚫 "${cleanRunTitle(target.name)}" has been cancelled.`, 'error');
+                    return;
+                }
                 if (target.is_closed) {
                     showRunsSelectionAlert(`🔒 Signups for "${cleanRunTitle(target.name)}" have been closed by the hosts.`, 'error');
                     return;
@@ -571,6 +582,10 @@
     }
 
     function selectRun(ev) {
+        if (ev.is_cancelled) {
+            showRunsSelectionAlert(`🚫 "${cleanRunTitle(ev.name)}" has been cancelled.`, 'error');
+            return;
+        }
         if (ev.is_closed) {
             showRunsSelectionAlert(`🔒 Signups for "${cleanRunTitle(ev.name)}" are closed.`, 'error');
             return;
@@ -605,7 +620,9 @@
         if (runId && allEvents.length > 0) {
             const target = allEvents.find(e => e.id === runId);
             if (target) {
-                if (target.is_closed) {
+                if (target.is_cancelled) {
+                    showRunsSelectionAlert(`🚫 "${cleanRunTitle(target.name)}" has been cancelled.`, 'error');
+                } else if (target.is_closed) {
                     showRunsSelectionAlert(`🔒 Signups for "${cleanRunTitle(target.name)}" have been closed by the hosts.`, 'error');
                 } else {
                     hideRunsSelectionAlert();
@@ -1215,6 +1232,7 @@
                         const rawName = (matchedEvent && matchedEvent.name) || s.run_name || s.tab_name;
                         const runTitle = cleanRunTitle(rawName);
                         const runTimeStr = formatRunDateTime(matchedEvent || s);
+                        const isCancelled = Boolean((matchedEvent && matchedEvent.is_cancelled) || s.is_cancelled);
 
                         let typeBadgeClass = 'ftb';
                         let badgeLabel = 'FT:B';
@@ -1234,7 +1252,8 @@
                                 <div class="my-signup-item-main">
                                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                                         <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
-                                        <strong style="color: var(--text-primary); font-weight: 700;">${escapeHtml(runTitle)}</strong>
+                                        <strong style="color: var(--text-primary); font-weight: 700; ${isCancelled ? 'text-decoration: line-through; opacity: 0.75;' : ''}">${escapeHtml(runTitle)}</strong>
+                                        ${isCancelled ? `<span class="run-cancelled-badge"><span class="material-symbols-outlined" style="font-size: 0.9rem;">cancel</span> Cancelled</span>` : ''}
                                         <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 4px;">Character: ${escapeHtml(s.character_name)}</span>
                                     </div>
                                     ${runTimeStr ? `

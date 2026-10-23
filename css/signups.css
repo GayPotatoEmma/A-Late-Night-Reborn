@@ -980,12 +980,12 @@
 
 .modal-box-warning {
   max-width: 480px;
-  border-color: rgba(245, 158, 11, 0.4);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 30px rgba(245, 158, 11, 0.15);
+  border-color: rgba(239, 68, 68, 0.45);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 30px rgba(239, 68, 68, 0.18);
 }
 
 .modal-header-icon.warning-icon {
-  color: #f59e0b;
+  color: #ff6b6b;
 }
 
 .modal-warning-text {
@@ -993,14 +993,14 @@
   font-size: 0.96rem;
   line-height: 1.6;
   color: var(--text-primary);
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
   border-radius: 12px;
   padding: 1rem 1.15rem;
 }
 
 .modal-warning-text strong {
-  color: #fbbf24;
+  color: #ff6b6b;
 }
 
 .modal-warning-subtext {
@@ -1019,18 +1019,18 @@
   font-size: 0.88rem;
   font-weight: 700;
   border-radius: 10px;
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   border: none;
-  color: #0a0b1c;
+  color: #ffffff;
   cursor: pointer;
   transition: all var(--transition);
-  box-shadow: 0 3px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 3px 12px rgba(239, 68, 68, 0.35);
 }
 
 .modal-btn-confirm-warning:hover {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
   transform: translateY(-1px);
-  box-shadow: 0 5px 16px rgba(245, 158, 11, 0.45);
+  box-shadow: 0 5px 16px rgba(239, 68, 68, 0.5);
 }
 
 /* =====================================================
@@ -1413,26 +1413,30 @@
 }
 
 [data-theme^="light"] .modal-box-warning {
-  border-color: rgba(217, 119, 6, 0.35);
+  border-color: rgba(220, 38, 38, 0.4);
+}
+
+[data-theme^="light"] .modal-header-icon.warning-icon {
+  color: #dc2626;
 }
 
 [data-theme^="light"] .modal-warning-text {
-  background: rgba(245, 158, 11, 0.08);
-  border-color: rgba(217, 119, 6, 0.3);
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(220, 38, 38, 0.35);
   color: #221e2a;
 }
 
 [data-theme^="light"] .modal-warning-text strong {
-  color: #b45309;
+  color: #dc2626;
 }
 
 [data-theme^="light"] .modal-btn-confirm-warning {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   color: #ffffff;
 }
 
 [data-theme^="light"] .modal-btn-confirm-warning:hover {
-  background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
 }
 
 [data-theme^="light"] .signup-connect-box {

@@ -249,6 +249,34 @@
         </div>
     </div>
 
+    <!-- ── Phantom Job Experience Warning Modal Popup ── -->
+    <div class="modal-backdrop" id="phantom-exp-warning-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="phantom-warning-title">
+        <div class="modal-box modal-box-warning" id="phantom-exp-warning-box">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="material-symbols-outlined modal-header-icon warning-icon">warning</span>
+                    <div>
+                        <h3 class="modal-title" id="phantom-warning-title">Phantom Job Experience Warning</h3>
+                        <div class="modal-subtitle">Please confirm before selecting all</div>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" id="phantom-warning-close-btn" aria-label="Close warning modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-warning-text">
+                    You are selecting that you have experience on <strong>every Phantom Job</strong> in Forked Tower. If this is found to be inaccurate, you may be removed from future runs.
+                </p>
+                <p class="modal-warning-subtext">
+                    Please only select the Phantom Jobs you have previously played in Forked Tower and feel comfortable performing on.
+                </p>
+            </div>
+            <div class="modal-footer modal-footer-end">
+                <button type="button" class="modal-btn-dismiss" id="phantom-warning-cancel-btn">Cancel</button>
+                <button type="button" class="modal-btn-confirm-warning" id="phantom-warning-confirm-btn">I Understand, Select All</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/theme.js"></script>
     <script src="js/stars.js"></script>

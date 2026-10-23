@@ -998,6 +998,27 @@
         });
     }
 
+    function openPhantomExpWarningModal() {
+        const backdrop = document.getElementById('phantom-exp-warning-backdrop');
+        if (!backdrop) return;
+        backdrop.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePhantomExpWarningModal() {
+        const backdrop = document.getElementById('phantom-exp-warning-backdrop');
+        if (!backdrop) return;
+        backdrop.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function confirmPhantomExpSelectAll() {
+        document.querySelectorAll('#chips-phantom-exp .chip-btn').forEach(b => {
+            setChipSelected(b, true);
+        });
+        closePhantomExpWarningModal();
+    }
+
     function attachPhantomChipHandlers() {
         document.querySelectorAll('#chips-phantom-exp .chip-btn, #chips-phantom-lvl .chip-btn').forEach(btn => {
             btn.onclick = () => toggleChipSelected(btn);
@@ -1006,6 +1027,10 @@
             btn.onclick = () => {
                 const targetId = btn.getAttribute('data-toggle-target');
                 const state = btn.getAttribute('data-toggle-state') === 'true';
+                if (targetId === 'chips-phantom-exp' && state) {
+                    openPhantomExpWarningModal();
+                    return;
+                }
                 document.querySelectorAll(`#${targetId} .chip-btn`).forEach(b => {
                     setChipSelected(b, state);
                 });
@@ -1618,8 +1643,26 @@
                 if (e.target === modalBackdrop) closeApplicationModal();
             };
         }
+
+        // 7. Phantom Job Experience warning modal listeners
+        const phantomWarningBackdrop = document.getElementById('phantom-exp-warning-backdrop');
+        const phantomWarningCloseBtn = document.getElementById('phantom-warning-close-btn');
+        const phantomWarningCancelBtn = document.getElementById('phantom-warning-cancel-btn');
+        const phantomWarningConfirmBtn = document.getElementById('phantom-warning-confirm-btn');
+        if (phantomWarningCloseBtn) phantomWarningCloseBtn.onclick = closePhantomExpWarningModal;
+        if (phantomWarningCancelBtn) phantomWarningCancelBtn.onclick = closePhantomExpWarningModal;
+        if (phantomWarningConfirmBtn) phantomWarningConfirmBtn.onclick = confirmPhantomExpSelectAll;
+        if (phantomWarningBackdrop) {
+            phantomWarningBackdrop.onclick = (e) => {
+                if (e.target === phantomWarningBackdrop) closePhantomExpWarningModal();
+            };
+        }
+
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeApplicationModal();
+            if (e.key === 'Escape') {
+                closeApplicationModal();
+                closePhantomExpWarningModal();
+            }
         });
     });
 })();

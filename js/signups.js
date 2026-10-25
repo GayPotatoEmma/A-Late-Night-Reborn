@@ -783,7 +783,9 @@
         if (!select) return;
 
         const options = PROG_OPTIONS[contentType] || PROG_OPTIONS['Chaotic'];
-        select.innerHTML = options.map(opt => `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`).join('');
+        select.innerHTML = `<option value="" disabled selected>Select your progression point...</option>` +
+            options.map(opt => `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`).join('');
+        select.value = '';
     }
 
     function renderPartyPreferences(contentType) {
@@ -1096,9 +1098,11 @@
             return;
         }
 
-        const progPoint = document.getElementById('input-prog-point').value;
+        const progSelect = document.getElementById('input-prog-point');
+        const progPoint = progSelect ? progSelect.value : '';
         if (!progPoint) {
             showStatusAlert('Please select your furthest progression point.', 'error');
+            if (progSelect) progSelect.focus();
             return;
         }
 

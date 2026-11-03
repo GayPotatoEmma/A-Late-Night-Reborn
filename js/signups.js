@@ -974,7 +974,7 @@
                 'Rend Armor (Keep vulnerability debuff up on boss)',
                 'Banish (Keep vulnerability debuff up on Bozjan Phantom)',
                 'Flare Star (Keep DoT up on boss, BLM only)',
-                'Dispel (Remove buff on boss, only Ovni/Soup)',
+                'Dispel (Buff Removal)',
                 'Cure IV (Keep Bravery up on party, Caster only)'
             ];
 

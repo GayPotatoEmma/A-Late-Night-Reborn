@@ -971,17 +971,17 @@
         } else if (contentType === 'DRS') {
             const lostActions = [
                 'Perception (Finding Traps)',
-                'Rend Armor (Keep vulnerability debuff up on boss)',
-                'Banish (Keep vulnerability debuff up on Bozjan Phantom)',
-                'Flare Star (Keep DoT up on boss, BLM only)',
+                'Rend Armor (Vulnerability)',
+                'Banish (Phantom Vulnerability)',
+                'Flare Star (BLM DoT)',
                 'Dispel (Buff Removal)',
-                'Cure IV (Keep Bravery up on party, Caster only)'
+                'Cure IV (Party Bravery)'
             ];
 
             container.innerHTML = `
                 <div class="dynamic-jobs-box">
                     <div class="jobs-role-title">
-                        <span class="material-symbols-outlined">magic_button</span> What special Lost Actions do you have experience with?
+                        <span class="material-symbols-outlined">magic_button</span> Lost Actions Experience
                     </div>
                     <div class="chips-group" id="chips-lost-exp">
                         ${lostActions.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}" aria-pressed="false">${escapeHtml(a)}</button>`).join('')}
@@ -1003,7 +1003,7 @@
                                 <option value="Yes and I'm experienced">Yes and I'm experienced</option>
                                 <option value="Yes but it's my first time">Yes but it's my first time</option>
                             </select>
-                            <div class="form-hint">The duel is an optional encounter that only one person can do. Defeating this will grant you with a significant buff for 2 hours. Do note that being defeated means you will be unable to continue with the rest of the group.</div>
+                            <div class="form-hint">Optional 1v1 encounter. Winning grants a strong 2-hour buff, but dying locks you out of the rest of the run.</div>
                         </div>
                     </div>
                 </div>

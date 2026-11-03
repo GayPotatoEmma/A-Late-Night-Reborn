@@ -67,6 +67,10 @@
         'BA': [
             'No Experience', 'Seen Raiden', 'Seen Absolute Virtue', 'Seen Ozma', 
             'Cleared 1-4 times', 'Cleared 5+ times'
+        ],
+        'DRS': [
+            'No Experience', 'Seen Trinity Seeker', "Seen Queen's Guard",
+            'Seen Trinity Avowed', 'Seen the Queen', 'Cleared 1-4 times', 'Cleared 5+ times'
         ]
     };
 
@@ -408,6 +412,8 @@
 
         if (text.includes('CHAOTIC') || text.includes('[C]')) {
             ct = 'Chaotic';
+        } else if (text.includes('[DRS]') || text.includes('DRS') || text.includes('DELUBRUM')) {
+            ct = 'DRS';
         } else if (text.includes('[FT:M]') || text.includes('FT:M') || text.includes('MAGIC')) {
             ct = 'FT:M';
         } else if (text.includes('[FT:B]') || text.includes('FT:B') || text.includes('BLOOD')) {
@@ -424,6 +430,7 @@
         if (ct === 'FT:B') catKey = 'ftb';
         else if (ct === 'FT:M') catKey = 'ftm';
         else if (ct === 'BA') catKey = 'ba';
+        else if (ct === 'DRS') catKey = 'drs';
         ev.category_key = catKey;
 
         // 3. Detect Day
@@ -449,7 +456,7 @@
         if (!name) return 'Run';
         return name
             .replace(/^\[.*?\]\s*[-–:]?\s*/, '')
-            .replace(/^(Forked Tower:\s*(Blood|Magic)|Cloud of Darkness\s*\(Chaotic\)|Baldesion Arsenal)\s*[-–:]?\s*/i, '')
+            .replace(/^(Forked Tower:\s*(Blood|Magic)|Cloud of Darkness\s*\(Chaotic\)|Baldesion Arsenal|Delubrum Reginae\s*(?:\(Savage\))?)\s*[-–:]?\s*/i, '')
             .trim() || name;
     }
 
@@ -526,6 +533,9 @@
             } else if (ev.content_type === 'BA') {
                 typeBadgeClass = 'ba';
                 badgeLabel = 'BA';
+            } else if (ev.content_type === 'DRS') {
+                typeBadgeClass = 'drs';
+                badgeLabel = 'DRS';
             }
 
             const isDisabled = Boolean(ev.is_closed || ev.is_cancelled);
@@ -800,6 +810,16 @@
                 { value: 'B', label: 'Party B' },
                 { value: 'C', label: 'Party C' }
             ];
+        } else if (contentType === 'DRS') {
+            options = [
+                { value: 'Any', label: 'Any Party' },
+                { value: 'A (Slimes)', label: 'A (Slimes)' },
+                { value: 'B (Slimes)', label: 'B (Slimes)' },
+                { value: 'C (Slimes)', label: 'C (Slimes)' },
+                { value: '1 (Golems)', label: '1 (Golems)' },
+                { value: '2 (Golems)', label: '2 (Golems)' },
+                { value: '3 (Golems)', label: '3 (Golems)' }
+            ];
         } else {
             options = [
                 { value: 'Any', label: 'Any Party' },
@@ -945,6 +965,50 @@
                 </div>
             `;
             document.querySelectorAll('#chips-logos-exp .chip-btn').forEach(b => {
+                b.onclick = () => toggleChipSelected(b);
+            });
+
+        } else if (contentType === 'DRS') {
+            const lostActions = [
+                'Perception (Finding Traps)',
+                'Rend Armor (Keep vulnerability debuff up on boss)',
+                'Banish (Keep vulnerability debuff up on Bozjan Phantom)',
+                'Flare Star (Keep DoT up on boss, BLM only)',
+                'Dispel (Remove buff on boss, only Ovni/Soup)',
+                'Cure IV (Keep Bravery up on party, Caster only)'
+            ];
+
+            container.innerHTML = `
+                <div class="dynamic-jobs-box">
+                    <div class="jobs-role-title">
+                        <span class="material-symbols-outlined">magic_button</span> What special Lost Actions do you have experience with?
+                    </div>
+                    <div class="chips-group" id="chips-lost-exp">
+                        ${lostActions.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}" aria-pressed="false">${escapeHtml(a)}</button>`).join('')}
+                    </div>
+
+                    <div class="form-grid-2" style="margin-top: 1.25rem; margin-bottom: 0;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" for="input-lost-try">Would you like to try any new special Lost Actions?</label>
+                            <select id="input-lost-try" class="input-select">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" for="input-drs-duel">Would you like to do the Duel?</label>
+                            <select id="input-drs-duel" class="input-select">
+                                <option value="No">No</option>
+                                <option value="Yes and I'm experienced">Yes and I'm experienced</option>
+                                <option value="Yes but it's my first time">Yes but it's my first time</option>
+                            </select>
+                            <div class="form-hint">The duel is an optional encounter that only one person can do. Defeating this will grant you with a significant buff for 2 hours. Do note that being defeated means you will be unable to continue with the rest of the group.</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.querySelectorAll('#chips-lost-exp .chip-btn').forEach(b => {
                 b.onclick = () => toggleChipSelected(b);
             });
         }
@@ -1187,6 +1251,10 @@
         } else if (selectedEvent.content_type === 'BA') {
             payload.logos_actions_exp = Array.from(document.querySelectorAll('#chips-logos-exp .chip-btn.selected')).map(b => b.getAttribute('data-action'));
             payload.logos_try_new = document.getElementById('input-logos-try').value;
+        } else if (selectedEvent.content_type === 'DRS') {
+            payload.lost_actions_exp = Array.from(document.querySelectorAll('#chips-lost-exp .chip-btn.selected')).map(b => b.getAttribute('data-action'));
+            payload.lost_try_new = document.getElementById('input-lost-try').value;
+            payload.duel = document.getElementById('input-drs-duel').value;
         }
 
         submitBtn.disabled = true;
@@ -1255,6 +1323,7 @@
                         const contentType = (matchedEvent && matchedEvent.content_type) || s.content_type || (
                             s.tab_name.includes('[FT:M]') ? 'FT:M' :
                             s.tab_name.includes('[C]') ? 'Chaotic' :
+                            s.tab_name.includes('[DRS]') ? 'DRS' :
                             s.tab_name.includes('[BA]') ? 'BA' : 'FT:B'
                         );
 
@@ -1274,6 +1343,9 @@
                         } else if (contentType === 'BA') {
                             typeBadgeClass = 'ba';
                             badgeLabel = 'BA';
+                        } else if (contentType === 'DRS') {
+                            typeBadgeClass = 'drs';
+                            badgeLabel = 'DRS';
                         }
 
                         return `
@@ -1349,6 +1421,7 @@
         if (contentType === 'FT:M') { badgeClass = 'ftm'; badgeLabel = 'FT:M'; }
         else if (contentType === 'Chaotic') { badgeClass = 'chaotic'; badgeLabel = 'Chaotic'; }
         else if (contentType === 'BA') { badgeClass = 'ba'; badgeLabel = 'BA'; }
+        else if (contentType === 'DRS') { badgeClass = 'drs'; badgeLabel = 'DRS'; }
 
         runTitle.textContent = cleanName;
         const eventTimeStr = formatRunDateTime(matchedEvent || signup) || (signup.tab_name || '');
@@ -1414,6 +1487,28 @@
                         <div class="modal-row">
                             <span class="modal-sublabel">Try New Special Logos:</span>
                             <span class="modal-subvalue">${escapeHtml(signup.logos_try_new || 'No')}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (contentType === 'DRS') {
+            contentSpecificHtml = `
+                <div class="modal-section">
+                    <div class="modal-section-title">
+                        <span class="material-symbols-outlined">magic_button</span> Lost Actions & Duel
+                    </div>
+                    <div class="modal-key-val">
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Special Lost Actions Experience:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.lost_actions_exp || 'None specified')}</span>
+                        </div>
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Try New Special Lost Actions:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.lost_try_new || 'No')}</span>
+                        </div>
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Duel Preference:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.duel || 'No')}</span>
                         </div>
                     </div>
                 </div>

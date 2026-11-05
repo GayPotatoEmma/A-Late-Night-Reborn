@@ -3,12 +3,7 @@
 (function () {
     const DISCORD_CLIENT_ID = "1526282207185080411";
 
-    // Auto-detect API URL: use localhost if running locally, otherwise live API
     function getApiUrl() {
-        const host = window.location.hostname;
-        if (host === 'localhost' || host === '127.0.0.1' || host === '') {
-            return 'http://localhost:8000';
-        }
         return 'https://api.alatenightreborn.com';
     }
 

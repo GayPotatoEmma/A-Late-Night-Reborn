@@ -619,12 +619,14 @@
             return `
                 <div class="run-select-card ${isSelected ? 'selected' : ''} ${isDisabled ? 'is-closed' : ''} ${ev.is_cancelled ? 'is-cancelled' : ''}" data-run-id="${ev.id}" role="button" tabindex="${isDisabled ? '-1' : '0'}" aria-disabled="${isDisabled ? 'true' : 'false'}" aria-pressed="${isSelected ? 'true' : 'false'}" title="${cardTitleAttr}">
                     <div class="run-card-top">
-                        <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
+                        <div class="run-card-header-left">
+                            <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
+                            <span class="run-card-title">${escapeHtml(cleanRunTitle(ev.name))}</span>
+                        </div>
                         ${statusBadge}
                     </div>
-                    <div class="run-card-title">${escapeHtml(cleanRunTitle(ev.name))}</div>
                     <div class="run-card-time">
-                        <span class="material-symbols-outlined" style="font-size: 1rem;">schedule</span>
+                        <span class="material-symbols-outlined" style="font-size: 0.95rem;">schedule</span>
                         ${escapeHtml(formatRunDateTime(ev))}
                     </div>
                 </div>
@@ -672,11 +674,17 @@
         selectedEvent = ev;
         renderEventsGrid();
         
-        // Show Form Card
+        // Show Form Card & Hide Desktop Empty Placeholder
+        const emptyPlaceholder = document.getElementById('signup-empty-placeholder');
+        if (emptyPlaceholder) {
+            emptyPlaceholder.style.display = 'none';
+        }
         const formCard = document.getElementById('signup-form-card');
         if (formCard) {
             formCard.style.display = 'block';
-            formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (window.innerWidth < 1024) {
+                formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         document.getElementById('selected-run-banner').textContent = `${ev.content_type} | ${cleanRunTitle(ev.name)} (${formatRunDateTime(ev)})`;
@@ -952,31 +960,33 @@
 
         } else if (contentType === 'FT:B' || contentType === 'FT:M') {
             container.innerHTML = `
-                <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_exp">
-                    <div class="jobs-role-title">
-                        <span class="material-symbols-outlined">auto_fix_high</span> Phantom Jobs Experience
+                <div class="phantom-jobs-dual-grid">
+                    <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_exp">
+                        <div class="jobs-role-title">
+                            <span class="material-symbols-outlined">auto_fix_high</span> Phantom Jobs Experience
+                        </div>
+                        <div class="form-hint" style="margin-bottom: 0.75rem;">Select the phantom jobs you have previously played in Forked Tower and feel experienced on.</div>
+                        <div class="quick-toggle-actions">
+                            <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-exp" data-toggle-state="true">Select All</button>
+                            <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-exp" data-toggle-state="false">Clear</button>
+                        </div>
+                        <div class="chips-group" id="chips-phantom-exp">
+                            ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
+                        </div>
                     </div>
-                    <div class="form-hint" style="margin-bottom: 0.75rem;">Select the phantom jobs you have previously played in Forked Tower and feel experienced on.</div>
-                    <div class="quick-toggle-actions">
-                        <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-exp" data-toggle-state="true">Select All</button>
-                        <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-exp" data-toggle-state="false">Clear</button>
-                    </div>
-                    <div class="chips-group" id="chips-phantom-exp">
-                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
-                    </div>
-                </div>
 
-                <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_lvl">
-                    <div class="jobs-role-title">
-                        <span class="material-symbols-outlined">military_tech</span> Phantom Jobs Fully Leveled
-                    </div>
-                    <div class="form-hint" style="margin-bottom: 0.75rem;">You are required to have at least 6 phantom jobs leveled.</div>
-                    <div class="quick-toggle-actions">
-                        <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-lvl" data-toggle-state="true">Select All</button>
-                        <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-lvl" data-toggle-state="false">Clear</button>
-                    </div>
-                    <div class="chips-group" id="chips-phantom-lvl">
-                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
+                    <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_lvl">
+                        <div class="jobs-role-title">
+                            <span class="material-symbols-outlined">military_tech</span> Phantom Jobs Fully Leveled
+                        </div>
+                        <div class="form-hint" style="margin-bottom: 0.75rem;">You are required to have at least 6 phantom jobs leveled.</div>
+                        <div class="quick-toggle-actions">
+                            <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-lvl" data-toggle-state="true">Select All</button>
+                            <button type="button" class="btn-mini-toggle" data-toggle-target="chips-phantom-lvl" data-toggle-state="false">Clear</button>
+                        </div>
+                        <div class="chips-group" id="chips-phantom-lvl">
+                            ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
+                        </div>
                     </div>
                 </div>
             `;
@@ -1396,27 +1406,23 @@
 
                         return `
                             <div class="my-signup-item" data-signup-idx="${idx}" role="button" tabindex="0" title="Click to view full application details">
-                                <div class="my-signup-item-main">
-                                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                <div class="my-signup-item-top">
+                                    <div class="my-signup-item-title-row">
                                         <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
                                         <strong style="color: var(--text-primary); font-weight: 700; ${isCancelled ? 'text-decoration: line-through; opacity: 0.75;' : ''}">${escapeHtml(runTitle)}</strong>
                                         ${isCancelled ? `<span class="run-cancelled-badge"><span class="material-symbols-outlined" style="font-size: 0.9rem;">cancel</span> Cancelled</span>` : ''}
-                                        <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 4px;">Character: ${escapeHtml(s.character_name)}</span>
                                     </div>
-                                    ${runTimeStr ? `
-                                    <div style="display: flex; align-items: center; gap: 5px; font-size: 0.83rem; color: var(--text-secondary); margin-top: 4px;">
-                                        <span class="material-symbols-outlined" style="font-size: 0.95rem; color: var(--accent-purple);">schedule</span>
-                                        <span>${escapeHtml(runTimeStr)}</span>
-                                    </div>` : ''}
-                                    <div style="font-size: 0.82rem; color: var(--accent-teal); margin-top: 3px;">
-                                        Preferred: ${escapeHtml(s.preferred_role || 'Any')} | Party: ${escapeHtml(s.party_preference || 'Any')}
-                                    </div>
-                                </div>
-                                <div class="my-signup-item-action">
-                                    <span class="btn-view-application">
-                                        <span class="material-symbols-outlined" style="font-size: 1rem;">visibility</span>
-                                        <span>View Details</span>
+                                    <span class="btn-view-application-more" aria-label="View application details" title="View application details">
+                                        <span class="material-symbols-outlined">more_horiz</span>
                                     </span>
+                                </div>
+                                ${runTimeStr ? `
+                                <div class="my-signup-item-time">
+                                    <span class="material-symbols-outlined" style="font-size: 0.95rem; color: var(--accent-purple);">schedule</span>
+                                    <span>${escapeHtml(runTimeStr)}</span>
+                                </div>` : ''}
+                                <div class="my-signup-item-meta">
+                                    Preferred: ${escapeHtml(s.preferred_role || 'Any')} | Party: ${escapeHtml(s.party_preference || 'Any')}
                                 </div>
                             </div>
                         `;
@@ -1575,32 +1581,34 @@
                 </div>
             </div>
 
-            <!-- Role & Party Info -->
-            <div class="modal-section">
-                <div class="modal-section-title">
-                    <span class="material-symbols-outlined">group</span> Roles & Parties
+            <div class="modal-sections-grid">
+                <!-- Role & Party Info -->
+                <div class="modal-section">
+                    <div class="modal-section-title">
+                        <span class="material-symbols-outlined">group</span> Roles & Parties
+                    </div>
+                    <div class="modal-key-val">
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Preferred Role:</span>
+                            <span class="modal-subvalue"><span class="badge-role-highlight">${escapeHtml(signup.preferred_role || 'Any')}</span></span>
+                        </div>
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Playable Roles:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.playable_roles || 'Any')}</span>
+                        </div>
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Party Preference:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.party_preference || 'Any')}</span>
+                        </div>
+                        <div class="modal-row">
+                            <span class="modal-sublabel">Progression Point:</span>
+                            <span class="modal-subvalue">${escapeHtml(signup.prog_point || 'Not specified')}</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-key-val">
-                    <div class="modal-row">
-                        <span class="modal-sublabel">Preferred Role:</span>
-                        <span class="modal-subvalue"><span class="badge-role-highlight">${escapeHtml(signup.preferred_role || 'Any')}</span></span>
-                    </div>
-                    <div class="modal-row">
-                        <span class="modal-sublabel">Playable Roles:</span>
-                        <span class="modal-subvalue">${escapeHtml(signup.playable_roles || 'Any')}</span>
-                    </div>
-                    <div class="modal-row">
-                        <span class="modal-sublabel">Party Preference:</span>
-                        <span class="modal-subvalue">${escapeHtml(signup.party_preference || 'Any')}</span>
-                    </div>
-                    <div class="modal-row">
-                        <span class="modal-sublabel">Progression Point:</span>
-                        <span class="modal-subvalue">${escapeHtml(signup.prog_point || 'Not specified')}</span>
-                    </div>
-                </div>
-            </div>
 
-            ${contentSpecificHtml}
+                ${contentSpecificHtml}
+            </div>
 
             <!-- Team & Notes -->
             <div class="modal-section">
@@ -2482,32 +2490,34 @@
             const hasOtherLeveled = otherProfile && Array.isArray(otherProfile.phantom_jobs_lvl) && otherProfile.phantom_jobs_lvl.length > 0;
 
             contentSpecificHtml = `
-                <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_exp">
-                    <div class="jobs-role-title">
-                        <span class="material-symbols-outlined">auto_fix_high</span> Phantom Jobs Experience (${escapeHtml(contentType)})
+                <div class="phantom-jobs-dual-grid">
+                    <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_exp">
+                        <div class="jobs-role-title">
+                            <span class="material-symbols-outlined">auto_fix_high</span> Phantom Jobs Experience (${escapeHtml(contentType)})
+                        </div>
+                        <div class="form-hint" style="margin-bottom: 0.75rem;">Select the phantom jobs you have previously played in ${escapeHtml(contentType)} and feel experienced on.</div>
+                        <div class="quick-toggle-actions">
+                            <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-exp" data-toggle-state="true">Select All</button>
+                            <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-exp" data-toggle-state="false">Clear</button>
+                        </div>
+                        <div class="chips-group" id="prefs-chips-phantom-exp">
+                            ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
+                        </div>
                     </div>
-                    <div class="form-hint" style="margin-bottom: 0.75rem;">Select the phantom jobs you have previously played in ${escapeHtml(contentType)} and feel experienced on.</div>
-                    <div class="quick-toggle-actions">
-                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-exp" data-toggle-state="true">Select All</button>
-                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-exp" data-toggle-state="false">Clear</button>
-                    </div>
-                    <div class="chips-group" id="prefs-chips-phantom-exp">
-                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
-                    </div>
-                </div>
 
-                <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_lvl">
-                    <div class="jobs-role-title">
-                        <span class="material-symbols-outlined">military_tech</span> Phantom Jobs Fully Leveled
-                    </div>
-                    <div class="form-hint" style="margin-bottom: 0.75rem;">You are required to have at least 6 phantom jobs leveled.</div>
-                    <div class="quick-toggle-actions">
-                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-lvl" data-toggle-state="true">Select All</button>
-                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-lvl" data-toggle-state="false">Clear</button>
-                        ${hasOtherLeveled ? `<button type="button" class="btn-mini-toggle" id="btn-prefs-copy-other-ft" style="color: var(--accent-purple); border-color: rgba(178, 145, 247, 0.4);">Copy Leveled from ${escapeHtml(otherFt)}</button>` : ''}
-                    </div>
-                    <div class="chips-group" id="prefs-chips-phantom-lvl">
-                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
+                    <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_lvl">
+                        <div class="jobs-role-title">
+                            <span class="material-symbols-outlined">military_tech</span> Phantom Jobs Fully Leveled
+                        </div>
+                        <div class="form-hint" style="margin-bottom: 0.75rem;">You are required to have at least 6 phantom jobs leveled.</div>
+                        <div class="quick-toggle-actions">
+                            <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-lvl" data-toggle-state="true">Select All</button>
+                            <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-lvl" data-toggle-state="false">Clear</button>
+                            ${hasOtherLeveled ? `<button type="button" class="btn-mini-toggle" id="btn-prefs-copy-other-ft" style="color: var(--accent-purple); border-color: rgba(178, 145, 247, 0.4);">Copy Leveled from ${escapeHtml(otherFt)}</button>` : ''}
+                        </div>
+                        <div class="chips-group" id="prefs-chips-phantom-lvl">
+                            ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
+                        </div>
                     </div>
                 </div>
             `;

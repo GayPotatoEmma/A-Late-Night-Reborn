@@ -2,16 +2,29 @@
    A Late Night Reborn | Run Signups Styles
    ===================================================== */
 
-.signups-container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 1.5rem 1.5rem 5rem 1.5rem;
+.main-content {
+  max-width: 1480px;
+  padding: 1.5rem 2rem 3.5rem;
 }
 
-/* ── Hero & Subtitle ──────────────────────────────── */
+.signups-container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 0 3rem 0;
+}
+
+/* ── Top Bar & Hero ───────────────────────────────── */
+.signups-top-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
 .signups-hero {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0.25rem;
 }
 
 .signups-eyebrow {
@@ -25,21 +38,176 @@
 
 .signups-title {
   font-family: 'Quicksand', sans-serif;
-  font-size: 2.4rem;
+  font-size: 2.3rem;
   font-weight: 700;
   background: linear-gradient(125deg, #ffffff 0%, #fcd4c8 32%, #b291f7 65%, #e4c090 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.45rem;
 }
 
 .signups-desc {
   max-width: 620px;
   margin: 0 auto;
   color: var(--text-secondary);
-  font-size: 0.98rem;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* ── 2-Column Desktop Workspace Grid (Option A) ───── */
+.signups-workspace-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.signups-left-col,
+.signups-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.signups-left-col .glass-card,
+.signups-right-col .glass-card {
+  margin-bottom: 0;
+}
+
+/* Empty State Card on Right Column (Desktop Only) */
+.signup-empty-state-card {
+  display: none;
+}
+
+.signup-empty-state-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  border: 1px dashed rgba(252, 212, 200, 0.16);
+  border-radius: var(--radius-md);
+  background: rgba(10, 11, 28, 0.35);
+}
+
+.signup-empty-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(178, 145, 247, 0.14);
+  border: 1px solid rgba(178, 145, 247, 0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: var(--accent-purple);
+}
+
+.signup-empty-icon .material-symbols-outlined {
+  font-size: 1.8rem;
+}
+
+.signup-empty-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.signup-empty-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  max-width: 380px;
+  line-height: 1.55;
+}
+
+/* Dual Phantom Jobs Grid inside Right Column */
+.phantom-jobs-dual-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.phantom-jobs-dual-grid .dynamic-jobs-box {
+  margin-bottom: 0;
+}
+
+@media (min-width: 1024px) {
+  .header-inner {
+    max-width: 1520px;
+    padding: 0.8rem 2rem;
+  }
+
+  .main-content {
+    max-width: 1520px;
+    padding: 1.5rem 2rem 3.5rem;
+  }
+
+  .signups-top-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .signups-hero {
+    text-align: left;
+    margin-bottom: 0;
+    flex: 1;
+  }
+
+  .signups-desc {
+    margin: 0;
+    max-width: 600px;
+  }
+
+  #auth-banner-container {
+    flex: 0 0 auto;
+    min-width: 520px;
+  }
+
+  #auth-banner-container .glass-card {
+    margin-bottom: 0;
+    padding: 1rem 1.35rem;
+  }
+
+  #auth-banner-container .auth-banner-authed {
+    flex-wrap: nowrap;
+  }
+
+  .signups-workspace-grid {
+    display: grid;
+    grid-template-columns: 520px minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: start;
+  }
+
+  .signups-left-col {
+    position: sticky;
+    top: 5.25rem;
+  }
+
+  .signups-left-col .runs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .signup-empty-state-card {
+    display: block;
+  }
+}
+
+@media (min-width: 1360px) {
+  .signups-workspace-grid {
+    grid-template-columns: 560px minmax(0, 1fr);
+  }
+
+  .phantom-jobs-dual-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* ── Glassmorphic Cards ────────────────────────────── */
@@ -300,21 +468,21 @@
 .runs-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 12px;
-  margin-bottom: 1.25rem;
+  gap: 10px;
+  margin-bottom: 0.25rem;
 }
 
 .run-select-card {
   background: rgba(10, 11, 28, 0.45);
   border: 1px solid rgba(252, 212, 200, 0.14);
   border-radius: var(--radius-md);
-  padding: 1.15rem;
+  padding: 0.85rem 1.05rem;
   cursor: pointer;
   transition: all var(--transition);
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .run-select-card:hover {
@@ -390,6 +558,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.run-card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .run-type-badge {
@@ -399,6 +577,7 @@
   padding: 3px 8px;
   border-radius: 6px;
   letter-spacing: 0.5px;
+  flex-shrink: 0;
 }
 
 .run-type-badge.ftb { background: rgba(231, 76, 60, 0.2); color: #ff6b6b; border: 1px solid rgba(231, 76, 60, 0.4); }
@@ -409,17 +588,17 @@
 
 .run-card-title {
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: #ffffff;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .run-card-time {
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   color: var(--text-secondary);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .run-card-count {
@@ -429,6 +608,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-shrink: 0;
 }
 
 /* ── Form Controls & Layout ───────────────────────── */
@@ -692,19 +872,17 @@
 .my-signups-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .my-signup-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 4px;
   background: rgba(10, 11, 28, 0.5);
   border: 1px solid rgba(252, 212, 200, 0.15);
   border-radius: var(--radius-sm);
-  padding: 0.85rem 1.25rem;
-  flex-wrap: wrap;
-  gap: 10px;
+  padding: 0.75rem 1rem;
   cursor: pointer;
   transition: all var(--transition);
 }
@@ -716,22 +894,54 @@
   box-shadow: 0 4px 18px rgba(178, 145, 247, 0.18);
 }
 
-.btn-view-application {
-  display: inline-flex;
+.my-signup-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.my-signup-item-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.my-signup-item-time {
+  display: flex;
   align-items: center;
   gap: 5px;
-  padding: 0.4rem 0.85rem;
   font-size: 0.82rem;
-  font-weight: 600;
-  border-radius: 999px;
-  background: rgba(178, 145, 247, 0.12);
-  border: 1px solid rgba(178, 145, 247, 0.3);
-  color: var(--accent-purple);
+  color: var(--text-secondary);
+}
+
+.my-signup-item-meta {
+  font-size: 0.8rem;
+  color: var(--accent-teal);
+}
+
+.btn-view-application-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(252, 212, 200, 0.16);
+  color: var(--text-secondary);
   transition: all var(--transition);
+  flex-shrink: 0;
   pointer-events: none;
 }
 
-.my-signup-item:hover .btn-view-application {
+.btn-view-application-more .material-symbols-outlined {
+  font-size: 1.15rem;
+}
+
+.my-signup-item:hover .btn-view-application-more {
   background: rgba(178, 145, 247, 0.25);
   border-color: var(--accent-purple);
   color: #ffffff;
@@ -762,9 +972,9 @@
   border: 1px solid rgba(252, 212, 200, 0.22);
   border-radius: 18px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 0 0 30px rgba(178, 145, 247, 0.15);
-  max-width: 620px;
+  max-width: 780px;
   width: 100%;
-  max-height: 85vh;
+  max-height: 88vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -840,6 +1050,18 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+.modal-sections-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 720px) {
+  .modal-sections-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .modal-info-box {
@@ -1342,13 +1564,13 @@
   box-shadow: 0 4px 18px rgba(108, 90, 158, 0.15);
 }
 
-[data-theme^="light"] .btn-view-application {
+[data-theme^="light"] .btn-view-application-more {
   background: rgba(108, 90, 158, 0.08);
   border-color: rgba(108, 90, 158, 0.25);
   color: #564682;
 }
 
-[data-theme^="light"] .my-signup-item:hover .btn-view-application {
+[data-theme^="light"] .my-signup-item:hover .btn-view-application-more {
   background: rgba(108, 90, 158, 0.16);
   border-color: #564682;
   color: #2a2048;
@@ -1704,7 +1926,13 @@
 
 /* Saved Preferences Modal Layout */
 .modal-box-lg {
-  max-width: 760px;
+  max-width: 1040px;
+}
+
+@media (min-width: 820px) {
+  #prefs-modal-editor .phantom-jobs-dual-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .prefs-content-tabs {
@@ -2058,5 +2286,16 @@
 [data-theme^="light"] .prefs-btn-danger-text {
   color: #dc2626;
   border-color: rgba(220, 38, 38, 0.3);
+}
+
+[data-theme^="light"] .signup-empty-state-body {
+  background: rgba(0, 0, 0, 0.025);
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+[data-theme^="light"] .signup-empty-icon {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: rgba(124, 58, 237, 0.25);
+  color: #7c3aed;
 }
 

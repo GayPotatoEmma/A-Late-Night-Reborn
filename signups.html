@@ -45,190 +45,220 @@
         <main class="main-content">
             <div class="signups-container">
 
-                <!-- ── Hero ── -->
-                <div class="signups-hero">
-                    <h1 class="signups-title">Run Signups</h1>
-                    <p class="signups-desc">
-                        Select an upcoming run below to sign up. Connect your Discord account to automatically link your verified character name and Discord handle.
-                    </p>
+                <!-- ── Top Header Bar (Hero Left + Discord Profile Right on Desktop) ── -->
+                <div class="signups-top-bar">
+                    <div class="signups-hero">
+                        <h1 class="signups-title">Run Signups</h1>
+                        <p class="signups-desc">
+                            Select an upcoming run to sign up. Connect your Discord account to automatically link your verified character name and Discord handle.
+                        </p>
+                    </div>
+
+                    <!-- ── Discord Authentication Banner ── -->
+                    <div id="auth-banner-container"></div>
                 </div>
 
-                <!-- ── Discord Authentication Banner ── -->
-                <div id="auth-banner-container"></div>
+                <!-- ── 2-Column Desktop Workspace ── -->
+                <div class="signups-workspace-grid">
 
-                <!-- ── Step 1: Select Upcoming Run ── -->
-                <div class="glass-card" id="runs-selection-container">
-                    <div class="card-heading">
-                        <span class="material-symbols-outlined">event_available</span>
-                        <span>1. Select an Upcoming Run</span>
-                    </div>
-
-                    <!-- Status Notification Alert for Run Selection (e.g. Closed Runs) -->
-                    <div id="runs-selection-alert" class="status-alert" style="display: none; margin-bottom: 1.25rem;"></div>
-
-                    <div class="content-filter-bar">
-                        <button type="button" class="filter-pill active" data-filter="all">All Runs</button>
-                        <button type="button" class="filter-pill" data-filter="chaotic">Cloud of Darkness (Chaotic)</button>
-                        <button type="button" class="filter-pill" data-filter="ftb">Forked Tower: Blood</button>
-                        <button type="button" class="filter-pill" data-filter="ftm">Forked Tower: Magic</button>
-                        <button type="button" class="filter-pill" data-filter="ba">Baldesion Arsenal</button>
-                        <button type="button" class="filter-pill" data-filter="drs">Delubrum Reginae (Savage)</button>
-                    </div>
-
-                    <div class="runs-grid" id="runs-grid">
-                        <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">
-                            Loading upcoming runs from ALNR Bot...
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ── Step 2: Signup Form (Appears when run is selected) ── -->
-                <div class="glass-card" id="signup-form-card" style="display: none;">
-                    <div class="card-heading">
-                        <span class="material-symbols-outlined">how_to_reg</span>
-                        <span>2. Details</span>
-                    </div>
-
-                    <div style="background: rgba(178, 145, 247, 0.1); border: 1px solid rgba(178, 145, 247, 0.3); border-radius: var(--radius-sm); padding: 0.75rem 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
-                        <span class="material-symbols-outlined" style="color: var(--accent-purple);">shield</span>
-                        <span style="font-size: 0.92rem; color: var(--text-primary);">Signing up for: <strong id="selected-run-banner" style="color: var(--accent-rose);"></strong></span>
-                    </div>
-
-                    <!-- Discord Connection Required Prompt (Shown when user is not connected) -->
-                    <div id="signup-connect-prompt" class="signup-connect-box" style="display: none;">
-                        <div class="signup-connect-icon">
-                            <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-                        </div>
-                        <div class="signup-connect-title" id="signup-connect-title">Connect Discord to Sign Up</div>
-                        <div class="signup-connect-desc" id="signup-connect-desc">
-                            Please connect your Discord account to continue with your signup.
-                        </div>
-                        <div id="signup-connect-action">
-                            <button type="button" class="auth-btn-discord" id="btn-discord-login-inline">
-                                <span>Connect Discord</span>
-                                <span class="material-symbols-outlined" style="font-size: 1.2rem;">login</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Already Registered Notice (Shown when user is already signed up for this run) -->
-                    <div id="signup-already-registered-box" class="signup-connect-box" style="display: none;">
-                        <div class="signup-connect-icon" style="background: rgba(46, 204, 113, 0.18); border: 1px solid rgba(46, 204, 113, 0.35);">
-                            <span class="material-symbols-outlined" style="color: #2ecc71; font-size: 28px;">task_alt</span>
-                        </div>
-                        <div class="signup-connect-title" id="already-registered-title">You're already signed up for this run.</div>
-                        <div class="signup-connect-desc" id="already-registered-desc">
-                            Need to change something? Please make a ticket in our <a href="https://discord.gg/alnr" target="_blank" rel="noopener" style="color: var(--accent-rose); font-weight: 600; text-decoration: underline;">Discord</a>.
-                        </div>
-                        <div style="margin-top: 0.85rem;">
-                            <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="auth-btn-discord" style="padding: 0.65rem 1.25rem;">
-                                <span>Open Discord</span>
-                                <span class="material-symbols-outlined" style="font-size: 1.1rem;">open_in_new</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Signup Input Fields Section (Only revealed once connected and not already signed up) -->
-                    <div id="signup-fields-section" style="display: none;">
-                        <!-- Saved Preferences Auto-Fill / Outdated Questions Notice -->
-                        <div id="prefs-form-banner" class="prefs-form-banner" style="display: none;"></div>
-
-                        <!-- Character & Discord Information -->
-                        <div class="form-grid-2">
-                            <div class="form-group">
-                                <label class="form-label" for="input-char-name">FFXIV Character Name</label>
-                                <input type="text" id="input-char-name" class="input-text" placeholder="e.g. Emmalynn Raenlight" required />
-                                <div class="form-hint">Full in-game character name (Firstname Lastname).</div>
+                    <!-- ── Left Column: Upcoming Runs + Active Signups ── -->
+                    <div class="signups-left-col">
+                        <!-- ── Step 1: Select Upcoming Run ── -->
+                        <div class="glass-card" id="runs-selection-container">
+                            <div class="card-heading">
+                                <span class="material-symbols-outlined">event_available</span>
+                                <span>1. Select an Upcoming Run</span>
                             </div>
 
-                            <div class="form-group">
-                                <label class="form-label" for="input-discord-name">Discord Username</label>
-                                <input type="text" id="input-discord-name" class="input-text" placeholder="e.g. emmalynn" required />
-                                <div class="form-hint">Your Discord handle without leading '@'.</div>
+                            <!-- Status Notification Alert for Run Selection (e.g. Closed Runs) -->
+                            <div id="runs-selection-alert" class="status-alert" style="display: none; margin-bottom: 1.25rem;"></div>
+
+                            <div class="content-filter-bar">
+                                <button type="button" class="filter-pill active" data-filter="all">All Runs</button>
+                                <button type="button" class="filter-pill" data-filter="chaotic">Cloud of Darkness (Chaotic)</button>
+                                <button type="button" class="filter-pill" data-filter="ftb">Forked Tower: Blood</button>
+                                <button type="button" class="filter-pill" data-filter="ftm">Forked Tower: Magic</button>
+                                <button type="button" class="filter-pill" data-filter="ba">Baldesion Arsenal</button>
+                                <button type="button" class="filter-pill" data-filter="drs">Delubrum Reginae (Savage)</button>
+                            </div>
+
+                            <div class="runs-grid" id="runs-grid">
+                                <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 2rem;">
+                                    Loading upcoming runs from ALNR Bot...
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Preferred Role -->
-                        <div class="form-group" data-pref-field="preferred_role">
-                            <label class="form-label" for="preferred-role-chips">What is your preferred role?</label>
-                            <div class="chips-group" id="preferred-role-chips"></div>
-                        </div>
-
-                        <!-- Playable Roles -->
-                        <div class="form-group" data-pref-field="playable_roles">
-                            <label class="form-label" for="playable-roles-chips">What roles can you play?</label>
-                            <div class="chips-group" id="playable-roles-chips"></div>
-                            <div class="form-hint" id="playable-roles-hint" style="display: none;">Selecting a role reveals only the jobs associated with that role below.</div>
-                        </div>
-
-                        <!-- Dynamic Role & Job Selection Area (Only shows relevant jobs!) -->
-                        <div id="dynamic-jobs-container"></div>
-
-                        <!-- Progression Point & Party Preference -->
-                        <div class="form-grid-2" style="margin-top: 1.5rem;">
-                            <div class="form-group" data-pref-field="prog_point">
-                                <label class="form-label" for="input-prog-point">Furthest Progression Point</label>
-                                <select id="input-prog-point" class="input-select"></select>
+                        <!-- ── "My Active Signups" Section ── -->
+                        <div class="glass-card" id="my-signups-card" style="display: none;">
+                            <div class="card-heading">
+                                <span class="material-symbols-outlined">bookmark_check</span>
+                                <span>Your Active Signups</span>
                             </div>
-
-                            <div class="form-group" data-pref-field="party_preference">
-                                <label class="form-label">Party Preference</label>
-                                <div class="chips-group" id="party-pref-chips"></div>
-                                <div class="form-hint">Choose Any Party or select multiple parties.</div>
-                            </div>
-                        </div>
-
-                        <!-- Friend Group & Additional Notes -->
-                        <div class="form-grid-2">
-                            <div class="form-group">
-                                <label class="form-label" for="input-friend-group">Friend Group (Optional)</label>
-                                <input type="text" id="input-friend-group" class="input-text" placeholder="e.g. Team Potato" />
-                                <div class="form-hint">Enter your friend group name if you wish to be placed together.</div>
-                                <div class="field-error-msg" id="error-friend-group" style="display: none;"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label" for="input-notes">Additional Notes (Optional)</label>
-                                <textarea id="input-notes" class="input-textarea" placeholder="Any special notes or scheduling requests..."></textarea>
-                                <div class="field-error-msg" id="error-notes" style="display: none;"></div>
-                            </div>
-                        </div>
-
-                        <!-- Save Preferences Inline Controls -->
-                        <div class="prefs-save-inline-bar">
-                            <label class="prefs-checkbox-label" for="chk-save-prefs">
-                                <input type="checkbox" id="chk-save-prefs" />
-                                <span id="chk-save-prefs-text">Save as my default preferences for this content on this device</span>
-                            </label>
-                            <button type="button" class="btn-save-prefs-inline" id="btn-save-prefs-inline">
-                                <span class="material-symbols-outlined" style="font-size: 1rem;">bookmark_add</span>
-                                <span>Save Preferences</span>
-                            </button>
-                        </div>
-
-                        <!-- Status Notification Alert -->
-                        <div id="signup-status-alert" class="status-alert" style="display: none;"></div>
-
-                        <!-- Form Action Buttons -->
-                        <div class="form-actions-bar">
-                            <div style="font-size: 0.85rem; color: var(--text-muted);">
-                                Rosters will be posted in Discord before the run.
-                            </div>
-                            <button type="button" class="btn-submit-signup" id="btn-submit-form">
-                                <span>Submit Signup</span>
-                                <span class="material-symbols-outlined">send</span>
-                            </button>
+                            <div class="my-signups-list" id="my-signups-list"></div>
                         </div>
                     </div>
-                </div>
 
-                <!-- ── "My Active Signups" Section ── -->
-                <div class="glass-card" id="my-signups-card" style="display: none;">
-                    <div class="card-heading">
-                        <span class="material-symbols-outlined">bookmark_check</span>
-                        <span>Your Active Signups</span>
+                    <!-- ── Right Column: Step 2 Signup Form / Empty State Placeholder ── -->
+                    <div class="signups-right-col">
+                        <!-- Empty State Placeholder (Desktop only, hidden once a run is selected) -->
+                        <div class="glass-card signup-empty-state-card" id="signup-empty-placeholder">
+                            <div class="card-heading">
+                                <span class="material-symbols-outlined">how_to_reg</span>
+                                <span>2. Details</span>
+                            </div>
+                            <div class="signup-empty-state-body">
+                                <div class="signup-empty-icon">
+                                    <span class="material-symbols-outlined">touch_app</span>
+                                </div>
+                                <div class="signup-empty-title">Select an Upcoming Run</div>
+                                <div class="signup-empty-desc">
+                                    Click any open run on the left to load its signup form and auto-fill your saved preferences.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ── Step 2: Signup Form (Appears when run is selected) ── -->
+                        <div class="glass-card" id="signup-form-card" style="display: none;">
+                            <div class="card-heading">
+                                <span class="material-symbols-outlined">how_to_reg</span>
+                                <span>2. Details</span>
+                            </div>
+
+                            <div style="background: rgba(178, 145, 247, 0.1); border: 1px solid rgba(178, 145, 247, 0.3); border-radius: var(--radius-sm); padding: 0.75rem 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+                                <span class="material-symbols-outlined" style="color: var(--accent-purple);">shield</span>
+                                <span style="font-size: 0.92rem; color: var(--text-primary);">Signing up for: <strong id="selected-run-banner" style="color: var(--accent-rose);"></strong></span>
+                            </div>
+
+                            <!-- Discord Connection Required Prompt (Shown when user is not connected) -->
+                            <div id="signup-connect-prompt" class="signup-connect-box" style="display: none;">
+                                <div class="signup-connect-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                                </div>
+                                <div class="signup-connect-title" id="signup-connect-title">Connect Discord to Sign Up</div>
+                                <div class="signup-connect-desc" id="signup-connect-desc">
+                                    Please connect your Discord account to continue with your signup.
+                                </div>
+                                <div id="signup-connect-action">
+                                    <button type="button" class="auth-btn-discord" id="btn-discord-login-inline">
+                                        <span>Connect Discord</span>
+                                        <span class="material-symbols-outlined" style="font-size: 1.2rem;">login</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Already Registered Notice (Shown when user is already signed up for this run) -->
+                            <div id="signup-already-registered-box" class="signup-connect-box" style="display: none;">
+                                <div class="signup-connect-icon" style="background: rgba(46, 204, 113, 0.18); border: 1px solid rgba(46, 204, 113, 0.35);">
+                                    <span class="material-symbols-outlined" style="color: #2ecc71; font-size: 28px;">task_alt</span>
+                                </div>
+                                <div class="signup-connect-title" id="already-registered-title">You're already signed up for this run.</div>
+                                <div class="signup-connect-desc" id="already-registered-desc">
+                                    Need to change something? Please make a ticket in our <a href="https://discord.gg/alnr" target="_blank" rel="noopener" style="color: var(--accent-rose); font-weight: 600; text-decoration: underline;">Discord</a>.
+                                </div>
+                                <div style="margin-top: 0.85rem;">
+                                    <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="auth-btn-discord" style="padding: 0.65rem 1.25rem;">
+                                        <span>Open Discord</span>
+                                        <span class="material-symbols-outlined" style="font-size: 1.1rem;">open_in_new</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Signup Input Fields Section (Only revealed once connected and not already signed up) -->
+                            <div id="signup-fields-section" style="display: none;">
+                                <!-- Saved Preferences Auto-Fill / Outdated Questions Notice -->
+                                <div id="prefs-form-banner" class="prefs-form-banner" style="display: none;"></div>
+
+                                <!-- Character & Discord Information -->
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label class="form-label" for="input-char-name">FFXIV Character Name</label>
+                                        <input type="text" id="input-char-name" class="input-text" placeholder="e.g. Emmalynn Raenlight" required />
+                                        <div class="form-hint">Full in-game character name (Firstname Lastname).</div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="input-discord-name">Discord Username</label>
+                                        <input type="text" id="input-discord-name" class="input-text" placeholder="e.g. emmalynn" required />
+                                        <div class="form-hint">Your Discord handle without leading '@'.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Preferred Role -->
+                                <div class="form-group" data-pref-field="preferred_role">
+                                    <label class="form-label" for="preferred-role-chips">What is your preferred role?</label>
+                                    <div class="chips-group" id="preferred-role-chips"></div>
+                                </div>
+
+                                <!-- Playable Roles -->
+                                <div class="form-group" data-pref-field="playable_roles">
+                                    <label class="form-label" for="playable-roles-chips">What roles can you play?</label>
+                                    <div class="chips-group" id="playable-roles-chips"></div>
+                                    <div class="form-hint" id="playable-roles-hint" style="display: none;">Selecting a role reveals only the jobs associated with that role below.</div>
+                                </div>
+
+                                <!-- Dynamic Role & Job Selection Area (Only shows relevant jobs!) -->
+                                <div id="dynamic-jobs-container"></div>
+
+                                <!-- Progression Point & Party Preference -->
+                                <div class="form-grid-2" style="margin-top: 1.5rem;">
+                                    <div class="form-group" data-pref-field="prog_point">
+                                        <label class="form-label" for="input-prog-point">Furthest Progression Point</label>
+                                        <select id="input-prog-point" class="input-select"></select>
+                                    </div>
+
+                                    <div class="form-group" data-pref-field="party_preference">
+                                        <label class="form-label">Party Preference</label>
+                                        <div class="chips-group" id="party-pref-chips"></div>
+                                        <div class="form-hint">Choose Any Party or select multiple parties.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Friend Group & Additional Notes -->
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label class="form-label" for="input-friend-group">Friend Group (Optional)</label>
+                                        <input type="text" id="input-friend-group" class="input-text" placeholder="e.g. Team Potato" />
+                                        <div class="form-hint">Enter your friend group name if you wish to be placed together.</div>
+                                        <div class="field-error-msg" id="error-friend-group" style="display: none;"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="input-notes">Additional Notes (Optional)</label>
+                                        <textarea id="input-notes" class="input-textarea" placeholder="Any special notes or scheduling requests..."></textarea>
+                                        <div class="field-error-msg" id="error-notes" style="display: none;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Save Preferences Inline Controls -->
+                                <div class="prefs-save-inline-bar">
+                                    <label class="prefs-checkbox-label" for="chk-save-prefs">
+                                        <input type="checkbox" id="chk-save-prefs" />
+                                        <span id="chk-save-prefs-text">Save as my default preferences for this content on this device</span>
+                                    </label>
+                                    <button type="button" class="btn-save-prefs-inline" id="btn-save-prefs-inline">
+                                        <span class="material-symbols-outlined" style="font-size: 1rem;">bookmark_add</span>
+                                        <span>Save Preferences</span>
+                                    </button>
+                                </div>
+
+                                <!-- Status Notification Alert -->
+                                <div id="signup-status-alert" class="status-alert" style="display: none;"></div>
+
+                                <!-- Form Action Buttons -->
+                                <div class="form-actions-bar">
+                                    <div style="font-size: 0.85rem; color: var(--text-muted);">
+                                        Rosters will be posted in Discord before the run.
+                                    </div>
+                                    <button type="button" class="btn-submit-signup" id="btn-submit-form">
+                                        <span>Submit Signup</span>
+                                        <span class="material-symbols-outlined">send</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="my-signups-list" id="my-signups-list"></div>
+
                 </div>
 
             </div>

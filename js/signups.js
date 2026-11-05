@@ -2,17 +2,12 @@
 
 (function () {
     const DISCORD_CLIENT_ID = "1526282207185080411";
-    
-    // Auto-detect API URL: use local port 5000 if testing on localhost, otherwise fallback to worker/api
+
+    // Auto-detect API URL: use localhost if running locally, otherwise live API
     function getApiUrl() {
-        let stored = localStorage.getItem('alnr_api_url');
-        if (stored && (stored.includes('workers.dev') || (!window.location.hostname.includes('localhost') && stored.includes('localhost')))) {
-            localStorage.removeItem('alnr_api_url');
-            stored = null;
-        }
-        if (stored) return stored.replace(/\/+$/, '');
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            return 'http://127.0.0.1:5000';
+        const host = window.location.hostname;
+        if (host === 'localhost' || host === '127.0.0.1' || host === '') {
+            return 'http://localhost:8000';
         }
         return 'https://api.alatenightreborn.com';
     }
@@ -22,6 +17,74 @@
     let selectedEvent = null;
     let activeFilter = 'all';
     let mySignupsList = [];
+    let activePrefsTab = 'Chaotic';
+    let prefsModalInitialSnapshot = '';
+    let phantomWarningContext = 'form'; // 'form' or 'modal'
+
+    // ── Saved Preferences & Schema Versioning ────────────────────────────────────
+    const PREFS_STORAGE_KEY = 'alnr_signup_preferences_v1';
+    const CONTENT_TYPES = ['Chaotic', 'FT:B', 'FT:M', 'BA', 'DRS'];
+    const CONTENT_SCHEMA_VERSIONS = {
+        'Chaotic': 1,
+        'FT:B': 1,
+        'FT:M': 1,
+        'BA': 1,
+        'DRS': 1
+    };
+
+    const BA_LOGOS_ACTIONS = [
+        'Perception (Finding Traps)',
+        'Spirit Dart (Vulnerability)',
+        'Feint (Evasion)',
+        'Dispel (Buff Removal)',
+        'Bravery (Buffs)',
+        'Refresh (Magia Wheel)'
+    ];
+
+    const DRS_LOST_ACTIONS = [
+        'Perception (Finding Traps)',
+        'Rend Armor (Vulnerability)',
+        'Banish (Phantom Vulnerability)',
+        'Flare Star (BLM DoT)',
+        'Dispel (Buff Removal)',
+        'Cure IV (Party Bravery)'
+    ];
+
+    const DRS_DUEL_OPTIONS = [
+        'No',
+        "Yes and I'm experienced",
+        "Yes but it's my first time"
+    ];
+
+    function getPartyOptionsForContent(contentType) {
+        if (contentType === 'Chaotic') {
+            return [
+                { value: 'Any', label: 'Any Party' },
+                { value: 'A', label: 'Party A' },
+                { value: 'B', label: 'Party B' },
+                { value: 'C', label: 'Party C' }
+            ];
+        } else if (contentType === 'DRS') {
+            return [
+                { value: 'Any', label: 'Any Party' },
+                { value: 'A (Slimes)', label: 'A (Slimes)' },
+                { value: 'B (Slimes)', label: 'B (Slimes)' },
+                { value: 'C (Slimes)', label: 'C (Slimes)' },
+                { value: '1 (Golems)', label: '1 (Golems)' },
+                { value: '2 (Golems)', label: '2 (Golems)' },
+                { value: '3 (Golems)', label: '3 (Golems)' }
+            ];
+        }
+        return [
+            { value: 'Any', label: 'Any Party' },
+            { value: 'A', label: 'Party A' },
+            { value: 'B', label: 'Party B' },
+            { value: 'C', label: 'Party C' },
+            { value: '1', label: 'Party 1' },
+            { value: '2', label: 'Party 2' },
+            { value: '3', label: 'Party 3' }
+        ];
+    }
 
     // ── Pre-defined Lists ────────────────────────────────────────────────────────
     const ALL_ROLES = [
@@ -294,10 +357,19 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn-signout" id="btn-discord-signout" type="button">Sign Out</button>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button type="button" class="btn-prefs-cog" id="btn-open-prefs-modal" aria-label="Raid signup preferences" title="Saved Signup Preferences">
+                            <span class="material-symbols-outlined">settings</span>
+                            <span class="prefs-outdated-badge" id="prefs-outdated-badge" style="display: none;" title="Saved preferences need updating">!</span>
+                        </button>
+                        <button class="btn-signout" id="btn-discord-signout" type="button">Sign Out</button>
+                    </div>
                 </div>
             `;
             document.getElementById('btn-discord-signout').onclick = signOut;
+            const openPrefsBtn = document.getElementById('btn-open-prefs-modal');
+            if (openPrefsBtn) openPrefsBtn.onclick = () => openPrefsModal();
+            updatePrefsCogBadge();
         }
 
         updateSignupAuthVisibility();
@@ -707,6 +779,13 @@
 
         // Render Dynamic Role / Job Sections
         renderDynamicJobSections();
+
+        // Update inline checkbox label & apply saved preferences if present
+        const saveChkText = document.getElementById('chk-save-prefs-text');
+        if (saveChkText) {
+            saveChkText.textContent = `Save as my default preferences for ${contentType} on this device`;
+        }
+        applySavedPrefsToStep2Form(contentType);
     }
 
     function renderPreferredRoles() {
@@ -802,35 +881,7 @@
         const container = document.getElementById('party-pref-chips');
         if (!container) return;
 
-        let options = [];
-        if (contentType === 'Chaotic') {
-            options = [
-                { value: 'Any', label: 'Any Party' },
-                { value: 'A', label: 'Party A' },
-                { value: 'B', label: 'Party B' },
-                { value: 'C', label: 'Party C' }
-            ];
-        } else if (contentType === 'DRS') {
-            options = [
-                { value: 'Any', label: 'Any Party' },
-                { value: 'A (Slimes)', label: 'A (Slimes)' },
-                { value: 'B (Slimes)', label: 'B (Slimes)' },
-                { value: 'C (Slimes)', label: 'C (Slimes)' },
-                { value: '1 (Golems)', label: '1 (Golems)' },
-                { value: '2 (Golems)', label: '2 (Golems)' },
-                { value: '3 (Golems)', label: '3 (Golems)' }
-            ];
-        } else {
-            options = [
-                { value: 'Any', label: 'Any Party' },
-                { value: 'A', label: 'Party A' },
-                { value: 'B', label: 'Party B' },
-                { value: 'C', label: 'Party C' },
-                { value: '1', label: 'Party 1' },
-                { value: '2', label: 'Party 2' },
-                { value: '3', label: 'Party 3' }
-            ];
-        }
+        const options = getPartyOptionsForContent(contentType);
 
         container.innerHTML = options.map(o => `
             <button type="button" class="chip-btn ${o.value === 'Any' ? 'selected' : ''}" data-party="${escapeHtml(o.value)}" aria-pressed="${o.value === 'Any' ? 'true' : 'false'}">
@@ -906,7 +957,7 @@
 
         } else if (contentType === 'FT:B' || contentType === 'FT:M') {
             container.innerHTML = `
-                <div class="dynamic-jobs-box">
+                <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_exp">
                     <div class="jobs-role-title">
                         <span class="material-symbols-outlined">auto_fix_high</span> Phantom Jobs Experience
                     </div>
@@ -920,7 +971,7 @@
                     </div>
                 </div>
 
-                <div class="dynamic-jobs-box">
+                <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_lvl">
                     <div class="jobs-role-title">
                         <span class="material-symbols-outlined">military_tech</span> Phantom Jobs Fully Leveled
                     </div>
@@ -937,25 +988,18 @@
             attachPhantomChipHandlers();
 
         } else if (contentType === 'BA') {
-            const logosActions = [
-                'Perception (Finding Traps)', 
-                'Spirit Dart (Vulnerability)', 
-                'Feint (Evasion)', 
-                'Dispel (Buff Removal)', 
-                'Bravery (Buffs)', 
-                'Refresh (Magia Wheel)'
-            ];
-
             container.innerHTML = `
                 <div class="dynamic-jobs-box">
-                    <div class="jobs-role-title">
-                        <span class="material-symbols-outlined">magic_button</span> Logos Actions Experience
-                    </div>
-                    <div class="chips-group" id="chips-logos-exp">
-                        ${logosActions.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}" aria-pressed="false">${escapeHtml(a)}</button>`).join('')}
+                    <div class="form-group" data-pref-field="logos_actions_exp" style="margin-bottom: 1.25rem;">
+                        <div class="jobs-role-title">
+                            <span class="material-symbols-outlined">magic_button</span> Logos Actions Experience
+                        </div>
+                        <div class="chips-group" id="chips-logos-exp">
+                            ${BA_LOGOS_ACTIONS.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}" aria-pressed="false">${escapeHtml(a)}</button>`).join('')}
+                        </div>
                     </div>
                     
-                    <div class="form-group" style="margin-top: 1.25rem; margin-bottom: 0;">
+                    <div class="form-group" data-pref-field="logos_try_new" style="margin-bottom: 0;">
                         <label class="form-label" for="input-logos-try">Would you like to try any new special Logos Actions?</label>
                         <select id="input-logos-try" class="input-select" style="max-width: 200px;">
                             <option value="No">No</option>
@@ -969,26 +1013,19 @@
             });
 
         } else if (contentType === 'DRS') {
-            const lostActions = [
-                'Perception (Finding Traps)',
-                'Rend Armor (Vulnerability)',
-                'Banish (Phantom Vulnerability)',
-                'Flare Star (BLM DoT)',
-                'Dispel (Buff Removal)',
-                'Cure IV (Party Bravery)'
-            ];
-
             container.innerHTML = `
                 <div class="dynamic-jobs-box">
-                    <div class="jobs-role-title">
-                        <span class="material-symbols-outlined">magic_button</span> Lost Actions Experience
-                    </div>
-                    <div class="chips-group" id="chips-lost-exp">
-                        ${lostActions.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}" aria-pressed="false">${escapeHtml(a)}</button>`).join('')}
+                    <div class="form-group" data-pref-field="lost_actions_exp" style="margin-bottom: 1.25rem;">
+                        <div class="jobs-role-title">
+                            <span class="material-symbols-outlined">magic_button</span> Lost Actions Experience
+                        </div>
+                        <div class="chips-group" id="chips-lost-exp">
+                            ${DRS_LOST_ACTIONS.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}" aria-pressed="false">${escapeHtml(a)}</button>`).join('')}
+                        </div>
                     </div>
 
-                    <div class="form-grid-2" style="margin-top: 1.25rem; margin-bottom: 0;">
-                        <div class="form-group" style="margin-bottom: 0;">
+                    <div class="form-grid-2" style="margin-bottom: 0;">
+                        <div class="form-group" data-pref-field="lost_try_new" style="margin-bottom: 0;">
                             <label class="form-label" for="input-lost-try">Would you like to try any new special Lost Actions?</label>
                             <select id="input-lost-try" class="input-select">
                                 <option value="No">No</option>
@@ -996,12 +1033,10 @@
                             </select>
                         </div>
 
-                        <div class="form-group" style="margin-bottom: 0;">
+                        <div class="form-group" data-pref-field="duel" style="margin-bottom: 0;">
                             <label class="form-label" for="input-drs-duel">Would you like to do the Duel?</label>
                             <select id="input-drs-duel" class="input-select">
-                                <option value="No">No</option>
-                                <option value="Yes and I'm experienced">Yes and I'm experienced</option>
-                                <option value="Yes but it's my first time">Yes but it's my first time</option>
+                                ${DRS_DUEL_OPTIONS.map(opt => `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`).join('')}
                             </select>
                             <div class="form-hint">Optional 1v1 encounter. Winning grants a strong 2-hour buff, but dying locks you out of the rest of the run.</div>
                         </div>
@@ -1036,7 +1071,7 @@
 
     function createJobChipsGroup(groupId, title, jobs, roleClass) {
         return `
-            <div class="dynamic-jobs-box" data-role-group="${groupId}">
+            <div class="dynamic-jobs-box" data-role-group="${groupId}" data-pref-field="${groupId}">
                 <div class="jobs-role-title">${escapeHtml(title)}</div>
                 <div class="quick-toggle-actions">
                     <button type="button" class="btn-mini-toggle" data-toggle-group="${groupId}" data-toggle-state="true">Select All</button>
@@ -1064,7 +1099,8 @@
         });
     }
 
-    function openPhantomExpWarningModal() {
+    function openPhantomExpWarningModal(context = 'form') {
+        phantomWarningContext = context;
         const backdrop = document.getElementById('phantom-exp-warning-backdrop');
         if (!backdrop) return;
         backdrop.style.display = 'flex';
@@ -1075,11 +1111,17 @@
         const backdrop = document.getElementById('phantom-exp-warning-backdrop');
         if (!backdrop) return;
         backdrop.style.display = 'none';
-        document.body.style.overflow = '';
+        const prefsModal = document.getElementById('prefs-modal-backdrop');
+        if (!prefsModal || prefsModal.style.display === 'none') {
+            document.body.style.overflow = '';
+        }
     }
 
     function confirmPhantomExpSelectAll() {
-        document.querySelectorAll('#chips-phantom-exp .chip-btn').forEach(b => {
+        const selector = phantomWarningContext === 'modal'
+            ? '#prefs-chips-phantom-exp .chip-btn'
+            : '#chips-phantom-exp .chip-btn';
+        document.querySelectorAll(selector).forEach(b => {
             setChipSelected(b, true);
         });
         closePhantomExpWarningModal();
@@ -1257,6 +1299,15 @@
             payload.duel = document.getElementById('input-drs-duel').value;
         }
 
+        // Save preferences if checkbox is checked
+        const savePrefsChk = document.getElementById('chk-save-prefs');
+        if (savePrefsChk && savePrefsChk.checked) {
+            const extracted = extractProfileFromStep2Form(selectedEvent.content_type);
+            if (!extracted.error && extracted.profile) {
+                savePreferencesForContent(selectedEvent.content_type, extracted.profile);
+            }
+        }
+
         submitBtn.disabled = true;
         submitBtn.innerHTML = `<span class="material-symbols-outlined" style="animation: spin 1s infinite linear;">sync</span> Submitting...`;
 
@@ -1396,6 +1447,7 @@
                     container.style.display = 'none';
                 }
                 updateSignupAuthVisibility();
+                renderEventsGrid();
             }
         } catch (e) {
             console.warn('[My Signups]', e);
@@ -1698,21 +1750,1232 @@
         }
     }
 
+    // ── Saved Preferences Storage & Schema Validation ────────────────────────────
+
+    function loadSavedPreferencesStore() {
+        try {
+            const raw = localStorage.getItem(PREFS_STORAGE_KEY);
+            if (!raw) return { version: 1, profiles: {} };
+            const parsed = JSON.parse(raw);
+            if (!parsed || typeof parsed !== 'object' || typeof parsed.profiles !== 'object' || !parsed.profiles) {
+                return { version: 1, profiles: {} };
+            }
+            return parsed;
+        } catch (e) {
+            console.warn('[Preferences] Could not load saved preferences:', e);
+            return { version: 1, profiles: {} };
+        }
+    }
+
+    function writeSavedPreferencesStore(store) {
+        try {
+            store.updated_at = new Date().toISOString();
+            localStorage.setItem(PREFS_STORAGE_KEY, JSON.stringify(store));
+            updatePrefsCogBadge();
+            renderEventsGrid();
+        } catch (e) {
+            console.error('[Preferences] Could not write saved preferences:', e);
+        }
+    }
+
+    function savePreferencesForContent(contentType, profile) {
+        const store = loadSavedPreferencesStore();
+        const cleanProfile = Object.assign({}, profile, {
+            schema_version: CONTENT_SCHEMA_VERSIONS[contentType] || 1
+        });
+        delete cleanProfile.friend_group;
+        delete cleanProfile.notes;
+        store.profiles[contentType] = cleanProfile;
+        writeSavedPreferencesStore(store);
+    }
+
+    function clearPreferencesForContent(contentType) {
+        const store = loadSavedPreferencesStore();
+        delete store.profiles[contentType];
+        writeSavedPreferencesStore(store);
+    }
+
+    function clearAllSavedPreferences() {
+        try {
+            localStorage.removeItem(PREFS_STORAGE_KEY);
+        } catch (e) {}
+        updatePrefsCogBadge();
+        renderEventsGrid();
+    }
+
+    function validateSavedProfile(contentType, profile) {
+        if (!profile || typeof profile !== 'object') {
+            return { status: 'none', outdatedFields: [], sanitized: null };
+        }
+
+        const outdatedFields = [];
+        const addOutdated = (key, label) => {
+            if (!outdatedFields.some(f => f.key === key)) {
+                outdatedFields.push({ key, label });
+            }
+        };
+
+        const validRoleIds = ALL_ROLES.map(r => r.id);
+        const validProgOptions = PROG_OPTIONS[contentType] || PROG_OPTIONS['Chaotic'];
+        const validPartyValues = getPartyOptionsForContent(contentType).map(o => o.value);
+
+        const sanitized = {
+            schema_version: profile.schema_version
+        };
+
+        // 1. Preferred Role
+        if (typeof profile.preferred_role === 'string' && validRoleIds.includes(profile.preferred_role)) {
+            sanitized.preferred_role = profile.preferred_role;
+        } else {
+            sanitized.preferred_role = 'Any';
+            addOutdated('preferred_role', 'Preferred Role');
+        }
+
+        // 2. Playable Roles
+        if (Array.isArray(profile.playable_roles) && profile.playable_roles.length > 0) {
+            const validPlayable = profile.playable_roles.filter(r => validRoleIds.includes(r));
+            sanitized.playable_roles = validPlayable;
+            if (validPlayable.length === 0 || validPlayable.length !== profile.playable_roles.length) {
+                addOutdated('playable_roles', 'Playable Roles');
+            }
+        } else {
+            sanitized.playable_roles = [];
+            addOutdated('playable_roles', 'Playable Roles');
+        }
+
+        // 3. Prog Point
+        if (typeof profile.prog_point === 'string' && validProgOptions.includes(profile.prog_point)) {
+            sanitized.prog_point = profile.prog_point;
+        } else {
+            sanitized.prog_point = '';
+            addOutdated('prog_point', 'Furthest Progression Point');
+        }
+
+        // 4. Party Preference
+        if (typeof profile.party_preference === 'string' && profile.party_preference.trim()) {
+            const parts = profile.party_preference.split(',').map(s => s.trim()).filter(Boolean);
+            const validParts = parts.filter(p => validPartyValues.includes(p));
+            if (validParts.length > 0 && validParts.length === parts.length) {
+                sanitized.party_preference = validParts.join(', ');
+            } else {
+                sanitized.party_preference = validParts.length > 0 ? validParts.join(', ') : 'Any';
+                addOutdated('party_preference', 'Party Preference');
+            }
+        } else {
+            sanitized.party_preference = 'Any';
+            addOutdated('party_preference', 'Party Preference');
+        }
+
+        // 5. Content-Specific Fields
+        if (contentType === 'Chaotic') {
+            const playable = sanitized.playable_roles;
+            const roleGroups = [
+                { key: 'tanks', label: 'Tanks You Can Play', roleKey: 'Tank', active: playable.includes('Tank') || playable.includes('Any') },
+                { key: 'healers', label: 'Healers You Can Play', roleKey: 'Healer', active: playable.includes('Regen Healer') || playable.includes('Shield Healer') || playable.includes('Any') },
+                { key: 'melee_dps', label: 'Melee DPS You Can Play', roleKey: 'Melee DPS', active: playable.includes('Melee DPS') || playable.includes('Any') },
+                { key: 'magical_dps', label: 'Magical DPS You Can Play', roleKey: 'Magical DPS', active: playable.includes('Magical DPS') || playable.includes('Any') },
+                { key: 'phys_ranged_dps', label: 'Physical Ranged You Can Play', roleKey: 'Physical Ranged DPS', active: playable.includes('Physical Ranged DPS') || playable.includes('Any') }
+            ];
+
+            roleGroups.forEach(g => {
+                const rawJobs = Array.isArray(profile[g.key]) ? profile[g.key] : [];
+                const allowedJobs = JOBS_BY_ROLE[g.roleKey] || [];
+                const validJobs = rawJobs.filter(j => allowedJobs.includes(j));
+                sanitized[g.key] = validJobs;
+                if (rawJobs.length !== validJobs.length || (g.active && validJobs.length === 0)) {
+                    addOutdated(g.key, g.label);
+                }
+            });
+        } else if (contentType === 'FT:B' || contentType === 'FT:M') {
+            const rawExp = Array.isArray(profile.phantom_jobs_exp) ? profile.phantom_jobs_exp : null;
+            if (rawExp) {
+                const validExp = rawExp.filter(j => PHANTOM_JOBS.includes(j));
+                sanitized.phantom_jobs_exp = validExp;
+                if (validExp.length !== rawExp.length) {
+                    addOutdated('phantom_jobs_exp', 'Phantom Jobs Experience');
+                }
+            } else {
+                sanitized.phantom_jobs_exp = [];
+                addOutdated('phantom_jobs_exp', 'Phantom Jobs Experience');
+            }
+
+            const rawLvl = Array.isArray(profile.phantom_jobs_lvl) ? profile.phantom_jobs_lvl : null;
+            if (rawLvl) {
+                const validLvl = rawLvl.filter(j => PHANTOM_JOBS.includes(j));
+                sanitized.phantom_jobs_lvl = validLvl;
+                if (validLvl.length !== rawLvl.length || validLvl.length < 6) {
+                    addOutdated('phantom_jobs_lvl', 'Phantom Jobs Fully Leveled');
+                }
+            } else {
+                sanitized.phantom_jobs_lvl = [];
+                addOutdated('phantom_jobs_lvl', 'Phantom Jobs Fully Leveled');
+            }
+        } else if (contentType === 'BA') {
+            const rawLogos = Array.isArray(profile.logos_actions_exp) ? profile.logos_actions_exp : null;
+            if (rawLogos) {
+                const validLogos = rawLogos.filter(a => BA_LOGOS_ACTIONS.includes(a));
+                sanitized.logos_actions_exp = validLogos;
+                if (validLogos.length !== rawLogos.length) {
+                    addOutdated('logos_actions_exp', 'Logos Actions Experience');
+                }
+            } else {
+                sanitized.logos_actions_exp = [];
+                addOutdated('logos_actions_exp', 'Logos Actions Experience');
+            }
+
+            if (profile.logos_try_new === 'Yes' || profile.logos_try_new === 'No') {
+                sanitized.logos_try_new = profile.logos_try_new;
+            } else {
+                sanitized.logos_try_new = 'No';
+                addOutdated('logos_try_new', 'Try New Special Logos Actions');
+            }
+        } else if (contentType === 'DRS') {
+            const rawLost = Array.isArray(profile.lost_actions_exp) ? profile.lost_actions_exp : null;
+            if (rawLost) {
+                const validLost = rawLost.filter(a => DRS_LOST_ACTIONS.includes(a));
+                sanitized.lost_actions_exp = validLost;
+                if (validLost.length !== rawLost.length) {
+                    addOutdated('lost_actions_exp', 'Lost Actions Experience');
+                }
+            } else {
+                sanitized.lost_actions_exp = [];
+                addOutdated('lost_actions_exp', 'Lost Actions Experience');
+            }
+
+            if (profile.lost_try_new === 'Yes' || profile.lost_try_new === 'No') {
+                sanitized.lost_try_new = profile.lost_try_new;
+            } else {
+                sanitized.lost_try_new = 'No';
+                addOutdated('lost_try_new', 'Try New Special Lost Actions');
+            }
+
+            if (typeof profile.duel === 'string' && DRS_DUEL_OPTIONS.includes(profile.duel)) {
+                sanitized.duel = profile.duel;
+            } else {
+                sanitized.duel = 'No';
+                addOutdated('duel', 'Duel Preference');
+            }
+        }
+
+        // 6. Schema Version Check
+        const expectedSchema = CONTENT_SCHEMA_VERSIONS[contentType] || 1;
+        if (profile.schema_version !== expectedSchema && outdatedFields.length === 0) {
+            addOutdated('schema', 'Updated Questions');
+        }
+
+        return {
+            status: outdatedFields.length > 0 ? 'outdated' : 'complete',
+            outdatedFields,
+            sanitized
+        };
+    }
+
+    function getValidatedProfile(contentType) {
+        const store = loadSavedPreferencesStore();
+        const profile = store.profiles[contentType];
+        return validateSavedProfile(contentType, profile);
+    }
+
+    function updatePrefsCogBadge() {
+        const badge = document.getElementById('prefs-outdated-badge');
+        const cogBtn = document.getElementById('btn-open-prefs-modal');
+        if (!badge) return;
+
+        const store = loadSavedPreferencesStore();
+        const outdatedTypes = [];
+        CONTENT_TYPES.forEach(ct => {
+            if (store.profiles[ct]) {
+                const check = validateSavedProfile(ct, store.profiles[ct]);
+                if (check.status === 'outdated') {
+                    outdatedTypes.push(ct);
+                }
+            }
+        });
+
+        if (outdatedTypes.length > 0) {
+            badge.style.display = 'inline-flex';
+            const msg = `Saved preferences need updating for: ${outdatedTypes.join(', ')}`;
+            badge.title = msg;
+            if (cogBtn) cogBtn.title = msg;
+        } else {
+            badge.style.display = 'none';
+            if (cogBtn) cogBtn.title = 'Saved Signup Preferences';
+        }
+    }
+
+    // ── Step 2 Form Auto-Fill & Outdated Field Highlighting ──────────────────────
+
+    function clearFormOutdatedHighlights(rootEl) {
+        if (!rootEl) return;
+        rootEl.querySelectorAll('.field-outdated-highlight').forEach(el => {
+            el.classList.remove('field-outdated-highlight');
+        });
+        rootEl.querySelectorAll('.field-outdated-tag').forEach(tag => {
+            tag.remove();
+        });
+    }
+
+    function highlightOutdatedFieldsInContainer(rootEl, outdatedFields) {
+        if (!rootEl || !Array.isArray(outdatedFields)) return;
+        outdatedFields.forEach(item => {
+            const fieldBox = rootEl.querySelector(`[data-pref-field="${item.key}"]`);
+            if (fieldBox) {
+                fieldBox.classList.add('field-outdated-highlight');
+                const labelEl = fieldBox.querySelector('.form-label, .jobs-role-title');
+                if (labelEl && !labelEl.querySelector('.field-outdated-tag')) {
+                    const tag = document.createElement('span');
+                    tag.className = 'field-outdated-tag';
+                    tag.innerHTML = `<span class="material-symbols-outlined" style="font-size: 0.85rem;">priority_high</span> Needs Update`;
+                    labelEl.appendChild(tag);
+                }
+            }
+        });
+    }
+
+    function applySavedPrefsToStep2Form(contentType) {
+        const fieldsSection = document.getElementById('signup-fields-section');
+        const banner = document.getElementById('prefs-form-banner');
+        const saveChk = document.getElementById('chk-save-prefs');
+        const saveChkText = document.getElementById('chk-save-prefs-text');
+        const saveBtnInline = document.getElementById('btn-save-prefs-inline');
+        clearFormOutdatedHighlights(fieldsSection);
+
+        const check = getValidatedProfile(contentType);
+        if (check.status === 'none' || !check.sanitized) {
+            if (banner) {
+                banner.style.display = 'none';
+                banner.innerHTML = '';
+            }
+            if (saveChk) saveChk.checked = false;
+            if (saveChkText) saveChkText.textContent = `Save as my default preferences for ${contentType} on this device`;
+            if (saveBtnInline) {
+                saveBtnInline.innerHTML = `<span class="material-symbols-outlined" style="font-size: 1rem;">bookmark_add</span><span>Save Preferences</span>`;
+            }
+            return;
+        }
+
+        const p = check.sanitized;
+        if (saveChk) saveChk.checked = true;
+        if (saveChkText) saveChkText.textContent = `Keep my saved ${contentType} preferences updated when I submit`;
+        if (saveBtnInline) {
+            saveBtnInline.innerHTML = `<span class="material-symbols-outlined" style="font-size: 1rem;">bookmark_added</span><span>Update Saved Preferences</span>`;
+        }
+
+        // 1. Preferred Role
+        const prefRoleContainer = document.getElementById('preferred-role-chips');
+        if (prefRoleContainer && p.preferred_role) {
+            prefRoleContainer.querySelectorAll('.chip-btn').forEach(b => {
+                setChipSelected(b, b.getAttribute('data-role') === p.preferred_role);
+            });
+        }
+
+        // 2. Playable Roles
+        const playableContainer = document.getElementById('playable-roles-chips');
+        if (playableContainer && Array.isArray(p.playable_roles)) {
+            playableContainer.querySelectorAll('.chip-btn').forEach(b => {
+                b.removeAttribute('data-auto-preferred');
+                setChipSelected(b, p.playable_roles.includes(b.getAttribute('data-role')));
+            });
+        }
+
+        // 3. Prog Point
+        const progSelect = document.getElementById('input-prog-point');
+        if (progSelect) {
+            progSelect.value = p.prog_point || '';
+        }
+
+        // 4. Party Preference
+        const partyContainer = document.getElementById('party-pref-chips');
+        if (partyContainer && p.party_preference) {
+            const parts = p.party_preference.split(',').map(s => s.trim()).filter(Boolean);
+            partyContainer.querySelectorAll('.chip-btn').forEach(b => {
+                setChipSelected(b, parts.includes(b.getAttribute('data-party')));
+            });
+        }
+
+        // 5. Content-Specific Fields
+        if (contentType === 'Chaotic') {
+            syncChaoticRoleVisibility();
+            ['tanks', 'healers', 'melee_dps', 'magical_dps', 'phys_ranged_dps'].forEach(group => {
+                const jobs = Array.isArray(p[group]) ? p[group] : [];
+                document.querySelectorAll(`#dynamic-jobs-container .chips-group[data-group="${group}"] .chip-btn`).forEach(b => {
+                    setChipSelected(b, jobs.includes(b.getAttribute('data-job')));
+                });
+            });
+        } else if (contentType === 'FT:B' || contentType === 'FT:M') {
+            const expJobs = Array.isArray(p.phantom_jobs_exp) ? p.phantom_jobs_exp : [];
+            const lvlJobs = Array.isArray(p.phantom_jobs_lvl) ? p.phantom_jobs_lvl : [];
+            document.querySelectorAll('#chips-phantom-exp .chip-btn').forEach(b => {
+                setChipSelected(b, expJobs.includes(b.getAttribute('data-job')));
+            });
+            document.querySelectorAll('#chips-phantom-lvl .chip-btn').forEach(b => {
+                setChipSelected(b, lvlJobs.includes(b.getAttribute('data-job')));
+            });
+        } else if (contentType === 'BA') {
+            const logosExp = Array.isArray(p.logos_actions_exp) ? p.logos_actions_exp : [];
+            document.querySelectorAll('#chips-logos-exp .chip-btn').forEach(b => {
+                setChipSelected(b, logosExp.includes(b.getAttribute('data-action')));
+            });
+            const trySelect = document.getElementById('input-logos-try');
+            if (trySelect && p.logos_try_new) trySelect.value = p.logos_try_new;
+        } else if (contentType === 'DRS') {
+            const lostExp = Array.isArray(p.lost_actions_exp) ? p.lost_actions_exp : [];
+            document.querySelectorAll('#chips-lost-exp .chip-btn').forEach(b => {
+                setChipSelected(b, lostExp.includes(b.getAttribute('data-action')));
+            });
+            const trySelect = document.getElementById('input-lost-try');
+            if (trySelect && p.lost_try_new) trySelect.value = p.lost_try_new;
+            const duelSelect = document.getElementById('input-drs-duel');
+            if (duelSelect && p.duel) duelSelect.value = p.duel;
+        }
+
+        // 6. Render Banner & Highlight Outdated Fields if any
+        if (banner) {
+            banner.style.display = 'flex';
+            if (check.status === 'outdated') {
+                banner.className = 'prefs-form-banner outdated';
+                const fieldNames = check.outdatedFields.map(f => f.label).join(', ');
+                banner.innerHTML = `
+                    <div class="prefs-banner-text">
+                        <span class="material-symbols-outlined" style="color: #f59e0b;">error</span>
+                        <span><strong>Update Needed:</strong> Questions for ${escapeHtml(contentType)} have changed. Please review <strong>${escapeHtml(fieldNames)}</strong> below and save your preferences.</span>
+                    </div>
+                    <div class="prefs-banner-actions">
+                        <button type="button" class="btn-prefs-banner-action" id="btn-banner-open-prefs">Open Preferences</button>
+                    </div>
+                `;
+                highlightOutdatedFieldsInContainer(fieldsSection, check.outdatedFields);
+            } else {
+                banner.className = 'prefs-form-banner';
+                banner.innerHTML = `
+                    <div class="prefs-banner-text">
+                        <span class="material-symbols-outlined" style="color: #2ecc71;">auto_awesome</span>
+                        <span>Auto-filled from your saved <strong>${escapeHtml(contentType)}</strong> preferences.</span>
+                    </div>
+                    <div class="prefs-banner-actions">
+                        <button type="button" class="btn-prefs-banner-action btn-prefs-banner-jump" id="btn-banner-jump-submit">
+                            <span>Jump to Submit</span>
+                            <span class="material-symbols-outlined" style="font-size: 0.95rem;">arrow_downward</span>
+                        </button>
+                        <button type="button" class="btn-prefs-banner-action" id="btn-banner-open-prefs">Edit Preferences</button>
+                        <button type="button" class="btn-prefs-banner-action" id="btn-banner-reset-form">Reset Form</button>
+                    </div>
+                `;
+            }
+
+            const jumpSubmitBtn = document.getElementById('btn-banner-jump-submit');
+            if (jumpSubmitBtn) {
+                jumpSubmitBtn.onclick = () => {
+                    const targetEl = document.getElementById('input-friend-group') || document.getElementById('btn-submit-form');
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                };
+            }
+            const openPrefsBtn = document.getElementById('btn-banner-open-prefs');
+            if (openPrefsBtn) {
+                openPrefsBtn.onclick = () => openPrefsModal(contentType);
+            }
+            const resetFormBtn = document.getElementById('btn-banner-reset-form');
+            if (resetFormBtn) {
+                resetFormBtn.onclick = () => {
+                    renderPreferredRoles();
+                    renderPlayableRoles();
+                    renderProgPoints(contentType);
+                    renderPartyPreferences(contentType);
+                    renderDynamicJobSections();
+                    clearFormOutdatedHighlights(fieldsSection);
+                    banner.style.display = 'none';
+                };
+            }
+        }
+    }
+
+    function extractProfileFromStep2Form(contentType) {
+        const preferredRoleBtn = document.querySelector('#preferred-role-chips .chip-btn.selected');
+        if (!preferredRoleBtn) {
+            return { error: 'Please select your preferred role.' };
+        }
+        const preferredRole = preferredRoleBtn.getAttribute('data-role');
+
+        const playableRoles = getSelectedPlayableRoles();
+        if (playableRoles.length === 0) {
+            return { error: 'Please select at least one playable role.' };
+        }
+
+        const progSelect = document.getElementById('input-prog-point');
+        const progPoint = progSelect ? progSelect.value : '';
+        if (!progPoint) {
+            return { error: 'Please select your furthest progression point.' };
+        }
+
+        const partyPref = getSelectedPartyPreferences() || 'Any';
+
+        const profile = {
+            schema_version: CONTENT_SCHEMA_VERSIONS[contentType] || 1,
+            preferred_role: preferredRole,
+            playable_roles: playableRoles,
+            prog_point: progPoint,
+            party_preference: partyPref
+        };
+
+        if (contentType === 'Chaotic') {
+            function getGroupJobs(group) {
+                return Array.from(document.querySelectorAll(`#dynamic-jobs-container .chips-group[data-group="${group}"] .chip-btn.selected`))
+                    .map(b => b.getAttribute('data-job'));
+            }
+            profile.tanks = (playableRoles.includes('Tank') || playableRoles.includes('Any')) ? getGroupJobs('tanks') : [];
+            profile.healers = (playableRoles.includes('Regen Healer') || playableRoles.includes('Shield Healer') || playableRoles.includes('Any')) ? getGroupJobs('healers') : [];
+            profile.melee_dps = (playableRoles.includes('Melee DPS') || playableRoles.includes('Any')) ? getGroupJobs('melee_dps') : [];
+            profile.magical_dps = (playableRoles.includes('Magical DPS') || playableRoles.includes('Any')) ? getGroupJobs('magical_dps') : [];
+            profile.phys_ranged_dps = (playableRoles.includes('Physical Ranged DPS') || playableRoles.includes('Any')) ? getGroupJobs('phys_ranged_dps') : [];
+
+            if ((playableRoles.includes('Tank') || playableRoles.includes('Any')) && profile.tanks.length === 0) {
+                return { error: 'Please select at least one job you can play for Tanks.' };
+            }
+            if ((playableRoles.includes('Regen Healer') || playableRoles.includes('Shield Healer') || playableRoles.includes('Any')) && profile.healers.length === 0) {
+                return { error: 'Please select at least one job you can play for Healers.' };
+            }
+            if ((playableRoles.includes('Melee DPS') || playableRoles.includes('Any')) && profile.melee_dps.length === 0) {
+                return { error: 'Please select at least one job you can play for Melee DPS.' };
+            }
+            if ((playableRoles.includes('Magical DPS') || playableRoles.includes('Any')) && profile.magical_dps.length === 0) {
+                return { error: 'Please select at least one job you can play for Magical DPS.' };
+            }
+            if ((playableRoles.includes('Physical Ranged DPS') || playableRoles.includes('Any')) && profile.phys_ranged_dps.length === 0) {
+                return { error: 'Please select at least one job you can play for Physical Ranged DPS.' };
+            }
+        } else if (contentType === 'FT:B' || contentType === 'FT:M') {
+            profile.phantom_jobs_exp = Array.from(document.querySelectorAll('#chips-phantom-exp .chip-btn.selected')).map(b => b.getAttribute('data-job'));
+            profile.phantom_jobs_lvl = Array.from(document.querySelectorAll('#chips-phantom-lvl .chip-btn.selected')).map(b => b.getAttribute('data-job'));
+            if (profile.phantom_jobs_lvl.length < 6) {
+                return { error: 'You are required to have at least 6 phantom jobs leveled.' };
+            }
+        } else if (contentType === 'BA') {
+            profile.logos_actions_exp = Array.from(document.querySelectorAll('#chips-logos-exp .chip-btn.selected')).map(b => b.getAttribute('data-action'));
+            const tryEl = document.getElementById('input-logos-try');
+            profile.logos_try_new = tryEl ? tryEl.value : 'No';
+        } else if (contentType === 'DRS') {
+            profile.lost_actions_exp = Array.from(document.querySelectorAll('#chips-lost-exp .chip-btn.selected')).map(b => b.getAttribute('data-action'));
+            const tryEl = document.getElementById('input-lost-try');
+            const duelEl = document.getElementById('input-drs-duel');
+            profile.lost_try_new = tryEl ? tryEl.value : 'No';
+            profile.duel = duelEl ? duelEl.value : 'No';
+        }
+
+        return { profile };
+    }
+
+    function handleSavePrefsInline() {
+        if (!selectedEvent) return;
+        const contentType = selectedEvent.content_type;
+        const result = extractProfileFromStep2Form(contentType);
+        if (result.error) {
+            showStatusAlert(result.error, 'error');
+            return;
+        }
+        savePreferencesForContent(contentType, result.profile);
+        applySavedPrefsToStep2Form(contentType);
+        showStatusAlert(`Saved your default ${contentType} preferences on this device!`, 'success');
+    }
+
+    // ── Saved Preferences Modal Editor ───────────────────────────────────────────
+
+    function showPrefsModalAlert(msg, type = 'info') {
+        const alertEl = document.getElementById('prefs-modal-alert');
+        if (!alertEl) return;
+        alertEl.className = `status-alert ${type}`;
+        alertEl.innerHTML = `
+            <span class="material-symbols-outlined">${type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info'}</span>
+            <span>${escapeHtml(msg)}</span>
+        `;
+        alertEl.style.display = 'flex';
+    }
+
+    function hidePrefsModalAlert() {
+        const alertEl = document.getElementById('prefs-modal-alert');
+        if (!alertEl) return;
+        alertEl.style.display = 'none';
+        alertEl.innerHTML = '';
+    }
+
+    function updatePrefsModalTabBadges() {
+        const store = loadSavedPreferencesStore();
+        CONTENT_TYPES.forEach(ct => {
+            const statusSpan = document.querySelector(`.prefs-tab-status[data-tab-status="${ct}"]`);
+            if (!statusSpan) return;
+            const profile = store.profiles[ct];
+            if (!profile) {
+                statusSpan.className = 'prefs-tab-status';
+                statusSpan.textContent = '';
+                statusSpan.title = 'Not saved yet';
+                return;
+            }
+            const check = validateSavedProfile(ct, profile);
+            if (check.status === 'complete') {
+                statusSpan.className = 'prefs-tab-status complete';
+                statusSpan.textContent = '✓';
+                statusSpan.title = 'Complete & ready for auto-fill';
+            } else if (check.status === 'outdated') {
+                statusSpan.className = 'prefs-tab-status outdated';
+                statusSpan.textContent = '!';
+                statusSpan.title = 'Needs update';
+            } else {
+                statusSpan.className = 'prefs-tab-status';
+                statusSpan.textContent = '';
+            }
+        });
+    }
+
+    function openPrefsModal(initialTab) {
+        const backdrop = document.getElementById('prefs-modal-backdrop');
+        if (!backdrop) return;
+
+        hidePrefsModalAlert();
+
+        // Pick initial tab: explicit argument -> first outdated tab -> selectedEvent -> 'Chaotic'
+        if (initialTab && CONTENT_TYPES.includes(initialTab)) {
+            activePrefsTab = initialTab;
+        } else {
+            const store = loadSavedPreferencesStore();
+            const firstOutdated = CONTENT_TYPES.find(ct => store.profiles[ct] && validateSavedProfile(ct, store.profiles[ct]).status === 'outdated');
+            if (firstOutdated) {
+                activePrefsTab = firstOutdated;
+            } else if (selectedEvent && CONTENT_TYPES.includes(selectedEvent.content_type)) {
+                activePrefsTab = selectedEvent.content_type;
+            } else {
+                activePrefsTab = 'Chaotic';
+            }
+        }
+
+        renderPrefsModalTab(activePrefsTab);
+        backdrop.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function getPrefsModalStateSnapshot() {
+        const editor = document.getElementById('prefs-modal-editor');
+        if (!editor) return '';
+        const selectedChips = Array.from(editor.querySelectorAll('.chip-btn.selected'))
+            .map(b => b.getAttribute('data-role') || b.getAttribute('data-job') || b.getAttribute('data-action') || b.getAttribute('data-party') || b.textContent.trim());
+        const selects = Array.from(editor.querySelectorAll('select')).map(s => `${s.id}:${s.value}`);
+        return JSON.stringify({ chips: selectedChips, selects });
+    }
+
+    function hasUnsavedPrefsModalChanges() {
+        const backdrop = document.getElementById('prefs-modal-backdrop');
+        if (!backdrop || backdrop.style.display === 'none') return false;
+        if (!prefsModalInitialSnapshot) return false;
+        return getPrefsModalStateSnapshot() !== prefsModalInitialSnapshot;
+    }
+
+    function closePrefsModal(force = false) {
+        const backdrop = document.getElementById('prefs-modal-backdrop');
+        if (!backdrop || backdrop.style.display === 'none') return;
+        if (!force && hasUnsavedPrefsModalChanges()) {
+            if (!window.confirm(`You have unsaved changes for ${activePrefsTab}. Close without saving?`)) {
+                return;
+            }
+        }
+        backdrop.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function syncPrefsModalChaoticVisibility() {
+        const editor = document.getElementById('prefs-modal-editor');
+        if (!editor || activePrefsTab !== 'Chaotic') return;
+        const selectedRoles = Array.from(editor.querySelectorAll('#prefs-playable-roles-chips .chip-btn.selected'))
+            .map(b => b.getAttribute('data-role'));
+
+        const groups = [
+            { id: 'tanks', active: selectedRoles.includes('Tank') || selectedRoles.includes('Any') },
+            { id: 'healers', active: selectedRoles.includes('Regen Healer') || selectedRoles.includes('Shield Healer') || selectedRoles.includes('Any') },
+            { id: 'melee_dps', active: selectedRoles.includes('Melee DPS') || selectedRoles.includes('Any') },
+            { id: 'magical_dps', active: selectedRoles.includes('Magical DPS') || selectedRoles.includes('Any') },
+            { id: 'phys_ranged_dps', active: selectedRoles.includes('Physical Ranged DPS') || selectedRoles.includes('Any') }
+        ];
+
+        groups.forEach(g => {
+            const el = editor.querySelector(`.dynamic-jobs-box[data-role-group="${g.id}"]`);
+            if (el) {
+                el.style.display = g.active ? 'block' : 'none';
+            }
+        });
+    }
+
+    function renderPrefsModalTab(contentType) {
+        activePrefsTab = contentType;
+        hidePrefsModalAlert();
+        updatePrefsModalTabBadges();
+
+        // Update active tab button
+        document.querySelectorAll('#prefs-content-tabs .prefs-tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-pref-tab') === contentType);
+        });
+
+        const saveBtnText = document.getElementById('btn-prefs-save-tab-text');
+        const clearBtnText = document.getElementById('btn-prefs-clear-tab-text');
+        const clearBtn = document.getElementById('btn-prefs-clear-tab');
+        if (saveBtnText) saveBtnText.textContent = `Save ${contentType} Preferences`;
+        if (clearBtnText) clearBtnText.textContent = `Reset ${contentType} Preferences`;
+
+        const check = getValidatedProfile(contentType);
+        if (clearBtn) {
+            clearBtn.style.display = check.status === 'none' ? 'none' : 'inline-flex';
+        }
+        const statusBanner = document.getElementById('prefs-modal-tab-status');
+        if (statusBanner) {
+            if (check.status === 'complete') {
+                statusBanner.className = 'prefs-modal-status-banner complete';
+                statusBanner.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="material-symbols-outlined" style="font-size: 1.15rem;">check_circle</span>
+                        <span><strong>${escapeHtml(contentType)} preferences saved!</strong> Your answers will automatically fill when selecting a run.</span>
+                    </div>
+                `;
+            } else if (check.status === 'outdated') {
+                const labels = check.outdatedFields.map(f => f.label).join(', ');
+                statusBanner.className = 'prefs-modal-status-banner outdated';
+                statusBanner.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="material-symbols-outlined" style="font-size: 1.15rem; color: #f59e0b;">error</span>
+                        <span><strong>Action Needed:</strong> Questions for ${escapeHtml(contentType)} changed. Please update: <strong>${escapeHtml(labels)}</strong> and click Save.</span>
+                    </div>
+                `;
+            } else {
+                statusBanner.className = 'prefs-modal-status-banner';
+                statusBanner.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="material-symbols-outlined" style="font-size: 1.15rem; color: var(--accent-purple);">info</span>
+                        <span>No saved preferences for <strong>${escapeHtml(contentType)}</strong> yet. Configure your defaults below and click Save.</span>
+                    </div>
+                `;
+            }
+        }
+
+        const editor = document.getElementById('prefs-modal-editor');
+        if (!editor) return;
+
+        const progOptions = PROG_OPTIONS[contentType] || PROG_OPTIONS['Chaotic'];
+        const partyOptions = getPartyOptionsForContent(contentType);
+
+        let contentSpecificHtml = '';
+        if (contentType === 'Chaotic') {
+            const createModalJobGroup = (groupId, title, jobs, roleClass) => `
+                <div class="dynamic-jobs-box" data-role-group="${groupId}" data-pref-field="${groupId}">
+                    <div class="jobs-role-title">${escapeHtml(title)}</div>
+                    <div class="quick-toggle-actions">
+                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-group="${groupId}" data-toggle-state="true">Select All</button>
+                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-group="${groupId}" data-toggle-state="false">Clear</button>
+                    </div>
+                    <div class="chips-group" data-prefs-group="${groupId}">
+                        ${jobs.map(j => `<button type="button" class="chip-btn ${roleClass}" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
+                    </div>
+                </div>
+            `;
+            contentSpecificHtml = `
+                ${createModalJobGroup('tanks', 'Tanks You Can Play', JOBS_BY_ROLE['Tank'], 'role-tank')}
+                ${createModalJobGroup('healers', 'Healers You Can Play', JOBS_BY_ROLE['Healer'], 'role-healer')}
+                ${createModalJobGroup('melee_dps', 'Melee DPS You Can Play', JOBS_BY_ROLE['Melee DPS'], 'role-dps')}
+                ${createModalJobGroup('magical_dps', 'Magical DPS You Can Play', JOBS_BY_ROLE['Magical DPS'], 'role-dps')}
+                ${createModalJobGroup('phys_ranged_dps', 'Physical Ranged You Can Play', JOBS_BY_ROLE['Physical Ranged DPS'], 'role-dps')}
+            `;
+        } else if (contentType === 'FT:B' || contentType === 'FT:M') {
+            const otherFt = contentType === 'FT:B' ? 'FT:M' : 'FT:B';
+            const store = loadSavedPreferencesStore();
+            const otherProfile = store.profiles[otherFt];
+            const hasOtherLeveled = otherProfile && Array.isArray(otherProfile.phantom_jobs_lvl) && otherProfile.phantom_jobs_lvl.length > 0;
+
+            contentSpecificHtml = `
+                <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_exp">
+                    <div class="jobs-role-title">
+                        <span class="material-symbols-outlined">auto_fix_high</span> Phantom Jobs Experience (${escapeHtml(contentType)})
+                    </div>
+                    <div class="form-hint" style="margin-bottom: 0.75rem;">Select the phantom jobs you have previously played in ${escapeHtml(contentType)} and feel experienced on.</div>
+                    <div class="quick-toggle-actions">
+                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-exp" data-toggle-state="true">Select All</button>
+                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-exp" data-toggle-state="false">Clear</button>
+                    </div>
+                    <div class="chips-group" id="prefs-chips-phantom-exp">
+                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
+                    </div>
+                </div>
+
+                <div class="dynamic-jobs-box" data-pref-field="phantom_jobs_lvl">
+                    <div class="jobs-role-title">
+                        <span class="material-symbols-outlined">military_tech</span> Phantom Jobs Fully Leveled
+                    </div>
+                    <div class="form-hint" style="margin-bottom: 0.75rem;">You are required to have at least 6 phantom jobs leveled.</div>
+                    <div class="quick-toggle-actions">
+                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-lvl" data-toggle-state="true">Select All</button>
+                        <button type="button" class="btn-mini-toggle" data-prefs-toggle-target="prefs-chips-phantom-lvl" data-toggle-state="false">Clear</button>
+                        ${hasOtherLeveled ? `<button type="button" class="btn-mini-toggle" id="btn-prefs-copy-other-ft" style="color: var(--accent-purple); border-color: rgba(178, 145, 247, 0.4);">Copy Leveled from ${escapeHtml(otherFt)}</button>` : ''}
+                    </div>
+                    <div class="chips-group" id="prefs-chips-phantom-lvl">
+                        ${PHANTOM_JOBS.map(j => `<button type="button" class="chip-btn" data-job="${escapeHtml(j)}" aria-pressed="false">${escapeHtml(j)}</button>`).join('')}
+                    </div>
+                </div>
+            `;
+        } else if (contentType === 'BA') {
+            contentSpecificHtml = `
+                <div class="dynamic-jobs-box">
+                    <div class="form-group" data-pref-field="logos_actions_exp" style="margin-bottom: 1.25rem;">
+                        <div class="jobs-role-title">
+                            <span class="material-symbols-outlined">magic_button</span> Logos Actions Experience
+                        </div>
+                        <div class="chips-group" id="prefs-chips-logos-exp">
+                            ${BA_LOGOS_ACTIONS.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}" aria-pressed="false">${escapeHtml(a)}</button>`).join('')}
+                        </div>
+                    </div>
+                    <div class="form-group" data-pref-field="logos_try_new" style="margin-bottom: 0;">
+                        <label class="form-label" for="prefs-input-logos-try">Would you like to try any new special Logos Actions?</label>
+                        <select id="prefs-input-logos-try" class="input-select" style="max-width: 200px;">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+        } else if (contentType === 'DRS') {
+            contentSpecificHtml = `
+                <div class="dynamic-jobs-box">
+                    <div class="form-group" data-pref-field="lost_actions_exp" style="margin-bottom: 1.25rem;">
+                        <div class="jobs-role-title">
+                            <span class="material-symbols-outlined">magic_button</span> Lost Actions Experience
+                        </div>
+                        <div class="chips-group" id="prefs-chips-lost-exp">
+                            ${DRS_LOST_ACTIONS.map(a => `<button type="button" class="chip-btn" data-action="${escapeHtml(a)}" aria-pressed="false">${escapeHtml(a)}</button>`).join('')}
+                        </div>
+                    </div>
+                    <div class="form-grid-2" style="margin-bottom: 0;">
+                        <div class="form-group" data-pref-field="lost_try_new" style="margin-bottom: 0;">
+                            <label class="form-label" for="prefs-input-lost-try">Would you like to try any new special Lost Actions?</label>
+                            <select id="prefs-input-lost-try" class="input-select">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group" data-pref-field="duel" style="margin-bottom: 0;">
+                            <label class="form-label" for="prefs-input-drs-duel">Would you like to do the Duel?</label>
+                            <select id="prefs-input-drs-duel" class="input-select">
+                                ${DRS_DUEL_OPTIONS.map(opt => `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`).join('')}
+                            </select>
+                            <div class="form-hint">Optional 1v1 encounter. Winning grants a strong 2-hour buff, but dying locks you out of the rest of the run.</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        editor.innerHTML = `
+            <div class="form-group" data-pref-field="preferred_role">
+                <label class="form-label">What is your preferred role?</label>
+                <div class="chips-group" id="prefs-preferred-role-chips">
+                    ${ALL_ROLES.map(r => `<button type="button" class="chip-btn ${r.class} ${r.id === 'Any' ? 'selected' : ''}" data-role="${r.id}" aria-pressed="${r.id === 'Any' ? 'true' : 'false'}">${r.label}</button>`).join('')}
+                </div>
+            </div>
+
+            <div class="form-group" data-pref-field="playable_roles">
+                <label class="form-label">What roles can you play?</label>
+                <div class="chips-group" id="prefs-playable-roles-chips">
+                    ${ALL_ROLES.map(r => `<button type="button" class="chip-btn ${r.class}" data-role="${r.id}" aria-pressed="false">${r.label}</button>`).join('')}
+                </div>
+                ${contentType === 'Chaotic' ? `<div class="form-hint">Selecting a role reveals only the jobs associated with that role below.</div>` : ''}
+            </div>
+
+            ${contentSpecificHtml}
+
+            <div class="form-grid-2" style="margin-top: 1.25rem; margin-bottom: 0.25rem;">
+                <div class="form-group" data-pref-field="prog_point" style="margin-bottom: 0;">
+                    <label class="form-label" for="prefs-input-prog-point">Furthest Progression Point</label>
+                    <select id="prefs-input-prog-point" class="input-select">
+                        <option value="" disabled selected>Select your progression point...</option>
+                        ${progOptions.map(opt => `<option value="${escapeHtml(opt)}">${escapeHtml(opt)}</option>`).join('')}
+                    </select>
+                </div>
+
+                <div class="form-group" data-pref-field="party_preference" style="margin-bottom: 0;">
+                    <label class="form-label">Party Preference</label>
+                    <div class="chips-group" id="prefs-party-pref-chips">
+                        ${partyOptions.map(o => `<button type="button" class="chip-btn ${o.value === 'Any' ? 'selected' : ''}" data-party="${escapeHtml(o.value)}" aria-pressed="${o.value === 'Any' ? 'true' : 'false'}">${escapeHtml(o.label)}</button>`).join('')}
+                    </div>
+                    <div class="form-hint">Choose Any Party or select multiple parties.</div>
+                </div>
+            </div>
+        `;
+
+        // Attach interactive handlers inside modal editor
+        const prefRoleContainer = document.getElementById('prefs-preferred-role-chips');
+        const playableContainer = document.getElementById('prefs-playable-roles-chips');
+
+        if (prefRoleContainer) {
+            prefRoleContainer.querySelectorAll('.chip-btn').forEach(btn => {
+                btn.onclick = () => {
+                    prefRoleContainer.querySelectorAll('.chip-btn').forEach(b => setChipSelected(b, false));
+                    setChipSelected(btn, true);
+                    const roleId = btn.getAttribute('data-role');
+                    if (playableContainer && roleId) {
+                        playableContainer.querySelectorAll('.chip-btn[data-auto-preferred="true"]').forEach(b => {
+                            b.removeAttribute('data-auto-preferred');
+                            setChipSelected(b, false);
+                        });
+                        if (roleId !== 'Any') {
+                            const matchBtn = playableContainer.querySelector(`.chip-btn[data-role="${roleId}"]`);
+                            if (matchBtn && !matchBtn.classList.contains('selected')) {
+                                setChipSelected(matchBtn, true);
+                                matchBtn.setAttribute('data-auto-preferred', 'true');
+                            }
+                        }
+                        syncPrefsModalChaoticVisibility();
+                    }
+                };
+            });
+        }
+
+        if (playableContainer) {
+            playableContainer.querySelectorAll('.chip-btn').forEach(btn => {
+                btn.onclick = () => {
+                    const roleId = btn.getAttribute('data-role');
+                    btn.removeAttribute('data-auto-preferred');
+                    if (roleId === 'Any') {
+                        const isSelected = toggleChipSelected(btn);
+                        if (isSelected) {
+                            playableContainer.querySelectorAll('.chip-btn:not([data-role="Any"])').forEach(b => {
+                                b.removeAttribute('data-auto-preferred');
+                                setChipSelected(b, true);
+                            });
+                        }
+                    } else {
+                        toggleChipSelected(btn);
+                    }
+                    syncPrefsModalChaoticVisibility();
+                };
+            });
+        }
+
+        const partyContainer = document.getElementById('prefs-party-pref-chips');
+        if (partyContainer) {
+            partyContainer.querySelectorAll('.chip-btn').forEach(btn => {
+                btn.onclick = () => {
+                    const partyVal = btn.getAttribute('data-party');
+                    const anyBtn = partyContainer.querySelector('[data-party="Any"]');
+                    const specificBtns = Array.from(partyContainer.querySelectorAll('.chip-btn:not([data-party="Any"])'));
+                    if (partyVal === 'Any') {
+                        if (anyBtn) setChipSelected(anyBtn, true);
+                        specificBtns.forEach(b => setChipSelected(b, false));
+                    } else {
+                        toggleChipSelected(btn);
+                        const anySpecificSelected = specificBtns.some(b => b.classList.contains('selected'));
+                        if (anyBtn) setChipSelected(anyBtn, !anySpecificSelected);
+                    }
+                };
+            });
+        }
+
+        if (contentType === 'Chaotic') {
+            editor.querySelectorAll('.dynamic-jobs-box .chips-group .chip-btn').forEach(btn => {
+                btn.onclick = () => toggleChipSelected(btn);
+            });
+            editor.querySelectorAll('.btn-mini-toggle[data-prefs-toggle-group]').forEach(btn => {
+                btn.onclick = () => {
+                    const groupId = btn.getAttribute('data-prefs-toggle-group');
+                    const state = btn.getAttribute('data-toggle-state') === 'true';
+                    editor.querySelectorAll(`.chips-group[data-prefs-group="${groupId}"] .chip-btn`).forEach(b => {
+                        setChipSelected(b, state);
+                    });
+                };
+            });
+            syncPrefsModalChaoticVisibility();
+        } else if (contentType === 'FT:B' || contentType === 'FT:M') {
+            editor.querySelectorAll('#prefs-chips-phantom-exp .chip-btn, #prefs-chips-phantom-lvl .chip-btn').forEach(btn => {
+                btn.onclick = () => toggleChipSelected(btn);
+            });
+            editor.querySelectorAll('.btn-mini-toggle[data-prefs-toggle-target]').forEach(btn => {
+                btn.onclick = () => {
+                    const targetId = btn.getAttribute('data-prefs-toggle-target');
+                    const state = btn.getAttribute('data-toggle-state') === 'true';
+                    if (targetId === 'prefs-chips-phantom-exp' && state) {
+                        openPhantomExpWarningModal('modal');
+                        return;
+                    }
+                    editor.querySelectorAll(`#${targetId} .chip-btn`).forEach(b => {
+                        setChipSelected(b, state);
+                    });
+                };
+            });
+            const copyFtBtn = document.getElementById('btn-prefs-copy-other-ft');
+            if (copyFtBtn) {
+                copyFtBtn.onclick = () => {
+                    const otherFt = contentType === 'FT:B' ? 'FT:M' : 'FT:B';
+                    const store = loadSavedPreferencesStore();
+                    const otherLvl = (store.profiles[otherFt] && Array.isArray(store.profiles[otherFt].phantom_jobs_lvl))
+                        ? store.profiles[otherFt].phantom_jobs_lvl
+                        : [];
+                    editor.querySelectorAll('#prefs-chips-phantom-lvl .chip-btn').forEach(b => {
+                        setChipSelected(b, otherLvl.includes(b.getAttribute('data-job')));
+                    });
+                    showPrefsModalAlert(`Copied ${otherLvl.length} leveled Phantom Jobs from ${otherFt}.`, 'info');
+                };
+            }
+        } else if (contentType === 'BA') {
+            editor.querySelectorAll('#prefs-chips-logos-exp .chip-btn').forEach(b => {
+                b.onclick = () => toggleChipSelected(b);
+            });
+        } else if (contentType === 'DRS') {
+            editor.querySelectorAll('#prefs-chips-lost-exp .chip-btn').forEach(b => {
+                b.onclick = () => toggleChipSelected(b);
+            });
+        }
+
+        // Pre-populate if saved profile exists
+        if (check.sanitized) {
+            const p = check.sanitized;
+            if (prefRoleContainer && p.preferred_role) {
+                prefRoleContainer.querySelectorAll('.chip-btn').forEach(b => {
+                    setChipSelected(b, b.getAttribute('data-role') === p.preferred_role);
+                });
+            }
+            if (playableContainer && Array.isArray(p.playable_roles)) {
+                playableContainer.querySelectorAll('.chip-btn').forEach(b => {
+                    setChipSelected(b, p.playable_roles.includes(b.getAttribute('data-role')));
+                });
+            }
+            const progSelect = document.getElementById('prefs-input-prog-point');
+            if (progSelect) progSelect.value = p.prog_point || '';
+
+            if (partyContainer && p.party_preference) {
+                const parts = p.party_preference.split(',').map(s => s.trim()).filter(Boolean);
+                partyContainer.querySelectorAll('.chip-btn').forEach(b => {
+                    setChipSelected(b, parts.includes(b.getAttribute('data-party')));
+                });
+            }
+
+            if (contentType === 'Chaotic') {
+                syncPrefsModalChaoticVisibility();
+                ['tanks', 'healers', 'melee_dps', 'magical_dps', 'phys_ranged_dps'].forEach(group => {
+                    const jobs = Array.isArray(p[group]) ? p[group] : [];
+                    editor.querySelectorAll(`.chips-group[data-prefs-group="${group}"] .chip-btn`).forEach(b => {
+                        setChipSelected(b, jobs.includes(b.getAttribute('data-job')));
+                    });
+                });
+            } else if (contentType === 'FT:B' || contentType === 'FT:M') {
+                const expJobs = Array.isArray(p.phantom_jobs_exp) ? p.phantom_jobs_exp : [];
+                const lvlJobs = Array.isArray(p.phantom_jobs_lvl) ? p.phantom_jobs_lvl : [];
+                editor.querySelectorAll('#prefs-chips-phantom-exp .chip-btn').forEach(b => {
+                    setChipSelected(b, expJobs.includes(b.getAttribute('data-job')));
+                });
+                editor.querySelectorAll('#prefs-chips-phantom-lvl .chip-btn').forEach(b => {
+                    setChipSelected(b, lvlJobs.includes(b.getAttribute('data-job')));
+                });
+            } else if (contentType === 'BA') {
+                const logosExp = Array.isArray(p.logos_actions_exp) ? p.logos_actions_exp : [];
+                editor.querySelectorAll('#prefs-chips-logos-exp .chip-btn').forEach(b => {
+                    setChipSelected(b, logosExp.includes(b.getAttribute('data-action')));
+                });
+                const tryEl = document.getElementById('prefs-input-logos-try');
+                if (tryEl && p.logos_try_new) tryEl.value = p.logos_try_new;
+            } else if (contentType === 'DRS') {
+                const lostExp = Array.isArray(p.lost_actions_exp) ? p.lost_actions_exp : [];
+                editor.querySelectorAll('#prefs-chips-lost-exp .chip-btn').forEach(b => {
+                    setChipSelected(b, lostExp.includes(b.getAttribute('data-action')));
+                });
+                const tryEl = document.getElementById('prefs-input-lost-try');
+                if (tryEl && p.lost_try_new) tryEl.value = p.lost_try_new;
+                const duelEl = document.getElementById('prefs-input-drs-duel');
+                if (duelEl && p.duel) duelEl.value = p.duel;
+            }
+
+            if (check.status === 'outdated') {
+                highlightOutdatedFieldsInContainer(editor, check.outdatedFields);
+            }
+        }
+
+        prefsModalInitialSnapshot = getPrefsModalStateSnapshot();
+    }
+
+    function saveCurrentPrefsModalTab() {
+        const contentType = activePrefsTab;
+        const editor = document.getElementById('prefs-modal-editor');
+        if (!editor) return;
+
+        const prefRoleBtn = editor.querySelector('#prefs-preferred-role-chips .chip-btn.selected');
+        if (!prefRoleBtn) {
+            showPrefsModalAlert('Please select your preferred role.', 'error');
+            return;
+        }
+        const preferredRole = prefRoleBtn.getAttribute('data-role');
+
+        const playableRoles = Array.from(editor.querySelectorAll('#prefs-playable-roles-chips .chip-btn.selected'))
+            .map(b => b.getAttribute('data-role'));
+        if (playableRoles.length === 0) {
+            showPrefsModalAlert('Please select at least one playable role.', 'error');
+            return;
+        }
+
+        const progSelect = document.getElementById('prefs-input-prog-point');
+        const progPoint = progSelect ? progSelect.value : '';
+        if (!progPoint) {
+            showPrefsModalAlert('Please select your furthest progression point.', 'error');
+            if (progSelect) progSelect.focus();
+            return;
+        }
+
+        const partyContainer = document.getElementById('prefs-party-pref-chips');
+        let partyPref = 'Any';
+        if (partyContainer) {
+            const anyBtn = partyContainer.querySelector('[data-party="Any"]');
+            if (!anyBtn || !anyBtn.classList.contains('selected')) {
+                const selectedParties = Array.from(partyContainer.querySelectorAll('.chip-btn.selected:not([data-party="Any"])'))
+                    .map(b => b.getAttribute('data-party'));
+                partyPref = selectedParties.length > 0 ? selectedParties.join(', ') : 'Any';
+            }
+        }
+
+        const profile = {
+            schema_version: CONTENT_SCHEMA_VERSIONS[contentType] || 1,
+            preferred_role: preferredRole,
+            playable_roles: playableRoles,
+            prog_point: progPoint,
+            party_preference: partyPref
+        };
+
+        if (contentType === 'Chaotic') {
+            const getJobs = (group) => Array.from(editor.querySelectorAll(`.chips-group[data-prefs-group="${group}"] .chip-btn.selected`))
+                .map(b => b.getAttribute('data-job'));
+            profile.tanks = (playableRoles.includes('Tank') || playableRoles.includes('Any')) ? getJobs('tanks') : [];
+            profile.healers = (playableRoles.includes('Regen Healer') || playableRoles.includes('Shield Healer') || playableRoles.includes('Any')) ? getJobs('healers') : [];
+            profile.melee_dps = (playableRoles.includes('Melee DPS') || playableRoles.includes('Any')) ? getJobs('melee_dps') : [];
+            profile.magical_dps = (playableRoles.includes('Magical DPS') || playableRoles.includes('Any')) ? getJobs('magical_dps') : [];
+            profile.phys_ranged_dps = (playableRoles.includes('Physical Ranged DPS') || playableRoles.includes('Any')) ? getJobs('phys_ranged_dps') : [];
+
+            if ((playableRoles.includes('Tank') || playableRoles.includes('Any')) && profile.tanks.length === 0) {
+                showPrefsModalAlert('Please select at least one job you can play for Tanks.', 'error');
+                return;
+            }
+            if ((playableRoles.includes('Regen Healer') || playableRoles.includes('Shield Healer') || playableRoles.includes('Any')) && profile.healers.length === 0) {
+                showPrefsModalAlert('Please select at least one job you can play for Healers.', 'error');
+                return;
+            }
+            if ((playableRoles.includes('Melee DPS') || playableRoles.includes('Any')) && profile.melee_dps.length === 0) {
+                showPrefsModalAlert('Please select at least one job you can play for Melee DPS.', 'error');
+                return;
+            }
+            if ((playableRoles.includes('Magical DPS') || playableRoles.includes('Any')) && profile.magical_dps.length === 0) {
+                showPrefsModalAlert('Please select at least one job you can play for Magical DPS.', 'error');
+                return;
+            }
+            if ((playableRoles.includes('Physical Ranged DPS') || playableRoles.includes('Any')) && profile.phys_ranged_dps.length === 0) {
+                showPrefsModalAlert('Please select at least one job you can play for Physical Ranged DPS.', 'error');
+                return;
+            }
+        } else if (contentType === 'FT:B' || contentType === 'FT:M') {
+            profile.phantom_jobs_exp = Array.from(editor.querySelectorAll('#prefs-chips-phantom-exp .chip-btn.selected')).map(b => b.getAttribute('data-job'));
+            profile.phantom_jobs_lvl = Array.from(editor.querySelectorAll('#prefs-chips-phantom-lvl .chip-btn.selected')).map(b => b.getAttribute('data-job'));
+            if (profile.phantom_jobs_lvl.length < 6) {
+                showPrefsModalAlert('You are required to have at least 6 phantom jobs leveled.', 'error');
+                return;
+            }
+        } else if (contentType === 'BA') {
+            profile.logos_actions_exp = Array.from(editor.querySelectorAll('#prefs-chips-logos-exp .chip-btn.selected')).map(b => b.getAttribute('data-action'));
+            const tryEl = document.getElementById('prefs-input-logos-try');
+            profile.logos_try_new = tryEl ? tryEl.value : 'No';
+        } else if (contentType === 'DRS') {
+            profile.lost_actions_exp = Array.from(editor.querySelectorAll('#prefs-chips-lost-exp .chip-btn.selected')).map(b => b.getAttribute('data-action'));
+            const tryEl = document.getElementById('prefs-input-lost-try');
+            const duelEl = document.getElementById('prefs-input-drs-duel');
+            profile.lost_try_new = tryEl ? tryEl.value : 'No';
+            profile.duel = duelEl ? duelEl.value : 'No';
+        }
+
+        savePreferencesForContent(contentType, profile);
+        renderPrefsModalTab(contentType);
+        showPrefsModalAlert(`Saved ${contentType} preferences!`, 'success');
+
+        if (selectedEvent && selectedEvent.content_type === contentType) {
+            applySavedPrefsToStep2Form(contentType);
+        }
+    }
+
+    function clearCurrentPrefsModalTab() {
+        const contentType = activePrefsTab;
+        if (!window.confirm(`Reset your saved ${contentType} preferences on this device?`)) return;
+        clearPreferencesForContent(contentType);
+        renderPrefsModalTab(contentType);
+        showPrefsModalAlert(`Reset saved preferences for ${contentType}.`, 'info');
+        if (selectedEvent && selectedEvent.content_type === contentType) {
+            renderFormInputs();
+        }
+    }
+
+    // ── Cross-Device Transfer: Share Code & JSON Export/Import ───────────────────
+
+    function encodePrefsShareCode() {
+        const store = loadSavedPreferencesStore();
+        const keys = Object.keys(store.profiles || {});
+        if (keys.length === 0) return null;
+        const jsonStr = JSON.stringify({ version: 1, profiles: store.profiles });
+        const bytes = new TextEncoder().encode(jsonStr);
+        let binary = '';
+        bytes.forEach(b => { binary += String.fromCharCode(b); });
+        const b64 = btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        return `ALNR1:${b64}`;
+    }
+
+    function decodeAndImportPrefsPayload(rawInput) {
+        if (!rawInput || typeof rawInput !== 'string') {
+            throw new Error('Please provide a valid share code or JSON payload.');
+        }
+        const trimmed = rawInput.trim();
+        let parsed = null;
+
+        if (trimmed.startsWith('ALNR1:')) {
+            let b64 = trimmed.slice(6).trim().replace(/-/g, '+').replace(/_/g, '/');
+            while (b64.length % 4 !== 0) b64 += '=';
+            const binary = atob(b64);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) {
+                bytes[i] = binary.charCodeAt(i);
+            }
+            const jsonStr = new TextDecoder().decode(bytes);
+            parsed = JSON.parse(jsonStr);
+        } else {
+            parsed = JSON.parse(trimmed);
+        }
+
+        if (!parsed || typeof parsed !== 'object' || typeof parsed.profiles !== 'object' || !parsed.profiles) {
+            throw new Error('Invalid preferences format.');
+        }
+
+        const store = loadSavedPreferencesStore();
+        let importedCount = 0;
+
+        CONTENT_TYPES.forEach(ct => {
+            if (parsed.profiles[ct] && typeof parsed.profiles[ct] === 'object') {
+                const check = validateSavedProfile(ct, parsed.profiles[ct]);
+                if (check.sanitized) {
+                    const toSave = Object.assign({}, check.sanitized);
+                    // Preserve original schema version if outdated so user gets prompted to review any invalid field
+                    if (check.status === 'complete') {
+                        toSave.schema_version = CONTENT_SCHEMA_VERSIONS[ct] || 1;
+                    }
+                    store.profiles[ct] = toSave;
+                    importedCount++;
+                }
+            }
+        });
+
+        if (importedCount === 0) {
+            throw new Error('No recognized content profiles found in the imported data.');
+        }
+
+        writeSavedPreferencesStore(store);
+        return importedCount;
+    }
+
     // ── Init on DOM Ready ────────────────────────────────────────────────────────
 
     document.addEventListener('DOMContentLoaded', async () => {
-        // 1. Auth code check & verify session
-        await handleAuthCodeIfPresent();
-        if (!currentUser) {
-            await verifyExistingSession();
-        }
-        renderAuthBanner();
-
-        // 2. Load events
-        await loadEvents();
-        await loadMySignups();
-
-        // 3. Category Filter Buttons
+        // 1. Category Filter Buttons
         document.querySelectorAll('.filter-pill').forEach(pill => {
             pill.onclick = () => {
                 document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
@@ -1722,16 +2985,149 @@
             };
         });
 
-        // 4. Character limit validation listeners
+        // 2. Character limit validation listeners
         setupCharacterLimitValidations();
 
-        // 5. Submit button
+        // 3. Submit & Inline Save Preferences buttons
         const submitBtn = document.getElementById('btn-submit-form');
         if (submitBtn) {
             submitBtn.onclick = submitSignup;
         }
+        const savePrefsInlineBtn = document.getElementById('btn-save-prefs-inline');
+        if (savePrefsInlineBtn) {
+            savePrefsInlineBtn.onclick = handleSavePrefsInline;
+        }
 
-        // 6. Application modal close listeners
+        // 4. Saved Preferences Modal listeners (attached immediately so modal works before runs finish loading)
+        const openPrefsBtn = document.getElementById('btn-open-prefs-modal');
+        const prefsModalBackdrop = document.getElementById('prefs-modal-backdrop');
+        const prefsModalCloseBtn = document.getElementById('prefs-modal-close-btn');
+        const prefsModalDismissBtn = document.getElementById('prefs-modal-dismiss-btn');
+        if (openPrefsBtn) openPrefsBtn.onclick = () => openPrefsModal();
+        if (prefsModalCloseBtn) prefsModalCloseBtn.onclick = () => closePrefsModal();
+        if (prefsModalDismissBtn) prefsModalDismissBtn.onclick = () => closePrefsModal();
+        if (prefsModalBackdrop) {
+            prefsModalBackdrop.onclick = (e) => {
+                if (e.target === prefsModalBackdrop) closePrefsModal();
+            };
+        }
+
+        document.querySelectorAll('#prefs-content-tabs .prefs-tab-btn').forEach(tabBtn => {
+            tabBtn.onclick = () => {
+                const tab = tabBtn.getAttribute('data-pref-tab');
+                if (!tab || tab === activePrefsTab) return;
+                if (hasUnsavedPrefsModalChanges()) {
+                    if (!window.confirm(`You have unsaved changes for ${activePrefsTab}. Switch to ${tab} without saving?`)) {
+                        return;
+                    }
+                }
+                renderPrefsModalTab(tab);
+            };
+        });
+
+        const prefsSaveTabBtn = document.getElementById('btn-prefs-save-tab');
+        const prefsClearTabBtn = document.getElementById('btn-prefs-clear-tab');
+        if (prefsSaveTabBtn) prefsSaveTabBtn.onclick = saveCurrentPrefsModalTab;
+        if (prefsClearTabBtn) prefsClearTabBtn.onclick = clearCurrentPrefsModalTab;
+
+        // Share code & JSON Export/Import listeners
+        const copyShareBtn = document.getElementById('btn-copy-share-code');
+        const applyShareBtn = document.getElementById('btn-apply-share-code');
+        const shareInput = document.getElementById('input-prefs-share-code');
+        const exportJsonBtn = document.getElementById('btn-export-prefs-json');
+        const importJsonBtn = document.getElementById('btn-import-prefs-json');
+        const importFileInput = document.getElementById('input-import-prefs-file');
+        const clearAllPrefsBtn = document.getElementById('btn-clear-all-prefs');
+
+        if (copyShareBtn) {
+            copyShareBtn.onclick = async () => {
+                const code = encodePrefsShareCode();
+                if (!code) {
+                    showPrefsModalAlert('No saved preferences to export yet. Save at least one content tab first.', 'error');
+                    return;
+                }
+                if (shareInput) shareInput.value = code;
+                try {
+                    await navigator.clipboard.writeText(code);
+                    showPrefsModalAlert('Share code copied to clipboard! Paste it on your other device.', 'success');
+                } catch (e) {
+                    showPrefsModalAlert('Share code generated in the box above - copy it to use on another device.', 'info');
+                }
+            };
+        }
+
+        if (applyShareBtn) {
+            applyShareBtn.onclick = () => {
+                const val = shareInput ? shareInput.value.trim() : '';
+                if (!val) {
+                    showPrefsModalAlert('Please paste an ALNR1:... share code into the box first.', 'error');
+                    return;
+                }
+                try {
+                    const count = decodeAndImportPrefsPayload(val);
+                    renderPrefsModalTab(activePrefsTab);
+                    if (selectedEvent) applySavedPrefsToStep2Form(selectedEvent.content_type);
+                    showPrefsModalAlert(`Successfully imported preferences for ${count} content type(s)!`, 'success');
+                } catch (err) {
+                    showPrefsModalAlert(`Import failed: ${err.message}`, 'error');
+                }
+            };
+        }
+
+        if (exportJsonBtn) {
+            exportJsonBtn.onclick = () => {
+                const store = loadSavedPreferencesStore();
+                if (Object.keys(store.profiles || {}).length === 0) {
+                    showPrefsModalAlert('No saved preferences to export yet. Save at least one content tab first.', 'error');
+                    return;
+                }
+                const blob = new Blob([JSON.stringify(store, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'alnr-signup-preferences.json';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+                showPrefsModalAlert('Downloaded alnr-signup-preferences.json.', 'success');
+            };
+        }
+
+        if (importJsonBtn && importFileInput) {
+            importJsonBtn.onclick = () => importFileInput.click();
+            importFileInput.onchange = (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    try {
+                        const count = decodeAndImportPrefsPayload(String(reader.result || ''));
+                        renderPrefsModalTab(activePrefsTab);
+                        if (selectedEvent) applySavedPrefsToStep2Form(selectedEvent.content_type);
+                        showPrefsModalAlert(`Successfully imported preferences for ${count} content type(s) from file!`, 'success');
+                    } catch (err) {
+                        showPrefsModalAlert(`JSON file import failed: ${err.message}`, 'error');
+                    } finally {
+                        importFileInput.value = '';
+                    }
+                };
+                reader.readAsText(file);
+            };
+        }
+
+        if (clearAllPrefsBtn) {
+            clearAllPrefsBtn.onclick = () => {
+                if (!window.confirm('Are you sure you want to delete all saved signup preferences on this device?')) return;
+                clearAllSavedPreferences();
+                if (shareInput) shareInput.value = '';
+                renderPrefsModalTab(activePrefsTab);
+                if (selectedEvent) renderFormInputs();
+                showPrefsModalAlert('All saved preferences have been cleared from this device.', 'info');
+            };
+        }
+
+        // 5. Application modal close listeners
         const modalBackdrop = document.getElementById('application-modal-backdrop');
         const modalCloseBtn = document.getElementById('modal-close-btn');
         const modalDismissBtn = document.getElementById('modal-dismiss-btn');
@@ -1743,7 +3139,7 @@
             };
         }
 
-        // 7. Phantom Job Experience warning modal listeners
+        // 6. Phantom Job Experience warning modal listeners
         const phantomWarningBackdrop = document.getElementById('phantom-exp-warning-backdrop');
         const phantomWarningCloseBtn = document.getElementById('phantom-warning-close-btn');
         const phantomWarningCancelBtn = document.getElementById('phantom-warning-cancel-btn');
@@ -1759,9 +3155,25 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
+                const phantomBackdrop = document.getElementById('phantom-exp-warning-backdrop');
+                if (phantomBackdrop && phantomBackdrop.style.display !== 'none') {
+                    closePhantomExpWarningModal();
+                    return;
+                }
                 closeApplicationModal();
-                closePhantomExpWarningModal();
+                closePrefsModal();
             }
         });
+
+        // 8. Auth code check, verify session & load events
+        await handleAuthCodeIfPresent();
+        if (!currentUser) {
+            await verifyExistingSession();
+        }
+        renderAuthBanner();
+        updatePrefsCogBadge();
+
+        await loadEvents();
+        await loadMySignups();
     });
 })();

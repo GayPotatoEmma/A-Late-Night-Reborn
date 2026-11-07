@@ -57,7 +57,10 @@
     <script src="js/nav.js"></script>
     <script>
         (function () {
-            fetch('https://api.alatenightreborn.com/api/mod/lite-dashboard.js', { credentials: 'include' })
+            fetch('https://api.alatenightreborn.com/api/mod/lite-dashboard?t=' + Date.now(), {
+                credentials: 'include',
+                cache: 'no-store'
+            })
                 .then(function (r) {
                     if (!r.ok) {
                         window.location.replace('signups.html');

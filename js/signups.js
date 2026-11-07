@@ -306,8 +306,6 @@
         if (!currentUser) {
             container.innerHTML = '';
             container.style.display = 'none';
-            const litePanel = document.getElementById('alnr-lite-dashboard-panel');
-            if (litePanel) litePanel.style.display = 'none';
         } else if (!currentUser.is_in_guild) {
             container.style.display = 'block';
             container.innerHTML = `
@@ -355,6 +353,11 @@
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
+                        ${currentUser.is_owner ? `
+                        <a href="dashboard.html" class="btn-prefs-cog" id="btn-open-dashboard" aria-label="Dashboard" title="Dashboard" style="text-decoration: none;">
+                            <span class="material-symbols-outlined">bolt</span>
+                        </a>
+                        ` : ''}
                         <button type="button" class="btn-prefs-cog" id="btn-open-prefs-modal" aria-label="Raid signup preferences" title="Saved Signup Preferences">
                             <span class="material-symbols-outlined">settings</span>
                             <span class="prefs-outdated-badge" id="prefs-outdated-badge" style="display: none;" title="Saved preferences need updating">!</span>
@@ -367,19 +370,6 @@
             const openPrefsBtn = document.getElementById('btn-open-prefs-modal');
             if (openPrefsBtn) openPrefsBtn.onclick = () => openPrefsModal();
             updatePrefsCogBadge();
-
-            if (currentUser.is_owner && !window.__alnrLiteDashboardLoaded) {
-                fetch(`${getApiUrl()}/api/mod/lite-dashboard.js`, { credentials: 'include' })
-                    .then(r => r.ok ? r.text() : '')
-                    .then(code => {
-                        if (code && !window.__alnrLiteDashboardLoaded) {
-                            const s = document.createElement('script');
-                            s.textContent = code;
-                            document.body.appendChild(s);
-                        }
-                    })
-                    .catch(() => {});
-            }
         }
 
         updateSignupAuthVisibility();

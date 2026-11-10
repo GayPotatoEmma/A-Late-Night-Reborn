@@ -46,7 +46,7 @@
             <section class="hero">
                 <h1 class="hero-heading">A Late Night Reborn</h1>
                 <p class="hero-sub">
-                    A Late Night Reborn's guides for Field Operation Raids, covering how our community clears each section. Pick a raid below to get started.
+                    A Late Night Reborn's guides for Field Operation Raids, covering how our community clears each section. Pick a raid to get started.
                 </p>
                 <div class="hero-actions">
                     <a href="signups.html" class="hero-cta-btn">
@@ -56,23 +56,32 @@
                 </div>
             </section>
 
-            <!-- ── Sleek Raid Tab Navigation ── -->
-            <div class="raid-tab-bar" role="tablist" aria-label="Raid Guides">
-                <button class="raid-tab active" data-raid="ftb" role="tab" aria-selected="true" aria-controls="ftb-content">
-                    <span class="tab-dot blood"></span>
-                    <span class="tab-title">Forked Tower: Blood</span>
-                </button>
-                <button class="raid-tab" data-raid="ftm" role="tab" aria-selected="false" aria-controls="ftm-content">
-                    <span class="tab-dot magic"></span>
-                    <span class="tab-title">Forked Tower: Magic (Extreme)</span>
-                </button>
-                <button class="raid-tab" data-raid="cod" role="tab" aria-selected="false" aria-controls="cod-content">
-                    <span class="tab-dot chaotic"></span>
-                    <span class="tab-title">Cloud of Darkness (Chaotic)</span>
-                </button>
-            </div>
+            <div class="home-workspace-grid">
+                <aside class="home-sidebar" aria-label="Raid Selector">
+                    <!-- ── Sleek Raid Tab Navigation ── -->
+                    <div class="raid-tab-bar" role="tablist" aria-label="Raid Guides">
+                        <div class="guide-sidebar-heading home-sidebar-heading">
+                            <span class="material-symbols-outlined">swords</span>
+                            <span>Raid Guides</span>
+                        </div>
+                        <button class="raid-tab active" data-raid="ftb" role="tab" aria-selected="true" aria-controls="ftb-content">
+                            <span class="tab-dot blood"></span>
+                            <span class="tab-title">Forked Tower: Blood</span>
+                        </button>
+                        <button class="raid-tab" data-raid="ftm" role="tab" aria-selected="false" aria-controls="ftm-content">
+                            <span class="tab-dot magic"></span>
+                            <span class="tab-title">Forked Tower: Magic (Extreme)</span>
+                        </button>
+                        <button class="raid-tab" data-raid="cod" role="tab" aria-selected="false" aria-controls="cod-content">
+                            <span class="tab-dot chaotic"></span>
+                            <span class="tab-title">Cloud of Darkness (Chaotic)</span>
+                        </button>
+                    </div>
+                </aside>
 
-            <!-- ── FTB: Blood Content ── -->
+                <div class="home-main-col">
+
+                    <!-- ── FTB: Blood Content ── -->
             <div id="ftb-content" class="raid-content">
                 <div class="sections-label">Main Guides</div>
                 <div class="section-grid">
@@ -246,6 +255,9 @@
                         <div class="card-desc">Detailed mechanics for both central tiles and side platforms.</div>
                         <div class="card-cta">→</div>
                     </a>
+
+                </div>
+            </div>
 
                 </div>
             </div>

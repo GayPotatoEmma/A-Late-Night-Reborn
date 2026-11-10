@@ -438,7 +438,8 @@
       .replace(/\/index\.html$|\/index$|\.html$/, '')
       .replace(/\/$/, '') || '/';
 
-    if (linkPath === currentPath) {
+    var isMatch = (linkPath === currentPath) || (linkPath !== '/' && currentPath.length > linkPath.length && currentPath.slice(-linkPath.length) === linkPath);
+    if (isMatch) {
       link.classList.add('nav-current');
       var section = link.closest('.nav-section');
       if (section) {
@@ -454,4 +455,154 @@
       }
     }
   });
+
+  // Enhance guide pages with a desktop 2-column workspace layout & sticky TOC sidebar
+  var mainEl = document.querySelector('main.main-content');
+  var pageHeader = mainEl ? mainEl.querySelector('.page-header') : null;
+  var contentCards = mainEl ? Array.prototype.slice.call(mainEl.querySelectorAll('.content-card[id]')) : [];
+
+  if (mainEl && pageHeader && contentCards.length > 0 && !mainEl.querySelector('.guide-workspace-grid')) {
+    var workspaceGrid = document.createElement('div');
+    workspaceGrid.className = 'guide-workspace-grid';
+
+    var sidebar = document.createElement('aside');
+    sidebar.className = 'guide-sidebar';
+    sidebar.setAttribute('aria-label', 'Guide navigation');
+
+    // 1. On This Page (TOC Card)
+    var tocCard = document.createElement('div');
+    tocCard.className = 'guide-sidebar-card guide-toc-card';
+    var tocHeading = document.createElement('div');
+    tocHeading.className = 'guide-sidebar-heading';
+    tocHeading.innerHTML = '<span class="material-symbols-outlined">toc</span><span>On This Page</span>';
+    tocCard.appendChild(tocHeading);
+
+    var tocList = document.createElement('nav');
+    tocList.className = 'guide-toc-list';
+    var tocLinks = [];
+
+    contentCards.forEach(function (card, idx) {
+      var id = card.getAttribute('id');
+      var h2 = card.querySelector('.card-heading');
+      if (!id || !h2) return;
+      var a = document.createElement('a');
+      a.href = '#' + id;
+      a.className = 'guide-toc-link' + (idx === 0 ? ' active' : '');
+      a.setAttribute('data-target', id);
+      a.textContent = h2.textContent.trim();
+      tocList.appendChild(a);
+      tocLinks.push({ id: id, el: card, link: a });
+    });
+
+    tocCard.appendChild(tocList);
+    sidebar.appendChild(tocCard);
+
+    // 2. Raid Guides Quick-Switcher Card
+    var activeRaidGroup = document.querySelector('.nav-raid-group.expanded') ||
+      (inFTB ? document.getElementById('nav-raid-ftb') :
+       inFTM ? document.getElementById('nav-raid-ftm') :
+       inCOD ? document.getElementById('nav-raid-cod') : null);
+
+    if (activeRaidGroup) {
+      var raidCard = document.createElement('div');
+      raidCard.className = 'guide-sidebar-card guide-raid-card';
+      var raidHeaderSpan = activeRaidGroup.querySelector('.nav-raid-header span');
+      var raidTitle = raidHeaderSpan ? raidHeaderSpan.textContent.trim() : 'Raid Guides';
+
+      var raidHeading = document.createElement('div');
+      raidHeading.className = 'guide-sidebar-heading';
+      raidHeading.innerHTML = '<span class="material-symbols-outlined">menu_book</span><span>' + raidTitle + '</span>';
+      raidCard.appendChild(raidHeading);
+
+      var raidList = document.createElement('nav');
+      raidList.className = 'guide-raid-list';
+
+      activeRaidGroup.querySelectorAll('.nav-section').forEach(function (sec) {
+        var pageLink = sec.querySelector('.nav-page-link');
+        var badge = sec.querySelector('.nav-badge');
+        if (!pageLink) return;
+        var a = document.createElement('a');
+        a.href = pageLink.getAttribute('href');
+        var isCurrent = pageLink.classList.contains('nav-current');
+        a.className = 'guide-raid-link' + (isCurrent ? ' active' : '');
+
+        var titleSpan = document.createElement('span');
+        titleSpan.className = 'guide-raid-link-title';
+        titleSpan.textContent = pageLink.textContent.trim();
+        a.appendChild(titleSpan);
+
+        if (badge) {
+          var badgeClone = badge.cloneNode(true);
+          a.appendChild(badgeClone);
+        }
+        raidList.appendChild(a);
+      });
+
+      raidCard.appendChild(raidList);
+      sidebar.appendChild(raidCard);
+    }
+
+    var mainCol = document.createElement('div');
+    mainCol.className = 'guide-main-col';
+
+    var isPhantomJobsPage = window.location.pathname.indexOf('phantom-jobs') !== -1;
+    var jobsGrid = null;
+    if (isPhantomJobsPage && contentCards.length > 2) {
+      jobsGrid = document.createElement('div');
+      jobsGrid.className = 'guide-cards-grid';
+    }
+
+    contentCards.forEach(function (card) {
+      if (jobsGrid && card.getAttribute('id') !== 'overview') {
+        jobsGrid.appendChild(card);
+      } else {
+        mainCol.appendChild(card);
+      }
+    });
+
+    if (jobsGrid && jobsGrid.children.length > 0) {
+      mainCol.appendChild(jobsGrid);
+    }
+
+    var sectionNav = mainEl.querySelector('.section-nav');
+    if (sectionNav) {
+      mainCol.appendChild(sectionNav);
+    }
+
+    workspaceGrid.appendChild(sidebar);
+    workspaceGrid.appendChild(mainCol);
+    mainEl.appendChild(workspaceGrid);
+
+    // Scroll-spy for TOC links
+    var ticking = false;
+    function updateActiveToc() {
+      ticking = false;
+      if (!tocLinks.length) return;
+      var scrollThreshold = 130;
+      var activeItem = tocLinks[0];
+      for (var i = 0; i < tocLinks.length; i++) {
+        var rect = tocLinks[i].el.getBoundingClientRect();
+        if (rect.top <= scrollThreshold) {
+          activeItem = tocLinks[i];
+        } else {
+          break;
+        }
+      }
+      tocLinks.forEach(function (item) {
+        if (item === activeItem) {
+          item.link.classList.add('active');
+        } else {
+          item.link.classList.remove('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(updateActiveToc);
+        ticking = true;
+      }
+    }, { passive: true });
+    updateActiveToc();
+  }
 })();

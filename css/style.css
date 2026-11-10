@@ -88,7 +88,7 @@ img { max-width: 100%; display: block; }
 }
 
 .header-inner {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: .8rem 1.5rem;
   display: flex;
@@ -418,10 +418,20 @@ img { max-width: 100%; display: block; }
 
 .main-content {
   flex: 1;
-  max-width: 1200px;
+  max-width: 1600px;
   width: 100%;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 3.5rem;
+  padding: 2.25rem 1.5rem 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .header-inner {
+    padding: 0.8rem 2rem;
+  }
+
+  .main-content {
+    padding: 2.25rem 2rem 3.5rem;
+  }
 }
 
 /* ── Hero (Landing) ───────────────────────────────── */
@@ -463,7 +473,7 @@ img { max-width: 100%; display: block; }
 .hero-sub {
   font-size: 1rem;
   color: var(--text-secondary);
-  max-width: 520px;
+  max-width: 640px;
   margin: 0 auto 1.5rem;
   font-weight: 300;
   letter-spacing: .01em;
@@ -1267,6 +1277,7 @@ details.accordion-item[open] > summary {
 .tab-dot {
   width: 8px;
   height: 8px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: var(--text-muted);
   transition: transform var(--transition), background var(--transition);
@@ -1451,6 +1462,7 @@ html.theme-transitioning .site-header,
 html.theme-transitioning .nav-panel,
 html.theme-transitioning .section-card,
 html.theme-transitioning .content-card,
+html.theme-transitioning .guide-sidebar-card,
 html.theme-transitioning .glass-card,
 html.theme-transitioning .raid-tab-bar,
 html.theme-transitioning .raid-tab,
@@ -1948,6 +1960,230 @@ html.theme-transitioning .input-textarea {
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(252, 212, 200, 0.28) 20%, rgba(178, 145, 247, 0.4) 50%, rgba(252, 212, 200, 0.28) 80%, transparent 100%);
   margin: 2.25rem 0 1.75rem;
+}
+
+/* ── Desktop Guide Workspace Layout (Wide View) ─────────── */
+.page-subtitle {
+  max-width: 1020px;
+  line-height: 1.65;
+}
+
+.guide-workspace-grid,
+.home-workspace-grid {
+  display: block;
+}
+
+.guide-sidebar {
+  display: none;
+}
+
+.home-sidebar-heading {
+  display: none;
+}
+
+.guide-main-col,
+.home-main-col {
+  min-width: 0;
+}
+
+.guide-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+
+.guide-cards-grid > .content-card {
+  margin-bottom: 0;
+  height: 100%;
+}
+
+@media (min-width: 960px) {
+  .guide-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1120px) {
+  .guide-workspace-grid,
+  .home-workspace-grid {
+    display: grid;
+    grid-template-columns: 270px minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: start;
+  }
+
+  .guide-sidebar,
+  .home-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    position: sticky;
+    top: 5.25rem;
+    max-height: calc(100vh - 6.25rem);
+    overflow-y: auto;
+    padding-right: 2px;
+    scrollbar-width: thin;
+  }
+
+  .home-sidebar-heading {
+    display: flex;
+  }
+
+  .home-sidebar .raid-tab-bar {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0.45rem;
+    padding: 1.15rem 1.1rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 0;
+  }
+
+  .home-sidebar .raid-tab {
+    flex: none;
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.7rem 0.85rem;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.35;
+  }
+
+  .section-img {
+    max-height: 620px;
+  }
+
+  .img-row.double .section-img {
+    max-height: 600px;
+  }
+}
+
+.guide-sidebar-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: 1.15rem 1.1rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+.guide-sidebar-heading {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0 0.35rem 0.65rem;
+  margin-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.guide-sidebar-heading .material-symbols-outlined {
+  font-size: 1rem;
+  color: var(--accent-purple);
+}
+
+.guide-toc-list,
+.guide-raid-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.guide-toc-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.81rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  transition: color var(--transition), background var(--transition), border-color var(--transition);
+  border-left: 2px solid transparent;
+}
+
+.guide-toc-link:hover {
+  color: var(--text-primary);
+  background: rgba(178, 145, 247, 0.08);
+}
+
+.guide-toc-link.active {
+  color: var(--text-primary);
+  font-weight: 600;
+  background: rgba(178, 145, 247, 0.14);
+  border-left-color: var(--accent-purple);
+}
+
+.guide-raid-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.42rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.81rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.3;
+  transition: color var(--transition), background var(--transition);
+}
+
+.guide-raid-link:hover {
+  color: var(--text-primary);
+  background: rgba(178, 145, 247, 0.08);
+}
+
+.guide-raid-link.active {
+  color: var(--accent-purple);
+  font-weight: 600;
+  background: rgba(178, 145, 247, 0.13);
+}
+
+.guide-raid-link-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-theme^="light"] .guide-sidebar-heading {
+  border-bottom-color: rgba(0, 0, 0, 0.07);
+}
+
+[data-theme^="light"] .guide-toc-link:hover,
+[data-theme^="light"] .guide-raid-link:hover {
+  background: rgba(124, 58, 237, 0.07);
+}
+
+[data-theme^="light"] .guide-toc-link.active,
+[data-theme^="light"] .guide-raid-link.active {
+  background: rgba(124, 58, 237, 0.12);
+}
+
+[data-theme*="lite"] .guide-sidebar-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+[data-theme="dark-lite"] .guide-sidebar-card {
+  background: #141634 !important;
+}
+
+[data-theme="light-lite"] .guide-sidebar-card {
+  background: #ffffff !important;
 }
 
 /* ── Accessibility: Reduced Motion ───────────────────────── */

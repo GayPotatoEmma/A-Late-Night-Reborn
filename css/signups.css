@@ -3,8 +3,8 @@
    ===================================================== */
 
 .main-content {
-  max-width: 1480px;
-  padding: 1.5rem 2rem 3.5rem;
+  max-width: 1600px;
+  padding: 1.5rem 1.5rem 3.5rem;
 }
 
 .signups-container {
@@ -136,13 +136,7 @@
 }
 
 @media (min-width: 1024px) {
-  .header-inner {
-    max-width: 1520px;
-    padding: 0.8rem 2rem;
-  }
-
   .main-content {
-    max-width: 1520px;
     padding: 1.5rem 2rem 3.5rem;
   }
 

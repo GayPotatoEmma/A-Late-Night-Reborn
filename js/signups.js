@@ -379,10 +379,14 @@
         const fieldsSection = document.getElementById('signup-fields-section');
         const connectPrompt = document.getElementById('signup-connect-prompt');
         const alreadyRegisteredBox = document.getElementById('signup-already-registered-box');
+        const fullWarningBanner = document.getElementById('selected-run-full-warning');
+        const fullWarningCounts = document.getElementById('selected-run-full-counts');
         const promptIcon = connectPrompt ? connectPrompt.querySelector('.signup-connect-icon') : null;
         const promptTitle = document.getElementById('signup-connect-title');
         const promptDesc = document.getElementById('signup-connect-desc');
         const promptAction = document.getElementById('signup-connect-action');
+
+        let isAlreadySignedUp = false;
 
         if (currentUser && currentUser.is_in_guild) {
             if (connectPrompt) connectPrompt.style.display = 'none';
@@ -395,6 +399,7 @@
             }) : null;
 
             if (existingSignup) {
+                isAlreadySignedUp = true;
                 if (fieldsSection) fieldsSection.style.display = 'none';
                 if (alreadyRegisteredBox) {
                     alreadyRegisteredBox.style.display = 'flex';
@@ -471,6 +476,19 @@
                     const inlineBtn = document.getElementById('btn-discord-login-inline');
                     if (inlineBtn) inlineBtn.onclick = initiateDiscordLogin;
                 }
+            }
+        }
+
+        if (fullWarningBanner) {
+            if (selectedEvent && selectedEvent.is_roster_full && !isAlreadySignedUp) {
+                const maxSlots = selectedEvent.max_slots || (selectedEvent.content_type === 'Chaotic' ? 24 : 48);
+                const rosterCount = selectedEvent.roster_count || maxSlots;
+                if (fullWarningCounts) {
+                    fullWarningCounts.textContent = `${rosterCount}/${maxSlots}`;
+                }
+                fullWarningBanner.style.display = 'flex';
+            } else {
+                fullWarningBanner.style.display = 'none';
             }
         }
     }
@@ -611,11 +629,15 @@
             }
 
             const isDisabled = Boolean(ev.is_closed || ev.is_cancelled);
+            const maxSlots = ev.max_slots || (ev.content_type === 'Chaotic' ? 24 : 48);
+            const rosterCount = ev.roster_count || maxSlots;
             const statusBadge = ev.is_cancelled
                 ? `<span class="run-cancelled-badge"><span class="material-symbols-outlined" style="font-size: 0.95rem;">cancel</span> Cancelled</span>`
                 : ev.is_closed
                     ? `<span class="run-closed-badge"><span class="material-symbols-outlined" style="font-size: 0.95rem;">lock</span> Closed (${ev.signup_count})</span>`
-                    : `<span class="run-card-count"><span class="material-symbols-outlined" style="font-size: 1rem;">group</span> ${ev.signup_count} signed up</span>`;
+                    : ev.is_roster_full
+                        ? `<div style="display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap;"><span class="run-backups-badge" title="Main roster is full (${rosterCount}/${maxSlots}) - signups are still open for backups"><span class="material-symbols-outlined" style="font-size: 0.95rem;">warning</span> Roster Full · Backups Open</span><span class="run-card-count"><span class="material-symbols-outlined" style="font-size: 1rem;">group</span> ${ev.signup_count} signed up</span></div>`
+                        : `<span class="run-card-count"><span class="material-symbols-outlined" style="font-size: 1rem;">group</span> ${ev.signup_count} signed up</span>`;
 
             const cardTitleAttr = ev.is_cancelled
                 ? 'This run has been cancelled'

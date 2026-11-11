@@ -130,6 +130,15 @@
                                 <span style="font-size: 0.92rem; color: var(--text-primary);">Signing up for: <strong id="selected-run-banner" style="color: var(--accent-rose);"></strong></span>
                             </div>
 
+                            <!-- Full Roster / Backups Warning Banner (Shown when the run's roster is already full) -->
+                            <div id="selected-run-full-warning" class="run-full-warning-banner" style="display: none;">
+                                <span class="material-symbols-outlined run-full-warning-icon">warning</span>
+                                <div class="run-full-warning-text">
+                                    <strong>This run's main roster is already full (<span id="selected-run-full-counts">48/48</span>).</strong>
+                                    <span>Signups are still open for <strong>backups</strong> in case any spots open up before the run.</span>
+                                </div>
+                            </div>
+
                             <!-- Discord Connection Required Prompt (Shown when user is not connected) -->
                             <div id="signup-connect-prompt" class="signup-connect-box" style="display: none;">
                                 <div class="signup-connect-icon">

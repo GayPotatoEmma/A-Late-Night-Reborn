@@ -631,13 +631,12 @@
             const isDisabled = Boolean(ev.is_closed || ev.is_cancelled);
             const maxSlots = ev.max_slots || (ev.content_type === 'Chaotic' ? 24 : 48);
             const rosterCount = ev.roster_count || maxSlots;
+            const fullTooltip = `Main roster is full (${rosterCount}/${maxSlots}) - signups are still open for backups`;
             const statusBadge = ev.is_cancelled
                 ? `<span class="run-cancelled-badge"><span class="material-symbols-outlined" style="font-size: 0.95rem;">cancel</span> Cancelled</span>`
                 : ev.is_closed
                     ? `<span class="run-closed-badge"><span class="material-symbols-outlined" style="font-size: 0.95rem;">lock</span> Closed (${ev.signup_count})</span>`
-                    : ev.is_roster_full
-                        ? `<div style="display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap;"><span class="run-backups-badge" title="Main roster is full (${rosterCount}/${maxSlots}) - signups are still open for backups"><span class="material-symbols-outlined" style="font-size: 0.95rem;">warning</span> Roster Full · Backups Open</span><span class="run-card-count"><span class="material-symbols-outlined" style="font-size: 1rem;">group</span> ${ev.signup_count} signed up</span></div>`
-                        : `<span class="run-card-count"><span class="material-symbols-outlined" style="font-size: 1rem;">group</span> ${ev.signup_count} signed up</span>`;
+                    : `<span class="run-card-count">${ev.is_roster_full ? `<span class="run-backups-icon" data-tooltip="${escapeHtml(fullTooltip)}" aria-label="${escapeHtml(fullTooltip)}"><span class="material-symbols-outlined">warning</span></span>` : ''}<span class="material-symbols-outlined" style="font-size: 1rem;">group</span> ${ev.signup_count} signed up</span>`;
 
             const cardTitleAttr = ev.is_cancelled
                 ? 'This run has been cancelled'

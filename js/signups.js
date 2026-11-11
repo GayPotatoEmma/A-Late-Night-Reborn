@@ -353,7 +353,7 @@
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        ${currentUser.is_owner ? `
+                        ${(currentUser.can_access_dashboard || currentUser.dashboard_role || currentUser.is_owner) ? `
                         <a href="dashboard.html" class="btn-prefs-cog" id="btn-open-dashboard" aria-label="Dashboard" title="Dashboard" style="text-decoration: none;">
                             <span class="material-symbols-outlined">bolt</span>
                         </a>

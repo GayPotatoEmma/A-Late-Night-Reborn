@@ -394,10 +394,11 @@
         if (currentUser && currentUser.is_in_guild) {
             if (connectPrompt) connectPrompt.style.display = 'none';
 
-            // Check if user is already signed up for the selected run
+            // Check if user is already signed up for the selected run block
             const existingSignup = selectedEvent ? mySignupsList.find(s => {
-                if (s.tab_name && selectedEvent.tab_name && s.tab_name === selectedEvent.tab_name) return true;
                 if (s.event_id && selectedEvent.id && s.event_id === selectedEvent.id) return true;
+                if (s.run_key && selectedEvent.run_key && s.run_key === selectedEvent.run_key && (!s.content_type || s.content_type === selectedEvent.content_type)) return true;
+                if (s.tab_name && selectedEvent.tab_name && s.tab_name === selectedEvent.tab_name) return true;
                 return false;
             }) : null;
 
@@ -548,15 +549,28 @@
     function cleanRunTitle(name) {
         if (!name) return 'Run';
         return name
-            .replace(/^\[.*?\]\s*[-–:]?\s*/, '')
-            .replace(/^(Forked Tower:\s*(Blood|Magic)|Cloud of Darkness\s*\(Chaotic\)|Baldesion Arsenal|Delubrum Reginae\s*(?:\(Savage\))?)\s*[-–:]?\s*/i, '')
+            .replace(/^\[.*?\]\s*[-:]?\s*/, '')
+            .replace(/^(Forked Tower:\s*(Blood|Magic)|Cloud of Darkness\s*\(Chaotic\)|Baldesion Arsenal|Delubrum Reginae\s*(?:\(Savage\))?)\s*[-:]?\s*/i, '')
             .trim() || name;
     }
 
     function formatRunDateTime(ev) {
         if (!ev) return '';
         if (!ev.start_time) return ev.start_time_formatted || '';
-        const d = new Date(ev.start_time * 1000);
+
+        // Normalize :58/:59 -> :00 next hour and :28/:29 -> :30 so 21:59 UTC displays cleanly as 22:00 UTC (22ST)
+        let d = new Date(ev.start_time * 1000);
+        d.setUTCSeconds(0, 0);
+        const rawUtcMins = d.getUTCMinutes();
+        if (rawUtcMins >= 58) {
+            d = new Date(d.getTime() + (60 - rawUtcMins) * 60000);
+        } else if (rawUtcMins >= 28 && rawUtcMins <= 29) {
+            d = new Date(d.getTime() + (30 - rawUtcMins) * 60000);
+        } else if (rawUtcMins <= 2) {
+            d = new Date(d.getTime() - rawUtcMins * 60000);
+        } else if (rawUtcMins >= 31 && rawUtcMins <= 32) {
+            d = new Date(d.getTime() - (rawUtcMins - 30) * 60000);
+        }
 
         // Local date parts
         const dayName = d.toLocaleDateString(undefined, { weekday: 'long' });
@@ -568,10 +582,15 @@
         const localMins = String(d.getMinutes()).padStart(2, '0');
         const localTime = `${localHours}:${localMins}`;
 
-        // Server time (UTC): e.g. 21ST or 21:30ST
-        const utcHours = d.getUTCHours();
-        const utcMins = d.getUTCMinutes();
-        const serverTime = utcMins === 0 ? `${utcHours}ST` : `${utcHours}:${String(utcMins).padStart(2, '0')}ST`;
+        // Server time (UTC) rounded to nearest hour or half-hour: e.g. 22ST or 15:30ST
+        let serverTime = ev.rounded_st || '';
+        if (!serverTime) {
+            const roundedHalfHrSec = Math.round((d.getTime() / 1000) / 1800) * 1800;
+            const stDate = new Date(roundedHalfHrSec * 1000);
+            const utcHours = stDate.getUTCHours();
+            const utcMins = stDate.getUTCMinutes();
+            serverTime = utcMins === 0 ? `${utcHours}ST` : `${utcHours}:${String(utcMins).padStart(2, '0')}ST`;
+        }
 
         return `${dayName}, ${dayNum} ${monthName} @ ${localTime} (${serverTime})`;
     }
@@ -645,6 +664,24 @@
                 ? 'This run has been cancelled'
                 : (ev.is_closed ? 'Signups for this run are closed' : '');
 
+            const matchedMySignup = currentUser ? mySignupsList.find(s =>
+                (s.event_id && ev.id && s.event_id === ev.id) ||
+                (s.run_key && ev.run_key && s.run_key === ev.run_key && (!s.content_type || s.content_type === ev.content_type)) ||
+                (s.tab_name && ev.tab_name && s.tab_name === ev.tab_name)
+            ) : null;
+
+            let userPillHtml = '';
+            if (matchedMySignup && !ev.is_cancelled) {
+                if (matchedMySignup.roster_status === 'selected') {
+                    const pLbl = matchedMySignup.assigned_party_label || 'Selected';
+                    userPillHtml = `<span class="run-user-status-pill is-selected"><span class="material-symbols-outlined" style="font-size: 0.86rem;">verified</span> ${escapeHtml(pLbl)}</span>`;
+                } else if (matchedMySignup.roster_status === 'standby') {
+                    userPillHtml = `<span class="run-user-status-pill is-standby"><span class="material-symbols-outlined" style="font-size: 0.86rem;">hourglass_top</span> Standby</span>`;
+                } else {
+                    userPillHtml = `<span class="run-user-status-pill is-pending"><span class="material-symbols-outlined" style="font-size: 0.86rem;">check_circle</span> Signed Up</span>`;
+                }
+            }
+
             return `
                 <div class="run-select-card ${isSelected ? 'selected' : ''} ${isDisabled ? 'is-closed' : ''} ${ev.is_cancelled ? 'is-cancelled' : ''}" data-run-id="${ev.id}" role="button" tabindex="${isDisabled ? '-1' : '0'}" aria-disabled="${isDisabled ? 'true' : 'false'}" aria-pressed="${isSelected ? 'true' : 'false'}" title="${cardTitleAttr}">
                     <div class="run-card-top">
@@ -654,9 +691,12 @@
                         </div>
                         ${statusBadge}
                     </div>
-                    <div class="run-card-time">
-                        <span class="material-symbols-outlined" style="font-size: 0.95rem;">schedule</span>
-                        ${escapeHtml(formatRunDateTime(ev))}
+                    <div class="run-card-time" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                        <span style="display: inline-flex; align-items: center; gap: 5px;">
+                            <span class="material-symbols-outlined" style="font-size: 0.95rem;">schedule</span>
+                            ${escapeHtml(formatRunDateTime(ev))}
+                        </span>
+                        ${userPillHtml}
                     </div>
                 </div>
             `;
@@ -723,7 +763,7 @@
 
     function checkUrlPreselection() {
         const params = new URLSearchParams(window.location.search);
-        let runId = params.get('event') || params.get('run');
+        let runId = params.get('event') || params.get('run') || params.get('run_key');
         try {
             if (!runId) {
                 runId = sessionStorage.getItem('alnr_oauth_run');
@@ -732,7 +772,7 @@
         } catch (e) {}
 
         if (runId && allEvents.length > 0) {
-            const target = allEvents.find(e => e.id === runId);
+            const target = allEvents.find(e => e.id === runId || (e.run_key && e.run_key === runId));
             if (target) {
                 if (target.is_cancelled) {
                     showRunsSelectionAlert(`🚫 "${cleanRunTitle(target.name)}" has been cancelled.`, 'error');
@@ -1287,6 +1327,7 @@
 
         const payload = {
             event_id: selectedEvent.id,
+            run_key: selectedEvent.run_key || '',
             run_name: selectedEvent.name,
             start_time: selectedEvent.start_time,
             content_type: selectedEvent.content_type,
@@ -1412,11 +1453,14 @@
                 const rawSignups = data.signups || [];
                 // Only keep signups that have an active upcoming event attached
                 mySignupsList = rawSignups.filter(s => {
-                    if (s.event_id) {
-                        return allEvents.some(e => e.id === s.event_id);
+                    if (s.event_id && allEvents.some(e => e.id === s.event_id)) {
+                        return true;
                     }
-                    if (s.tab_name) {
-                        return allEvents.some(e => e.tab_name === s.tab_name);
+                    if (s.run_key && allEvents.some(e => e.run_key === s.run_key && (!s.content_type || e.content_type === s.content_type))) {
+                        return true;
+                    }
+                    if (s.tab_name && allEvents.some(e => e.tab_name === s.tab_name)) {
+                        return true;
                     }
                     return false;
                 });
@@ -1424,7 +1468,11 @@
                 if (mySignupsList.length > 0) {
                     container.style.display = 'block';
                     list.innerHTML = mySignupsList.map((s, idx) => {
-                        const matchedEvent = allEvents.find(e => (s.event_id && e.id === s.event_id) || (s.tab_name && e.tab_name === s.tab_name));
+                        const matchedEvent = allEvents.find(e =>
+                            (s.event_id && e.id === s.event_id) ||
+                            (s.run_key && e.run_key === s.run_key && (!s.content_type || e.content_type === s.content_type)) ||
+                            (s.tab_name && e.tab_name === s.tab_name)
+                        );
                         
                         const contentType = (matchedEvent && matchedEvent.content_type) || s.content_type || (
                             s.tab_name.includes('[FT:M]') ? 'FT:M' :
@@ -1454,6 +1502,61 @@
                             badgeLabel = 'DRS';
                         }
 
+                        let rosterBannerHtml = '';
+                        let quickLinksHtml = '';
+                        if (!isCancelled) {
+                            const rStatus = s.roster_status || 'pending';
+                            if (rStatus === 'selected') {
+                                const assignParts = [
+                                    s.assigned_party_label || (s.assigned_party ? `Party ${s.assigned_party}` : ''),
+                                    s.assigned_role || '',
+                                    s.assigned_job || ''
+                                ].filter(Boolean);
+                                const assignSummary = assignParts.length > 0 ? assignParts.join(' • ') : 'Main Roster';
+                                rosterBannerHtml = `
+                                    <div class="my-signup-roster-banner is-selected">
+                                        <span class="material-symbols-outlined">verified</span>
+                                        <span>Selected: ${escapeHtml(assignSummary)}</span>
+                                    </div>
+                                `;
+                            } else if (rStatus === 'standby') {
+                                rosterBannerHtml = `
+                                    <div class="my-signup-roster-banner is-standby">
+                                        <span class="material-symbols-outlined">hourglass_top</span>
+                                        <span>Standby / Backup Bench</span>
+                                    </div>
+                                `;
+                            } else {
+                                rosterBannerHtml = `
+                                    <div class="my-signup-roster-banner is-pending">
+                                        <span class="material-symbols-outlined">schedule_send</span>
+                                        <span>Signed Up - Roster Pending</span>
+                                    </div>
+                                `;
+                            }
+
+                            const linkItems = [];
+                            if (s.roster_image_url) {
+                                linkItems.push(`
+                                    <a href="${escapeHtml(s.roster_image_url)}" target="_blank" rel="noopener noreferrer" class="my-signup-quick-link is-roster" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()">
+                                        <span class="material-symbols-outlined">grid_view</span>
+                                        <span>View Roster</span>
+                                    </a>
+                                `);
+                            }
+                            if (s.gcal_url) {
+                                linkItems.push(`
+                                    <a href="${escapeHtml(s.gcal_url)}" target="_blank" rel="noopener noreferrer" class="my-signup-quick-link is-calendar" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()">
+                                        <span class="material-symbols-outlined">calendar_add_on</span>
+                                        <span>Calendar</span>
+                                    </a>
+                                `);
+                            }
+                            if (linkItems.length > 0) {
+                                quickLinksHtml = `<div class="my-signup-quick-links">${linkItems.join('')}</div>`;
+                            }
+                        }
+
                         return `
                             <div class="my-signup-item" data-signup-idx="${idx}" role="button" tabindex="0" title="Click to view full application details">
                                 <div class="my-signup-item-top">
@@ -1471,9 +1574,11 @@
                                     <span class="material-symbols-outlined" style="font-size: 0.95rem; color: var(--accent-purple);">schedule</span>
                                     <span>${escapeHtml(runTimeStr)}</span>
                                 </div>` : ''}
+                                ${rosterBannerHtml}
                                 <div class="my-signup-item-meta">
                                     Preferred: ${escapeHtml(s.preferred_role || 'Any')} | Party: ${escapeHtml(s.party_preference || 'Any')}
                                 </div>
+                                ${quickLinksHtml}
                             </div>
                         `;
                     }).join('');
@@ -1514,7 +1619,11 @@
         const runSubtitle = document.getElementById('modal-run-subtitle');
         if (!modalBackdrop || !modalBody) return;
 
-        const matchedEvent = allEvents.find(e => (signup.event_id && e.id === signup.event_id) || (signup.tab_name && e.tab_name === signup.tab_name));
+        const matchedEvent = allEvents.find(e =>
+            (signup.event_id && e.id === signup.event_id) ||
+            (signup.run_key && e.run_key === signup.run_key && (!signup.content_type || e.content_type === signup.content_type)) ||
+            (signup.tab_name && e.tab_name === signup.tab_name)
+        );
         const rawName = (matchedEvent && matchedEvent.name) || signup.run_name || signup.tab_name;
         const cleanName = cleanRunTitle(rawName);
         const contentType = (matchedEvent && matchedEvent.content_type) || signup.content_type || 'FT:B';
@@ -1618,6 +1727,95 @@
             `;
         }
 
+        const isCancelledModal = Boolean((matchedEvent && matchedEvent.is_cancelled) || signup.is_cancelled);
+        let modalRosterHtml = '';
+        if (!isCancelledModal) {
+            const rStatus = signup.roster_status || 'pending';
+            const jobTypeLabel = signup.assigned_job_type || (
+                contentType === 'Chaotic' ? 'Combat Job' :
+                contentType === 'BA' ? 'Logos Action' :
+                contentType === 'DRS' ? 'Lost Action' : 'Phantom Job'
+            );
+
+            const modalLinks = [];
+            if (signup.roster_image_url) {
+                modalLinks.push(`
+                    <a href="${escapeHtml(signup.roster_image_url)}" target="_blank" rel="noopener noreferrer" class="my-signup-quick-link is-roster">
+                        <span class="material-symbols-outlined">grid_view</span>
+                        <span>View Full Roster Image</span>
+                    </a>
+                `);
+            }
+            if (signup.gcal_url) {
+                modalLinks.push(`
+                    <a href="${escapeHtml(signup.gcal_url)}" target="_blank" rel="noopener noreferrer" class="my-signup-quick-link is-calendar">
+                        <span class="material-symbols-outlined">calendar_add_on</span>
+                        <span>Add to Google Calendar</span>
+                    </a>
+                `);
+            }
+            const modalLinksRow = modalLinks.length > 0 ? `<div class="modal-roster-actions">${modalLinks.join('')}</div>` : '';
+
+            if (rStatus === 'selected') {
+                modalRosterHtml = `
+                    <div class="modal-roster-card is-selected">
+                        <div class="modal-roster-header">
+                            <span class="modal-roster-status-title">
+                                <span class="material-symbols-outlined">verified</span>
+                                Selected for Main Roster
+                            </span>
+                        </div>
+                        <div class="modal-roster-assign-grid">
+                            <div class="modal-roster-assign-chip">
+                                <span class="modal-sublabel">Assigned Party</span>
+                                <strong class="modal-subvalue">${escapeHtml(signup.assigned_party_label || (signup.assigned_party ? `Party ${signup.assigned_party}` : 'Rostered'))}</strong>
+                            </div>
+                            <div class="modal-roster-assign-chip">
+                                <span class="modal-sublabel">Assigned Role</span>
+                                <strong class="modal-subvalue">${escapeHtml(signup.assigned_role || 'Assigned')}</strong>
+                            </div>
+                            ${signup.assigned_job ? `
+                            <div class="modal-roster-assign-chip">
+                                <span class="modal-sublabel">Assigned ${escapeHtml(jobTypeLabel)}</span>
+                                <strong class="modal-subvalue">${escapeHtml(signup.assigned_job)}</strong>
+                            </div>` : ''}
+                        </div>
+                        ${modalLinksRow}
+                    </div>
+                `;
+            } else if (rStatus === 'standby') {
+                modalRosterHtml = `
+                    <div class="modal-roster-card is-standby">
+                        <div class="modal-roster-header">
+                            <span class="modal-roster-status-title">
+                                <span class="material-symbols-outlined">hourglass_top</span>
+                                Standby / Backup Bench
+                            </span>
+                        </div>
+                        <div style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45;">
+                            The main roster for this run has been posted and you are currently on Standby. Hosts may reach out if a fill spot opens.
+                        </div>
+                        ${modalLinksRow}
+                    </div>
+                `;
+            } else {
+                modalRosterHtml = `
+                    <div class="modal-roster-card is-pending">
+                        <div class="modal-roster-header">
+                            <span class="modal-roster-status-title">
+                                <span class="material-symbols-outlined">schedule_send</span>
+                                Signed Up - Roster Pending
+                            </span>
+                        </div>
+                        <div style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45;">
+                            Your signup is recorded. Your party and role assignment will appear here once the host posts the roster.
+                        </div>
+                        ${modalLinksRow}
+                    </div>
+                `;
+            }
+        }
+
         modalBody.innerHTML = `
             <!-- Player Info -->
             <div class="modal-grid-2">
@@ -1630,6 +1828,8 @@
                     <span class="modal-subvalue-lg">@${escapeHtml(signup.discord_username || 'N/A')}</span>
                 </div>
             </div>
+
+            ${modalRosterHtml}
 
             <div class="modal-sections-grid">
                 <!-- Role & Party Info -->

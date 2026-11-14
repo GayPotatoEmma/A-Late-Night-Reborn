@@ -991,6 +991,201 @@
   color: var(--accent-teal);
 }
 
+.my-signup-roster-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 7px;
+  font-size: 0.79rem;
+  font-weight: 600;
+  margin-top: 3px;
+  width: fit-content;
+  max-width: 100%;
+  line-height: 1.35;
+}
+
+.my-signup-roster-banner .material-symbols-outlined {
+  font-size: 0.98rem;
+  flex-shrink: 0;
+}
+
+.my-signup-roster-banner.is-selected {
+  background: rgba(52, 211, 153, 0.14);
+  border: 1px solid rgba(52, 211, 153, 0.42);
+  color: #6ee7b7;
+}
+
+.my-signup-roster-banner.is-standby {
+  background: rgba(251, 191, 36, 0.13);
+  border: 1px solid rgba(251, 191, 36, 0.38);
+  color: #fcd34d;
+}
+
+.my-signup-roster-banner.is-pending {
+  background: rgba(178, 145, 247, 0.11);
+  border: 1px solid rgba(178, 145, 247, 0.28);
+  color: #d8b4fe;
+}
+
+.my-signup-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.my-signup-quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(252, 212, 200, 0.18);
+  color: var(--text-primary);
+  transition: all 0.16s ease;
+}
+
+.my-signup-quick-link .material-symbols-outlined {
+  font-size: 0.9rem;
+}
+
+.my-signup-quick-link:hover {
+  background: rgba(178, 145, 247, 0.24);
+  border-color: var(--accent-purple);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.my-signup-quick-link.is-discord {
+  border-color: rgba(129, 140, 248, 0.38);
+  background: rgba(99, 102, 241, 0.14);
+  color: #c7d2fe;
+}
+
+.my-signup-quick-link.is-discord:hover {
+  background: rgba(99, 102, 241, 0.3);
+  border-color: #818cf8;
+  color: #ffffff;
+}
+
+.my-signup-quick-link.is-roster {
+  border-color: rgba(52, 211, 153, 0.35);
+  background: rgba(16, 185, 129, 0.12);
+  color: #a7f3d0;
+}
+
+.my-signup-quick-link.is-roster:hover {
+  background: rgba(16, 185, 129, 0.28);
+  border-color: #34d399;
+  color: #ffffff;
+}
+
+.modal-roster-card {
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(178, 145, 247, 0.25);
+  background: rgba(18, 21, 46, 0.65);
+}
+
+.modal-roster-card.is-selected {
+  border-color: rgba(52, 211, 153, 0.45);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.13) 0%, rgba(15, 23, 42, 0.7) 100%);
+}
+
+.modal-roster-card.is-standby {
+  border-color: rgba(251, 191, 36, 0.4);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.7) 100%);
+}
+
+.modal-roster-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 0.55rem;
+}
+
+.modal-roster-status-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.94rem;
+}
+
+.modal-roster-card.is-selected .modal-roster-status-title {
+  color: #6ee7b7;
+}
+
+.modal-roster-card.is-standby .modal-roster-status-title {
+  color: #fcd34d;
+}
+
+.modal-roster-card.is-pending .modal-roster-status-title {
+  color: #d8b4fe;
+}
+
+.modal-roster-assign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.modal-roster-assign-chip {
+  background: rgba(10, 12, 28, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 8px;
+  padding: 0.45rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.modal-roster-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0.5rem;
+}
+
+.run-user-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-left: auto;
+}
+
+.run-user-status-pill.is-selected {
+  background: rgba(52, 211, 153, 0.16);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  color: #6ee7b7;
+}
+
+.run-user-status-pill.is-standby {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  color: #fcd34d;
+}
+
+.run-user-status-pill.is-pending {
+  background: rgba(178, 145, 247, 0.16);
+  border: 1px solid rgba(178, 145, 247, 0.36);
+  color: #d8b4fe;
+}
+
 .btn-view-application-more {
   display: inline-flex;
   align-items: center;
@@ -1643,6 +1838,98 @@
   background: rgba(108, 90, 158, 0.16);
   border-color: #564682;
   color: #2a2048;
+}
+
+[data-theme^="light"] .my-signup-roster-banner.is-selected {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(5, 150, 105, 0.4);
+  color: #047857;
+}
+
+[data-theme^="light"] .my-signup-roster-banner.is-standby {
+  background: rgba(245, 158, 11, 0.13);
+  border-color: rgba(217, 119, 6, 0.4);
+  color: #b45309;
+}
+
+[data-theme^="light"] .my-signup-roster-banner.is-pending {
+  background: rgba(124, 58, 237, 0.09);
+  border-color: rgba(124, 58, 237, 0.28);
+  color: #5b21b6;
+}
+
+[data-theme^="light"] .my-signup-quick-link {
+  background: rgba(108, 90, 158, 0.07);
+  border-color: rgba(108, 90, 158, 0.24);
+  color: #362c52;
+}
+
+[data-theme^="light"] .my-signup-quick-link.is-discord {
+  background: rgba(79, 70, 229, 0.09);
+  border-color: rgba(79, 70, 229, 0.3);
+  color: #3730a3;
+}
+
+[data-theme^="light"] .my-signup-quick-link.is-roster {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(5, 150, 105, 0.32);
+  color: #065f46;
+}
+
+[data-theme^="light"] .my-signup-quick-link:hover {
+  background: rgba(108, 90, 158, 0.2);
+  border-color: #564682;
+  color: #1f1635;
+}
+
+[data-theme^="light"] .modal-roster-card {
+  background: rgba(248, 246, 255, 0.92);
+  border-color: rgba(108, 90, 158, 0.24);
+}
+
+[data-theme^="light"] .modal-roster-card.is-selected {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.11) 0%, rgba(248, 250, 252, 0.95) 100%);
+  border-color: rgba(5, 150, 105, 0.4);
+}
+
+[data-theme^="light"] .modal-roster-card.is-standby {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.11) 0%, rgba(248, 250, 252, 0.95) 100%);
+  border-color: rgba(217, 119, 6, 0.38);
+}
+
+[data-theme^="light"] .modal-roster-card.is-selected .modal-roster-status-title {
+  color: #047857;
+}
+
+[data-theme^="light"] .modal-roster-card.is-standby .modal-roster-status-title {
+  color: #b45309;
+}
+
+[data-theme^="light"] .modal-roster-card.is-pending .modal-roster-status-title {
+  color: #5b21b6;
+}
+
+[data-theme^="light"] .modal-roster-assign-chip {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme^="light"] .run-user-status-pill.is-selected {
+  background: rgba(16, 185, 129, 0.13);
+  border-color: rgba(5, 150, 105, 0.42);
+  color: #047857;
+}
+
+[data-theme^="light"] .run-user-status-pill.is-standby {
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(217, 119, 6, 0.4);
+  color: #b45309;
+}
+
+[data-theme^="light"] .run-user-status-pill.is-pending {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.32);
+  color: #5b21b6;
 }
 
 /* Light mode styles for modal */

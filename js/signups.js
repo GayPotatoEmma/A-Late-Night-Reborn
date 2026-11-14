@@ -676,7 +676,7 @@
                     const pLbl = matchedMySignup.assigned_party_label || 'Selected';
                     userPillHtml = `<span class="run-user-status-pill is-selected"><span class="material-symbols-outlined" style="font-size: 0.86rem;">verified</span> ${escapeHtml(pLbl)}</span>`;
                 } else if (matchedMySignup.roster_status === 'standby') {
-                    userPillHtml = `<span class="run-user-status-pill is-standby"><span class="material-symbols-outlined" style="font-size: 0.86rem;">hourglass_top</span> Standby</span>`;
+                    userPillHtml = `<span class="run-user-status-pill is-standby"><span class="material-symbols-outlined" style="font-size: 0.86rem;">hourglass_top</span> Backup</span>`;
                 } else {
                     userPillHtml = `<span class="run-user-status-pill is-pending"><span class="material-symbols-outlined" style="font-size: 0.86rem;">check_circle</span> Signed Up</span>`;
                 }
@@ -1523,7 +1523,7 @@
                                 rosterBannerHtml = `
                                     <div class="my-signup-roster-banner is-standby">
                                         <span class="material-symbols-outlined">hourglass_top</span>
-                                        <span>Standby / Backup Bench</span>
+                                        <span>Backup</span>
                                     </div>
                                 `;
                             } else {
@@ -1789,11 +1789,11 @@
                         <div class="modal-roster-header">
                             <span class="modal-roster-status-title">
                                 <span class="material-symbols-outlined">hourglass_top</span>
-                                Standby / Backup Bench
+                                Backup
                             </span>
                         </div>
                         <div style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45;">
-                            The main roster for this run has been posted and you are currently on Standby. Hosts may reach out if a fill spot opens.
+                            The main roster for this run has been posted and you are currently listed as a Backup. Hosts may reach out if a fill spot opens.
                         </div>
                         ${modalLinksRow}
                     </div>

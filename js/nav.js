@@ -788,9 +788,6 @@
             '</div>';
         }
 
-        var countHtml = (typeof state.activeSignupsCount === 'number' && state.activeSignupsCount > 0)
-          ? '<span class="popover-count-pill">' + state.activeSignupsCount + '</span>'
-          : '';
         var prefsDotHtml = state.outdatedPrefs ? '<span class="popover-alert-dot">!</span>' : '';
         var dashHtml = (u.can_access_dashboard || u.dashboard_role || u.is_owner)
           ? '<a href="/dashboard" class="popover-item is-dash"><span class="popover-item-left">' + ICONS.bolt + '<span>Host Dashboard</span></span></a>'
@@ -807,9 +804,7 @@
           '</div>' +
           warnHtml +
           '<div class="popover-menu">' +
-            '<a href="/profile?tab=signups" data-pop-profile-tab="signups" class="popover-item"><span class="popover-item-left">' + ICONS.signups + '<span>Active Signups</span></span>' + countHtml + '</a>' +
-            '<a href="/profile?tab=stats" data-pop-profile-tab="stats" class="popover-item"><span class="popover-item-left">' + ICONS.stats + '<span>Run Stats</span></span></a>' +
-            '<a href="/profile?tab=prefs" data-pop-profile-tab="prefs" class="popover-item"><span class="popover-item-left">' + ICONS.prefs + '<span>Saved Preferences</span></span>' + prefsDotHtml + '</a>' +
+            '<a href="/profile" class="popover-item"><span class="popover-item-left">' + ICONS.person + '<span>Profile</span></span>' + prefsDotHtml + '</a>' +
             dashHtml +
             '<div class="popover-divider"></div>' +
             '<button type="button" class="popover-item is-danger" id="pop-btn-signout"><span class="popover-item-left">' + ICONS.logout + '<span>Sign Out</span></span></button>' +

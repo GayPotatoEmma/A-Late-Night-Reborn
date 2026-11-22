@@ -3231,4 +3231,82 @@
   color: #6d28d9;
 }
 
+/* =====================================================
+   Dedicated Full-Page My Profile Layout
+   ===================================================== */
+
+.profile-page-container {
+  max-width: 1120px;
+}
+
+.profile-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  transition: color var(--transition), transform var(--transition);
+}
+
+.profile-back-link:hover {
+  color: var(--accent-rose);
+  transform: translateX(-2px);
+}
+
+.profile-back-link .material-symbols-outlined {
+  font-size: 1.05rem;
+}
+
+.profile-page-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.profile-page-tabs {
+  padding: 0.85rem 1.75rem 0;
+}
+
+.profile-page-body {
+  padding: 1.5rem 1.75rem 1.75rem;
+}
+
+.profile-page-footer {
+  padding: 0.9rem 1.75rem;
+  border-top: 1px solid rgba(252, 212, 200, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-signups-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 820px) {
+  .profile-signups-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-page-tabs {
+    padding: 0.7rem 1rem 0;
+  }
+  .profile-page-body {
+    padding: 1.15rem 1rem 1.35rem;
+  }
+  .profile-page-footer {
+    padding: 0.8rem 1rem;
+  }
+}
+
+[data-theme^="light"] .profile-page-footer {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+
 

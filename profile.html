@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile | A Late Night Reborn</title>
+    <link rel="icon" href="assets/alnr%20logo.png" type="image/png" />
+    <meta name="description" content="View your active A Late Night Reborn run signups, personal run stats, and saved signup preferences." />
+    <meta property="og:title" content="My Profile | A Late Night Reborn" />
+    <meta property="og:description" content="View your active A Late Night Reborn run signups, personal run stats, and saved signup preferences." />
+    <meta property="og:image" content="https://alatenightreborn.com/assets/alnr%20logo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="A Late Night Reborn" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Quicksand:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/signups.css?v=5" />
+    <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
+</head>
+<body data-page="profile">
+
+    <canvas id="stars-canvas"></canvas>
+    <div class="bg-nebula"></div>
+
+    <div class="site-wrapper">
+
+        <!-- ── Header ── -->
+        <header class="site-header">
+            <div class="header-inner">
+                <a href="/" class="header-logo-link">
+                    <img src="assets/alnr%20logo.png" alt="ALNR Logo" class="header-logo" width="1024" height="1024" />
+                </a>
+                <a href="/">
+                    <span class="header-site-name">A Late Night Reborn</span>
+                </a>
+                <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="header-discord">Discord</a>
+
+                <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">&#9728;</button>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+            </div>
+        </header>
+
+        <!-- ── Main ── -->
+        <main class="main-content">
+            <div class="signups-container profile-page-container">
+
+                <!-- ── Top Header Bar ── -->
+                <div class="signups-top-bar">
+                    <div class="signups-hero">
+                        <a href="signups.html" class="profile-back-link">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                            <span>Back to Run Signups</span>
+                        </a>
+                        <h1 class="signups-title">My Profile</h1>
+                        <p class="signups-desc">
+                            Manage your active signups, view your ALNR run stats, and customize saved signup presets.
+                        </p>
+                    </div>
+
+                    <!-- Discord Profile Banner -->
+                    <div id="auth-banner-container"></div>
+                </div>
+
+                <!-- ── Logged-Out Prompt Card ── -->
+                <div class="glass-card profile-login-card" id="profile-login-card" style="display: none;">
+                    <div class="signup-connect-box" style="margin-bottom: 0;">
+                        <div class="signup-connect-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        </div>
+                        <div class="signup-connect-title">Connect Discord to View Your Profile</div>
+                        <div class="signup-connect-desc">
+                            Sign in with Discord to check your active signups, roster status, and personal ALNR run stats.
+                        </div>
+                        <button type="button" class="auth-btn-discord" id="btn-profile-discord-login">
+                            <span>Connect Discord</span>
+                            <span class="material-symbols-outlined" style="font-size: 1.2rem;">login</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ── Main Full-Page Profile Workspace Card ── -->
+                <div class="glass-card profile-page-card" id="profile-workspace-card" style="display: none;">
+                    <!-- Top-Level Profile Tabs -->
+                    <div class="profile-top-tabs profile-page-tabs" id="profile-top-tabs" role="tablist">
+                        <button type="button" class="profile-top-tab active" data-profile-tab="signups" role="tab" aria-selected="true">
+                            <span class="material-symbols-outlined">bookmark_check</span>
+                            <span>Active Signups</span>
+                            <span class="profile-tab-count" id="profile-tab-signups-count" style="display: none;">0</span>
+                        </button>
+                        <button type="button" class="profile-top-tab" data-profile-tab="stats" role="tab" aria-selected="false">
+                            <span class="material-symbols-outlined">bar_chart</span>
+                            <span>Run Stats</span>
+                        </button>
+                        <button type="button" class="profile-top-tab" data-profile-tab="prefs" role="tab" aria-selected="false">
+                            <span class="material-symbols-outlined">tune</span>
+                            <span>Saved Preferences</span>
+                            <span class="profile-tab-outdated-dot" id="profile-tab-prefs-outdated" style="display: none;" title="Saved preferences need updating">!</span>
+                        </button>
+                    </div>
+
+                    <div class="profile-page-body">
+                        <!-- Tab 1: Active Signups -->
+                        <div class="profile-tab-panel" id="profile-panel-signups">
+                            <div class="my-signups-list profile-signups-grid" id="my-signups-list">
+                                <div class="stats-empty-box" style="grid-column: 1 / -1;">Loading your active signups...</div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Run Stats -->
+                        <div class="profile-tab-panel" id="profile-panel-stats" style="display: none;">
+                            <div id="profile-stats-content">
+                                <div class="stats-empty-box">Loading your ALNR run stats...</div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 3: Saved Preferences -->
+                        <div class="profile-tab-panel" id="profile-panel-prefs" style="display: none;">
+                            <!-- Content Tabs -->
+                            <div class="prefs-content-tabs" id="prefs-content-tabs" role="tablist">
+                                <button type="button" class="prefs-tab-btn active" data-pref-tab="Chaotic" role="tab">
+                                    <span>Chaotic</span>
+                                    <span class="prefs-tab-status" data-tab-status="Chaotic"></span>
+                                </button>
+                                <button type="button" class="prefs-tab-btn" data-pref-tab="FT:B" role="tab">
+                                    <span>FT:B</span>
+                                    <span class="prefs-tab-status" data-tab-status="FT:B"></span>
+                                </button>
+                                <button type="button" class="prefs-tab-btn" data-pref-tab="FT:M" role="tab">
+                                    <span>FT:M</span>
+                                    <span class="prefs-tab-status" data-tab-status="FT:M"></span>
+                                </button>
+                                <button type="button" class="prefs-tab-btn" data-pref-tab="BA" role="tab">
+                                    <span>BA</span>
+                                    <span class="prefs-tab-status" data-tab-status="BA"></span>
+                                </button>
+                                <button type="button" class="prefs-tab-btn" data-pref-tab="DRS" role="tab">
+                                    <span>DRS</span>
+                                    <span class="prefs-tab-status" data-tab-status="DRS"></span>
+                                </button>
+                            </div>
+
+                            <!-- Tab Status Banner -->
+                            <div id="prefs-modal-tab-status" class="prefs-modal-status-banner"></div>
+
+                            <!-- Dynamic Editor for Active Content Tab -->
+                            <div id="prefs-modal-editor" class="prefs-modal-editor"></div>
+
+                            <!-- Save / Clear Current Tab Actions -->
+                            <div class="prefs-tab-actions">
+                                <button type="button" class="modal-btn-dismiss prefs-btn-danger-outline" id="btn-prefs-clear-tab">
+                                    <span class="material-symbols-outlined" style="font-size: 1rem;">delete_outline</span>
+                                    <span id="btn-prefs-clear-tab-text">Clear Tab</span>
+                                </button>
+                                <button type="button" class="btn-submit-signup prefs-btn-save-tab" id="btn-prefs-save-tab">
+                                    <span class="material-symbols-outlined" style="font-size: 1.1rem;">save</span>
+                                    <span id="btn-prefs-save-tab-text">Save Preferences</span>
+                                </button>
+                            </div>
+
+                            <div id="prefs-modal-alert" class="status-alert" style="display: none; margin-top: 0;"></div>
+
+                            <!-- Cross-Device Transfer & Backup Section -->
+                            <div class="prefs-transfer-section">
+                                <div class="prefs-transfer-header">
+                                    <span class="material-symbols-outlined" style="font-size: 1.15rem; color: var(--accent-purple);">sync_alt</span>
+                                    <span>Transfer &amp; Backup Preferences (PC &lt;-&gt; Mobile)</span>
+                                </div>
+                                <div class="prefs-transfer-desc">
+                                    Your preferences are stored only in this browser. Copy a share code or export a JSON file to move your settings to another device.
+                                </div>
+
+                                <div class="prefs-share-code-row">
+                                    <input type="text" id="input-prefs-share-code" class="input-text prefs-share-input" placeholder="Paste an ALNR1:... share code here to import" />
+                                    <button type="button" class="btn-prefs-secondary" id="btn-apply-share-code">
+                                        <span class="material-symbols-outlined" style="font-size: 1rem;">download</span>
+                                        <span>Apply Code</span>
+                                    </button>
+                                </div>
+
+                                <div class="prefs-transfer-buttons">
+                                    <button type="button" class="btn-prefs-secondary" id="btn-copy-share-code">
+                                        <span class="material-symbols-outlined" style="font-size: 1rem;">content_copy</span>
+                                        <span>Copy Share Code</span>
+                                    </button>
+                                    <button type="button" class="btn-prefs-secondary" id="btn-export-prefs-json">
+                                        <span class="material-symbols-outlined" style="font-size: 1rem;">file_download</span>
+                                        <span>Export .json</span>
+                                    </button>
+                                    <button type="button" class="btn-prefs-secondary" id="btn-import-prefs-json">
+                                        <span class="material-symbols-outlined" style="font-size: 1rem;">file_upload</span>
+                                        <span>Import .json</span>
+                                    </button>
+                                    <input type="file" id="input-import-prefs-file" accept=".json,application/json" style="display: none;" />
+                                    <button type="button" class="btn-prefs-secondary prefs-btn-danger-text" id="btn-clear-all-prefs">
+                                        <span class="material-symbols-outlined" style="font-size: 1rem;">delete_forever</span>
+                                        <span>Clear All Saved Data</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-page-footer">
+                        <div class="modal-cancellation-hint" id="profile-modal-footer-hint">
+                            <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">lock</span>
+                            <span>Private to your Discord account.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- ── Footer ── -->
+        <footer class="site-footer">
+            <p>A Late Night Reborn &middot; Final Fantasy XIV Raid Guide &middot; <a href="privacy.html" class="footer-privacy-link">Privacy Notice</a> &middot; <a href="contact.html" class="footer-privacy-link">Contact</a> &middot; <a href="https://ko-fi.com/gaypotatoemma" target="_blank" rel="noopener" class="footer-privacy-link">Ko-fi</a></p>
+        </footer>
+
+    </div>
+
+    <!-- ── Application Details Modal Popup ── -->
+    <div class="modal-backdrop" id="application-modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-run-title">
+        <div class="modal-box" id="application-modal-box">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="material-symbols-outlined modal-header-icon">assignment_ind</span>
+                    <div>
+                        <h3 class="modal-title" id="modal-run-title">Application Details</h3>
+                        <div class="modal-subtitle" id="modal-run-subtitle"></div>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-details-body"></div>
+            <div class="modal-footer">
+                <div class="modal-cancellation-hint">
+                    <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-rose);">info</span>
+                    <span>Need to update or cancel? Make a ticket in our <a href="https://discord.gg/alnr" target="_blank" rel="noopener">Discord</a>.</span>
+                </div>
+                <button type="button" class="modal-btn-dismiss" id="modal-dismiss-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Phantom Job Experience "Select All" Warning Modal ── -->
+    <div class="modal-backdrop" id="phantom-exp-warning-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="phantom-warning-title">
+        <div class="modal-box modal-box-warning" id="phantom-exp-warning-box">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="material-symbols-outlined modal-header-icon warning-icon">warning</span>
+                    <div>
+                        <h3 class="modal-title" id="phantom-warning-title">Phantom Job Experience Warning</h3>
+                        <div class="modal-subtitle">Please confirm before selecting all</div>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" id="phantom-warning-close-btn" aria-label="Close warning modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-warning-text">
+                    You are selecting that you have experience on <strong>every Phantom Job</strong> in Forked Tower. If this is found to be inaccurate, you may be removed from future runs.
+                </p>
+                <p class="modal-warning-subtext">
+                    Please only select the Phantom Jobs you have previously played in Forked Tower and feel comfortable performing on.
+                </p>
+            </div>
+            <div class="modal-footer modal-footer-end">
+                <button type="button" class="modal-btn-dismiss" id="phantom-warning-cancel-btn">Cancel</button>
+                <button type="button" class="modal-btn-confirm-warning" id="phantom-warning-confirm-btn">I Understand, Select All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/stars.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/signups.js?v=6"></script>
+</body>
+</html>

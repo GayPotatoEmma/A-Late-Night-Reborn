@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Quicksand:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/signups.css?v=4" />
+    <link rel="stylesheet" href="css/signups.css?v=5" />
     <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
 </head>
 <body>
@@ -323,155 +323,10 @@
         </div>
     </div>
 
-    <!-- ── Unified My Profile Modal (Active Signups, Run Stats & Saved Preferences) ── -->
-    <div class="modal-backdrop" id="prefs-modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="prefs-modal-title">
-        <div class="modal-box modal-box-lg profile-modal-box" id="prefs-modal-box">
-            <div class="modal-header">
-                <div class="modal-title-wrap">
-                    <img id="profile-modal-avatar" src="assets/alnr%20logo.png" alt="Avatar" class="profile-modal-avatar" />
-                    <div>
-                        <h3 class="modal-title profile-modal-title-row" id="prefs-modal-title">
-                            <span>My Profile</span>
-                            <span class="badge-verified" id="profile-modal-char-badge" style="display: none;"></span>
-                        </h3>
-                        <div class="modal-subtitle" id="profile-modal-subtitle">Your active signups, run stats, and saved presets</div>
-                    </div>
-                </div>
-                <button type="button" class="modal-close-btn" id="prefs-modal-close-btn" aria-label="Close profile modal">&times;</button>
-            </div>
-
-            <!-- Top-Level Profile Tabs -->
-            <div class="profile-top-tabs" id="profile-top-tabs" role="tablist">
-                <button type="button" class="profile-top-tab active" data-profile-tab="signups" role="tab" aria-selected="true">
-                    <span class="material-symbols-outlined">bookmark_check</span>
-                    <span>Active Signups</span>
-                    <span class="profile-tab-count" id="profile-tab-signups-count" style="display: none;">0</span>
-                </button>
-                <button type="button" class="profile-top-tab" data-profile-tab="stats" role="tab" aria-selected="false">
-                    <span class="material-symbols-outlined">bar_chart</span>
-                    <span>Run Stats</span>
-                </button>
-                <button type="button" class="profile-top-tab" data-profile-tab="prefs" role="tab" aria-selected="false">
-                    <span class="material-symbols-outlined">tune</span>
-                    <span>Saved Preferences</span>
-                    <span class="profile-tab-outdated-dot" id="profile-tab-prefs-outdated" style="display: none;" title="Saved preferences need updating">!</span>
-                </button>
-            </div>
-
-            <div class="modal-body" id="prefs-modal-body">
-                <!-- Tab 1: Active Signups -->
-                <div class="profile-tab-panel" id="profile-panel-signups">
-                    <div class="my-signups-list" id="my-signups-list"></div>
-                </div>
-
-                <!-- Tab 2: Run Stats -->
-                <div class="profile-tab-panel" id="profile-panel-stats" style="display: none;">
-                    <div id="profile-stats-content">
-                        <div class="stats-empty-box">Loading your ALNR run stats...</div>
-                    </div>
-                </div>
-
-                <!-- Tab 3: Saved Preferences -->
-                <div class="profile-tab-panel" id="profile-panel-prefs" style="display: none;">
-                    <!-- Content Tabs -->
-                    <div class="prefs-content-tabs" id="prefs-content-tabs" role="tablist">
-                        <button type="button" class="prefs-tab-btn active" data-pref-tab="Chaotic" role="tab">
-                            <span>Chaotic</span>
-                            <span class="prefs-tab-status" data-tab-status="Chaotic"></span>
-                        </button>
-                        <button type="button" class="prefs-tab-btn" data-pref-tab="FT:B" role="tab">
-                            <span>FT:B</span>
-                            <span class="prefs-tab-status" data-tab-status="FT:B"></span>
-                        </button>
-                        <button type="button" class="prefs-tab-btn" data-pref-tab="FT:M" role="tab">
-                            <span>FT:M</span>
-                            <span class="prefs-tab-status" data-tab-status="FT:M"></span>
-                        </button>
-                        <button type="button" class="prefs-tab-btn" data-pref-tab="BA" role="tab">
-                            <span>BA</span>
-                            <span class="prefs-tab-status" data-tab-status="BA"></span>
-                        </button>
-                        <button type="button" class="prefs-tab-btn" data-pref-tab="DRS" role="tab">
-                            <span>DRS</span>
-                            <span class="prefs-tab-status" data-tab-status="DRS"></span>
-                        </button>
-                    </div>
-
-                    <!-- Tab Status Banner -->
-                    <div id="prefs-modal-tab-status" class="prefs-modal-status-banner"></div>
-
-                    <!-- Dynamic Editor for Active Content Tab -->
-                    <div id="prefs-modal-editor" class="prefs-modal-editor"></div>
-
-                    <!-- Save / Clear Current Tab Actions -->
-                    <div class="prefs-tab-actions">
-                        <button type="button" class="modal-btn-dismiss prefs-btn-danger-outline" id="btn-prefs-clear-tab">
-                            <span class="material-symbols-outlined" style="font-size: 1rem;">delete_outline</span>
-                            <span id="btn-prefs-clear-tab-text">Clear Tab</span>
-                        </button>
-                        <button type="button" class="btn-submit-signup prefs-btn-save-tab" id="btn-prefs-save-tab">
-                            <span class="material-symbols-outlined" style="font-size: 1.1rem;">save</span>
-                            <span id="btn-prefs-save-tab-text">Save Preferences</span>
-                        </button>
-                    </div>
-
-                    <div id="prefs-modal-alert" class="status-alert" style="display: none; margin-top: 0;"></div>
-
-                    <!-- Cross-Device Transfer & Backup Section -->
-                    <div class="prefs-transfer-section">
-                        <div class="prefs-transfer-header">
-                            <span class="material-symbols-outlined" style="font-size: 1.15rem; color: var(--accent-purple);">sync_alt</span>
-                            <span>Transfer &amp; Backup Preferences (PC &lt;-&gt; Mobile)</span>
-                        </div>
-                        <div class="prefs-transfer-desc">
-                            Your preferences are stored only in this browser. Copy a share code or export a JSON file to move your settings to another device.
-                        </div>
-
-                        <div class="prefs-share-code-row">
-                            <input type="text" id="input-prefs-share-code" class="input-text prefs-share-input" placeholder="Paste an ALNR1:... share code here to import" />
-                            <button type="button" class="btn-prefs-secondary" id="btn-apply-share-code">
-                                <span class="material-symbols-outlined" style="font-size: 1rem;">download</span>
-                                <span>Apply Code</span>
-                            </button>
-                        </div>
-
-                        <div class="prefs-transfer-buttons">
-                            <button type="button" class="btn-prefs-secondary" id="btn-copy-share-code">
-                                <span class="material-symbols-outlined" style="font-size: 1rem;">content_copy</span>
-                                <span>Copy Share Code</span>
-                            </button>
-                            <button type="button" class="btn-prefs-secondary" id="btn-export-prefs-json">
-                                <span class="material-symbols-outlined" style="font-size: 1rem;">file_download</span>
-                                <span>Export .json</span>
-                            </button>
-                            <button type="button" class="btn-prefs-secondary" id="btn-import-prefs-json">
-                                <span class="material-symbols-outlined" style="font-size: 1rem;">file_upload</span>
-                                <span>Import .json</span>
-                            </button>
-                            <input type="file" id="input-import-prefs-file" accept=".json,application/json" style="display: none;" />
-                            <button type="button" class="btn-prefs-secondary prefs-btn-danger-text" id="btn-clear-all-prefs">
-                                <span class="material-symbols-outlined" style="font-size: 1rem;">delete_forever</span>
-                                <span>Clear All Saved Data</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <div class="modal-cancellation-hint" id="profile-modal-footer-hint">
-                    <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">lock</span>
-                    <span>Private to your Discord account.</span>
-                </div>
-                <button type="button" class="modal-btn-dismiss" id="prefs-modal-dismiss-btn">Done</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Scripts -->
     <script src="js/theme.js"></script>
     <script src="js/stars.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/signups.js?v=5"></script>
+    <script src="js/signups.js?v=6"></script>
 </body>
 </html>

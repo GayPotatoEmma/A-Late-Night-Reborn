@@ -140,9 +140,14 @@
         ]
     };
 
+    const IS_PROFILE_PAGE = Boolean(document.body && document.body.dataset && document.body.dataset.page === 'profile');
+
     // ── OAuth2 Flow Handlers ─────────────────────────────────────────────────────
 
     function getRedirectUri() {
+        if (IS_PROFILE_PAGE) {
+            return window.location.origin + '/signups';
+        }
         return window.location.origin + window.location.pathname;
     }
 
@@ -161,10 +166,15 @@
         const state = generateOAuthState();
         try {
             sessionStorage.setItem('alnr_oauth_state', state);
-            const params = new URLSearchParams(window.location.search);
-            const runToSave = (selectedEvent && selectedEvent.id) || params.get('event') || params.get('run');
-            if (runToSave) {
-                sessionStorage.setItem('alnr_oauth_run', runToSave);
+            if (IS_PROFILE_PAGE) {
+                sessionStorage.setItem('alnr_post_auth_redirect', window.location.pathname + window.location.search);
+            } else {
+                sessionStorage.removeItem('alnr_post_auth_redirect');
+                const params = new URLSearchParams(window.location.search);
+                const runToSave = (selectedEvent && selectedEvent.id) || params.get('event') || params.get('run');
+                if (runToSave) {
+                    sessionStorage.setItem('alnr_oauth_run', runToSave);
+                }
             }
         } catch (e) {
             console.warn('[Signups Auth] Could not store oauth state:', e);
@@ -287,6 +297,16 @@
 
             const data = await res.json();
             currentUser = data.user;
+            try {
+                const postRedirect = sessionStorage.getItem('alnr_post_auth_redirect');
+                if (postRedirect) {
+                    sessionStorage.removeItem('alnr_post_auth_redirect');
+                    if (postRedirect.startsWith('/') || postRedirect.startsWith('profile')) {
+                        window.location.replace(postRedirect);
+                        return;
+                    }
+                }
+            } catch (e) {}
             showStatusAlert(`Welcome back, ${currentUser.global_name || currentUser.username}!`, 'success');
         } catch (err) {
             console.error('[Signups Auth]', err);
@@ -368,11 +388,13 @@
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <button type="button" class="btn-profile-pill" id="btn-open-prefs-modal" aria-label="My Profile" title="My Profile (Active Signups, Run Stats & Saved Preferences)">
+                        ${!IS_PROFILE_PAGE ? `
+                        <a href="profile.html" class="btn-profile-pill" id="btn-open-prefs-modal" aria-label="My Profile" title="My Profile (Active Signups, Run Stats & Saved Preferences)" style="text-decoration: none;">
                             <span class="material-symbols-outlined">person</span>
                             <span>Profile</span>
                             <span class="prefs-outdated-badge" id="prefs-outdated-badge" style="display: none;" title="Saved preferences need updating">!</span>
-                        </button>
+                        </a>
+                        ` : ''}
                         ${(currentUser.can_access_dashboard || currentUser.dashboard_role || currentUser.is_owner) ? `
                         <a href="dashboard.html" class="btn-prefs-cog" id="btn-open-dashboard" aria-label="Dashboard" title="Dashboard" style="text-decoration: none;">
                             <span class="material-symbols-outlined">bolt</span>
@@ -383,9 +405,19 @@
                 </div>
             `;
             document.getElementById('btn-discord-signout').onclick = signOut;
-            const openPrefsBtn = document.getElementById('btn-open-prefs-modal');
-            if (openPrefsBtn) openPrefsBtn.onclick = () => openProfileModal('signups');
             updatePrefsCogBadge();
+        }
+
+        if (IS_PROFILE_PAGE) {
+            const loginCard = document.getElementById('profile-login-card');
+            const workspaceCard = document.getElementById('profile-workspace-card');
+            if (currentUser) {
+                if (loginCard) loginCard.style.display = 'none';
+                if (workspaceCard) workspaceCard.style.display = 'block';
+            } else {
+                if (loginCard) loginCard.style.display = 'block';
+                if (workspaceCard) workspaceCard.style.display = 'none';
+            }
         }
 
         updateSignupAuthVisibility();
@@ -610,7 +642,7 @@
 
     async function loadEvents() {
         const container = document.getElementById('runs-selection-container');
-        if (!container) return;
+        if (!container && !IS_PROFILE_PAGE) return;
 
         try {
             const res = await fetch(`${getApiUrl()}/api/public/events`);
@@ -619,15 +651,19 @@
             const raw = data.events || [];
             allEvents = raw.map(normalizeEvent);
 
-            renderEventsGrid();
-            checkUrlPreselection();
+            if (container) {
+                renderEventsGrid();
+                checkUrlPreselection();
+            }
         } catch (e) {
             console.error('[Signups] Failed to fetch events:', e);
-            container.innerHTML = `
-                <div style="color: var(--text-muted); padding: 1.5rem; text-align: center;">
-                    Could not load upcoming runs from server. Check connection or try refreshing.
-                </div>
-            `;
+            if (container) {
+                container.innerHTML = `
+                    <div style="color: var(--text-muted); padding: 1.5rem; text-align: center;">
+                        Could not load upcoming runs from server. Check connection or try refreshing.
+                    </div>
+                `;
+            }
         }
     }
 
@@ -1454,7 +1490,6 @@
         if (!currentUser) return;
 
         const list = document.getElementById('my-signups-list');
-        if (!list) return;
 
         try {
             const res = await fetch(`${getApiUrl()}/api/public/signups/my`, {
@@ -1483,7 +1518,7 @@
                     countBadge.style.display = mySignupsList.length > 0 ? 'inline-flex' : 'none';
                 }
 
-                if (mySignupsList.length > 0) {
+                if (list && mySignupsList.length > 0) {
                     list.innerHTML = mySignupsList.map((s, idx) => {
                         const matchedEvent = allEvents.find(e =>
                             (s.event_id && e.id === s.event_id) ||
@@ -1616,12 +1651,12 @@
                             }
                         };
                     });
-                } else {
+                } else if (list) {
                     list.innerHTML = `
-                        <div class="stats-empty-box">
+                        <div class="stats-empty-box" style="grid-column: 1 / -1;">
                             <span class="material-symbols-outlined" style="font-size: 2rem; color: var(--accent-purple); display: block; margin-bottom: 0.5rem;">event_busy</span>
                             <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">No Active Signups Yet</div>
-                            <div>Select any open run on the signups page to register, and your upcoming runs and roster assignments will appear here.</div>
+                            <div>Select any open run on the <a href="signups.html" style="color: var(--accent-rose); text-decoration: underline;">Run Signups</a> page to register, and your upcoming runs and roster assignments will appear here.</div>
                         </div>
                     `;
                 }
@@ -2696,7 +2731,7 @@
         } else if (tabName === 'stats') {
             hintEl.innerHTML = `
                 <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">lock</span>
-                <span>Private to your Discord account &bull; Synced from ALNR Run Tracker.</span>
+                <span>Only visible to you.</span>
             `;
         } else {
             hintEl.innerHTML = `
@@ -2762,7 +2797,6 @@
         const summary = cachedMyStats.summary || {};
         const totalRuns = Number(summary.total_runs || 0);
         const byRaid = Array.isArray(cachedMyStats.by_raid) ? cachedMyStats.by_raid : [];
-        const milestones = Array.isArray(cachedMyStats.milestones) ? cachedMyStats.milestones : [];
         const allRuns = Array.isArray(cachedMyStats.runs) ? cachedMyStats.runs : [];
 
         if (!cachedMyStats.matched || totalRuns === 0) {
@@ -2796,23 +2830,6 @@
                 </button>
             `;
         }).join('');
-
-        const milestonesHtml = milestones.length > 0 ? `
-            <div>
-                <div class="stats-section-title" style="margin-bottom: 0.55rem;">
-                    <div class="stats-section-title-left">
-                        <span class="material-symbols-outlined">workspace_premium</span>
-                        <span>Milestones</span>
-                    </div>
-                </div>
-                <div class="stats-milestones-row">
-                    ${milestones.map(m => {
-                        const toneCls = m.tone && m.tone !== 'purple' ? ` ${escapeHtml(m.tone)}` : '';
-                        return `<span class="milestone-pill${toneCls}"><span class="material-symbols-outlined">${escapeHtml(m.icon || 'auto_awesome')}</span> ${escapeHtml(m.label)}</span>`;
-                    }).join('')}
-                </div>
-            </div>
-        ` : '';
 
         const filteredRuns = activeStatsRaidFilter === 'all'
             ? allRuns
@@ -2890,8 +2907,6 @@
                 </div>
             </div>
 
-            ${milestonesHtml}
-
             <div>
                 <div class="stats-section-title" style="margin-bottom: 0.6rem;">
                     <div class="stats-section-title-left">
@@ -2959,6 +2974,15 @@
 
         updateProfileModalFooterHint(tabName);
 
+        if (IS_PROFILE_PAGE && window.location.protocol !== 'file:') {
+            try {
+                const url = new URL(window.location.href);
+                url.searchParams.set('tab', tabName);
+                if (tabName !== 'prefs') url.searchParams.delete('raid');
+                window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+            } catch (e) {}
+        }
+
         if (tabName === 'stats') {
             loadMyRunStats(false);
         } else if (tabName === 'prefs') {
@@ -2981,15 +3005,16 @@
     }
 
     function openProfileModal(initialProfileTab = 'signups', initialPrefsTab = null) {
-        const backdrop = document.getElementById('prefs-modal-backdrop');
-        if (!backdrop) return;
-
-        updateProfileModalHeader();
-        backdrop.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-
-        activeProfileTab = '';
-        switchProfileTab(initialProfileTab || 'signups', initialPrefsTab);
+        if (IS_PROFILE_PAGE) {
+            activeProfileTab = '';
+            switchProfileTab(initialProfileTab || 'signups', initialPrefsTab);
+            return;
+        }
+        const params = new URLSearchParams();
+        if (initialProfileTab) params.set('tab', initialProfileTab);
+        if (initialPrefsTab) params.set('raid', initialPrefsTab);
+        const qs = params.toString();
+        window.location.href = `profile.html${qs ? '?' + qs : ''}`;
     }
 
     function openPrefsModal(initialTab) {
@@ -3006,6 +3031,11 @@
     }
 
     function hasUnsavedPrefsModalChanges() {
+        if (IS_PROFILE_PAGE) {
+            if (activeProfileTab !== 'prefs') return false;
+            if (!prefsModalInitialSnapshot) return false;
+            return getPrefsModalStateSnapshot() !== prefsModalInitialSnapshot;
+        }
         const backdrop = document.getElementById('prefs-modal-backdrop');
         if (!backdrop || backdrop.style.display === 'none') return false;
         if (activeProfileTab !== 'prefs') return false;
@@ -3665,12 +3695,13 @@
             savePrefsInlineBtn.onclick = handleSavePrefsInline;
         }
 
-        // 4. Unified My Profile Modal listeners (attached immediately so modal works before runs finish loading)
-        const openPrefsBtn = document.getElementById('btn-open-prefs-modal');
+        // 4. Profile page & tab listeners
+        const profileLoginBtn = document.getElementById('btn-profile-discord-login');
+        if (profileLoginBtn) profileLoginBtn.onclick = initiateDiscordLogin;
+
         const prefsModalBackdrop = document.getElementById('prefs-modal-backdrop');
         const prefsModalCloseBtn = document.getElementById('prefs-modal-close-btn');
         const prefsModalDismissBtn = document.getElementById('prefs-modal-dismiss-btn');
-        if (openPrefsBtn) openPrefsBtn.onclick = () => openProfileModal('signups');
         if (prefsModalCloseBtn) prefsModalCloseBtn.onclick = () => closePrefsModal();
         if (prefsModalDismissBtn) prefsModalDismissBtn.onclick = () => closePrefsModal();
         if (prefsModalBackdrop) {
@@ -3848,7 +3879,19 @@
         renderAuthBanner();
         updatePrefsCogBadge();
 
-        await loadEvents();
-        await loadMySignups();
+        if (IS_PROFILE_PAGE) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const initTab = urlParams.get('tab') || 'signups';
+            const initRaid = urlParams.get('raid') || null;
+            if (currentUser) {
+                activeProfileTab = '';
+                switchProfileTab(initTab, initRaid);
+            }
+            await loadEvents();
+            await loadMySignups();
+        } else {
+            await loadEvents();
+            await loadMySignups();
+        }
     });
 })();

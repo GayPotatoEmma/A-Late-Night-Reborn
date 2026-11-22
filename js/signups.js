@@ -15,6 +15,11 @@
     let activePrefsTab = 'Chaotic';
     let prefsModalInitialSnapshot = '';
     let phantomWarningContext = 'form'; // 'form' or 'modal'
+    let activeProfileTab = 'signups'; // 'signups' | 'stats' | 'prefs'
+    let cachedMyStats = null;
+    let myStatsLoading = false;
+    let activeStatsRaidFilter = 'all';
+    let statsHistoryVisibleCount = 10;
 
     // ── Saved Preferences & Schema Versioning ────────────────────────────────────
     const PREFS_STORAGE_KEY = 'alnr_signup_preferences_v1';
@@ -192,11 +197,18 @@
         currentUser = null;
         mySignupsList = [];
 
-        // 3. Clear and hide "My Active Signups" list
-        const mySignupsCard = document.getElementById('my-signups-card');
+        // 3. Clear "My Active Signups" list & cached run stats
         const mySignupsListEl = document.getElementById('my-signups-list');
-        if (mySignupsCard) mySignupsCard.style.display = 'none';
         if (mySignupsListEl) mySignupsListEl.innerHTML = '';
+        const tabCountBadge = document.getElementById('profile-tab-signups-count');
+        if (tabCountBadge) {
+            tabCountBadge.textContent = '0';
+            tabCountBadge.style.display = 'none';
+        }
+        cachedMyStats = null;
+        activeStatsRaidFilter = 'all';
+        statsHistoryVisibleCount = 10;
+        closePrefsModal(true);
 
         // 4. Close any open Application Details modal & wipe body
         closeApplicationModal();
@@ -356,22 +368,23 @@
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
+                        <button type="button" class="btn-profile-pill" id="btn-open-prefs-modal" aria-label="My Profile" title="My Profile (Active Signups, Run Stats & Saved Preferences)">
+                            <span class="material-symbols-outlined">person</span>
+                            <span>Profile</span>
+                            <span class="prefs-outdated-badge" id="prefs-outdated-badge" style="display: none;" title="Saved preferences need updating">!</span>
+                        </button>
                         ${(currentUser.can_access_dashboard || currentUser.dashboard_role || currentUser.is_owner) ? `
                         <a href="dashboard.html" class="btn-prefs-cog" id="btn-open-dashboard" aria-label="Dashboard" title="Dashboard" style="text-decoration: none;">
                             <span class="material-symbols-outlined">bolt</span>
                         </a>
                         ` : ''}
-                        <button type="button" class="btn-prefs-cog" id="btn-open-prefs-modal" aria-label="Raid signup preferences" title="Saved Signup Preferences">
-                            <span class="material-symbols-outlined">settings</span>
-                            <span class="prefs-outdated-badge" id="prefs-outdated-badge" style="display: none;" title="Saved preferences need updating">!</span>
-                        </button>
                         <button class="btn-signout" id="btn-discord-signout" type="button">Sign Out</button>
                     </div>
                 </div>
             `;
             document.getElementById('btn-discord-signout').onclick = signOut;
             const openPrefsBtn = document.getElementById('btn-open-prefs-modal');
-            if (openPrefsBtn) openPrefsBtn.onclick = () => openPrefsModal();
+            if (openPrefsBtn) openPrefsBtn.onclick = () => openProfileModal('signups');
             updatePrefsCogBadge();
         }
 
@@ -1440,9 +1453,8 @@
     async function loadMySignups() {
         if (!currentUser) return;
 
-        const container = document.getElementById('my-signups-card');
         const list = document.getElementById('my-signups-list');
-        if (!container || !list) return;
+        if (!list) return;
 
         try {
             const res = await fetch(`${getApiUrl()}/api/public/signups/my`, {
@@ -1465,8 +1477,13 @@
                     return false;
                 });
 
+                const countBadge = document.getElementById('profile-tab-signups-count');
+                if (countBadge) {
+                    countBadge.textContent = String(mySignupsList.length);
+                    countBadge.style.display = mySignupsList.length > 0 ? 'inline-flex' : 'none';
+                }
+
                 if (mySignupsList.length > 0) {
-                    container.style.display = 'block';
                     list.innerHTML = mySignupsList.map((s, idx) => {
                         const matchedEvent = allEvents.find(e =>
                             (s.event_id && e.id === s.event_id) ||
@@ -1600,7 +1617,13 @@
                         };
                     });
                 } else {
-                    container.style.display = 'none';
+                    list.innerHTML = `
+                        <div class="stats-empty-box">
+                            <span class="material-symbols-outlined" style="font-size: 2rem; color: var(--accent-purple); display: block; margin-bottom: 0.5rem;">event_busy</span>
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">No Active Signups Yet</div>
+                            <div>Select any open run on the signups page to register, and your upcoming runs and roster assignments will appear here.</div>
+                        </div>
+                    `;
                 }
                 updateSignupAuthVisibility();
                 renderEventsGrid();
@@ -1892,7 +1915,10 @@
         const modalBackdrop = document.getElementById('application-modal-backdrop');
         if (!modalBackdrop) return;
         modalBackdrop.style.display = 'none';
-        document.body.style.overflow = '';
+        const profileModal = document.getElementById('prefs-modal-backdrop');
+        if (!profileModal || profileModal.style.display === 'none') {
+            document.body.style.overflow = '';
+        }
     }
 
     function showStatusAlert(msg, type) {
@@ -2238,8 +2264,9 @@
 
     function updatePrefsCogBadge() {
         const badge = document.getElementById('prefs-outdated-badge');
+        const tabDot = document.getElementById('profile-tab-prefs-outdated');
         const cogBtn = document.getElementById('btn-open-prefs-modal');
-        if (!badge) return;
+        if (!badge && !tabDot) return;
 
         const store = loadSavedPreferencesStore();
         const outdatedTypes = [];
@@ -2253,13 +2280,20 @@
         });
 
         if (outdatedTypes.length > 0) {
-            badge.style.display = 'inline-flex';
             const msg = `Saved preferences need updating for: ${outdatedTypes.join(', ')}`;
-            badge.title = msg;
+            if (badge) {
+                badge.style.display = 'inline-flex';
+                badge.title = msg;
+            }
+            if (tabDot) {
+                tabDot.style.display = 'inline-flex';
+                tabDot.title = msg;
+            }
             if (cogBtn) cogBtn.title = msg;
         } else {
-            badge.style.display = 'none';
-            if (cogBtn) cogBtn.title = 'Saved Signup Preferences';
+            if (badge) badge.style.display = 'none';
+            if (tabDot) tabDot.style.display = 'none';
+            if (cogBtn) cogBtn.title = 'My Profile (Active Signups, Run Stats & Saved Preferences)';
         }
     }
 
@@ -2588,30 +2622,378 @@
         });
     }
 
-    function openPrefsModal(initialTab) {
-        const backdrop = document.getElementById('prefs-modal-backdrop');
-        if (!backdrop) return;
+    function formatStatsMonthYear(dateStr) {
+        if (!dateStr) return 'N/A';
+        const parts = String(dateStr).slice(0, 10).split('-');
+        if (parts.length !== 3) return dateStr;
+        const dt = new Date(Date.UTC(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10)));
+        if (Number.isNaN(dt.getTime())) return dateStr;
+        return dt.toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+    }
 
-        hidePrefsModalAlert();
+    function formatStatsFullDate(dateStr) {
+        if (!dateStr) return '';
+        const parts = String(dateStr).slice(0, 10).split('-');
+        if (parts.length !== 3) return dateStr;
+        const dt = new Date(Date.UTC(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10)));
+        if (Number.isNaN(dt.getTime())) return dateStr;
+        return dt.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+    }
 
-        // Pick initial tab: explicit argument -> first outdated tab -> selectedEvent -> 'Chaotic'
-        if (initialTab && CONTENT_TYPES.includes(initialTab)) {
-            activePrefsTab = initialTab;
-        } else {
-            const store = loadSavedPreferencesStore();
-            const firstOutdated = CONTENT_TYPES.find(ct => store.profiles[ct] && validateSavedProfile(ct, store.profiles[ct]).status === 'outdated');
-            if (firstOutdated) {
-                activePrefsTab = firstOutdated;
-            } else if (selectedEvent && CONTENT_TYPES.includes(selectedEvent.content_type)) {
-                activePrefsTab = selectedEvent.content_type;
+    function getRaidBadgeStyle(raid) {
+        const up = String(raid || '').toUpperCase();
+        if (up === 'FT:B') return { cls: 'rb-ftb', label: 'FT:B', grad: 'linear-gradient(90deg, #ef4444, #f87171)' };
+        if (up === 'FT:M') return { cls: 'rb-ftm', label: 'FT:M', grad: 'linear-gradient(90deg, #9333ea, #c084fc)' };
+        if (up === 'CHAOTIC') return { cls: 'rb-chaotic', label: 'CHAOTIC', grad: 'linear-gradient(90deg, #7c3aed, #a78bfa)' };
+        if (up === 'DRS') return { cls: 'rb-drs', label: 'DRS', grad: 'linear-gradient(90deg, #d97706, #fbbf24)' };
+        if (up === 'BA') return { cls: 'rb-ba', label: 'BA', grad: 'linear-gradient(90deg, #0284c7, #38bdf8)' };
+        return { cls: 'rb-other', label: String(raid || 'OTHER').toUpperCase(), grad: 'linear-gradient(90deg, #64748b, #94a3b8)' };
+    }
+
+    function updateProfileModalHeader() {
+        const avatarEl = document.getElementById('profile-modal-avatar');
+        const charBadgeEl = document.getElementById('profile-modal-char-badge');
+        const subEl = document.getElementById('profile-modal-subtitle');
+
+        if (avatarEl && currentUser && currentUser.avatar_url) {
+            avatarEl.src = currentUser.avatar_url;
+        }
+
+        const charName = (cachedMyStats && cachedMyStats.character_name) || (currentUser && currentUser.character_name) || '';
+        if (charBadgeEl) {
+            if (charName) {
+                charBadgeEl.textContent = charName;
+                charBadgeEl.style.display = 'inline-flex';
             } else {
-                activePrefsTab = 'Chaotic';
+                charBadgeEl.style.display = 'none';
             }
         }
 
-        renderPrefsModalTab(activePrefsTab);
+        if (subEl && currentUser) {
+            const parts = [`@${currentUser.username}`];
+            const lastRun = cachedMyStats && cachedMyStats.summary && cachedMyStats.summary.last_run;
+            if (lastRun) {
+                const dtParts = String(lastRun).slice(0, 10).split('-');
+                if (dtParts.length === 3) {
+                    const dt = new Date(Date.UTC(parseInt(dtParts[0], 10), parseInt(dtParts[1], 10) - 1, parseInt(dtParts[2], 10)));
+                    if (!Number.isNaN(dt.getTime())) {
+                        parts.push(`Last run: ${dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })}`);
+                    }
+                }
+            }
+            subEl.textContent = parts.join(' • ');
+        }
+    }
+
+    function updateProfileModalFooterHint(tabName) {
+        const hintEl = document.getElementById('profile-modal-footer-hint');
+        if (!hintEl) return;
+        if (tabName === 'prefs') {
+            hintEl.innerHTML = `
+                <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">lock</span>
+                <span>Saved exclusively on your device. See our <a href="privacy.html">Privacy Notice</a>.</span>
+            `;
+        } else if (tabName === 'stats') {
+            hintEl.innerHTML = `
+                <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">lock</span>
+                <span>Private to your Discord account &bull; Synced from ALNR Run Tracker.</span>
+            `;
+        } else {
+            hintEl.innerHTML = `
+                <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">info</span>
+                <span>Click any active signup to view full details or roster status.</span>
+            `;
+        }
+    }
+
+    async function loadMyRunStats(force = false) {
+        const container = document.getElementById('profile-stats-content');
+        if (!container) return;
+        if (!currentUser) {
+            container.innerHTML = `<div class="stats-empty-box">Connect your Discord account to view your ALNR run stats.</div>`;
+            return;
+        }
+        if (cachedMyStats && !force) {
+            renderMyRunStats();
+            return;
+        }
+        if (myStatsLoading) return;
+
+        myStatsLoading = true;
+        container.innerHTML = `<div class="stats-empty-box">Loading your ALNR run stats...</div>`;
+        try {
+            const res = await fetch(`${getApiUrl()}/api/public/my-stats`, {
+                credentials: 'include'
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}`);
+            }
+            const data = await res.json();
+            if (!data.success) {
+                throw new Error(data.error || 'Failed to load run stats');
+            }
+            cachedMyStats = data;
+            activeStatsRaidFilter = 'all';
+            statsHistoryVisibleCount = 10;
+            updateProfileModalHeader();
+            renderMyRunStats();
+        } catch (err) {
+            container.innerHTML = `
+                <div class="stats-empty-box">
+                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem;">Unable to Load Run Stats</div>
+                    <div style="margin-bottom: 0.85rem;">${escapeHtml(err.message || 'Please try again in a moment.')}</div>
+                    <button type="button" class="btn-prefs-secondary" id="btn-retry-my-stats">
+                        <span class="material-symbols-outlined" style="font-size: 1rem;">refresh</span>
+                        <span>Try Again</span>
+                    </button>
+                </div>
+            `;
+            const retryBtn = document.getElementById('btn-retry-my-stats');
+            if (retryBtn) retryBtn.onclick = () => loadMyRunStats(true);
+        } finally {
+            myStatsLoading = false;
+        }
+    }
+
+    function renderMyRunStats() {
+        const container = document.getElementById('profile-stats-content');
+        if (!container || !cachedMyStats) return;
+
+        const summary = cachedMyStats.summary || {};
+        const totalRuns = Number(summary.total_runs || 0);
+        const byRaid = Array.isArray(cachedMyStats.by_raid) ? cachedMyStats.by_raid : [];
+        const milestones = Array.isArray(cachedMyStats.milestones) ? cachedMyStats.milestones : [];
+        const allRuns = Array.isArray(cachedMyStats.runs) ? cachedMyStats.runs : [];
+
+        if (!cachedMyStats.matched || totalRuns === 0) {
+            const charLabel = cachedMyStats.character_name || (currentUser && currentUser.character_name) || (currentUser && currentUser.username) || 'your character';
+            container.innerHTML = `
+                <div class="stats-empty-box">
+                    <span class="material-symbols-outlined" style="font-size: 2.1rem; color: var(--accent-purple); display: block; margin-bottom: 0.5rem;">bar_chart</span>
+                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem;">No ALNR Runs Recorded Yet</div>
+                    <div>We didn't find any completed runs for <strong>${escapeHtml(charLabel)}</strong> yet. Once you attend a community run, your stats and history will appear here automatically!</div>
+                </div>
+            `;
+            return;
+        }
+
+        const totalClears = Number(summary.total_clears || 0);
+        const clearedRuns = Number(summary.cleared_runs || 0);
+        const distinctRaids = Number(summary.distinct_raids || byRaid.length || 0);
+        const raidingSince = formatStatsMonthYear(summary.first_run);
+        const topRaid = summary.top_raid || (byRaid[0] ? byRaid[0].raid : 'N/A');
+        const maxRaidRuns = byRaid.reduce((acc, r) => Math.max(acc, Number(r.runs || 0)), 1);
+
+        const breakdownRowsHtml = byRaid.map(r => {
+            const st = getRaidBadgeStyle(r.raid);
+            const pct = Math.max(6, Math.round((Number(r.runs || 0) / maxRaidRuns) * 100));
+            const isActive = activeStatsRaidFilter === r.raid;
+            return `
+                <button type="button" class="stats-raid-row${isActive ? ' is-active' : ''}" data-stats-raid="${escapeHtml(r.raid)}">
+                    <span class="stats-raid-badge ${st.cls}">${escapeHtml(st.label)}</span>
+                    <div class="stats-bar-track"><div class="stats-bar-fill" style="width: ${pct}%; background: ${st.grad};"></div></div>
+                    <div class="stats-raid-metrics"><strong>${r.runs}</strong> ${r.runs === 1 ? 'run' : 'runs'} &bull; ${r.clears} ${r.clears === 1 ? 'clear' : 'clears'}</div>
+                </button>
+            `;
+        }).join('');
+
+        const milestonesHtml = milestones.length > 0 ? `
+            <div>
+                <div class="stats-section-title" style="margin-bottom: 0.55rem;">
+                    <div class="stats-section-title-left">
+                        <span class="material-symbols-outlined">workspace_premium</span>
+                        <span>Milestones</span>
+                    </div>
+                </div>
+                <div class="stats-milestones-row">
+                    ${milestones.map(m => {
+                        const toneCls = m.tone && m.tone !== 'purple' ? ` ${escapeHtml(m.tone)}` : '';
+                        return `<span class="milestone-pill${toneCls}"><span class="material-symbols-outlined">${escapeHtml(m.icon || 'auto_awesome')}</span> ${escapeHtml(m.label)}</span>`;
+                    }).join('')}
+                </div>
+            </div>
+        ` : '';
+
+        const filteredRuns = activeStatsRaidFilter === 'all'
+            ? allRuns
+            : allRuns.filter(r => r.raid === activeStatsRaidFilter);
+        const visibleRuns = filteredRuns.slice(0, statsHistoryVisibleCount);
+
+        const filterPillsHtml = [
+            `<button type="button" class="stats-filter-pill${activeStatsRaidFilter === 'all' ? ' active' : ''}" data-stats-filter="all">All (${allRuns.length})</button>`,
+            ...byRaid.map(r => {
+                const st = getRaidBadgeStyle(r.raid);
+                return `<button type="button" class="stats-filter-pill${activeStatsRaidFilter === r.raid ? ' active' : ''}" data-stats-filter="${escapeHtml(r.raid)}">${escapeHtml(st.label)}</button>`;
+            })
+        ].join('');
+
+        const historyRowsHtml = visibleRuns.length > 0 ? visibleRuns.map(r => {
+            const st = getRaidBadgeStyle(r.raid);
+            const titleText = r.goal || 'Community Run';
+            const dateText = formatStatsFullDate(r.date) || r.date || '';
+            let pillText = r.result || (r.is_clear ? 'Cleared' : 'Completed');
+            if (r.is_clear && Number(r.clears || 0) > 1 && !/\d/.test(pillText)) {
+                pillText = `${r.clears} Clears`;
+            }
+            const pillCls = r.is_clear ? 'stats-result-pill' : 'stats-result-pill prog';
+            return `
+                <div class="stats-history-item">
+                    <div class="stats-history-left">
+                        <span class="stats-raid-badge ${st.cls}">${escapeHtml(st.label)}</span>
+                        <div>
+                            <div class="stats-history-title">${escapeHtml(titleText)}</div>
+                            <div class="stats-history-date">${escapeHtml(dateText)}</div>
+                        </div>
+                    </div>
+                    <span class="${pillCls}">${escapeHtml(pillText)}</span>
+                </div>
+            `;
+        }).join('') : `<div class="stats-empty-box">No runs found for this filter.</div>`;
+
+        const showMoreHtml = filteredRuns.length > visibleRuns.length ? `
+            <div class="stats-show-more-wrap">
+                <button type="button" class="btn-prefs-secondary" id="btn-stats-show-more">
+                    <span>Show More (${filteredRuns.length - visibleRuns.length} remaining)</span>
+                </button>
+            </div>
+        ` : '';
+
+        container.innerHTML = `
+            <div class="stats-summary-grid-3">
+                <div class="stats-kpi-card" style="--kpi-accent: #b291f7;">
+                    <div class="stats-kpi-top"><span>Total Runs</span><span class="material-symbols-outlined">swords</span></div>
+                    <div class="stats-kpi-val">${totalRuns}</div>
+                    <div class="stats-kpi-sub">Across ${distinctRaids} ${distinctRaids === 1 ? 'raid' : 'raids'}</div>
+                </div>
+                <div class="stats-kpi-card" style="--kpi-accent: #6ee7b7;">
+                    <div class="stats-kpi-top"><span>Total Clears</span><span class="material-symbols-outlined">emoji_events</span></div>
+                    <div class="stats-kpi-val">${totalClears}</div>
+                    <div class="stats-kpi-sub">Across ${clearedRuns} cleared ${clearedRuns === 1 ? 'run' : 'runs'}</div>
+                </div>
+                <div class="stats-kpi-card" style="--kpi-accent: #e4c090;">
+                    <div class="stats-kpi-top"><span>Raiding Since</span><span class="material-symbols-outlined">calendar_month</span></div>
+                    <div class="stats-kpi-val" style="font-size: 1.45rem; padding-top: 3px;">${escapeHtml(raidingSince)}</div>
+                    <div class="stats-kpi-sub">Most played: ${escapeHtml(topRaid)}</div>
+                </div>
+            </div>
+
+            <div>
+                <div class="stats-section-title" style="margin-bottom: 0.55rem;">
+                    <div class="stats-section-title-left">
+                        <span class="material-symbols-outlined">bar_chart</span>
+                        <span>Breakdown by Raid</span>
+                    </div>
+                    <span class="stats-section-hint">Click a raid to filter history</span>
+                </div>
+                <div class="stats-breakdown-box">
+                    ${breakdownRowsHtml}
+                </div>
+            </div>
+
+            ${milestonesHtml}
+
+            <div>
+                <div class="stats-section-title" style="margin-bottom: 0.6rem;">
+                    <div class="stats-section-title-left">
+                        <span class="material-symbols-outlined">history</span>
+                        <span>Recent Run History</span>
+                    </div>
+                    <div class="stats-filter-pills">${filterPillsHtml}</div>
+                </div>
+                <div class="stats-history-list">${historyRowsHtml}</div>
+                ${showMoreHtml}
+            </div>
+        `;
+
+        container.querySelectorAll('[data-stats-raid]').forEach(rowBtn => {
+            rowBtn.onclick = () => {
+                const raid = rowBtn.getAttribute('data-stats-raid');
+                activeStatsRaidFilter = (activeStatsRaidFilter === raid) ? 'all' : raid;
+                statsHistoryVisibleCount = 10;
+                renderMyRunStats();
+            };
+        });
+
+        container.querySelectorAll('[data-stats-filter]').forEach(pillBtn => {
+            pillBtn.onclick = () => {
+                const raid = pillBtn.getAttribute('data-stats-filter') || 'all';
+                if (activeStatsRaidFilter === raid) return;
+                activeStatsRaidFilter = raid;
+                statsHistoryVisibleCount = 10;
+                renderMyRunStats();
+            };
+        });
+
+        const showMoreBtn = document.getElementById('btn-stats-show-more');
+        if (showMoreBtn) {
+            showMoreBtn.onclick = () => {
+                statsHistoryVisibleCount += 10;
+                renderMyRunStats();
+            };
+        }
+    }
+
+    function switchProfileTab(tabName, initialPrefsTab = null) {
+        if (!['signups', 'stats', 'prefs'].includes(tabName)) tabName = 'signups';
+
+        if (activeProfileTab === 'prefs' && tabName !== 'prefs' && hasUnsavedPrefsModalChanges()) {
+            if (!window.confirm(`You have unsaved changes for ${activePrefsTab}. Switch tabs without saving?`)) {
+                return;
+            }
+        }
+
+        activeProfileTab = tabName;
+
+        document.querySelectorAll('#profile-top-tabs .profile-top-tab').forEach(btn => {
+            const isAct = btn.getAttribute('data-profile-tab') === tabName;
+            btn.classList.toggle('active', isAct);
+            btn.setAttribute('aria-selected', isAct ? 'true' : 'false');
+        });
+
+        const pSignups = document.getElementById('profile-panel-signups');
+        const pStats = document.getElementById('profile-panel-stats');
+        const pPrefs = document.getElementById('profile-panel-prefs');
+        if (pSignups) pSignups.style.display = tabName === 'signups' ? 'flex' : 'none';
+        if (pStats) pStats.style.display = tabName === 'stats' ? 'flex' : 'none';
+        if (pPrefs) pPrefs.style.display = tabName === 'prefs' ? 'flex' : 'none';
+
+        updateProfileModalFooterHint(tabName);
+
+        if (tabName === 'stats') {
+            loadMyRunStats(false);
+        } else if (tabName === 'prefs') {
+            hidePrefsModalAlert();
+            if (initialPrefsTab && CONTENT_TYPES.includes(initialPrefsTab)) {
+                activePrefsTab = initialPrefsTab;
+            } else {
+                const store = loadSavedPreferencesStore();
+                const firstOutdated = CONTENT_TYPES.find(ct => store.profiles[ct] && validateSavedProfile(ct, store.profiles[ct]).status === 'outdated');
+                if (firstOutdated) {
+                    activePrefsTab = firstOutdated;
+                } else if (selectedEvent && CONTENT_TYPES.includes(selectedEvent.content_type)) {
+                    activePrefsTab = selectedEvent.content_type;
+                } else if (!CONTENT_TYPES.includes(activePrefsTab)) {
+                    activePrefsTab = 'Chaotic';
+                }
+            }
+            renderPrefsModalTab(activePrefsTab);
+        }
+    }
+
+    function openProfileModal(initialProfileTab = 'signups', initialPrefsTab = null) {
+        const backdrop = document.getElementById('prefs-modal-backdrop');
+        if (!backdrop) return;
+
+        updateProfileModalHeader();
         backdrop.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+
+        activeProfileTab = '';
+        switchProfileTab(initialProfileTab || 'signups', initialPrefsTab);
+    }
+
+    function openPrefsModal(initialTab) {
+        openProfileModal('prefs', initialTab || null);
     }
 
     function getPrefsModalStateSnapshot() {
@@ -2626,6 +3008,7 @@
     function hasUnsavedPrefsModalChanges() {
         const backdrop = document.getElementById('prefs-modal-backdrop');
         if (!backdrop || backdrop.style.display === 'none') return false;
+        if (activeProfileTab !== 'prefs') return false;
         if (!prefsModalInitialSnapshot) return false;
         return getPrefsModalStateSnapshot() !== prefsModalInitialSnapshot;
     }
@@ -3282,12 +3665,12 @@
             savePrefsInlineBtn.onclick = handleSavePrefsInline;
         }
 
-        // 4. Saved Preferences Modal listeners (attached immediately so modal works before runs finish loading)
+        // 4. Unified My Profile Modal listeners (attached immediately so modal works before runs finish loading)
         const openPrefsBtn = document.getElementById('btn-open-prefs-modal');
         const prefsModalBackdrop = document.getElementById('prefs-modal-backdrop');
         const prefsModalCloseBtn = document.getElementById('prefs-modal-close-btn');
         const prefsModalDismissBtn = document.getElementById('prefs-modal-dismiss-btn');
-        if (openPrefsBtn) openPrefsBtn.onclick = () => openPrefsModal();
+        if (openPrefsBtn) openPrefsBtn.onclick = () => openProfileModal('signups');
         if (prefsModalCloseBtn) prefsModalCloseBtn.onclick = () => closePrefsModal();
         if (prefsModalDismissBtn) prefsModalDismissBtn.onclick = () => closePrefsModal();
         if (prefsModalBackdrop) {
@@ -3295,6 +3678,14 @@
                 if (e.target === prefsModalBackdrop) closePrefsModal();
             };
         }
+
+        document.querySelectorAll('#profile-top-tabs .profile-top-tab').forEach(tabBtn => {
+            tabBtn.onclick = () => {
+                const targetTab = tabBtn.getAttribute('data-profile-tab');
+                if (!targetTab || targetTab === activeProfileTab) return;
+                switchProfileTab(targetTab);
+            };
+        });
 
         document.querySelectorAll('#prefs-content-tabs .prefs-tab-btn').forEach(tabBtn => {
             tabBtn.onclick = () => {

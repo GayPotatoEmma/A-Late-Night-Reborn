@@ -2680,3 +2680,555 @@
   color: #78350f;
 }
 
+/* =====================================================
+   Unified My Profile Modal & Run Stats
+   ===================================================== */
+
+#application-modal-backdrop {
+  z-index: 1050;
+}
+
+.btn-profile-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(178, 145, 247, 0.16);
+  border: 1px solid rgba(178, 145, 247, 0.42);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition);
+}
+
+.btn-profile-pill:hover {
+  background: rgba(178, 145, 247, 0.28);
+  border-color: var(--accent-purple);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(178, 145, 247, 0.28);
+}
+
+.btn-profile-pill .material-symbols-outlined {
+  font-size: 1.12rem;
+  color: var(--accent-purple);
+}
+
+.profile-modal-box {
+  max-width: 900px;
+}
+
+.profile-modal-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(178, 145, 247, 0.55);
+  flex-shrink: 0;
+}
+
+.profile-modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.profile-top-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 0.65rem 1.5rem 0;
+  border-bottom: 1px solid rgba(252, 212, 200, 0.12);
+  background: rgba(10, 11, 28, 0.32);
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.profile-top-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0.6rem 0.95rem 0.72rem;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.profile-top-tab:hover {
+  color: var(--text-primary);
+}
+
+.profile-top-tab.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent-purple);
+}
+
+.profile-top-tab .material-symbols-outlined {
+  font-size: 1.1rem;
+}
+
+.profile-top-tab.active .material-symbols-outlined {
+  color: var(--accent-purple);
+}
+
+.profile-tab-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(178, 145, 247, 0.2);
+  color: #d8b4fe;
+  border: 1px solid rgba(178, 145, 247, 0.35);
+}
+
+.profile-tab-outdated-dot {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.profile-tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Stats KPI Grid */
+.stats-summary-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .stats-summary-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stats-kpi-card {
+  background: rgba(10, 11, 28, 0.56);
+  border: 1px solid rgba(252, 212, 200, 0.14);
+  border-radius: 14px;
+  padding: 0.95rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-kpi-card::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--kpi-accent, #b291f7), transparent);
+  opacity: 0.75;
+}
+
+.stats-kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.stats-kpi-top .material-symbols-outlined {
+  font-size: 1.15rem;
+  color: var(--kpi-accent, #b291f7);
+}
+
+.stats-kpi-val {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.18;
+}
+
+.stats-kpi-sub {
+  font-size: 0.77rem;
+  color: var(--text-secondary);
+}
+
+.stats-section-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stats-section-title-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stats-section-title .material-symbols-outlined {
+  font-size: 1.05rem;
+  color: var(--accent-purple);
+}
+
+.stats-section-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+}
+
+.stats-breakdown-box {
+  background: rgba(10, 11, 28, 0.48);
+  border: 1px solid rgba(252, 212, 200, 0.12);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.stats-raid-row {
+  display: grid;
+  grid-template-columns: 88px 1fr 142px;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 7px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.stats-raid-row:hover {
+  background: rgba(178, 145, 247, 0.08);
+}
+
+.stats-raid-row.is-active {
+  background: rgba(178, 145, 247, 0.14);
+  border-color: rgba(178, 145, 247, 0.35);
+}
+
+@media (max-width: 560px) {
+  .stats-raid-row {
+    grid-template-columns: 76px 1fr;
+    gap: 8px;
+  }
+  .stats-raid-metrics {
+    grid-column: 1 / -1;
+    text-align: left !important;
+  }
+}
+
+.stats-raid-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 9px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  min-width: 68px;
+}
+
+.stats-raid-badge.rb-ftb { background: rgba(248, 113, 113, 0.18); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.35); }
+.stats-raid-badge.rb-ftm { background: rgba(168, 85, 247, 0.20); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.38); }
+.stats-raid-badge.rb-chaotic { background: rgba(139, 92, 246, 0.22); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.4); }
+.stats-raid-badge.rb-drs { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.38); }
+.stats-raid-badge.rb-ba { background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.38); }
+.stats-raid-badge.rb-other { background: rgba(148, 163, 184, 0.18); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.35); }
+
+.stats-bar-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.stats-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.stats-raid-metrics {
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.stats-raid-metrics strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.stats-milestones-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.milestone-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.77rem;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(178, 145, 247, 0.12);
+  border: 1px solid rgba(178, 145, 247, 0.32);
+  color: #e9d5ff;
+}
+
+.milestone-pill.gold {
+  background: rgba(228, 192, 144, 0.14);
+  border-color: rgba(228, 192, 144, 0.38);
+  color: #fde68a;
+}
+
+.milestone-pill.teal {
+  background: rgba(110, 231, 183, 0.12);
+  border-color: rgba(110, 231, 183, 0.35);
+  color: #a7f3d0;
+}
+
+.milestone-pill.rose {
+  background: rgba(252, 212, 200, 0.14);
+  border-color: rgba(252, 212, 200, 0.38);
+  color: #fcd4c8;
+}
+
+.milestone-pill .material-symbols-outlined {
+  font-size: 0.95rem;
+}
+
+.stats-filter-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.stats-filter-pill {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.stats-filter-pill:hover {
+  border-color: rgba(178, 145, 247, 0.45);
+  color: var(--text-primary);
+}
+
+.stats-filter-pill.active {
+  background: var(--accent-purple);
+  border-color: var(--accent-purple);
+  color: #0a0b1c;
+}
+
+.stats-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stats-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0.72rem 0.95rem;
+  border-radius: 12px;
+  background: rgba(10, 11, 28, 0.55);
+  border: 1px solid rgba(252, 212, 200, 0.11);
+}
+
+.stats-history-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.stats-history-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.stats-history-date {
+  font-size: 0.77rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.stats-result-pill {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(46, 204, 113, 0.16);
+  border: 1px solid rgba(46, 204, 113, 0.36);
+  color: #4ade80;
+  white-space: nowrap;
+}
+
+.stats-result-pill.prog {
+  background: rgba(178, 145, 247, 0.16);
+  border-color: rgba(178, 145, 247, 0.36);
+  color: #d8b4fe;
+}
+
+.stats-empty-box {
+  text-align: center;
+  padding: 2.25rem 1.25rem;
+  border: 1px dashed rgba(252, 212, 200, 0.16);
+  border-radius: 14px;
+  background: rgba(10, 11, 28, 0.35);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.stats-show-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.35rem;
+}
+
+/* Light Theme Overrides for Unified My Profile & Run Stats */
+[data-theme^="light"] .btn-profile-pill {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.3);
+  color: #4c1d95;
+}
+
+[data-theme^="light"] .btn-profile-pill:hover {
+  background: rgba(124, 58, 237, 0.18);
+  border-color: #7c3aed;
+}
+
+[data-theme^="light"] .btn-profile-pill .material-symbols-outlined {
+  color: #6d28d9;
+}
+
+[data-theme^="light"] .profile-top-tabs {
+  background: rgba(124, 58, 237, 0.04);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme^="light"] .profile-tab-count {
+  background: rgba(124, 58, 237, 0.12);
+  color: #5b21b6;
+  border-color: rgba(124, 58, 237, 0.25);
+}
+
+[data-theme^="light"] .stats-kpi-card,
+[data-theme^="light"] .stats-breakdown-box,
+[data-theme^="light"] .stats-history-item,
+[data-theme^="light"] .stats-empty-box {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme^="light"] .stats-bar-track {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme^="light"] .stats-filter-pill {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #4b4458;
+}
+
+[data-theme^="light"] .stats-filter-pill.active {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  color: #ffffff;
+}
+
+[data-theme^="light"] .milestone-pill {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.28);
+  color: #5b21b6;
+}
+
+[data-theme^="light"] .milestone-pill.gold {
+  background: rgba(217, 119, 6, 0.12);
+  border-color: rgba(217, 119, 6, 0.3);
+  color: #92400e;
+}
+
+[data-theme^="light"] .milestone-pill.teal {
+  background: rgba(5, 150, 105, 0.12);
+  border-color: rgba(5, 150, 105, 0.3);
+  color: #065f46;
+}
+
+[data-theme^="light"] .milestone-pill.rose {
+  background: rgba(225, 29, 72, 0.1);
+  border-color: rgba(225, 29, 72, 0.28);
+  color: #9f1239;
+}
+
+[data-theme^="light"] .stats-result-pill {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(5, 150, 105, 0.32);
+  color: #047857;
+}
+
+[data-theme^="light"] .stats-result-pill.prog {
+  background: rgba(124, 58, 237, 0.12);
+  border-color: rgba(124, 58, 237, 0.3);
+  color: #6d28d9;
+}
+
+

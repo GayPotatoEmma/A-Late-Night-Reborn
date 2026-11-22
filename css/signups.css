@@ -3232,12 +3232,8 @@
 }
 
 /* =====================================================
-   Dedicated Full-Page My Profile Layout
+   Dedicated Full-Page My Profile Layout (Option A: 2-Panel Sidebar)
    ===================================================== */
-
-.profile-page-container {
-  max-width: 1120px;
-}
 
 .profile-back-link {
   display: inline-flex;
@@ -3259,25 +3255,139 @@
   font-size: 1.05rem;
 }
 
-.profile-page-card {
-  padding: 0;
-  overflow: hidden;
+.profile-sidebar-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.profile-page-tabs {
-  padding: 0.85rem 1.75rem 0;
+.profile-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
 }
 
-.profile-page-body {
-  padding: 1.5rem 1.75rem 1.75rem;
+.profile-nav-card {
+  padding: 1.15rem;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.profile-page-footer {
-  padding: 0.9rem 1.75rem;
-  border-top: 1px solid rgba(252, 212, 200, 0.1);
+.profile-nav-heading {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0.2rem 0.6rem 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 1px solid rgba(252, 212, 200, 0.12);
+  margin-bottom: 4px;
+}
+
+.profile-nav-heading .material-symbols-outlined {
+  font-size: 1rem;
+  color: var(--accent-purple);
+}
+
+.profile-nav-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 0.72rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.94rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition);
+}
+
+.profile-nav-btn:hover {
+  background: rgba(178, 145, 247, 0.09);
+  color: var(--text-primary);
+}
+
+.profile-nav-btn.active {
+  background: linear-gradient(135deg, rgba(178, 145, 247, 0.22), rgba(252, 212, 200, 0.12));
+  border-color: rgba(178, 145, 247, 0.45);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(178, 145, 247, 0.18);
+}
+
+.profile-nav-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-nav-btn .material-symbols-outlined {
+  font-size: 1.15rem;
+}
+
+.profile-nav-btn.active .material-symbols-outlined {
+  color: var(--accent-purple);
+}
+
+.profile-main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.profile-main-col .profile-tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.profile-main-col .glass-card {
+  margin-bottom: 0;
+}
+
+.stats-panel-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.stats-sub-section {
+  margin-top: 1.75rem;
+}
+
+.card-heading-note {
+  margin-left: auto;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.card-heading-split {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.card-heading-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .profile-signups-grid {
@@ -3292,20 +3402,56 @@
   }
 }
 
-@media (max-width: 640px) {
-  .profile-page-tabs {
-    padding: 0.7rem 1rem 0;
+@media (min-width: 1024px) {
+  .profile-sidebar-grid {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 1.75rem;
+    align-items: start;
   }
-  .profile-page-body {
-    padding: 1.15rem 1rem 1.35rem;
-  }
-  .profile-page-footer {
-    padding: 0.8rem 1rem;
+
+  .profile-sidebar {
+    position: sticky;
+    top: 5.25rem;
   }
 }
 
-[data-theme^="light"] .profile-page-footer {
-  border-top-color: rgba(0, 0, 0, 0.08);
+@media (max-width: 1023px) {
+  .profile-nav-card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.75rem;
+  }
+  .profile-nav-heading {
+    display: none;
+  }
+  .profile-nav-btn {
+    width: auto;
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 0.6rem 0.9rem;
+  }
+}
+
+/* Light Theme Overrides for Option A Sidebar */
+[data-theme^="light"] .profile-nav-heading {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme^="light"] .profile-nav-btn:hover {
+  background: rgba(124, 58, 237, 0.08);
+  color: #221e2a;
+}
+
+[data-theme^="light"] .profile-nav-btn.active {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.16), rgba(225, 29, 72, 0.08));
+  border-color: rgba(124, 58, 237, 0.38);
+  color: #4c1d95;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.12);
+}
+
+[data-theme^="light"] .profile-nav-btn.active .material-symbols-outlined {
+  color: #7c3aed;
 }
 
 

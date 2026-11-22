@@ -413,7 +413,7 @@
             const workspaceCard = document.getElementById('profile-workspace-card');
             if (currentUser) {
                 if (loginCard) loginCard.style.display = 'none';
-                if (workspaceCard) workspaceCard.style.display = 'block';
+                if (workspaceCard) workspaceCard.style.display = '';
             } else {
                 if (loginCard) loginCard.style.display = 'block';
                 if (workspaceCard) workspaceCard.style.display = 'none';
@@ -2745,7 +2745,7 @@
         const container = document.getElementById('profile-stats-content');
         if (!container) return;
         if (!currentUser) {
-            container.innerHTML = `<div class="stats-empty-box">Connect your Discord account to view your ALNR run stats.</div>`;
+            container.innerHTML = `<div class="glass-card"><div class="stats-empty-box">Connect your Discord account to view your ALNR run stats.</div></div>`;
             return;
         }
         if (cachedMyStats && !force) {
@@ -2755,7 +2755,7 @@
         if (myStatsLoading) return;
 
         myStatsLoading = true;
-        container.innerHTML = `<div class="stats-empty-box">Loading your ALNR run stats...</div>`;
+        container.innerHTML = `<div class="glass-card"><div class="stats-empty-box">Loading your ALNR run stats...</div></div>`;
         try {
             const res = await fetch(`${getApiUrl()}/api/public/my-stats`, {
                 credentials: 'include'
@@ -2774,13 +2774,15 @@
             renderMyRunStats();
         } catch (err) {
             container.innerHTML = `
-                <div class="stats-empty-box">
-                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem;">Unable to Load Run Stats</div>
-                    <div style="margin-bottom: 0.85rem;">${escapeHtml(err.message || 'Please try again in a moment.')}</div>
-                    <button type="button" class="btn-prefs-secondary" id="btn-retry-my-stats">
-                        <span class="material-symbols-outlined" style="font-size: 1rem;">refresh</span>
-                        <span>Try Again</span>
-                    </button>
+                <div class="glass-card">
+                    <div class="stats-empty-box">
+                        <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem;">Unable to Load Run Stats</div>
+                        <div style="margin-bottom: 0.85rem;">${escapeHtml(err.message || 'Please try again in a moment.')}</div>
+                        <button type="button" class="btn-prefs-secondary" id="btn-retry-my-stats">
+                            <span class="material-symbols-outlined" style="font-size: 1rem;">refresh</span>
+                            <span>Try Again</span>
+                        </button>
+                    </div>
                 </div>
             `;
             const retryBtn = document.getElementById('btn-retry-my-stats');
@@ -2802,10 +2804,20 @@
         if (!cachedMyStats.matched || totalRuns === 0) {
             const charLabel = cachedMyStats.character_name || (currentUser && currentUser.character_name) || (currentUser && currentUser.username) || 'your character';
             container.innerHTML = `
-                <div class="stats-empty-box">
-                    <span class="material-symbols-outlined" style="font-size: 2.1rem; color: var(--accent-purple); display: block; margin-bottom: 0.5rem;">bar_chart</span>
-                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem;">No ALNR Runs Recorded Yet</div>
-                    <div>We didn't find any completed runs for <strong>${escapeHtml(charLabel)}</strong> yet. Once you attend a community run, your stats and history will appear here automatically!</div>
+                <div class="glass-card">
+                    <div class="card-heading">
+                        <span class="material-symbols-outlined">bar_chart</span>
+                        <span>Run Stats Overview</span>
+                        <span class="card-heading-note">
+                            <span class="material-symbols-outlined" style="font-size: 0.95rem;">lock</span>
+                            <span>Only visible to you.</span>
+                        </span>
+                    </div>
+                    <div class="stats-empty-box">
+                        <span class="material-symbols-outlined" style="font-size: 2.1rem; color: var(--accent-purple); display: block; margin-bottom: 0.5rem;">bar_chart</span>
+                        <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem;">No ALNR Runs Recorded Yet</div>
+                        <div>We didn't find any completed runs for <strong>${escapeHtml(charLabel)}</strong> yet. Once you attend a community run, your stats and history will appear here automatically!</div>
+                    </div>
                 </div>
             `;
             return;
@@ -2876,40 +2888,51 @@
         ` : '';
 
         container.innerHTML = `
-            <div class="stats-summary-grid-3">
-                <div class="stats-kpi-card" style="--kpi-accent: #b291f7;">
-                    <div class="stats-kpi-top"><span>Total Runs</span><span class="material-symbols-outlined">swords</span></div>
-                    <div class="stats-kpi-val">${totalRuns}</div>
-                    <div class="stats-kpi-sub">Across ${distinctRaids} ${distinctRaids === 1 ? 'raid' : 'raids'}</div>
+            <div class="glass-card">
+                <div class="card-heading">
+                    <span class="material-symbols-outlined">bar_chart</span>
+                    <span>Run Stats Overview</span>
+                    <span class="card-heading-note">
+                        <span class="material-symbols-outlined" style="font-size: 0.95rem;">lock</span>
+                        <span>Only visible to you.</span>
+                    </span>
                 </div>
-                <div class="stats-kpi-card" style="--kpi-accent: #6ee7b7;">
-                    <div class="stats-kpi-top"><span>Total Clears</span><span class="material-symbols-outlined">emoji_events</span></div>
-                    <div class="stats-kpi-val">${totalClears}</div>
-                    <div class="stats-kpi-sub">Across ${clearedRuns} cleared ${clearedRuns === 1 ? 'run' : 'runs'}</div>
-                </div>
-                <div class="stats-kpi-card" style="--kpi-accent: #e4c090;">
-                    <div class="stats-kpi-top"><span>Raiding Since</span><span class="material-symbols-outlined">calendar_month</span></div>
-                    <div class="stats-kpi-val" style="font-size: 1.45rem; padding-top: 3px;">${escapeHtml(raidingSince)}</div>
-                    <div class="stats-kpi-sub">Most played: ${escapeHtml(topRaid)}</div>
-                </div>
-            </div>
 
-            <div>
-                <div class="stats-section-title" style="margin-bottom: 0.55rem;">
-                    <div class="stats-section-title-left">
-                        <span class="material-symbols-outlined">bar_chart</span>
-                        <span>Breakdown by Raid</span>
+                <div class="stats-summary-grid-3">
+                    <div class="stats-kpi-card" style="--kpi-accent: #b291f7;">
+                        <div class="stats-kpi-top"><span>Total Runs</span><span class="material-symbols-outlined">swords</span></div>
+                        <div class="stats-kpi-val">${totalRuns}</div>
+                        <div class="stats-kpi-sub">Across ${distinctRaids} ${distinctRaids === 1 ? 'raid' : 'raids'}</div>
                     </div>
-                    <span class="stats-section-hint">Click a raid to filter history</span>
+                    <div class="stats-kpi-card" style="--kpi-accent: #6ee7b7;">
+                        <div class="stats-kpi-top"><span>Total Clears</span><span class="material-symbols-outlined">emoji_events</span></div>
+                        <div class="stats-kpi-val">${totalClears}</div>
+                        <div class="stats-kpi-sub">Across ${clearedRuns} cleared ${clearedRuns === 1 ? 'run' : 'runs'}</div>
+                    </div>
+                    <div class="stats-kpi-card" style="--kpi-accent: #e4c090;">
+                        <div class="stats-kpi-top"><span>Raiding Since</span><span class="material-symbols-outlined">calendar_month</span></div>
+                        <div class="stats-kpi-val" style="font-size: 1.45rem; padding-top: 3px;">${escapeHtml(raidingSince)}</div>
+                        <div class="stats-kpi-sub">Most played: ${escapeHtml(topRaid)}</div>
+                    </div>
                 </div>
-                <div class="stats-breakdown-box">
-                    ${breakdownRowsHtml}
+
+                <div class="stats-sub-section">
+                    <div class="stats-section-title" style="margin-bottom: 0.75rem;">
+                        <div class="stats-section-title-left">
+                            <span class="material-symbols-outlined">bar_chart</span>
+                            <span>Breakdown by Raid</span>
+                        </div>
+                        <span class="stats-section-hint">Click a raid to filter history</span>
+                    </div>
+                    <div class="stats-breakdown-box">
+                        ${breakdownRowsHtml}
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <div class="stats-section-title" style="margin-bottom: 0.6rem;">
-                    <div class="stats-section-title-left">
+            <div class="glass-card">
+                <div class="card-heading card-heading-split">
+                    <div class="card-heading-left">
                         <span class="material-symbols-outlined">history</span>
                         <span>Recent Run History</span>
                     </div>
@@ -2959,7 +2982,7 @@
 
         activeProfileTab = tabName;
 
-        document.querySelectorAll('#profile-top-tabs .profile-top-tab').forEach(btn => {
+        document.querySelectorAll('#profile-top-tabs [data-profile-tab]').forEach(btn => {
             const isAct = btn.getAttribute('data-profile-tab') === tabName;
             btn.classList.toggle('active', isAct);
             btn.setAttribute('aria-selected', isAct ? 'true' : 'false');
@@ -3710,7 +3733,7 @@
             };
         }
 
-        document.querySelectorAll('#profile-top-tabs .profile-top-tab').forEach(tabBtn => {
+        document.querySelectorAll('#profile-top-tabs [data-profile-tab]').forEach(tabBtn => {
             tabBtn.onclick = () => {
                 const targetTab = tabBtn.getAttribute('data-profile-tab');
                 if (!targetTab || targetTab === activeProfileTab) return;

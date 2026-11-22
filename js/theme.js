@@ -48,19 +48,35 @@
       btn.setAttribute('aria-label', 'Theme: ' + info.name + (info.badge ? ' (' + info.badge + ')' : '') + ' (Click to change)');
     }
 
-    var options = document.querySelectorAll('.theme-option');
-    options.forEach(function (opt) {
-      if (opt.getAttribute('data-theme-val') === theme) {
-        opt.classList.add('active');
-        opt.setAttribute('aria-selected', 'true');
-      } else {
-        opt.classList.remove('active');
-        opt.setAttribute('aria-selected', 'false');
-      }
+    var isLight = theme.indexOf('light') === 0;
+    var isLite = theme.indexOf('lite') !== -1;
+
+    document.querySelectorAll('.theme-mode-btn').forEach(function (opt) {
+      var active = opt.getAttribute('data-theme-mode') === (isLight ? 'light' : 'dark');
+      opt.classList.toggle('active', active);
+      opt.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
 
+    var perfToggle = document.getElementById('theme-perf-toggle');
+    if (perfToggle) {
+      perfToggle.classList.toggle('active', isLite);
+      perfToggle.setAttribute('aria-checked', isLite ? 'true' : 'false');
+    }
+
     try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) {}
+
+    window.dispatchEvent(new CustomEvent('alnr:themechange', { detail: { theme: theme } }));
   }
+
+  window.alnrTheme = {
+    get: function () {
+      return normalizeTheme(html.getAttribute('data-theme') || 'dark');
+    },
+    set: function (theme) {
+      applyTheme(theme, true);
+    },
+    themes: THEMES
+  };
 
   var savedTheme = null;
   try { savedTheme = localStorage.getItem(STORAGE_KEY); } catch (e) {}
@@ -90,28 +106,23 @@
     dropdown.setAttribute('role', 'menu');
     dropdown.setAttribute('aria-label', 'Theme options');
 
-    var htmlContent = '';
-    var order = ['dark', 'dark-lite', 'light', 'light-lite'];
-    order.forEach(function (key, idx) {
-      if (idx === 2) {
-        htmlContent += '<div class="theme-dropdown-sep"></div>';
-      }
-      var t = THEMES[key];
-      var badgeHtml = t.badge ? '<span class="theme-pill">' + t.badge + '</span>' : '';
-      htmlContent += '\
-        <button type="button" class="theme-option" data-theme-val="' + key + '" role="menuitem">\
-          <span class="theme-option-icon">' + t.icon + '</span>\
-          <span class="theme-option-title">' + t.name + (badgeHtml ? ' ' + badgeHtml : '') + '</span>\
-          <span class="theme-option-check">&#10003;</span>\
-        </button>';
-    });
-
-    dropdown.innerHTML = htmlContent;
+    dropdown.innerHTML =
+      '<div class="popover-theme-grid">' +
+        '<button type="button" class="popover-theme-btn theme-mode-btn" data-theme-mode="dark">\u263e Dark</button>' +
+        '<button type="button" class="popover-theme-btn theme-mode-btn" data-theme-mode="light">\u2600 Light</button>' +
+      '</div>' +
+      '<button type="button" class="popover-perf-row" id="theme-perf-toggle" role="switch" aria-checked="false">' +
+        '<span class="popover-perf-label">Performance Mode</span>' +
+        '<span class="popover-switch" aria-hidden="true"><span class="popover-switch-thumb"></span></span>' +
+      '</button>';
     wrapper.appendChild(dropdown);
 
     function toggleDropdown(open) {
       var isOpen = typeof open === 'boolean' ? open : !wrapper.classList.contains('open');
       if (isOpen) {
+        if (window.alnrHeaderProfile && typeof window.alnrHeaderProfile.close === 'function') {
+          window.alnrHeaderProfile.close();
+        }
         wrapper.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
       } else {
@@ -126,12 +137,21 @@
     });
 
     dropdown.addEventListener('click', function (e) {
-      var option = e.target.closest('.theme-option');
-      if (!option) return;
-      var selectedTheme = option.getAttribute('data-theme-val');
-      if (selectedTheme) {
-        applyTheme(selectedTheme, true);
-        toggleDropdown(false);
+      e.stopPropagation();
+      var modeBtn = e.target.closest('.theme-mode-btn');
+      if (modeBtn) {
+        var cur = normalizeTheme(html.getAttribute('data-theme') || 'dark');
+        var isLite = cur.indexOf('lite') !== -1;
+        var mode = modeBtn.getAttribute('data-theme-mode') === 'light' ? 'light' : 'dark';
+        applyTheme(mode + (isLite ? '-lite' : ''), true);
+        return;
+      }
+      var perfBtn = e.target.closest('#theme-perf-toggle');
+      if (perfBtn) {
+        var cur2 = normalizeTheme(html.getAttribute('data-theme') || 'dark');
+        var isLight = cur2.indexOf('light') === 0;
+        var isLite2 = cur2.indexOf('lite') !== -1;
+        applyTheme((isLight ? 'light' : 'dark') + (!isLite2 ? '-lite' : ''), true);
       }
     });
 
@@ -146,6 +166,10 @@
         toggleDropdown(false);
       }
     });
+
+    window.alnrTheme.closeDropdown = function () {
+      toggleDropdown(false);
+    };
 
     var current = html.getAttribute('data-theme') || 'dark';
     applyTheme(current, false);

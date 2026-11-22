@@ -3454,5 +3454,265 @@
   color: #7c3aed;
 }
 
+/* =====================================================
+   Web Character Verification (Lodestone) Styles
+   ===================================================== */
+
+.verify-lead-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+.verify-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  margin-top: 0.45rem;
+}
+
+@media (max-width: 600px) {
+  .verify-input-row {
+    flex-direction: column;
+  }
+}
+
+.verify-input-row .input-text {
+  flex: 1;
+}
+
+.verify-char-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 0.95rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(10, 11, 28, 0.55);
+  border: 1px solid rgba(178, 145, 247, 0.28);
+  margin-bottom: 1.15rem;
+}
+
+.verify-char-preview-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.verify-char-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(178, 145, 247, 0.45);
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.verify-char-name {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.verify-char-meta {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.verify-code-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 0.95rem 1.15rem;
+  border-radius: 14px;
+  background: rgba(228, 192, 144, 0.1);
+  border: 1px solid rgba(228, 192, 144, 0.36);
+  margin-bottom: 1.15rem;
+}
+
+.verify-code-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.verify-code-val {
+  font-family: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fde68a;
+  margin-top: 2px;
+}
+
+.verify-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 1.25rem;
+}
+
+.verify-step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.verify-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(178, 145, 247, 0.22);
+  border: 1px solid rgba(178, 145, 247, 0.45);
+  color: #e9d5ff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.verify-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(252, 212, 200, 0.12);
+}
+
+.verify-verified-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 1.1rem 1.25rem;
+  border-radius: 14px;
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.35);
+}
+
+.verify-verified-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.verify-verified-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(46, 204, 113, 0.18);
+  border: 1px solid rgba(46, 204, 113, 0.4);
+  color: #4ade80;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.verify-verified-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.verify-verified-sub {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.verify-status-pill {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.verify-status-pill.is-verified {
+  background: rgba(46, 204, 113, 0.16);
+  border: 1px solid rgba(46, 204, 113, 0.38);
+  color: #4ade80;
+}
+
+.verify-status-pill.is-unverified {
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+
+/* Light Theme Overrides for Character Verification */
+[data-theme^="light"] .verify-char-preview {
+  background: rgba(255, 255, 255, 0.76);
+  border-color: rgba(124, 58, 237, 0.25);
+}
+
+[data-theme^="light"] .verify-code-box {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(217, 119, 6, 0.35);
+}
+
+[data-theme^="light"] .verify-code-val {
+  color: #92400e;
+}
+
+[data-theme^="light"] .verify-step-num {
+  background: rgba(124, 58, 237, 0.14);
+  border-color: rgba(124, 58, 237, 0.35);
+  color: #5b21b6;
+}
+
+[data-theme^="light"] .verify-actions-row {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme^="light"] .verify-verified-card {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(5, 150, 105, 0.32);
+}
+
+[data-theme^="light"] .verify-verified-icon {
+  color: #059669;
+  background: rgba(16, 185, 129, 0.16);
+  border-color: rgba(5, 150, 105, 0.32);
+}
+
+[data-theme^="light"] .verify-status-pill.is-verified {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(5, 150, 105, 0.32);
+  color: #047857;
+}
+
+[data-theme^="light"] .verify-status-pill.is-unverified {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(217, 119, 6, 0.35);
+  color: #92400e;
+}
+
+
 
 

@@ -15,11 +15,15 @@
     let activePrefsTab = 'Chaotic';
     let prefsModalInitialSnapshot = '';
     let phantomWarningContext = 'form'; // 'form' or 'modal'
-    let activeProfileTab = 'signups'; // 'signups' | 'stats' | 'prefs'
+    let activeProfileTab = 'signups'; // 'signups' | 'stats' | 'prefs' | 'verify'
     let cachedMyStats = null;
     let myStatsLoading = false;
     let activeStatsRaidFilter = 'all';
     let statsHistoryVisibleCount = 10;
+    let pendingVerification = null;
+    let verifyReverifyMode = false;
+    let verifyBusy = false;
+    let verifyAlert = null;
 
     // ── Saved Preferences & Schema Versioning ────────────────────────────────────
     const PREFS_STORAGE_KEY = 'alnr_signup_preferences_v1';
@@ -206,6 +210,9 @@
         } catch (e) {}
         currentUser = null;
         mySignupsList = [];
+        pendingVerification = null;
+        verifyReverifyMode = false;
+        verifyAlert = null;
 
         // 3. Clear "My Active Signups" list & cached run stats
         const mySignupsListEl = document.getElementById('my-signups-list');
@@ -301,7 +308,7 @@
                 const postRedirect = sessionStorage.getItem('alnr_post_auth_redirect');
                 if (postRedirect) {
                     sessionStorage.removeItem('alnr_post_auth_redirect');
-                    if (postRedirect.startsWith('/') || postRedirect.startsWith('profile')) {
+                    if ((postRedirect.startsWith('/') && !postRedirect.startsWith('//')) || postRedirect.startsWith('profile')) {
                         window.location.replace(postRedirect);
                         return;
                     }
@@ -323,6 +330,7 @@
                 const data = await res.json();
                 if (data.authenticated) {
                     currentUser = data.user;
+                    pendingVerification = data.pending_verification || null;
                 }
             } else {
                 localStorage.removeItem('alnr_session_token');
@@ -335,77 +343,27 @@
     // ── Rendering Auth State ─────────────────────────────────────────────────────
 
     function renderAuthBanner() {
-        const container = document.getElementById('auth-banner-container');
-        if (!container) return;
+        // Sync auth state into the site-wide header avatar popover
+        if (window.alnrHeaderProfile && typeof window.alnrHeaderProfile.setState === 'function') {
+            window.alnrHeaderProfile.setState({
+                user: currentUser,
+                activeSignupsCount: currentUser ? mySignupsList.length : null,
+                onSignOut: signOut,
+                onLogin: initiateDiscordLogin
+            });
+        }
 
-        if (!currentUser) {
+        // Update Character Verification warning dot in Profile sidebar
+        const verifyDot = document.getElementById('profile-tab-verify-dot');
+        if (verifyDot) {
+            const needsVerify = Boolean(currentUser && currentUser.is_in_guild && !currentUser.is_verified);
+            verifyDot.style.display = needsVerify ? 'inline-flex' : 'none';
+        }
+
+        const container = document.getElementById('auth-banner-container');
+        if (container) {
             container.innerHTML = '';
             container.style.display = 'none';
-        } else if (!currentUser.is_in_guild) {
-            container.style.display = 'block';
-            container.innerHTML = `
-                <div class="glass-card" style="border-color: rgba(245, 158, 11, 0.4); background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(20, 21, 50, 0.6) 100%); display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; flex-wrap: wrap;">
-                    <div class="auth-info-left">
-                        <div>
-                            <div style="font-weight: 700; font-size: 1.05rem; color: var(--text-primary);">Join us on Discord to Sign Up</div>
-                            <div style="font-size: 0.86rem; color: var(--text-secondary); margin-top: 2px;">
-                                You are connected as @${escapeHtml(currentUser.username)}, but not in the server. Please join <strong style="color: var(--accent-rose);">discord.gg/alnr</strong> to sign up.
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                        <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="auth-btn-discord" style="padding: 0.65rem 1.25rem;">
-                            <span>Join server</span>
-                            <span class="material-symbols-outlined" style="font-size: 1.1rem;">open_in_new</span>
-                        </a>
-                        <button class="btn-signout" id="btn-discord-signout" type="button">Sign Out</button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('btn-discord-signout').onclick = signOut;
-        } else {
-            container.style.display = 'block';
-            const verifiedBadge = currentUser.is_verified 
-                ? `<span class="badge-verified"><span class="material-symbols-outlined" style="font-size: 1rem;">verified</span> Verified</span>`
-                : `<span class="badge-unverified"><span class="material-symbols-outlined" style="font-size: 1rem;">warning</span> Unverified in Discord</span>`;
-
-            const charInfo = currentUser.character_name 
-                ? `Character: <strong style="color: var(--text-primary);">${escapeHtml(currentUser.character_name)}</strong> ${currentUser.server ? `(${escapeHtml(currentUser.server)})` : ''}`
-                : `Character: <em>Not linked yet</em>`;
-
-            container.innerHTML = `
-                <div class="glass-card auth-banner-authed">
-                    <div class="user-profile-strip">
-                        <img src="${currentUser.avatar_url}" alt="Avatar" class="user-avatar-img">
-                        <div class="user-details-box">
-                            <div class="user-display-name">
-                                <span>${escapeHtml(currentUser.global_name || currentUser.username)}</span>
-                                ${verifiedBadge}
-                            </div>
-                            <div style="font-size: 0.84rem; color: var(--text-secondary);">
-                                ${charInfo} • @${escapeHtml(currentUser.username)}
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        ${!IS_PROFILE_PAGE ? `
-                        <a href="profile.html" class="btn-profile-pill" id="btn-open-prefs-modal" aria-label="My Profile" title="My Profile (Active Signups, Run Stats & Saved Preferences)" style="text-decoration: none;">
-                            <span class="material-symbols-outlined">person</span>
-                            <span>Profile</span>
-                            <span class="prefs-outdated-badge" id="prefs-outdated-badge" style="display: none;" title="Saved preferences need updating">!</span>
-                        </a>
-                        ` : ''}
-                        ${(currentUser.can_access_dashboard || currentUser.dashboard_role || currentUser.is_owner) ? `
-                        <a href="dashboard.html" class="btn-prefs-cog" id="btn-open-dashboard" aria-label="Dashboard" title="Dashboard" style="text-decoration: none;">
-                            <span class="material-symbols-outlined">bolt</span>
-                        </a>
-                        ` : ''}
-                        <button class="btn-signout" id="btn-discord-signout" type="button">Sign Out</button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('btn-discord-signout').onclick = signOut;
-            updatePrefsCogBadge();
         }
 
         if (IS_PROFILE_PAGE) {
@@ -420,6 +378,7 @@
             }
         }
 
+        updatePrefsCogBadge();
         updateSignupAuthVisibility();
     }
 
@@ -1517,6 +1476,9 @@
                     countBadge.textContent = String(mySignupsList.length);
                     countBadge.style.display = mySignupsList.length > 0 ? 'inline-flex' : 'none';
                 }
+                if (window.alnrHeaderProfile && typeof window.alnrHeaderProfile.setState === 'function') {
+                    window.alnrHeaderProfile.setState({ activeSignupsCount: mySignupsList.length });
+                }
 
                 if (list && mySignupsList.length > 0) {
                     list.innerHTML = mySignupsList.map((s, idx) => {
@@ -2301,7 +2263,6 @@
         const badge = document.getElementById('prefs-outdated-badge');
         const tabDot = document.getElementById('profile-tab-prefs-outdated');
         const cogBtn = document.getElementById('btn-open-prefs-modal');
-        if (!badge && !tabDot) return;
 
         const store = loadSavedPreferencesStore();
         const outdatedTypes = [];
@@ -2313,6 +2274,10 @@
                 }
             }
         });
+
+        if (window.alnrHeaderProfile && typeof window.alnrHeaderProfile.setState === 'function') {
+            window.alnrHeaderProfile.setState({ outdatedPrefs: outdatedTypes.length > 0 });
+        }
 
         if (outdatedTypes.length > 0) {
             const msg = `Saved preferences need updating for: ${outdatedTypes.join(', ')}`;
@@ -2971,8 +2936,313 @@
         }
     }
 
+    function renderVerifyTab() {
+        const container = document.getElementById('profile-verify-content');
+        if (!container) return;
+
+        if (!currentUser) {
+            container.innerHTML = `<div class="stats-empty-box">Connect your Discord account to verify your FFXIV character.</div>`;
+            return;
+        }
+
+        const isVerified = Boolean(currentUser.is_verified);
+        const inGuild = Boolean(currentUser.is_in_guild);
+
+        const alertHtml = verifyAlert ? `
+            <div class="status-alert ${verifyAlert.type}" style="margin-bottom: 1.15rem; display: flex;">
+                <span class="material-symbols-outlined">${verifyAlert.type === 'success' ? 'check_circle' : verifyAlert.type === 'error' ? 'error' : 'info'}</span>
+                <span>${escapeHtml(verifyAlert.msg)}</span>
+            </div>
+        ` : '';
+
+        const statusPillHtml = !inGuild
+            ? `<span class="verify-status-pill is-unverified">Not in Server</span>`
+            : (isVerified
+                ? `<span class="verify-status-pill is-verified"><span class="material-symbols-outlined" style="font-size: 0.92rem;">verified</span> Verified</span>`
+                : `<span class="verify-status-pill is-unverified"><span class="material-symbols-outlined" style="font-size: 0.92rem;">warning</span> Unverified</span>`);
+
+        const headerHtml = `
+            <div class="card-heading">
+                <span class="material-symbols-outlined">verified_user</span>
+                <span>FFXIV Character Verification</span>
+                ${statusPillHtml}
+            </div>
+        `;
+
+        if (!inGuild) {
+            container.innerHTML = `
+                ${headerHtml}
+                ${alertHtml}
+                <div class="stats-empty-box">
+                    <span class="material-symbols-outlined" style="font-size: 2rem; color: #fbbf24; display: block; margin-bottom: 0.5rem;">warning</span>
+                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem;">Join Our Discord Server First</div>
+                    <div style="margin-bottom: 1rem;">You need to be a member of the A Late Night Reborn Discord server before verifying your character.</div>
+                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="auth-btn-discord" style="padding: 0.6rem 1.2rem;">
+                            <span>Join Discord</span>
+                            <span class="material-symbols-outlined" style="font-size: 1.05rem;">open_in_new</span>
+                        </a>
+                        <button type="button" class="btn-prefs-secondary" id="btn-verify-recheck-guild">Re-check Membership</button>
+                    </div>
+                </div>
+            `;
+            const recheckBtn = document.getElementById('btn-verify-recheck-guild');
+            if (recheckBtn) {
+                recheckBtn.onclick = async () => {
+                    recheckBtn.disabled = true;
+                    recheckBtn.textContent = 'Checking...';
+                    await verifyExistingSession();
+                    renderAuthBanner();
+                    renderVerifyTab();
+                };
+            }
+            return;
+        }
+
+        if (isVerified && !verifyReverifyMode && !pendingVerification) {
+            const charName = currentUser.character_name || currentUser.global_name || 'Verified Character';
+            const serverLabel = currentUser.server ? ` (${currentUser.server})` : '';
+            container.innerHTML = `
+                ${headerHtml}
+                ${alertHtml}
+                <div class="verify-verified-card">
+                    <div class="verify-verified-left">
+                        <div class="verify-verified-icon">
+                            <span class="material-symbols-outlined" style="font-size: 1.5rem;">verified</span>
+                        </div>
+                        <div>
+                            <div class="verify-verified-title">${escapeHtml(charName)}${escapeHtml(serverLabel)}</div>
+                            <div class="verify-verified-sub">Your Discord account is verified in A Late Night Reborn.</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-prefs-secondary" id="btn-verify-change-char">
+                        <span class="material-symbols-outlined" style="font-size: 1rem;">sync</span>
+                        <span>Re-verify / Change Character</span>
+                    </button>
+                </div>
+            `;
+            const changeBtn = document.getElementById('btn-verify-change-char');
+            if (changeBtn) {
+                changeBtn.onclick = () => {
+                    verifyReverifyMode = true;
+                    verifyAlert = null;
+                    renderVerifyTab();
+                };
+            }
+            return;
+        }
+
+        if (pendingVerification && pendingVerification.code) {
+            const p = pendingVerification;
+            const lodestoneUrl = p.url || `https://eu.finalfantasyxiv.com/lodestone/character/${encodeURIComponent(p.char_id || '')}/`;
+            container.innerHTML = `
+                ${headerHtml}
+                ${alertHtml}
+                <div class="verify-char-preview">
+                    <div class="verify-char-preview-left">
+                        ${p.avatar ? `<img src="${escapeHtml(p.avatar)}" alt="" class="verify-char-avatar" />` : ''}
+                        <div>
+                            <div class="verify-char-name">${escapeHtml(p.char_name || 'Character')}</div>
+                            <div class="verify-char-meta">${p.server ? `${escapeHtml(p.server)} • ` : ''}Lodestone ID: ${escapeHtml(p.char_id || '')}</div>
+                        </div>
+                    </div>
+                    <a href="${escapeHtml(lodestoneUrl)}" target="_blank" rel="noopener" class="btn-prefs-secondary">
+                        <span>Open Lodestone</span>
+                        <span class="material-symbols-outlined" style="font-size: 1rem;">open_in_new</span>
+                    </a>
+                </div>
+
+                <div class="verify-code-box">
+                    <div>
+                        <div class="verify-code-label">Verification Code</div>
+                        <div class="verify-code-val" id="verify-code-text">${escapeHtml(p.code)}</div>
+                    </div>
+                    <button type="button" class="btn-prefs-secondary" id="btn-verify-copy-code">
+                        <span class="material-symbols-outlined" style="font-size: 1rem;">content_copy</span>
+                        <span>Copy Code</span>
+                    </button>
+                </div>
+
+                <div class="verify-steps">
+                    <div class="verify-step-row">
+                        <span class="verify-step-num">1</span>
+                        <span>Log in to the <a href="https://eu.finalfantasyxiv.com/lodestone/my/setting/profile/" target="_blank" rel="noopener" style="color: var(--accent-rose); text-decoration: underline;">Lodestone Character Profile</a> settings page.</span>
+                    </div>
+                    <div class="verify-step-row">
+                        <span class="verify-step-num">2</span>
+                        <span>Paste <strong style="color: var(--text-primary);">${escapeHtml(p.code)}</strong> anywhere in your Character Profile bio and save (you can remove it right after).</span>
+                    </div>
+                    <div class="verify-step-row">
+                        <span class="verify-step-num">3</span>
+                        <span>Click <strong>Confirm Verification</strong> below. Your Discord nickname and Verified role will update automatically.</span>
+                    </div>
+                </div>
+
+                <div class="verify-actions-row">
+                    <button type="button" class="btn-prefs-secondary" id="btn-verify-reset" ${verifyBusy ? 'disabled' : ''}>
+                        <span class="material-symbols-outlined" style="font-size: 1rem;">arrow_back</span>
+                        <span>Use Different Link</span>
+                    </button>
+                    <button type="button" class="btn-submit-signup prefs-btn-save-tab" id="btn-verify-confirm" ${verifyBusy ? 'disabled' : ''}>
+                        <span class="material-symbols-outlined" style="font-size: 1.1rem;">verified</span>
+                        <span>${verifyBusy ? 'Checking Lodestone...' : 'Confirm Verification'}</span>
+                    </button>
+                </div>
+            `;
+
+            const copyBtn = document.getElementById('btn-verify-copy-code');
+            if (copyBtn) {
+                copyBtn.onclick = async () => {
+                    try {
+                        await navigator.clipboard.writeText(p.code);
+                        copyBtn.innerHTML = `<span class="material-symbols-outlined" style="font-size: 1rem;">check</span><span>Copied!</span>`;
+                        setTimeout(() => {
+                            if (document.getElementById('btn-verify-copy-code')) {
+                                copyBtn.innerHTML = `<span class="material-symbols-outlined" style="font-size: 1rem;">content_copy</span><span>Copy Code</span>`;
+                            }
+                        }, 1800);
+                    } catch (e) {}
+                };
+            }
+
+            const resetBtn = document.getElementById('btn-verify-reset');
+            if (resetBtn) {
+                resetBtn.onclick = () => {
+                    pendingVerification = null;
+                    verifyAlert = null;
+                    renderVerifyTab();
+                };
+            }
+
+            const confirmBtn = document.getElementById('btn-verify-confirm');
+            if (confirmBtn) {
+                confirmBtn.onclick = handleVerifyConfirm;
+            }
+            return;
+        }
+
+        // Step 1: Enter Lodestone URL / Character ID
+        container.innerHTML = `
+            ${headerHtml}
+            ${alertHtml}
+            <p class="verify-lead-desc">
+                Paste your FFXIV Lodestone profile link or numeric Character ID below to generate a one-time verification code.
+            </p>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" for="input-verify-lodestone">Lodestone Character URL or ID</label>
+                <div class="verify-input-row">
+                    <input type="text" id="input-verify-lodestone" class="input-text" placeholder="https://eu.finalfantasyxiv.com/lodestone/character/12345678/" ${verifyBusy ? 'disabled' : ''} />
+                    <button type="button" class="btn-submit-signup prefs-btn-save-tab" id="btn-verify-start" ${verifyBusy ? 'disabled' : ''}>
+                        <span class="material-symbols-outlined" style="font-size: 1.05rem;">search</span>
+                        <span>${verifyBusy ? 'Looking Up...' : 'Find Character'}</span>
+                    </button>
+                </div>
+                <div class="form-hint">You can find your character link on <a href="https://eu.finalfantasyxiv.com/lodestone/" target="_blank" rel="noopener" style="color: var(--accent-rose); text-decoration: underline;">finalfantasyxiv.com/lodestone</a>.</div>
+            </div>
+            ${isVerified ? `
+            <div class="verify-actions-row">
+                <button type="button" class="btn-prefs-secondary" id="btn-verify-cancel-reverify">Cancel</button>
+            </div>` : ''}
+        `;
+
+        const inputEl = document.getElementById('input-verify-lodestone');
+        const startBtn = document.getElementById('btn-verify-start');
+        if (startBtn) startBtn.onclick = handleVerifyStart;
+        if (inputEl) {
+            inputEl.onkeydown = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleVerifyStart();
+                }
+            };
+        }
+        const cancelBtn = document.getElementById('btn-verify-cancel-reverify');
+        if (cancelBtn) {
+            cancelBtn.onclick = () => {
+                verifyReverifyMode = false;
+                verifyAlert = null;
+                renderVerifyTab();
+            };
+        }
+    }
+
+    async function handleVerifyStart() {
+        if (verifyBusy) return;
+        const inputEl = document.getElementById('input-verify-lodestone');
+        const raw = inputEl ? inputEl.value.trim() : '';
+        if (!raw) {
+            verifyAlert = { type: 'error', msg: 'Please enter your Lodestone profile link or Character ID.' };
+            renderVerifyTab();
+            return;
+        }
+        verifyBusy = true;
+        verifyAlert = null;
+        renderVerifyTab();
+        try {
+            const res = await fetch(`${getApiUrl()}/api/public/verify/start`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ lodestone_input: raw })
+            });
+            const data = await res.json();
+            if (!res.ok || !data.success) {
+                throw new Error(data.error || 'Could not load character profile from Lodestone.');
+            }
+            pendingVerification = data.pending;
+            verifyAlert = null;
+        } catch (err) {
+            verifyAlert = { type: 'error', msg: err.message || 'Lookup failed. Please check the link and try again.' };
+        } finally {
+            verifyBusy = false;
+            renderVerifyTab();
+        }
+    }
+
+    async function handleVerifyConfirm() {
+        if (verifyBusy) return;
+        verifyBusy = true;
+        verifyAlert = null;
+        renderVerifyTab();
+        try {
+            const res = await fetch(`${getApiUrl()}/api/public/verify/confirm`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: 'include'
+            });
+            const data = await res.json();
+            if (!res.ok || !data.success) {
+                throw new Error(data.error || 'Verification code not found in your Lodestone profile yet.');
+            }
+            if (data.user) {
+                currentUser = data.user;
+            }
+            pendingVerification = null;
+            verifyReverifyMode = false;
+            cachedMyStats = null;
+            verifyAlert = {
+                type: 'success',
+                msg: data.warning
+                    ? `Verified as ${data.char_name}! Note: ${data.warning}`
+                    : `Successfully verified as ${data.char_name}! Your Discord nickname and Verified role have been updated.`
+            };
+            renderAuthBanner();
+        } catch (err) {
+            verifyAlert = { type: 'error', msg: err.message || 'Verification failed. Please try again.' };
+        } finally {
+            verifyBusy = false;
+            renderVerifyTab();
+        }
+    }
+
     function switchProfileTab(tabName, initialPrefsTab = null) {
-        if (!['signups', 'stats', 'prefs'].includes(tabName)) tabName = 'signups';
+        if (!['signups', 'stats', 'prefs', 'verify'].includes(tabName)) tabName = 'signups';
 
         if (activeProfileTab === 'prefs' && tabName !== 'prefs' && hasUnsavedPrefsModalChanges()) {
             if (!window.confirm(`You have unsaved changes for ${activePrefsTab}. Switch tabs without saving?`)) {
@@ -2991,9 +3261,11 @@
         const pSignups = document.getElementById('profile-panel-signups');
         const pStats = document.getElementById('profile-panel-stats');
         const pPrefs = document.getElementById('profile-panel-prefs');
+        const pVerify = document.getElementById('profile-panel-verify');
         if (pSignups) pSignups.style.display = tabName === 'signups' ? 'flex' : 'none';
         if (pStats) pStats.style.display = tabName === 'stats' ? 'flex' : 'none';
         if (pPrefs) pPrefs.style.display = tabName === 'prefs' ? 'flex' : 'none';
+        if (pVerify) pVerify.style.display = tabName === 'verify' ? 'flex' : 'none';
 
         updateProfileModalFooterHint(tabName);
 
@@ -3008,6 +3280,8 @@
 
         if (tabName === 'stats') {
             loadMyRunStats(false);
+        } else if (tabName === 'verify') {
+            renderVerifyTab();
         } else if (tabName === 'prefs') {
             hidePrefsModalAlert();
             if (initialPrefsTab && CONTENT_TYPES.includes(initialPrefsTab)) {
@@ -3025,6 +3299,13 @@
             }
             renderPrefsModalTab(activePrefsTab);
         }
+    }
+
+    if (IS_PROFILE_PAGE) {
+        window.alnrSwitchProfileTab = (tabName) => {
+            if (!currentUser) return;
+            switchProfileTab(tabName);
+        };
     }
 
     function openProfileModal(initialProfileTab = 'signups', initialPrefsTab = null) {

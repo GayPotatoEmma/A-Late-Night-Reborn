@@ -606,4 +606,291 @@
     }, { passive: true });
     updateActiveToc();
   }
+
+  // ── Site-Wide Header Profile Icon & Account Popover ───────────────────────
+  (function initHeaderProfilePopover() {
+    var headerInner = document.querySelector('.site-header .header-inner');
+    if (!headerInner || document.getElementById('header-profile-wrap')) return;
+
+    var API_URL = 'https://api.alatenightreborn.com';
+    var DISCORD_CLIENT_ID = '1526282207185080411';
+    var PREFS_KEY = 'alnr_signup_preferences_v1';
+
+    var state = {
+      user: null,
+      loaded: false,
+      activeSignupsCount: null,
+      outdatedPrefs: false,
+      onSignOut: null,
+      onLogin: null
+    };
+
+    var ICONS = {
+      person: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      signups: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><polyline points="9 10 11 12 15 8"/></svg>',
+      stats: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+      prefs: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>',
+      verify: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>',
+      bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+      logout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>',
+      warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;flex-shrink:0;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+      discord: '<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>'
+    };
+
+    function esc(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function getCurrentTheme() {
+      if (window.alnrTheme && typeof window.alnrTheme.get === 'function') return window.alnrTheme.get();
+      return document.documentElement.getAttribute('data-theme') || 'dark';
+    }
+
+    function setCurrentTheme(t) {
+      if (window.alnrTheme && typeof window.alnrTheme.set === 'function') {
+        window.alnrTheme.set(t);
+      } else {
+        document.documentElement.setAttribute('data-theme', t);
+        try { localStorage.setItem('alnr-theme', t); } catch (e) {}
+      }
+      renderPopover();
+    }
+
+    function startDefaultDiscordLogin() {
+      if (typeof state.onLogin === 'function') {
+        state.onLogin();
+        return;
+      }
+      var oauthState = '';
+      try {
+        var arr = new Uint8Array(16);
+        window.crypto.getRandomValues(arr);
+        oauthState = Array.from(arr, function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+      } catch (e) {
+        oauthState = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      }
+      var redirectUri = window.location.origin + '/signups';
+      try {
+        sessionStorage.setItem('alnr_oauth_state', oauthState);
+        sessionStorage.setItem('alnr_post_auth_redirect', window.location.pathname + window.location.search);
+      } catch (e) {}
+      var url = 'https://discord.com/oauth2/authorize?client_id=' + DISCORD_CLIENT_ID +
+        '&response_type=code&redirect_uri=' + encodeURIComponent(redirectUri) +
+        '&scope=identify&state=' + encodeURIComponent(oauthState);
+      window.location.href = url;
+    }
+
+    function performDefaultSignOut() {
+      if (typeof state.onSignOut === 'function') {
+        togglePopover(false);
+        state.onSignOut();
+        return;
+      }
+      fetch(API_URL + '/api/public/auth/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        credentials: 'include'
+      }).catch(function () {}).finally(function () {
+        try { localStorage.removeItem('alnr_session_token'); } catch (e) {}
+        state.user = null;
+        state.activeSignupsCount = null;
+        togglePopover(false);
+        renderPopover();
+      });
+    }
+
+    var wrap = document.createElement('div');
+    wrap.className = 'header-profile-wrap';
+    wrap.id = 'header-profile-wrap';
+
+    var avatarBtn = document.createElement('button');
+    avatarBtn.type = 'button';
+    avatarBtn.className = 'header-avatar-btn';
+    avatarBtn.id = 'header-profile-btn';
+    avatarBtn.setAttribute('aria-label', 'Account and theme menu');
+    avatarBtn.setAttribute('aria-haspopup', 'true');
+    avatarBtn.setAttribute('aria-expanded', 'false');
+
+    var popover = document.createElement('div');
+    popover.className = 'header-popover';
+    popover.id = 'header-profile-popover';
+    popover.setAttribute('role', 'menu');
+
+    wrap.appendChild(avatarBtn);
+    wrap.appendChild(popover);
+
+    var navToggleBtn = document.getElementById('nav-toggle');
+    if (navToggleBtn && navToggleBtn.parentNode === headerInner) {
+      headerInner.insertBefore(wrap, navToggleBtn);
+    } else {
+      headerInner.appendChild(wrap);
+    }
+
+    function togglePopover(force) {
+      var willOpen = typeof force === 'boolean' ? force : !wrap.classList.contains('open');
+      if (willOpen && window.alnrTheme && typeof window.alnrTheme.closeDropdown === 'function') {
+        window.alnrTheme.closeDropdown();
+      }
+      wrap.classList.toggle('open', willOpen);
+      avatarBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+
+    function renderPopover() {
+      var u = state.user;
+      var hasWarn = false;
+
+      if (!u) {
+        avatarBtn.className = 'header-avatar-btn';
+        avatarBtn.innerHTML = '<span style="display:inline-flex;width:18px;height:18px;">' + ICONS.person + '</span>';
+        popover.innerHTML =
+          '<div class="popover-signin-box" style="border-bottom: none;">' +
+            '<button type="button" class="popover-discord-btn" id="pop-btn-login">' + ICONS.discord + '<span>Connect Discord</span></button>' +
+          '</div>';
+      } else {
+        var inGuild = Boolean(u.is_in_guild);
+        var isVerified = Boolean(u.is_verified);
+        hasWarn = (!inGuild) || (!isVerified) || Boolean(state.outdatedPrefs);
+
+        avatarBtn.className = 'header-avatar-btn' + (hasWarn ? ' has-warn' : '');
+        var dotHtml = hasWarn
+          ? '<span class="header-avatar-dot warn">!</span>'
+          : '<span class="header-avatar-dot ok"></span>';
+        var avatarImgHtml = u.avatar_url
+          ? '<img src="' + esc(u.avatar_url) + '" alt="Avatar" class="header-avatar-img" />'
+          : '<span style="display:inline-flex;width:18px;height:18px;">' + ICONS.person + '</span>';
+        avatarBtn.innerHTML = avatarImgHtml + dotHtml;
+
+        var statusPill = !inGuild
+          ? '<span class="popover-status-pill unverified">Not in Server</span>'
+          : (isVerified
+            ? '<span class="popover-status-pill verified">Verified</span>'
+            : '<span class="popover-status-pill unverified">Unverified</span>');
+
+        var charSub = u.character_name
+          ? '<div class="popover-user-char">' + esc(u.character_name) + '</div>'
+          : '<div class="popover-user-char" style="opacity:0.75;">No character linked</div>';
+
+        var warnHtml = '';
+        if (!inGuild) {
+          warnHtml =
+            '<div class="popover-warn-box">' +
+              '<div class="popover-warn-title">' + ICONS.warn + '<span>Not in Discord Server</span></div>' +
+              '<a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="popover-verify-btn">Join Discord</a>' +
+            '</div>';
+        } else if (!isVerified) {
+          warnHtml =
+            '<div class="popover-warn-box">' +
+              '<div class="popover-warn-title">' + ICONS.warn + '<span>Character Not Verified</span></div>' +
+              '<a href="/profile?tab=verify" data-pop-profile-tab="verify" class="popover-verify-btn">Verify Character</a>' +
+            '</div>';
+        }
+
+        var countHtml = (typeof state.activeSignupsCount === 'number' && state.activeSignupsCount > 0)
+          ? '<span class="popover-count-pill">' + state.activeSignupsCount + '</span>'
+          : '';
+        var prefsDotHtml = state.outdatedPrefs ? '<span class="popover-alert-dot">!</span>' : '';
+        var dashHtml = (u.can_access_dashboard || u.dashboard_role || u.is_owner)
+          ? '<a href="/dashboard" class="popover-item is-dash"><span class="popover-item-left">' + ICONS.bolt + '<span>Host Dashboard</span></span></a>'
+          : '';
+        var verifyLinkHtml = isVerified
+          ? '<a href="/profile?tab=verify" data-pop-profile-tab="verify" class="popover-item"><span class="popover-item-left">' + ICONS.verify + '<span>Character Verification</span></span></a>'
+          : '';
+
+        popover.innerHTML =
+          '<div class="popover-user-head">' +
+            (u.avatar_url ? '<img src="' + esc(u.avatar_url) + '" alt="Avatar" class="popover-avatar-lg" />' : '') +
+            '<div style="min-width:0;flex:1;">' +
+              '<div class="popover-user-name-row"><span>' + esc(u.global_name || u.username) + '</span>' + statusPill + '</div>' +
+              charSub +
+              '<div class="popover-user-handle">@' + esc(u.username) + '</div>' +
+            '</div>' +
+          '</div>' +
+          warnHtml +
+          '<div class="popover-menu">' +
+            '<a href="/profile?tab=signups" data-pop-profile-tab="signups" class="popover-item"><span class="popover-item-left">' + ICONS.signups + '<span>Active Signups</span></span>' + countHtml + '</a>' +
+            '<a href="/profile?tab=stats" data-pop-profile-tab="stats" class="popover-item"><span class="popover-item-left">' + ICONS.stats + '<span>Run Stats</span></span></a>' +
+            '<a href="/profile?tab=prefs" data-pop-profile-tab="prefs" class="popover-item"><span class="popover-item-left">' + ICONS.prefs + '<span>Saved Preferences</span></span>' + prefsDotHtml + '</a>' +
+            verifyLinkHtml +
+            dashHtml +
+            '<div class="popover-divider"></div>' +
+            '<button type="button" class="popover-item is-danger" id="pop-btn-signout"><span class="popover-item-left">' + ICONS.logout + '<span>Sign Out</span></span></button>' +
+          '</div>';
+      }
+
+      var loginBtn = document.getElementById('pop-btn-login');
+      if (loginBtn) loginBtn.onclick = startDefaultDiscordLogin;
+      var signoutBtn = document.getElementById('pop-btn-signout');
+      if (signoutBtn) signoutBtn.onclick = performDefaultSignOut;
+
+      popover.querySelectorAll('[data-pop-profile-tab]').forEach(function (link) {
+        link.onclick = function (e) {
+          if (typeof window.alnrSwitchProfileTab === 'function') {
+            e.preventDefault();
+            var t = link.getAttribute('data-pop-profile-tab');
+            togglePopover(false);
+            window.alnrSwitchProfileTab(t);
+          }
+        };
+      });
+    }
+
+    popover.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+
+    avatarBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      togglePopover();
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) {
+        togglePopover(false);
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        togglePopover(false);
+      }
+    });
+
+    window.addEventListener('alnr:themechange', function () {
+      renderPopover();
+    });
+
+    window.alnrHeaderProfile = {
+      setState: function (partial) {
+        if (!partial || typeof partial !== 'object') return;
+        if ('user' in partial) { state.user = partial.user; state.loaded = true; }
+        if ('activeSignupsCount' in partial) state.activeSignupsCount = partial.activeSignupsCount;
+        if ('outdatedPrefs' in partial) state.outdatedPrefs = Boolean(partial.outdatedPrefs);
+        if ('onSignOut' in partial) state.onSignOut = partial.onSignOut;
+        if ('onLogin' in partial) state.onLogin = partial.onLogin;
+        renderPopover();
+      },
+      open: function () { togglePopover(true); },
+      close: function () { togglePopover(false); }
+    };
+
+    renderPopover();
+
+    // On pages without signups.js (Home, Guides, Contact, Privacy), fetch session once silently
+    var isSignupsOrProfile = Boolean(
+      document.getElementById('runs-selection-container') ||
+      (document.body && document.body.dataset && document.body.dataset.page === 'profile')
+    );
+    if (!isSignupsOrProfile && window.location.protocol !== 'file:') {
+      fetch(API_URL + '/api/public/auth/me', { credentials: 'include' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (d && d.authenticated && d.user) {
+            state.user = d.user;
+            state.loaded = true;
+            renderPopover();
+          }
+        })
+        .catch(function () {});
+    }
+  })();
 })();

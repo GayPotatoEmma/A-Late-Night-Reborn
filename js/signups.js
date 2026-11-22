@@ -2773,10 +2773,6 @@
                     <div class="card-heading">
                         <span class="material-symbols-outlined">bar_chart</span>
                         <span>Run Stats Overview</span>
-                        <span class="card-heading-note">
-                            <span class="material-symbols-outlined" style="font-size: 0.95rem;">lock</span>
-                            <span>Only visible to you.</span>
-                        </span>
                     </div>
                     <div class="stats-empty-box">
                         <span class="material-symbols-outlined" style="font-size: 2.1rem; color: var(--accent-purple); display: block; margin-bottom: 0.5rem;">bar_chart</span>
@@ -2857,10 +2853,6 @@
                 <div class="card-heading">
                     <span class="material-symbols-outlined">bar_chart</span>
                     <span>Run Stats Overview</span>
-                    <span class="card-heading-note">
-                        <span class="material-symbols-outlined" style="font-size: 0.95rem;">lock</span>
-                        <span>Only visible to you.</span>
-                    </span>
                 </div>
 
                 <div class="stats-summary-grid-3">

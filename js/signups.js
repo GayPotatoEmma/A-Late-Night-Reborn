@@ -2644,7 +2644,7 @@
         const up = String(raid || '').toUpperCase();
         if (up === 'FT:B') return { cls: 'rb-ftb', label: 'FT:B', grad: 'linear-gradient(90deg, #ef4444, #f87171)' };
         if (up === 'FT:M') return { cls: 'rb-ftm', label: 'FT:M', grad: 'linear-gradient(90deg, #9333ea, #c084fc)' };
-        if (up === 'CHAOTIC') return { cls: 'rb-chaotic', label: 'CHAOTIC', grad: 'linear-gradient(90deg, #7c3aed, #a78bfa)' };
+        if (up === 'CHAOTIC') return { cls: 'rb-chaotic', label: 'CHAOTIC', grad: 'linear-gradient(90deg, #10b981, #4ade80)' };
         if (up === 'DRS') return { cls: 'rb-drs', label: 'DRS', grad: 'linear-gradient(90deg, #d97706, #fbbf24)' };
         if (up === 'BA') return { cls: 'rb-ba', label: 'BA', grad: 'linear-gradient(90deg, #0284c7, #38bdf8)' };
         return { cls: 'rb-other', label: String(raid || 'OTHER').toUpperCase(), grad: 'linear-gradient(90deg, #64748b, #94a3b8)' };

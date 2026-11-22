@@ -1273,10 +1273,17 @@ details.accordion-item[open] > summary {
 }
 
 .raid-tab[data-raid="cod"].active {
-  border-color: rgba(251, 191, 36, .45);
-  background: rgba(251, 191, 36, .12);
+  border-color: rgba(52, 211, 153, .45);
+  background: rgba(52, 211, 153, .12);
   color: #fff;
-  box-shadow: 0 0 20px rgba(251, 191, 36, .2);
+  box-shadow: 0 0 20px rgba(52, 211, 153, .2);
+}
+
+[data-theme^="light"] .raid-tab[data-raid="cod"].active {
+  border-color: rgba(5, 150, 105, .42);
+  background: rgba(16, 185, 129, .14);
+  color: #065f46;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, .14);
 }
 
 .tab-dot {
@@ -1290,7 +1297,7 @@ details.accordion-item[open] > summary {
 
 .raid-tab.active .tab-dot.blood { background: #f43f5e; box-shadow: 0 0 8px #f43f5e; transform: scale(1.25); }
 .raid-tab.active .tab-dot.magic { background: #a855f7; box-shadow: 0 0 8px #a855f7; transform: scale(1.25); }
-.raid-tab.active .tab-dot.chaotic { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; transform: scale(1.25); }
+.raid-tab.active .tab-dot.chaotic { background: #34d399; box-shadow: 0 0 8px #34d399; transform: scale(1.25); }
 
 .tab-title {
   letter-spacing: .02em;

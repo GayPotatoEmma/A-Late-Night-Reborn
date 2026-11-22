@@ -377,7 +377,10 @@
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
   }
 
-  if (toggle)  toggle.addEventListener('click', openNav);
+  if (toggle) {
+    toggle.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>';
+    toggle.addEventListener('click', openNav);
+  }
   close.addEventListener('click', closeNav);
   overlay.addEventListener('click', closeNav);
 
@@ -626,7 +629,7 @@
     };
 
     var ICONS = {
-      person: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      person: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
       signups: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><polyline points="9 10 11 12 15 8"/></svg>',
       stats: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
       prefs: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>',
@@ -741,7 +744,7 @@
 
       if (!u) {
         avatarBtn.className = 'header-avatar-btn';
-        avatarBtn.innerHTML = '<span style="display:inline-flex;width:18px;height:18px;">' + ICONS.person + '</span>';
+        avatarBtn.innerHTML = '<span style="display:inline-flex;width:17px;height:17px;">' + ICONS.person + '</span>';
         popover.innerHTML =
           '<div class="popover-signin-box" style="border-bottom: none;">' +
             '<button type="button" class="popover-discord-btn" id="pop-btn-login">' + ICONS.discord + '<span>Connect Discord</span></button>' +
@@ -751,13 +754,13 @@
         var isVerified = Boolean(u.is_verified);
         hasWarn = (!inGuild) || (!isVerified) || Boolean(state.outdatedPrefs);
 
-        avatarBtn.className = 'header-avatar-btn' + (hasWarn ? ' has-warn' : '');
+        avatarBtn.className = 'header-avatar-btn' + (u.avatar_url ? ' has-avatar' : '') + (hasWarn ? ' has-warn' : '');
         var dotHtml = hasWarn
           ? '<span class="header-avatar-dot warn">!</span>'
           : '<span class="header-avatar-dot ok"></span>';
         var avatarImgHtml = u.avatar_url
           ? '<img src="' + esc(u.avatar_url) + '" alt="Avatar" class="header-avatar-img" />'
-          : '<span style="display:inline-flex;width:18px;height:18px;">' + ICONS.person + '</span>';
+          : '<span style="display:inline-flex;width:17px;height:17px;">' + ICONS.person + '</span>';
         avatarBtn.innerHTML = avatarImgHtml + dotHtml;
 
         var statusPill = !inGuild

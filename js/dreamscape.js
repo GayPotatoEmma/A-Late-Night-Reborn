@@ -422,10 +422,14 @@
   }
 
   function mountSecondary() {
+    var container = document.querySelector('.signups-container');
     var main = document.querySelector('main.main-content');
-    if (!main) return false;
-    var hero = main.querySelector('.signups-top-bar, .page-header, .contact-hero');
+    var host = container || main;
+    if (!host) return false;
+    var hero = host.querySelector(':scope > .signups-hero, :scope > .signups-top-bar, :scope > .page-header, :scope > .contact-hero');
     if (!hero) return false;
+
+    document.body.classList.add('ds-page-secondary');
 
     var sky = document.createElement('div');
     sky.className = 'ds-secondary-sky';
@@ -434,11 +438,22 @@
     art.innerHTML = buildBannerSkySvg();
     sky.appendChild(art);
 
-    var inner = document.createElement('div');
-    inner.className = 'ds-secondary-sky-inner';
-    hero.parentNode.insertBefore(sky, hero);
-    inner.appendChild(hero);
-    sky.appendChild(inner);
+    var skyInner = document.createElement('div');
+    skyInner.className = 'ds-secondary-sky-inner';
+    skyInner.appendChild(hero);
+    sky.appendChild(skyInner);
+
+    var bodyWrap = document.createElement('div');
+    bodyWrap.className = 'ds-secondary-body-wrap';
+    var bodyInner = document.createElement('div');
+    bodyInner.className = 'ds-secondary-body-inner';
+
+    var rest = Array.from(host.children).filter(function (el) { return el !== hero; });
+    host.innerHTML = '';
+    host.appendChild(sky);
+    rest.forEach(function (el) { bodyInner.appendChild(el); });
+    bodyWrap.appendChild(bodyInner);
+    host.appendChild(bodyWrap);
 
     mountedKind = 'secondary';
     return true;
@@ -446,14 +461,29 @@
 
   function unmountSecondary() {
     var sky = document.querySelector('.ds-secondary-sky');
-    if (!sky) return;
-    var inner = sky.querySelector('.ds-secondary-sky-inner');
-    if (inner) {
-      Array.from(inner.children).forEach(function (ch) {
-        sky.parentNode.insertBefore(ch, sky);
-      });
+    var bodyWrap = document.querySelector('.ds-secondary-body-wrap');
+    var host = (sky && sky.parentNode) || (bodyWrap && bodyWrap.parentNode);
+    if (host) {
+      if (sky) {
+        var inner = sky.querySelector('.ds-secondary-sky-inner');
+        if (inner) {
+          Array.from(inner.children).forEach(function (ch) {
+            host.insertBefore(ch, sky);
+          });
+        }
+        sky.remove();
+      }
+      if (bodyWrap) {
+        var bInner = bodyWrap.querySelector('.ds-secondary-body-inner');
+        if (bInner) {
+          Array.from(bInner.children).forEach(function (ch) {
+            host.insertBefore(ch, bodyWrap);
+          });
+        }
+        bodyWrap.remove();
+      }
     }
-    sky.remove();
+    document.body.classList.remove('ds-page-secondary');
   }
 
   function mount() {

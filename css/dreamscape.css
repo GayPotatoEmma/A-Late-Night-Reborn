@@ -1341,33 +1341,113 @@ html[data-ui="refresh"] .site-footer a {
   font-weight: 700;
 }
 
-/* Secondary Sky Banner (Contact / Privacy / Dashboard) */
+/* Secondary Sky Banner & Ground (Contact / Privacy / Dashboard) */
+html[data-ui="refresh"] body.ds-page-secondary .signups-container {
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 html[data-ui="refresh"] .ds-secondary-sky {
   position: relative;
-  min-height: 210px;
-  padding: 96px 0 62px;
-  background: linear-gradient(180deg, #171336 0%, #372969 72%, #684b8e 100%);
+  min-height: 285px;
+  padding: 102px 0 82px;
+  background: linear-gradient(180deg, #181436 0%, #3d2e6d 65%, #84609c 100%);
   overflow: hidden;
+}
+
+html[data-ui="refresh"][data-theme="dark"] .ds-secondary-sky,
+html[data-ui="refresh"][data-theme="dark-lite"] .ds-secondary-sky {
+  background: linear-gradient(180deg, #0e0b22 0%, #271e4f 65%, #4d3770 100%);
 }
 
 html[data-ui="refresh"] .ds-secondary-sky-inner {
   position: relative;
   z-index: 4;
-  max-width: 1120px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-html[data-ui="refresh"] .ds-secondary-sky h1 {
-  font-family: var(--ds-serif) !important;
-  font-size: clamp(2.1rem, 3.6vw, 2.9rem) !important;
+html[data-ui="refresh"] .ds-secondary-sky .signups-hero {
+  margin-bottom: 0 !important;
+  text-align: left !important;
+}
+
+html[data-ui="refresh"] .ds-secondary-sky h1,
+html[data-ui="refresh"] .ds-secondary-sky .signups-title {
+  font-family: var(--ds-display) !important;
+  font-size: clamp(2.15rem, 3.8vw, 3rem) !important;
+  font-weight: 600 !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
   background: none !important;
+  text-shadow: 0 4px 22px rgba(15, 11, 38, 0.45);
+  filter: none !important;
+  margin-bottom: 0.45rem !important;
 }
 
-html[data-ui="refresh"] .ds-secondary-sky p {
-  color: rgba(242, 235, 255, 0.86) !important;
+html[data-ui="refresh"] .ds-secondary-sky p,
+html[data-ui="refresh"] .ds-secondary-sky .signups-desc {
+  color: rgba(242, 235, 255, 0.90) !important;
+  font-size: 1rem !important;
+  max-width: 680px;
+  margin: 0 !important;
+}
+
+html[data-ui="refresh"] .ds-secondary-body-wrap {
+  position: relative;
+  z-index: 5;
+  background: var(--ds-ground);
+  padding: 1.35rem 2rem 4.5rem;
+}
+
+html[data-ui="refresh"] .ds-secondary-body-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+html[data-ui="refresh"] body.ds-page-secondary .glass-card {
+  background: var(--ds-surface) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--shadow-glass) !important;
+  backdrop-filter: none !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-secondary .glass-card h2,
+html[data-ui="refresh"] body.ds-page-secondary .privacy-section h2 {
+  font-family: var(--ds-serif) !important;
+  font-weight: 600 !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-secondary .auth-banner-unauthed {
+  background: var(--ds-surface) !important;
+  border: 1.5px solid var(--ds-border) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-secondary .privacy-highlight-box {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border-strong) !important;
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-secondary .privacy-section code {
+  background: var(--ds-surface-soft);
+  border: 1px solid var(--ds-border);
+  border-radius: 6px;
+  padding: 0.08rem 0.42rem;
+  color: var(--ds-ink);
+  font-size: 0.86em;
+}
+
+html[data-ui="refresh"] body.ds-page-secondary .contact-form .input-text,
+html[data-ui="refresh"] body.ds-page-secondary .contact-form .input-textarea {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
 }
 
 /* Mobile Nav Drawer Harmony - High-Contrast in Both Light & Dark Modes */

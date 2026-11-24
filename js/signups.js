@@ -2888,44 +2888,113 @@
             </div>
         ` : '';
 
-        container.innerHTML = `
-            <div class="glass-card">
-                <div class="card-heading">
-                    <span class="material-symbols-outlined">bar_chart</span>
-                    <span>Run Stats Overview</span>
-                </div>
+        const isRefreshUi = document.documentElement.getAttribute('data-ui') === 'refresh';
+        const clearRatePct = totalRuns > 0 ? Math.round((clearedRuns / totalRuns) * 100) : 0;
 
-                <div class="stats-summary-grid-3">
-                    <div class="stats-kpi-card" style="--kpi-accent: #b291f7;">
-                        <div class="stats-kpi-top"><span>Total Runs</span><span class="material-symbols-outlined">swords</span></div>
-                        <div class="stats-kpi-val">${totalRuns}</div>
-                        <div class="stats-kpi-sub">Across ${distinctRaids} ${distinctRaids === 1 ? 'raid' : 'raids'}</div>
-                    </div>
-                    <div class="stats-kpi-card" style="--kpi-accent: #6ee7b7;">
-                        <div class="stats-kpi-top"><span>Total Clears</span><span class="material-symbols-outlined">emoji_events</span></div>
-                        <div class="stats-kpi-val">${totalClears}</div>
-                        <div class="stats-kpi-sub">Across ${clearedRuns} cleared ${clearedRuns === 1 ? 'run' : 'runs'}</div>
-                    </div>
-                    <div class="stats-kpi-card" style="--kpi-accent: #e4c090;">
-                        <div class="stats-kpi-top"><span>Raiding Since</span><span class="material-symbols-outlined">calendar_month</span></div>
-                        <div class="stats-kpi-val" style="font-size: 1.45rem; padding-top: 3px;">${escapeHtml(raidingSince)}</div>
-                        <div class="stats-kpi-sub">Most played: ${escapeHtml(topRaid)}</div>
-                    </div>
-                </div>
+        let overviewCardHtml = '';
+        if (isRefreshUi) {
+            const totalSumRuns = byRaid.reduce((acc, r) => acc + Number(r.runs || 0), 0) || 1;
+            const ribbonSegsHtml = byRaid.map(r => {
+                const st = getRaidBadgeStyle(r.raid);
+                const pct = Math.max(2, (Number(r.runs || 0) / totalSumRuns) * 100);
+                const isActive = activeStatsRaidFilter === r.raid;
+                const isDim = activeStatsRaidFilter !== 'all' && !isActive;
+                return `<button type="button" class="ds-stats-ribbon-seg ${st.cls}${isActive ? ' is-active' : ''}${isDim ? ' is-dim' : ''}" style="width: ${pct.toFixed(2)}%;" data-stats-raid="${escapeHtml(r.raid)}" title="${escapeHtml(st.label)}: ${r.runs} ${r.runs === 1 ? 'run' : 'runs'}, ${r.clears} ${r.clears === 1 ? 'clear' : 'clears'}"></button>`;
+            }).join('');
 
-                <div class="stats-sub-section">
-                    <div class="stats-section-title" style="margin-bottom: 0.75rem;">
-                        <div class="stats-section-title-left">
-                            <span class="material-symbols-outlined">bar_chart</span>
-                            <span>Breakdown by Raid</span>
+            const raidTilesHtml = byRaid.map(r => {
+                const st = getRaidBadgeStyle(r.raid);
+                const isActive = activeStatsRaidFilter === r.raid;
+                return `
+                    <button type="button" class="ds-stats-raid-tile ${st.cls}${isActive ? ' is-active' : ''}" data-stats-raid="${escapeHtml(r.raid)}">
+                        <div class="ds-stats-tile-top">
+                            <span class="ds-stats-tile-dot ${st.cls}"></span>
+                            <span class="ds-stats-tile-name">${escapeHtml(st.label)}</span>
                         </div>
-                        <span class="stats-section-hint">Click a raid to filter history</span>
+                        <div class="ds-stats-tile-nums"><strong>${r.runs}</strong> ${r.runs === 1 ? 'run' : 'runs'} &bull; ${r.clears} ${r.clears === 1 ? 'clear' : 'clears'}</div>
+                    </button>
+                `;
+            }).join('');
+
+            overviewCardHtml = `
+                <div class="glass-card ds-stats-overview-card">
+                    <div class="ds-stats-open-grid">
+                        <div class="ds-stats-open-item">
+                            <div class="ds-stats-open-val">${totalRuns}</div>
+                            <div class="ds-stats-open-label">Total Runs</div>
+                            <div class="ds-stats-open-sub">Across ${distinctRaids} ${distinctRaids === 1 ? 'raid' : 'raids'}</div>
+                        </div>
+                        <div class="ds-stats-open-item">
+                            <div class="ds-stats-open-val is-clears">${totalClears}</div>
+                            <div class="ds-stats-open-label">Total Clears</div>
+                            <div class="ds-stats-open-sub">Across ${clearedRuns} cleared ${clearedRuns === 1 ? 'run' : 'runs'}</div>
+                        </div>
+                        <div class="ds-stats-open-item">
+                            <div class="ds-stats-open-val is-rate">${clearRatePct}%</div>
+                            <div class="ds-stats-open-label">Clear Rate</div>
+                            <div class="ds-stats-open-sub">Most played: ${escapeHtml(topRaid)}</div>
+                        </div>
+                        <div class="ds-stats-open-item">
+                            <div class="ds-stats-open-val is-since">${escapeHtml(raidingSince)}</div>
+                            <div class="ds-stats-open-label">Raiding Since</div>
+                            <div class="ds-stats-open-sub">ALNR community runs</div>
+                        </div>
                     </div>
-                    <div class="stats-breakdown-box">
-                        ${breakdownRowsHtml}
+
+                    <div class="ds-stats-ribbon-wrap">
+                        <div class="ds-stats-ribbon" role="group" aria-label="Raid breakdown proportion">
+                            ${ribbonSegsHtml}
+                        </div>
+                        <div class="ds-stats-raid-tiles">
+                            ${raidTilesHtml}
+                        </div>
                     </div>
                 </div>
-            </div>
+            `;
+        } else {
+            overviewCardHtml = `
+                <div class="glass-card">
+                    <div class="card-heading">
+                        <span class="material-symbols-outlined">bar_chart</span>
+                        <span>Run Stats Overview</span>
+                    </div>
+
+                    <div class="stats-summary-grid-3">
+                        <div class="stats-kpi-card" style="--kpi-accent: #b291f7;">
+                            <div class="stats-kpi-top"><span>Total Runs</span><span class="material-symbols-outlined">swords</span></div>
+                            <div class="stats-kpi-val">${totalRuns}</div>
+                            <div class="stats-kpi-sub">Across ${distinctRaids} ${distinctRaids === 1 ? 'raid' : 'raids'}</div>
+                        </div>
+                        <div class="stats-kpi-card" style="--kpi-accent: #6ee7b7;">
+                            <div class="stats-kpi-top"><span>Total Clears</span><span class="material-symbols-outlined">emoji_events</span></div>
+                            <div class="stats-kpi-val">${totalClears}</div>
+                            <div class="stats-kpi-sub">Across ${clearedRuns} cleared ${clearedRuns === 1 ? 'run' : 'runs'}</div>
+                        </div>
+                        <div class="stats-kpi-card" style="--kpi-accent: #e4c090;">
+                            <div class="stats-kpi-top"><span>Raiding Since</span><span class="material-symbols-outlined">calendar_month</span></div>
+                            <div class="stats-kpi-val" style="font-size: 1.45rem; padding-top: 3px;">${escapeHtml(raidingSince)}</div>
+                            <div class="stats-kpi-sub">Most played: ${escapeHtml(topRaid)}</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-sub-section">
+                        <div class="stats-section-title" style="margin-bottom: 0.75rem;">
+                            <div class="stats-section-title-left">
+                                <span class="material-symbols-outlined">bar_chart</span>
+                                <span>Breakdown by Raid</span>
+                            </div>
+                            <span class="stats-section-hint">Click a raid to filter history</span>
+                        </div>
+                        <div class="stats-breakdown-box">
+                            ${breakdownRowsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        container.innerHTML = `
+            ${overviewCardHtml}
 
             <div class="glass-card">
                 <div class="card-heading card-heading-split">
@@ -4233,6 +4302,9 @@
         window.addEventListener('alnr:uichange', () => {
             if (!IS_PROFILE_PAGE && typeof renderEvents === 'function') {
                 renderEvents();
+            }
+            if (IS_PROFILE_PAGE && cachedMyStats && typeof renderMyRunStats === 'function') {
+                renderMyRunStats();
             }
             if (typeof window.alnrDreamscapeUpdateProfileHero === 'function') {
                 window.alnrDreamscapeUpdateProfileHero(currentUser);

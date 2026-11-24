@@ -3987,6 +3987,16 @@
         const profileLoginBtn = document.getElementById('btn-profile-discord-login');
         if (profileLoginBtn) profileLoginBtn.onclick = initiateDiscordLogin;
 
+        const signOutAllBtn = document.getElementById('btn-profile-signout-all');
+        if (signOutAllBtn) {
+            signOutAllBtn.onclick = () => {
+                if (!window.confirm('Sign out of all devices? This will end your session on every browser you are signed into.')) {
+                    return;
+                }
+                signOut(true);
+            };
+        }
+
         document.querySelectorAll('#profile-top-tabs [data-profile-tab]').forEach(tabBtn => {
             tabBtn.onclick = () => {
                 const targetTab = tabBtn.getAttribute('data-profile-tab');

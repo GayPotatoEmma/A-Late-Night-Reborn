@@ -672,17 +672,13 @@
       window.location.href = url;
     }
 
-    function performDefaultSignOut(allDevices) {
-      if (allDevices && !window.confirm('Sign out of all devices? This will end your session on every browser you are signed into.')) {
-        return;
-      }
+    function performDefaultSignOut() {
       if (typeof state.onSignOut === 'function') {
         togglePopover(false);
-        state.onSignOut(Boolean(allDevices));
+        state.onSignOut();
         return;
       }
-      var endpoint = allDevices ? '/api/public/auth/logout-all' : '/api/public/auth/logout';
-      fetch(API_URL + endpoint, {
+      fetch(API_URL + '/api/public/auth/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
         credentials: 'include'
@@ -800,16 +796,13 @@
             dashHtml +
             '<div class="popover-divider"></div>' +
             '<button type="button" class="popover-item is-danger" id="pop-btn-signout"><span class="popover-item-left">' + ICONS.logout + '<span>Sign Out</span></span></button>' +
-            '<button type="button" class="popover-item is-danger" id="pop-btn-signout-all" style="font-size:0.82rem;opacity:0.88;"><span class="popover-item-left">' + ICONS.logout + '<span>Sign Out All Devices</span></span></button>' +
           '</div>';
       }
 
       var loginBtn = document.getElementById('pop-btn-login');
       if (loginBtn) loginBtn.onclick = startDefaultDiscordLogin;
       var signoutBtn = document.getElementById('pop-btn-signout');
-      if (signoutBtn) signoutBtn.onclick = function () { performDefaultSignOut(false); };
-      var signoutAllBtn = document.getElementById('pop-btn-signout-all');
-      if (signoutAllBtn) signoutAllBtn.onclick = function () { performDefaultSignOut(true); };
+      if (signoutBtn) signoutBtn.onclick = performDefaultSignOut;
 
       popover.querySelectorAll('[data-pop-profile-tab]').forEach(function (link) {
         link.onclick = function (e) {

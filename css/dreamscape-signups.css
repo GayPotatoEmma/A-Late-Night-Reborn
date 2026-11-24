@@ -665,6 +665,23 @@ html[data-ui="refresh"][data-theme="dark-lite"] body.ds-page-profile .profile-na
   color: var(--ds-moon) !important;
 }
 
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-footer {
+  border-top-color: var(--ds-border) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .profile-signout-all-btn {
+  color: var(--ds-ink-muted) !important;
+  border-radius: 12px !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .profile-signout-all-btn:hover {
+  background: var(--ds-ftb-soft) !important;
+  border-color: var(--ds-ftb-border) !important;
+  color: var(--ds-ftb) !important;
+}
+
 /* Editorial Run Stats Numerals + Proportional Raid Ribbon + Clickable Raid Tiles */
 html[data-ui="refresh"] .ds-stats-overview-card {
   padding: 1.7rem 1.9rem !important;

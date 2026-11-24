@@ -2052,6 +2052,35 @@ html[data-ui="refresh"][data-theme] .macro-copy-btn.copied {
   color: var(--ds-chaotic) !important;
 }
 
+html[data-ui="refresh"][data-theme] .macro-toolbar {
+  background: var(--ds-surface) !important;
+  border-bottom: 1.5px solid var(--ds-border) !important;
+}
+
+html[data-ui="refresh"][data-theme] .macro-lang-switcher {
+  background: var(--ds-ground) !important;
+  border: 1px solid var(--ds-border) !important;
+  border-radius: 999px !important;
+  padding: 0.2rem !important;
+}
+
+html[data-ui="refresh"][data-theme] .macro-lang-btn {
+  border-radius: 999px !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+  color: var(--ds-ink-muted) !important;
+}
+
+html[data-ui="refresh"][data-theme] .macro-lang-btn:hover {
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .macro-lang-btn.active {
+  background: var(--ds-ftm-soft) !important;
+  border-color: var(--ds-ftm-border) !important;
+  color: var(--ds-ink) !important;
+}
+
 html[data-ui="refresh"] .lightbox-overlay {
   background: rgba(14, 11, 32, 0.86) !important;
   backdrop-filter: blur(8px) !important;

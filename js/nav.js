@@ -510,55 +510,11 @@
     tocCard.appendChild(tocList);
     sidebar.appendChild(tocCard);
 
-    // 2. Raid Guides Quick-Switcher Card
-    var activeRaidGroup = document.querySelector('.nav-raid-group.expanded') ||
-      (inFTB ? document.getElementById('nav-raid-ftb') :
-       inFTM ? document.getElementById('nav-raid-ftm') :
-       inCOD ? document.getElementById('nav-raid-cod') : null);
-
-    if (activeRaidGroup) {
-      var raidCard = document.createElement('div');
-      raidCard.className = 'guide-sidebar-card guide-raid-card';
-      var raidHeaderSpan = activeRaidGroup.querySelector('.nav-raid-header span');
-      var raidTitle = raidHeaderSpan ? raidHeaderSpan.textContent.trim() : 'Raid Guides';
-
-      var raidHeading = document.createElement('div');
-      raidHeading.className = 'guide-sidebar-heading';
-      raidHeading.innerHTML = '<span class="material-symbols-outlined">menu_book</span><span>' + raidTitle + '</span>';
-      raidCard.appendChild(raidHeading);
-
-      var raidList = document.createElement('nav');
-      raidList.className = 'guide-raid-list';
-
-      activeRaidGroup.querySelectorAll('.nav-section').forEach(function (sec) {
-        var pageLink = sec.querySelector('.nav-page-link');
-        var badge = sec.querySelector('.nav-badge');
-        if (!pageLink) return;
-        var a = document.createElement('a');
-        a.href = pageLink.getAttribute('href');
-        var isCurrent = pageLink.classList.contains('nav-current');
-        a.className = 'guide-raid-link' + (isCurrent ? ' active' : '');
-
-        var titleSpan = document.createElement('span');
-        titleSpan.className = 'guide-raid-link-title';
-        titleSpan.textContent = pageLink.textContent.trim();
-        a.appendChild(titleSpan);
-
-        if (badge) {
-          var badgeClone = badge.cloneNode(true);
-          a.appendChild(badgeClone);
-        }
-        raidList.appendChild(a);
-      });
-
-      raidCard.appendChild(raidList);
-      sidebar.appendChild(raidCard);
-    }
+    var isPhantomJobsPage = window.location.pathname.indexOf('phantom-jobs') !== -1;
 
     var mainCol = document.createElement('div');
     mainCol.className = 'guide-main-col';
 
-    var isPhantomJobsPage = window.location.pathname.indexOf('phantom-jobs') !== -1;
     var jobsGrid = null;
     if (isPhantomJobsPage && contentCards.length > 2) {
       jobsGrid = document.createElement('div');

@@ -2922,22 +2922,18 @@
                         <div class="ds-stats-open-item">
                             <div class="ds-stats-open-val">${totalRuns}</div>
                             <div class="ds-stats-open-label">Total Runs</div>
-                            <div class="ds-stats-open-sub">Across ${distinctRaids} ${distinctRaids === 1 ? 'raid' : 'raids'}</div>
                         </div>
                         <div class="ds-stats-open-item">
                             <div class="ds-stats-open-val is-clears">${totalClears}</div>
                             <div class="ds-stats-open-label">Total Clears</div>
-                            <div class="ds-stats-open-sub">Across ${clearedRuns} cleared ${clearedRuns === 1 ? 'run' : 'runs'}</div>
                         </div>
                         <div class="ds-stats-open-item">
                             <div class="ds-stats-open-val is-rate">${clearRatePct}%</div>
                             <div class="ds-stats-open-label">Clear Rate</div>
-                            <div class="ds-stats-open-sub">Most played: ${escapeHtml(topRaid)}</div>
                         </div>
                         <div class="ds-stats-open-item">
                             <div class="ds-stats-open-val is-since">${escapeHtml(raidingSince)}</div>
                             <div class="ds-stats-open-label">Raiding Since</div>
-                            <div class="ds-stats-open-sub">ALNR community runs</div>
                         </div>
                     </div>
 

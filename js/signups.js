@@ -343,7 +343,10 @@
     // ── Rendering Auth State ─────────────────────────────────────────────────────
 
     function renderAuthBanner() {
-        // Sync auth state into the site-wide header avatar popover
+        // Sync auth state into the site-wide header avatar popover & optional Refresh [Beta] hero
+        if (typeof window.alnrDreamscapeUpdateProfileHero === 'function') {
+            window.alnrDreamscapeUpdateProfileHero(currentUser);
+        }
         if (window.alnrHeaderProfile && typeof window.alnrHeaderProfile.setState === 'function') {
             window.alnrHeaderProfile.setState({
                 user: currentUser,
@@ -688,6 +691,43 @@
                 } else {
                     userPillHtml = `<span class="run-user-status-pill is-pending"><span class="material-symbols-outlined" style="font-size: 0.86rem;">check_circle</span> Signed Up</span>`;
                 }
+            }
+
+            if (document.documentElement.getAttribute('data-ui') === 'refresh') {
+                let rightBadgeHtml = '';
+                if (ev.is_cancelled) {
+                    rightBadgeHtml = `<span class="ds-run-status is-cancelled"><span class="material-symbols-outlined">cancel</span> Cancelled</span>`;
+                } else if (ev.is_closed) {
+                    rightBadgeHtml = `<span class="ds-run-status is-closed"><span class="material-symbols-outlined">lock</span> Closed (${ev.signup_count})</span>`;
+                } else if (ev.is_roster_full) {
+                    rightBadgeHtml = `<span class="ds-run-status is-full"><span class="material-symbols-outlined">group</span> ${ev.signup_count} / ${maxSlots}</span>`;
+                } else {
+                    rightBadgeHtml = `<span class="ds-run-status is-open"><span class="material-symbols-outlined">group</span> ${ev.signup_count} / ${maxSlots}</span>`;
+                }
+
+                const inlineWarnHtml = (ev.is_roster_full && !isDisabled)
+                    ? `<span class="run-backups-icon" data-tooltip="${escapeHtml(fullTooltip)}" aria-label="${escapeHtml(fullTooltip)}"><span class="material-symbols-outlined">warning</span></span>`
+                    : '';
+
+                return `
+                    <div class="run-select-card ds-run-card raid-${typeBadgeClass} ${isSelected ? 'selected' : ''} ${isDisabled ? 'is-closed' : ''} ${ev.is_cancelled ? 'is-cancelled' : ''}" data-run-id="${ev.id}" role="button" tabindex="${isDisabled ? '-1' : '0'}" aria-disabled="${isDisabled ? 'true' : 'false'}" aria-pressed="${isSelected ? 'true' : 'false'}" title="${cardTitleAttr}">
+                        <div class="ds-run-top">
+                            <div class="ds-run-title-group">
+                                <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
+                                <span class="run-card-title">${escapeHtml(cleanRunTitle(ev.name))}</span>
+                                ${inlineWarnHtml}
+                            </div>
+                            ${rightBadgeHtml}
+                        </div>
+                        <div class="ds-run-bottom">
+                            <span class="run-card-time">
+                                <span class="material-symbols-outlined" style="font-size: 0.95rem;">schedule</span>
+                                <span>${escapeHtml(formatRunDateTime(ev))}</span>
+                            </span>
+                            ${userPillHtml}
+                        </div>
+                    </div>
+                `;
             }
 
             return `
@@ -4189,5 +4229,14 @@
             await loadEvents();
             await loadMySignups();
         }
+
+        window.addEventListener('alnr:uichange', () => {
+            if (!IS_PROFILE_PAGE && typeof renderEvents === 'function') {
+                renderEvents();
+            }
+            if (typeof window.alnrDreamscapeUpdateProfileHero === 'function') {
+                window.alnrDreamscapeUpdateProfileHero(currentUser);
+            }
+        });
     });
 })();

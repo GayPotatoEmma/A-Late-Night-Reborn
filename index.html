@@ -15,7 +15,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Quicksand:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
     <link rel="stylesheet" href="css/style.css" />
-    <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
+    <link rel="stylesheet" href="css/dreamscape.css" />
+    <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);if(localStorage.getItem('alnr-ui')==='refresh')document.documentElement.setAttribute('data-ui','refresh');}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
 </head>
 <body>
 
@@ -59,7 +60,7 @@
             <div class="home-workspace-grid">
                 <aside class="home-sidebar" aria-label="Raid Selector">
                     <!-- ── Sleek Raid Tab Navigation ── -->
-                    <div class="raid-tab-bar" role="tablist" aria-label="Raid Guides">
+                    <div class="raid-tab-bar ds-editorial-tabs" role="tablist" aria-label="Raid Guides">
                         <div class="guide-sidebar-heading home-sidebar-heading">
                             <span class="material-symbols-outlined">swords</span>
                             <span>Raid Guides</span>
@@ -76,6 +77,16 @@
                             <span class="tab-dot chaotic"></span>
                             <span class="tab-title">Cloud of Darkness (Chaotic)</span>
                         </button>
+                        <div class="raid-tab is-locked" data-raid="ba" aria-disabled="true" title="Baldesion Arsenal guides coming soon">
+                            <span class="tab-dot ba"></span>
+                            <span class="tab-title">Baldesion Arsenal</span>
+                            <span class="tab-wip-tag"><span class="material-symbols-outlined">lock</span> WIP</span>
+                        </div>
+                        <div class="raid-tab is-locked" data-raid="drs" aria-disabled="true" title="Delubrum Reginae (Savage) guides coming soon">
+                            <span class="tab-dot drs"></span>
+                            <span class="tab-title">Delubrum Reginae (Savage)</span>
+                            <span class="tab-wip-tag"><span class="material-symbols-outlined">lock</span> WIP</span>
+                        </div>
                     </div>
                 </aside>
 
@@ -275,7 +286,7 @@
     <script src="js/stars.js"></script>
     <script>
         (function () {
-            var tabs = document.querySelectorAll('.raid-tab');
+            var tabs = document.querySelectorAll('.raid-tab:not(.is-locked)');
             
             function switchRaid(raidId, updateUrl) {
                 var targetBtn = document.querySelector('.raid-tab[data-raid="' + raidId + '"]');

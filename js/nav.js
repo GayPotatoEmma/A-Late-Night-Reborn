@@ -887,4 +887,14 @@
         .catch(function () {});
     }
   })();
+
+  // ── Auto-load optional Refresh [Beta] engine across all pages ─────────────
+  (function loadDreamscapeEngine() {
+    if (window.__alnrDreamscapeEngine || document.getElementById('alnr-dreamscape-script')) return;
+    var isSub = /\/(ftb|ftm|chaotic)\//i.test(window.location.pathname || '');
+    var sc = document.createElement('script');
+    sc.id = 'alnr-dreamscape-script';
+    sc.src = (isSub ? '../' : '') + 'js/dreamscape.js';
+    document.body.appendChild(sc);
+  })();
 })();

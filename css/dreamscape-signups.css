@@ -1,0 +1,836 @@
+/* ============================================================================
+   A Late Night Reborn - 04 / DREAMSCAPE
+   Signups & Profile (Unified Twilight Sky Panorama + Warm Cloud-Paper Ground)
+   ============================================================================ */
+
+/* ============================================================================
+   3. RUN SIGNUPS - UNIFIED DREAMSCAPE SKY + CLOUD-PAPER WORKSPACE
+   ============================================================================ */
+
+html[data-ui="refresh"] body.ds-page-signups {
+  background: var(--ds-ground) !important;
+  color: var(--ds-ink);
+}
+
+html[data-ui="refresh"] body.ds-page-signups .signups-container {
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+html[data-ui="refresh"] .ds-signups-sky {
+  position: relative;
+  min-height: 285px;
+  padding: 102px 0 82px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #181436 0%, #3d2e6d 65%, #84609c 100%);
+}
+
+html[data-ui="refresh"][data-theme="dark"] .ds-signups-sky,
+html[data-ui="refresh"][data-theme="dark-lite"] .ds-signups-sky {
+  background: linear-gradient(180deg, #0e0b22 0%, #271e4f 65%, #4d3770 100%);
+}
+
+html[data-ui="refresh"] .ds-signups-sky-inner {
+  position: relative;
+  z-index: 4;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+html[data-ui="refresh"] .ds-signups-sky .signups-top-bar {
+  margin-bottom: 0 !important;
+}
+
+html[data-ui="refresh"] .ds-signups-sky .signups-title {
+  font-family: var(--ds-display) !important;
+  font-size: clamp(2.15rem, 3.8vw, 3rem) !important;
+  font-weight: 600 !important;
+  background: none !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  text-shadow: 0 4px 22px rgba(15, 11, 38, 0.45);
+  filter: none !important;
+}
+
+html[data-ui="refresh"] .ds-signups-sky .signups-desc {
+  color: rgba(242, 234, 255, 0.90) !important;
+  font-size: 1rem !important;
+  margin-top: 0.4rem;
+}
+
+html[data-ui="refresh"] .ds-signups-body-wrap {
+  position: relative;
+  z-index: 5;
+  background: var(--ds-ground);
+  padding: 1.25rem 2rem 4.5rem;
+}
+
+html[data-ui="refresh"] .ds-signups-body-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+html[data-ui="refresh"] body.ds-page-signups .signups-workspace-grid {
+  display: grid !important;
+  grid-template-columns: minmax(360px, 490px) minmax(0, 1fr) !important;
+  gap: 2rem !important;
+  align-items: start;
+}
+
+/* Cards seated cleanly on cloud-paper / midnight surface */
+html[data-ui="refresh"] body.ds-page-signups .signups-left-col,
+html[data-ui="refresh"] body.ds-page-signups #runs-selection-container,
+html[data-ui="refresh"] body.ds-page-signups .runs-grid {
+  overflow: visible !important;
+}
+
+html[data-ui="refresh"] body.ds-page-signups #runs-selection-container,
+html[data-ui="refresh"] body.ds-page-signups #signup-empty-placeholder,
+html[data-ui="refresh"] body.ds-page-signups #signup-form-card {
+  background: var(--ds-surface) !important;
+  color: var(--ds-ink) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 22px !important;
+  padding: 1.65rem 1.8rem !important;
+  box-shadow: var(--shadow-glass) !important;
+  backdrop-filter: none !important;
+}
+
+html[data-ui="refresh"] body.ds-page-signups .glass-card > .card-heading {
+  font-family: var(--ds-serif) !important;
+  font-size: 1.42rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: -0.01em !important;
+  color: var(--ds-ink) !important;
+  border-bottom: 1.5px solid var(--ds-border) !important;
+  padding-bottom: 0.75rem !important;
+  margin-bottom: 1.15rem !important;
+}
+
+html[data-ui="refresh"] body.ds-page-signups .glass-card > .card-heading .material-symbols-outlined {
+  color: var(--ds-ftm) !important;
+}
+
+/* Filter Pills (High-Contrast in BOTH Light & Dark) */
+html[data-ui="refresh"] body.ds-page-signups .content-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.15rem;
+}
+
+html[data-ui="refresh"][data-theme] body.ds-page-signups .filter-pill {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  color: var(--ds-ink-2) !important;
+  border-radius: 999px !important;
+  padding: 0.38rem 0.85rem !important;
+  font-family: var(--ds-sans) !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+html[data-ui="refresh"][data-theme] body.ds-page-signups .filter-pill:hover {
+  border-color: var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] body.ds-page-signups .filter-pill.active {
+  background: #261e3d !important;
+  border-color: #261e3d !important;
+  color: var(--ds-moon) !important;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] body.ds-page-signups .filter-pill.active {
+  background: var(--ds-moon) !important;
+  border-color: var(--ds-moon) !important;
+  color: #211b40 !important;
+}
+
+html[data-ui="refresh"][data-theme] body.ds-page-signups .filter-pill[data-filter="chaotic"].active {
+  background: var(--ds-chaotic) !important;
+  border-color: var(--ds-chaotic) !important;
+  color: #ffffff !important;
+}
+
+html[data-ui="refresh"][data-theme] body.ds-page-signups .filter-pill[data-filter="ftb"].active {
+  background: var(--ds-ftb) !important;
+  border-color: var(--ds-ftb) !important;
+  color: #ffffff !important;
+}
+
+html[data-ui="refresh"][data-theme] body.ds-page-signups .filter-pill[data-filter="ftm"].active {
+  background: var(--ds-ftm) !important;
+  border-color: var(--ds-ftm) !important;
+  color: #ffffff !important;
+}
+
+html[data-ui="refresh"][data-theme] body.ds-page-signups .filter-pill[data-filter="ba"].active {
+  background: var(--ds-ba) !important;
+  border-color: var(--ds-ba) !important;
+  color: #ffffff !important;
+}
+
+html[data-ui="refresh"][data-theme] body.ds-page-signups .filter-pill[data-filter="drs"].active {
+  background: var(--ds-drs) !important;
+  border-color: var(--ds-drs) !important;
+  color: #ffffff !important;
+}
+
+/* ============================================================================
+   Clean Modern Run Cards (No Flight Ticket Aesthetic)
+   ============================================================================ */
+
+html[data-ui="refresh"] body.ds-page-signups .runs-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.72rem !important;
+}
+
+html[data-ui="refresh"] .run-select-card.ds-run-card {
+  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.45rem !important;
+  padding: 0.9rem 1.05rem 0.9rem 1.15rem !important;
+  border-radius: 15px !important;
+  background: var(--ds-ground) !important;
+  color: var(--ds-ink) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-left: 4px solid var(--ds-border-strong) !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease !important;
+}
+
+html[data-ui="refresh"] .run-select-card.ds-run-card.raid-chaotic { border-left-color: var(--ds-chaotic) !important; }
+html[data-ui="refresh"] .run-select-card.ds-run-card.raid-ftb { border-left-color: var(--ds-ftb) !important; }
+html[data-ui="refresh"] .run-select-card.ds-run-card.raid-ftm { border-left-color: var(--ds-ftm) !important; }
+html[data-ui="refresh"] .run-select-card.ds-run-card.raid-ba { border-left-color: var(--ds-ba) !important; }
+html[data-ui="refresh"] .run-select-card.ds-run-card.raid-drs { border-left-color: var(--ds-drs) !important; }
+
+html[data-ui="refresh"] .run-select-card.ds-run-card:hover:not(.is-closed) {
+  background: var(--ds-surface) !important;
+  border-color: var(--ds-border-strong) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(38, 30, 61, 0.08) !important;
+  z-index: 25;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] .run-select-card.ds-run-card:hover:not(.is-closed) {
+  background: var(--ds-surface-soft) !important;
+  box-shadow: 0 8px 22px rgba(6, 5, 18, 0.42) !important;
+}
+
+html[data-ui="refresh"] .run-select-card.ds-run-card.selected {
+  background: var(--ds-surface) !important;
+  border-color: var(--ds-ftm) !important;
+  box-shadow: 0 0 0 2.5px rgba(129, 82, 220, 0.22), 0 10px 24px rgba(38, 30, 61, 0.10) !important;
+}
+
+html[data-ui="refresh"] .run-select-card.ds-run-card.selected.raid-chaotic { border-color: var(--ds-chaotic) !important; box-shadow: 0 0 0 2.5px rgba(29, 158, 98, 0.24) !important; }
+html[data-ui="refresh"] .run-select-card.ds-run-card.selected.raid-ftb { border-color: var(--ds-ftb) !important; box-shadow: 0 0 0 2.5px rgba(224, 79, 99, 0.24) !important; }
+
+html[data-ui="refresh"] .run-select-card.ds-run-card.is-closed {
+  opacity: 0.66 !important;
+}
+
+html[data-ui="refresh"] .ds-run-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+html[data-ui="refresh"] .ds-run-title-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+html[data-ui="refresh"] .ds-run-card .run-card-title {
+  font-family: var(--ds-serif) !important;
+  font-size: 1.02rem !important;
+  font-weight: 600 !important;
+  color: var(--ds-ink) !important;
+  line-height: 1.25;
+}
+
+html[data-ui="refresh"] .ds-run-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+html[data-ui="refresh"] .ds-run-card .run-card-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ds-ink-2) !important;
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+}
+
+/* Status Pill on Right of Top Row */
+html[data-ui="refresh"] .ds-run-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.2rem 0.62rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+html[data-ui="refresh"] .ds-run-status .material-symbols-outlined {
+  font-size: 0.92rem;
+}
+
+html[data-ui="refresh"] .ds-run-status.is-open {
+  background: var(--ds-surface-soft);
+  color: var(--ds-ink-2);
+}
+
+html[data-ui="refresh"] .ds-run-status.is-full {
+  background: #fef2da;
+  color: #8a560f;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] .ds-run-status.is-full {
+  background: rgba(235, 208, 155, 0.18);
+  color: #f6e2b3;
+}
+
+html[data-ui="refresh"] .ds-run-status.is-closed,
+html[data-ui="refresh"] .ds-run-status.is-cancelled {
+  background: var(--ds-surface-soft);
+  color: var(--ds-ink-muted);
+}
+
+/* Inline Roster-Full Warning Icon (Right after Run Name - zero extra line, tooltip expands cleanly) */
+html[data-ui="refresh"] body.ds-page-signups .run-backups-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #d97706 !important;
+  margin: 0 !important;
+  z-index: 30;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] body.ds-page-signups .run-backups-icon {
+  color: #fbbf24 !important;
+}
+
+html[data-ui="refresh"] body.ds-page-signups .run-backups-icon::after {
+  left: 50% !important;
+  right: auto !important;
+  transform: translate(-50%, -4px) !important;
+  width: max-content !important;
+  max-width: 240px !important;
+  white-space: normal !important;
+  text-align: center !important;
+  z-index: 95 !important;
+  background: #1b163a !important;
+  color: #fde7b5 !important;
+  border: 1.5px solid rgba(235, 208, 155, 0.45) !important;
+  box-shadow: 0 12px 28px rgba(8, 6, 24, 0.45) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-signups .run-backups-icon:hover::after,
+html[data-ui="refresh"] body.ds-page-signups .run-backups-icon:focus-visible::after {
+  transform: translate(-50%, 0) !important;
+}
+
+/* Raid Badges inside Signups (Chaotic ALWAYS Green) */
+html[data-ui="refresh"] .run-type-badge {
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.05em !important;
+  padding: 0.2rem 0.62rem !important;
+  border: none !important;
+}
+
+html[data-ui="refresh"] .run-type-badge.chaotic {
+  background: var(--ds-chaotic-soft) !important;
+  color: var(--ds-chaotic) !important;
+}
+
+html[data-ui="refresh"] .run-type-badge.ftb {
+  background: var(--ds-ftb-soft) !important;
+  color: var(--ds-ftb) !important;
+}
+
+html[data-ui="refresh"] .run-type-badge.ftm {
+  background: var(--ds-ftm-soft) !important;
+  color: var(--ds-ftm) !important;
+}
+
+html[data-ui="refresh"] .run-type-badge.ba {
+  background: var(--ds-ba-soft) !important;
+  color: var(--ds-ba) !important;
+}
+
+html[data-ui="refresh"] .run-type-badge.drs {
+  background: var(--ds-drs-soft) !important;
+  color: var(--ds-drs) !important;
+}
+
+/* Clean Un-Nested Empty State inside Details Card */
+html[data-ui="refresh"] body.ds-page-signups .signup-empty-state-body {
+  background: transparent !important;
+  border: none !important;
+  padding: 2.4rem 1.25rem !important;
+}
+
+/* Form Inputs, Selects & Chips inside Dreamscape Sheets */
+html[data-ui="refresh"] .form-label {
+  color: var(--ds-ink) !important;
+  font-weight: 800 !important;
+  font-size: 0.88rem !important;
+}
+
+html[data-ui="refresh"] .form-hint {
+  color: var(--ds-ink-muted) !important;
+}
+
+html[data-ui="refresh"] .input-text,
+html[data-ui="refresh"] .input-select,
+html[data-ui="refresh"] .input-textarea {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border-strong) !important;
+  border-radius: 13px !important;
+  color: var(--ds-ink) !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 700 !important;
+  padding: 0.72rem 0.95rem !important;
+}
+
+html[data-ui="refresh"] .input-text:focus,
+html[data-ui="refresh"] .input-select:focus,
+html[data-ui="refresh"] .input-textarea:focus {
+  border-color: var(--ds-ftm) !important;
+  box-shadow: 0 0 0 3px rgba(129, 82, 220, 0.18) !important;
+}
+
+html[data-ui="refresh"] .chip-btn,
+html[data-ui="refresh"] .job-chip,
+html[data-ui="refresh"] .phantom-chip {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  color: var(--ds-ink-2) !important;
+  border-radius: 999px !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+  transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+html[data-ui="refresh"] .chip-btn:hover,
+html[data-ui="refresh"] .job-chip:hover,
+html[data-ui="refresh"] .phantom-chip:hover {
+  border-color: var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"] .chip-btn.selected,
+html[data-ui="refresh"] .chip-btn.active,
+html[data-ui="refresh"] .job-chip.selected,
+html[data-ui="refresh"] .phantom-chip.selected {
+  background: #252047 !important;
+  border-color: #252047 !important;
+  color: var(--ds-moon) !important;
+  box-shadow: 0 4px 12px rgba(37, 32, 71, 0.24) !important;
+}
+
+html[data-ui="refresh"][data-theme="dark"] .chip-btn.selected,
+html[data-ui="refresh"][data-theme="dark"] .chip-btn.active,
+html[data-ui="refresh"][data-theme="dark"] .job-chip.selected,
+html[data-ui="refresh"][data-theme="dark"] .phantom-chip.selected,
+html[data-ui="refresh"][data-theme="dark-lite"] .chip-btn.selected,
+html[data-ui="refresh"][data-theme="dark-lite"] .chip-btn.active,
+html[data-ui="refresh"][data-theme="dark-lite"] .job-chip.selected,
+html[data-ui="refresh"][data-theme="dark-lite"] .phantom-chip.selected {
+  background: var(--ds-moon) !important;
+  border-color: var(--ds-moon) !important;
+  color: #211b40 !important;
+}
+
+/* Role-colored playable chips preserved with crisp contrast */
+html[data-ui="refresh"] .chip-btn.role-tank.selected { background: #2d5fa8 !important; border-color: #2d5fa8 !important; color: #fff !important; }
+html[data-ui="refresh"] .chip-btn.role-healer.selected { background: #1d9e62 !important; border-color: #1d9e62 !important; color: #fff !important; }
+html[data-ui="refresh"] .chip-btn.role-dps.selected { background: #c94657 !important; border-color: #c94657 !important; color: #fff !important; }
+
+html[data-ui="refresh"] .btn-submit-signup {
+  background: var(--ds-ftb) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+  padding: 0.85rem 1.85rem !important;
+  box-shadow: 0 10px 24px rgba(224, 79, 99, 0.30) !important;
+}
+
+html[data-ui="refresh"] .btn-submit-signup:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(224, 79, 99, 0.38) !important;
+}
+
+html[data-ui="refresh"] .signup-empty-icon {
+  background: var(--ds-surface-soft) !important;
+  border-color: var(--ds-border) !important;
+  color: var(--ds-ftm) !important;
+}
+
+html[data-ui="refresh"] .signup-empty-title,
+html[data-ui="refresh"] .signup-connect-title {
+  font-family: var(--ds-serif) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"] .signup-empty-desc,
+html[data-ui="refresh"] .signup-connect-desc {
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"] .signup-connect-box {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 20px !important;
+}
+
+html[data-ui="refresh"] #profile-login-card .signup-connect-box,
+html[data-ui="refresh"] #signup-form-card .signup-connect-box {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 1.25rem 0.5rem !important;
+}
+
+html[data-ui="refresh"] .prefs-form-banner {
+  background: var(--ds-chaotic-soft) !important;
+  border: 1.5px solid var(--ds-chaotic-border) !important;
+  border-radius: 16px !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"] .phantom-dual-box,
+html[data-ui="refresh"] .jobs-role-section {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 18px !important;
+}
+
+/* ============================================================================
+   4. MY PROFILE / RUN STATS - MOONLIT SKY ADVENTURER JOURNAL
+   ============================================================================ */
+
+html[data-ui="refresh"] .ds-profile-sky {
+  position: relative;
+  min-height: 285px;
+  padding: 102px 0 82px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #181436 0%, #3d2e6d 65%, #84609c 100%);
+}
+
+html[data-ui="refresh"][data-theme="dark"] .ds-profile-sky,
+html[data-ui="refresh"][data-theme="dark-lite"] .ds-profile-sky {
+  background: linear-gradient(180deg, #0e0b22 0%, #271e4f 65%, #4d3770 100%);
+}
+
+html[data-ui="refresh"] .ds-profile-sky-inner {
+  position: relative;
+  z-index: 4;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+html[data-ui="refresh"] .ds-profile-sky .signups-title {
+  font-family: var(--ds-display) !important;
+  font-size: clamp(2.15rem, 3.8vw, 3rem) !important;
+  font-weight: 600 !important;
+  background: none !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  text-shadow: 0 4px 22px rgba(15, 11, 38, 0.45);
+  filter: none !important;
+}
+
+html[data-ui="refresh"] .ds-profile-sky-meta {
+  margin-top: 0.4rem;
+  color: rgba(242, 234, 255, 0.88);
+  font-size: 0.98rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+html[data-ui="refresh"] .ds-profile-sky-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.22rem 0.78rem;
+  border-radius: 999px;
+  background: rgba(253, 212, 201, 0.20);
+  border: 1px solid rgba(253, 212, 201, 0.45);
+  color: var(--ds-moon);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .signups-container {
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+html[data-ui="refresh"] .ds-profile-body-wrap {
+  position: relative;
+  z-index: 5;
+  background: var(--ds-ground);
+  padding: 1.2rem 2rem 4.5rem;
+}
+
+html[data-ui="refresh"] .ds-profile-body-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .glass-card {
+  background: var(--ds-surface) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--shadow-glass) !important;
+  backdrop-filter: none !important;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .card-heading {
+  font-family: var(--ds-serif) !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: -0.015em !important;
+  color: var(--ds-ink) !important;
+  border-bottom: 1.5px solid var(--ds-border) !important;
+  padding-bottom: 0.75rem;
+}
+
+/* Profile Left Sidebar Navigation */
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-heading {
+  color: var(--ds-ink-muted) !important;
+  border-bottom-color: var(--ds-border) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-btn {
+  color: var(--ds-ink-2) !important;
+  border-radius: 13px !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-btn:hover {
+  background: var(--ds-surface-soft) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-btn.active {
+  background: #252047 !important;
+  color: var(--ds-moon) !important;
+  border-color: transparent !important;
+  box-shadow: 0 8px 20px rgba(37, 32, 71, 0.22) !important;
+}
+
+html[data-ui="refresh"][data-theme="dark"] body.ds-page-profile .profile-nav-btn.active,
+html[data-ui="refresh"][data-theme="dark-lite"] body.ds-page-profile .profile-nav-btn.active {
+  background: rgba(253, 212, 201, 0.18) !important;
+  color: var(--ds-moon) !important;
+}
+
+/* Editorial Run Stats Numerals */
+html[data-ui="refresh"] .stats-summary-grid-3 {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 1.25rem !important;
+}
+
+html[data-ui="refresh"] .stats-kpi-card {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 18px !important;
+  padding: 1.25rem 1.4rem !important;
+  box-shadow: none !important;
+}
+
+html[data-ui="refresh"] .stats-kpi-card::before {
+  display: none !important;
+}
+
+html[data-ui="refresh"] .stats-kpi-top {
+  color: var(--ds-ink-muted) !important;
+  font-weight: 800 !important;
+  font-size: 0.78rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+html[data-ui="refresh"] .stats-kpi-val {
+  font-family: var(--ds-serif) !important;
+  font-size: 2.55rem !important;
+  font-weight: 700 !important;
+  line-height: 1.08 !important;
+  color: var(--ds-ink) !important;
+  margin: 0.35rem 0 0.25rem !important;
+}
+
+html[data-ui="refresh"] .stats-summary-grid-3 .stats-kpi-card:nth-child(2) .stats-kpi-val {
+  color: var(--ds-chaotic) !important;
+}
+
+html[data-ui="refresh"] .stats-kpi-sub {
+  color: var(--ds-ink-2) !important;
+  font-weight: 700 !important;
+}
+
+/* Breakdown Bars (Chaotic Emerald Green) */
+html[data-ui="refresh"] .stats-breakdown-box {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 18px !important;
+  padding: 0.85rem !important;
+}
+
+html[data-ui="refresh"] .stats-raid-row {
+  border-radius: 13px !important;
+  padding: 0.65rem 0.85rem !important;
+}
+
+html[data-ui="refresh"] .stats-raid-row:hover,
+html[data-ui="refresh"] .stats-raid-row.is-active {
+  background: var(--ds-surface) !important;
+  border-color: var(--ds-border-strong) !important;
+}
+
+html[data-ui="refresh"] .stats-bar-track {
+  height: 11px !important;
+  border-radius: 999px !important;
+  background: var(--ds-surface-soft) !important;
+}
+
+html[data-ui="refresh"] .stats-raid-metrics {
+  color: var(--ds-ink-2) !important;
+  font-weight: 700 !important;
+}
+
+html[data-ui="refresh"] .stats-raid-metrics strong {
+  color: var(--ds-ink) !important;
+}
+
+/* Raid Badges in Stats (Chaotic ALWAYS Green) */
+html[data-ui="refresh"] .stats-raid-badge.rb-chaotic { background: var(--ds-chaotic-soft) !important; color: var(--ds-chaotic) !important; border-color: var(--ds-chaotic-border) !important; }
+html[data-ui="refresh"] .stats-raid-badge.rb-ftb { background: var(--ds-ftb-soft) !important; color: var(--ds-ftb) !important; border-color: var(--ds-ftb-border) !important; }
+html[data-ui="refresh"] .stats-raid-badge.rb-ftm { background: var(--ds-ftm-soft) !important; color: var(--ds-ftm) !important; border-color: var(--ds-ftm-border) !important; }
+html[data-ui="refresh"] .stats-raid-badge.rb-ba { background: var(--ds-ba-soft) !important; color: var(--ds-ba) !important; }
+html[data-ui="refresh"] .stats-raid-badge.rb-drs { background: var(--ds-drs-soft) !important; color: var(--ds-drs) !important; }
+
+/* Recent Voyages History Rows */
+html[data-ui="refresh"] .stats-history-item {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 15px !important;
+  padding: 0.9rem 1.15rem !important;
+}
+
+html[data-ui="refresh"] .stats-history-title {
+  color: var(--ds-ink) !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"] .stats-history-date {
+  color: var(--ds-ink-muted) !important;
+}
+
+html[data-ui="refresh"] .stats-result-pill {
+  background: var(--ds-chaotic-soft) !important;
+  color: var(--ds-chaotic) !important;
+  border: 1px solid var(--ds-chaotic-border) !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"] .stats-result-pill.prog {
+  background: var(--ds-ftm-soft) !important;
+  color: var(--ds-ftm) !important;
+  border-color: var(--ds-ftm-border) !important;
+}
+
+html[data-ui="refresh"] .stats-filter-pill {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  color: var(--ds-ink-2) !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"] .stats-filter-pill.active {
+  background: #252047 !important;
+  border-color: #252047 !important;
+  color: var(--ds-moon) !important;
+}
+
+/* Active Signup Cards on Profile */
+html[data-ui="refresh"] .my-signup-card {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 18px !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"] .my-signup-card:hover {
+  border-color: var(--ds-border-strong) !important;
+}
+
+/* ============================================================================
+   Responsive Polish for Signups & Profile
+   ============================================================================ */
+
+@media (max-width: 1020px) {
+  html[data-ui="refresh"] body.ds-page-signups .signups-workspace-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html[data-ui="refresh"] .ds-signups-sky,
+html[data-ui="refresh"] .ds-profile-sky {
+    min-height: 225px;
+    padding: 84px 0 60px;
+  }
+  html[data-ui="refresh"] .ds-signups-sky-inner,
+html[data-ui="refresh"] .ds-signups-body-wrap,
+html[data-ui="refresh"] .ds-profile-sky-inner,
+html[data-ui="refresh"] .ds-profile-body-wrap {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+  }
+  html[data-ui="refresh"] body.ds-page-signups #runs-selection-container,
+html[data-ui="refresh"] body.ds-page-signups #signup-empty-placeholder,
+html[data-ui="refresh"] body.ds-page-signups #signup-form-card {
+    padding: 1.35rem 1.2rem !important;
+  }
+  html[data-ui="refresh"] .stats-summary-grid-3 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}

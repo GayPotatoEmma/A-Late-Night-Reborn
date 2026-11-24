@@ -2830,6 +2830,94 @@ html.theme-transitioning .input-textarea {
   -webkit-backdrop-filter: none !important;
 }
 
+/* Refresh [Beta] pill in Theme Popover + Locked WIP Raid Tabs (Classic Mode support) */
+.popover-perf-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.popover-beta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.08rem 0.42rem;
+  border-radius: 999px;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(252, 212, 200, 0.20);
+  border: 1px solid rgba(252, 212, 200, 0.42);
+  color: #fcd4c8;
+  line-height: 1.35;
+}
+
+[data-theme^="light"] .popover-beta-pill {
+  background: rgba(124, 58, 237, 0.12);
+  border-color: rgba(124, 58, 237, 0.30);
+  color: #6d28d9;
+}
+
+html[data-ui="refresh"] .popover-beta-pill {
+  background: rgba(253, 212, 201, 0.22) !important;
+  border-color: rgba(253, 212, 201, 0.48) !important;
+  color: #fdd4c9 !important;
+}
+
+.raid-tab.is-locked {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.raid-tab .tab-dot.ba {
+  background: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.55);
+}
+
+.raid-tab .tab-dot.drs {
+  background: #f59e0b;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.55);
+}
+
+.tab-wip-tag {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0.1rem 0.42rem;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+}
+
+.tab-wip-tag .material-symbols-outlined {
+  font-size: 0.78rem;
+}
+
+.raid-tab[data-raid="ba"] .tab-wip-tag {
+  background: rgba(56, 189, 248, 0.14);
+  color: #7dd3fc;
+}
+
+.raid-tab[data-raid="drs"] .tab-wip-tag {
+  background: rgba(245, 158, 11, 0.16);
+  color: #fcd34d;
+}
+
+[data-theme^="light"] .raid-tab[data-raid="ba"] .tab-wip-tag {
+  background: rgba(2, 132, 199, 0.12);
+  color: #0369a1;
+}
+
+[data-theme^="light"] .raid-tab[data-raid="drs"] .tab-wip-tag {
+  background: rgba(217, 119, 6, 0.14);
+  color: #b45309;
+}
+
 [data-theme="dark-lite"] .header-popover {
   background: #141634 !important;
 }

@@ -1,5 +1,6 @@
 (function () {
   var STORAGE_KEY = 'alnr-theme';
+  var UI_STORAGE_KEY = 'alnr-ui';
   var html = document.documentElement;
 
   var THEMES = {
@@ -70,6 +71,36 @@
     window.dispatchEvent(new CustomEvent('alnr:themechange', { detail: { theme: theme } }));
   }
 
+  function normalizeUi(ui) {
+    return ui === 'refresh' ? 'refresh' : 'classic';
+  }
+
+  function applyUi(ui, animate) {
+    ui = normalizeUi(ui);
+    if (animate) {
+      html.classList.add('theme-transitioning');
+      setTimeout(function () {
+        html.classList.remove('theme-transitioning');
+      }, 320);
+    }
+
+    if (ui === 'refresh') {
+      html.setAttribute('data-ui', 'refresh');
+    } else {
+      html.removeAttribute('data-ui');
+    }
+
+    var refreshToggle = document.getElementById('theme-refresh-toggle');
+    if (refreshToggle) {
+      var isRefresh = ui === 'refresh';
+      refreshToggle.classList.toggle('active', isRefresh);
+      refreshToggle.setAttribute('aria-checked', isRefresh ? 'true' : 'false');
+    }
+
+    try { localStorage.setItem(UI_STORAGE_KEY, ui); } catch (e) {}
+    window.dispatchEvent(new CustomEvent('alnr:uichange', { detail: { ui: ui } }));
+  }
+
   window.alnrTheme = {
     get: function () {
       return normalizeTheme(html.getAttribute('data-theme') || 'dark');
@@ -77,13 +108,25 @@
     set: function (theme) {
       applyTheme(theme, true);
     },
+    getUi: function () {
+      return normalizeUi(html.getAttribute('data-ui') || 'classic');
+    },
+    setUi: function (ui) {
+      applyUi(ui, true);
+    },
     themes: THEMES
   };
 
   var savedTheme = null;
-  try { savedTheme = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  var savedUi = null;
+  try {
+    savedTheme = localStorage.getItem(STORAGE_KEY);
+    savedUi = localStorage.getItem(UI_STORAGE_KEY);
+  } catch (e) {}
   var initialTheme = normalizeTheme(savedTheme || html.getAttribute('data-theme') || 'dark');
+  var initialUi = normalizeUi(savedUi || html.getAttribute('data-ui') || 'classic');
   applyTheme(initialTheme, false);
+  applyUi(initialUi, false);
 
   function setupThemeDropdown() {
     var btn = document.getElementById('theme-toggle');
@@ -115,6 +158,10 @@
       '</div>' +
       '<button type="button" class="popover-perf-row" id="theme-perf-toggle" role="switch" aria-checked="false">' +
         '<span class="popover-perf-label">Performance Mode</span>' +
+        '<span class="popover-switch" aria-hidden="true"><span class="popover-switch-thumb"></span></span>' +
+      '</button>' +
+      '<button type="button" class="popover-perf-row" id="theme-refresh-toggle" role="switch" aria-checked="false">' +
+        '<span class="popover-perf-label">Refresh <span class="popover-beta-pill">Beta</span></span>' +
         '<span class="popover-switch" aria-hidden="true"><span class="popover-switch-thumb"></span></span>' +
       '</button>';
     wrapper.appendChild(dropdown);
@@ -154,6 +201,12 @@
         var isLight = cur2.indexOf('light') === 0;
         var isLite2 = cur2.indexOf('lite') !== -1;
         applyTheme((isLight ? 'light' : 'dark') + (!isLite2 ? '-lite' : ''), true);
+        return;
+      }
+      var refreshBtn = e.target.closest('#theme-refresh-toggle');
+      if (refreshBtn) {
+        var curUi = normalizeUi(html.getAttribute('data-ui') || 'classic');
+        applyUi(curUi === 'refresh' ? 'classic' : 'refresh', true);
       }
     });
 
@@ -174,7 +227,9 @@
     };
 
     var current = html.getAttribute('data-theme') || 'dark';
+    var currentUi = html.getAttribute('data-ui') || 'classic';
     applyTheme(current, false);
+    applyUi(currentUi, false);
   }
 
   if (document.readyState === 'loading') {

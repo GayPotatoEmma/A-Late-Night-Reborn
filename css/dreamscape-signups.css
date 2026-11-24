@@ -2034,6 +2034,107 @@ html[data-ui="refresh"][data-theme] body.ds-page-dashboard .lite-icon-btn.danger
 }
 
 /* ============================================================================
+   7. MOTION POLISH (Panel Fades, Chip Pop, Modal Reveal, Stats Ribbon Grow)
+   Disabled automatically in Performance Mode (-lite) & prefers-reduced-motion
+   ============================================================================ */
+
+@keyframes dsChipPop {
+  0%   { transform: scale(0.95); }
+  55%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes dsModalBackdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes dsModalBoxIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes dsRibbonGrow {
+  from {
+    transform: scaleX(0);
+    opacity: 0.4;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+html[data-ui="refresh"] .ds-panel-enter {
+  animation: dsPanelFade 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+html[data-ui="refresh"] .ds-card-enter {
+  animation: dsCardFadeUp 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--ds-i, 0) * 24ms);
+}
+
+html[data-ui="refresh"] .ds-chip-pop {
+  animation: dsChipPop 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-ui="refresh"] .modal-backdrop {
+  animation: dsModalBackdropIn 0.16s ease-out;
+}
+
+html[data-ui="refresh"] .modal-backdrop .modal-box {
+  animation: dsModalBoxIn 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-ui="refresh"] .ds-stats-ribbon-seg {
+  transform-origin: left center;
+  animation: dsRibbonGrow 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Tactile Press Feedback (:active) */
+html[data-ui="refresh"] .filter-pill:active,
+html[data-ui="refresh"] .chip-btn:active,
+html[data-ui="refresh"] .job-chip:active,
+html[data-ui="refresh"] .phantom-chip:active,
+html[data-ui="refresh"] .btn-submit-signup:active,
+html[data-ui="refresh"] .btn-prefs-secondary:active,
+html[data-ui="refresh"] .my-signup-quick-link:active,
+html[data-ui="refresh"] .stats-filter-pill:active,
+html[data-ui="refresh"] .ds-stats-raid-tile:active,
+html[data-ui="refresh"] .prefs-tab-btn:active,
+html[data-ui="refresh"] .lite-btn:active,
+html[data-ui="refresh"] .lite-icon-btn:active {
+  transform: scale(0.97) !important;
+}
+
+/* Minimal Motion in Performance Mode (-lite) & Reduced Motion */
+html[data-ui="refresh"][data-theme$="-lite"] .ds-panel-enter,
+html[data-ui="refresh"][data-theme$="-lite"] .ds-card-enter,
+html[data-ui="refresh"][data-theme$="-lite"] .ds-chip-pop,
+html[data-ui="refresh"][data-theme$="-lite"] .modal-backdrop,
+html[data-ui="refresh"][data-theme$="-lite"] .modal-backdrop .modal-box,
+html[data-ui="refresh"][data-theme$="-lite"] .ds-stats-ribbon-seg {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui="refresh"] .ds-panel-enter,
+  html[data-ui="refresh"] .ds-card-enter,
+  html[data-ui="refresh"] .ds-chip-pop,
+  html[data-ui="refresh"] .modal-backdrop,
+  html[data-ui="refresh"] .modal-backdrop .modal-box,
+  html[data-ui="refresh"] .ds-stats-ribbon-seg {
+    animation: none !important;
+  }
+}
+
+/* ============================================================================
    Responsive Polish for Signups & Profile
    ============================================================================ */
 

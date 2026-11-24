@@ -15,6 +15,10 @@
   var scrollHandler = null;
   var hashHandler = null;
   var resizeHandler = null;
+  var homeTabObserver = null;
+  var homeRaidCleanup = null;
+  var guideTocObserver = null;
+  var motionResizeHandler = null;
   var lastProfileUser = null;
   var lastProfileMeta = null;
 
@@ -331,6 +335,343 @@
 
   window.alnrDreamscapeUpdateProfileHero = applyProfileHero;
 
+  function mountHomeMotion() {
+    var tabBar = document.querySelector('.ds-cloud-land .raid-tab-bar.ds-editorial-tabs');
+    if (!tabBar) return;
+    var sidebar = tabBar.closest('.home-sidebar');
+    if (!sidebar) return;
+
+    var raidBadges = {
+      ftb: 'FT:B',
+      ftm: 'FT:M',
+      cod: 'Chaotic',
+      ba: 'BA',
+      drs: 'DRS'
+    };
+
+    var availableRaids = [];
+    var lockedRaids = [];
+    tabBar.querySelectorAll('.raid-tab').forEach(function (tab) {
+      var id = tab.dataset.raid || '';
+      var titleEl = tab.querySelector('.tab-title');
+      var title = titleEl ? titleEl.textContent.trim() : id.toUpperCase();
+      var locked = tab.classList.contains('is-locked');
+      var item = {
+        id: id,
+        title: title,
+        locked: locked,
+        badge: raidBadges[id] || id.toUpperCase()
+      };
+      if (locked) lockedRaids.push(item);
+      else availableRaids.push(item);
+    });
+
+    /* Stage 1: Initial Raid Selector Hub */
+    var hub = document.createElement('div');
+    hub.className = 'ds-raid-hub';
+    hub.innerHTML =
+      '<div class="ds-raid-hub-group">' +
+        '<div class="sections-label">Select a Raid</div>' +
+        '<div class="ds-raid-hub-grid">' +
+          availableRaids.map(function (r) {
+            return (
+              '<button type="button" class="ds-raid-hub-card" data-raid="' + escapeHeroText(r.id) + '">' +
+                '<span class="ds-raid-hub-badge">' + escapeHeroText(r.badge) + '</span>' +
+                '<span class="ds-raid-hub-title">' + escapeHeroText(r.title) + '</span>' +
+                '<span class="ds-raid-hub-cta" aria-hidden="true">&#8594;</span>' +
+              '</button>'
+            );
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      (lockedRaids.length ? (
+        '<div class="ds-raid-hub-group">' +
+          '<div class="sections-label">Coming Soon</div>' +
+          '<div class="ds-raid-hub-wip-grid">' +
+            lockedRaids.map(function (r) {
+              return (
+                '<div class="ds-raid-hub-card is-locked" data-raid="' + escapeHeroText(r.id) + '" aria-disabled="true">' +
+                  '<div class="ds-raid-hub-wip-left">' +
+                    '<span class="ds-raid-dot ' + escapeHeroText(r.id) + '" aria-hidden="true"></span>' +
+                    '<span class="ds-raid-hub-wip-title">' + escapeHeroText(r.title) + '</span>' +
+                  '</div>' +
+                  '<span class="ds-raid-hub-wip-pill"><span class="material-symbols-outlined" aria-hidden="true">lock</span> WIP</span>' +
+                '</div>'
+              );
+            }).join('') +
+          '</div>' +
+        '</div>'
+      ) : '');
+
+    /* Stage 2: Selected Raid Dropdown Switcher Bar */
+    var switcherBar = document.createElement('div');
+    switcherBar.className = 'ds-raid-switcher-bar';
+    switcherBar.innerHTML =
+      '<div class="ds-raid-dropdown" data-active-raid="">' +
+        '<button type="button" class="ds-raid-dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">' +
+          '<span class="ds-raid-dropdown-trigger-left">' +
+            '<span class="ds-raid-dot" aria-hidden="true"></span>' +
+            '<span class="ds-raid-dropdown-label">Select a Raid</span>' +
+          '</span>' +
+          '<span class="material-symbols-outlined ds-raid-dropdown-chev" aria-hidden="true">expand_more</span>' +
+        '</button>' +
+        '<div class="ds-raid-dropdown-menu" role="listbox" aria-label="Select Raid">' +
+          availableRaids.map(function (r) {
+            return (
+              '<button type="button" class="ds-raid-dropdown-option" role="option" aria-selected="false" data-raid="' + escapeHeroText(r.id) + '">' +
+                '<span class="ds-raid-dropdown-opt-left">' +
+                  '<span class="ds-raid-dot ' + escapeHeroText(r.id) + '" aria-hidden="true"></span>' +
+                  '<span>' + escapeHeroText(r.title) + '</span>' +
+                '</span>' +
+                '<span class="material-symbols-outlined ds-raid-dropdown-check" aria-hidden="true">check</span>' +
+              '</button>'
+            );
+          }).join('') +
+          (lockedRaids.length ? '<div class="ds-raid-dropdown-sep" role="separator"></div>' : '') +
+          lockedRaids.map(function (r) {
+            return (
+              '<div class="ds-raid-dropdown-option is-locked" aria-disabled="true" data-raid="' + escapeHeroText(r.id) + '">' +
+                '<span class="ds-raid-dropdown-opt-left">' +
+                  '<span class="ds-raid-dot ' + escapeHeroText(r.id) + '" aria-hidden="true"></span>' +
+                  '<span>' + escapeHeroText(r.title) + '</span>' +
+                '</span>' +
+                '<span class="ds-raid-hub-wip-pill"><span class="material-symbols-outlined" aria-hidden="true">lock</span> WIP</span>' +
+              '</div>'
+            );
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      '<button type="button" class="ds-raid-back-btn">' +
+        '<span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>' +
+        '<span>All Raids</span>' +
+      '</button>';
+
+    sidebar.appendChild(hub);
+    sidebar.appendChild(switcherBar);
+
+    var dropdown = switcherBar.querySelector('.ds-raid-dropdown');
+    var trigger = switcherBar.querySelector('.ds-raid-dropdown-trigger');
+    var triggerDot = trigger.querySelector('.ds-raid-dot');
+    var triggerLabel = trigger.querySelector('.ds-raid-dropdown-label');
+    var backBtn = switcherBar.querySelector('.ds-raid-back-btn');
+
+    function closeDropdown(restoreFocus) {
+      if (!dropdown.classList.contains('is-open')) return;
+      dropdown.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) trigger.focus();
+    }
+
+    function staggerNodes(nodes) {
+      if (isLiteOrReduced()) return;
+      nodes.forEach(function (card, idx) {
+        card.classList.remove('ds-card-enter');
+        card.style.setProperty('--ds-i', String(Math.min(idx, 10)));
+        void card.offsetWidth;
+        card.classList.add('ds-card-enter');
+      });
+    }
+
+    function staggerVisibleCards() {
+      var activeContent = document.querySelector('.ds-cloud-land .raid-content:not([hidden])');
+      if (!activeContent) return;
+      staggerNodes(activeContent.querySelectorAll('.section-card'));
+    }
+
+    function updateDropdownUI(raidId) {
+      var found = availableRaids.find(function (r) { return r.id === raidId; });
+      if (!found) return;
+      dropdown.setAttribute('data-active-raid', found.id);
+      triggerDot.className = 'ds-raid-dot ' + found.id;
+      triggerLabel.textContent = found.title;
+      dropdown.querySelectorAll('.ds-raid-dropdown-option[data-raid]').forEach(function (opt) {
+        var isMatch = opt.dataset.raid === found.id;
+        opt.classList.toggle('is-active', isMatch);
+        if (opt.hasAttribute('aria-selected')) {
+          opt.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+        }
+      });
+    }
+
+    function getUrlRaid() {
+      var h = (window.location.hash || '').replace('#', '').toLowerCase();
+      var q = '';
+      try {
+        q = (new URLSearchParams(window.location.search).get('raid') || '').toLowerCase();
+      } catch (e) { q = ''; }
+      var candidate = h || q;
+      if (!candidate) return '';
+      var valid = availableRaids.some(function (r) { return r.id === candidate; });
+      return valid ? candidate : '';
+    }
+
+    var currentSelectedRaid = '';
+
+    function showRaidHub(clearUrl, animate) {
+      closeDropdown(false);
+      currentSelectedRaid = '';
+      document.body.classList.add('ds-home-raid-picker');
+      document.body.classList.remove('ds-home-raid-selected');
+      if (clearUrl && history.replaceState) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+      if (animate) {
+        staggerNodes(hub.querySelectorAll('.ds-raid-hub-card'));
+      }
+    }
+
+    function selectRaid(raidId, triggerTabClick, animate) {
+      var found = availableRaids.find(function (r) { return r.id === raidId; });
+      if (!found) return;
+      closeDropdown(false);
+      if (triggerTabClick) {
+        var underlyingBtn = tabBar.querySelector('.raid-tab[data-raid="' + raidId + '"]');
+        if (underlyingBtn) underlyingBtn.click();
+      }
+      var changed = currentSelectedRaid !== raidId || document.body.classList.contains('ds-home-raid-picker');
+      currentSelectedRaid = raidId;
+      document.body.classList.remove('ds-home-raid-picker');
+      document.body.classList.add('ds-home-raid-selected');
+      updateDropdownUI(raidId);
+      if (animate && changed) {
+        staggerVisibleCards();
+      }
+    }
+
+    hub.querySelectorAll('.ds-raid-hub-card:not(.is-locked)').forEach(function (card) {
+      card.addEventListener('click', function () {
+        selectRaid(card.dataset.raid, true, true);
+      });
+    });
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = !dropdown.classList.contains('is-open');
+      dropdown.classList.toggle('is-open', open);
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    dropdown.querySelectorAll('.ds-raid-dropdown-option:not(.is-locked)').forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        selectRaid(opt.dataset.raid, true, true);
+      });
+    });
+
+    backBtn.addEventListener('click', function () {
+      showRaidHub(true, true);
+    });
+
+    function onDocClick(e) {
+      if (!dropdown.contains(e.target)) closeDropdown(false);
+    }
+
+    function onDocKeydown(e) {
+      if (e.key === 'Escape' && dropdown.classList.contains('is-open')) {
+        e.stopPropagation();
+        closeDropdown(true);
+      }
+    }
+
+    function onHashChange() {
+      var r = getUrlRaid();
+      if (r) selectRaid(r, false, true);
+      else showRaidHub(false, false);
+    }
+
+    document.addEventListener('click', onDocClick);
+    document.addEventListener('keydown', onDocKeydown);
+    window.addEventListener('hashchange', onHashChange);
+
+    if (window.MutationObserver) {
+      homeTabObserver = new MutationObserver(function () {
+        if (!document.body.classList.contains('ds-home-raid-selected')) return;
+        var active = tabBar.querySelector('.raid-tab.active');
+        if (active && active.dataset.raid && active.dataset.raid !== currentSelectedRaid) {
+          currentSelectedRaid = active.dataset.raid;
+          updateDropdownUI(currentSelectedRaid);
+          staggerVisibleCards();
+        }
+      });
+      tabBar.querySelectorAll('.raid-tab').forEach(function (btn) {
+        homeTabObserver.observe(btn, { attributes: true, attributeFilter: ['class'] });
+      });
+    }
+
+    homeRaidCleanup = function () {
+      document.removeEventListener('click', onDocClick);
+      document.removeEventListener('keydown', onDocKeydown);
+      window.removeEventListener('hashchange', onHashChange);
+      if (hub && hub.parentNode) hub.parentNode.removeChild(hub);
+      if (switcherBar && switcherBar.parentNode) switcherBar.parentNode.removeChild(switcherBar);
+      document.body.classList.remove('ds-home-raid-picker', 'ds-home-raid-selected');
+    };
+
+    var initialRaid = getUrlRaid();
+    if (initialRaid) {
+      selectRaid(initialRaid, false, false);
+    } else {
+      showRaidHub(false, false);
+    }
+  }
+
+  function unmountHomeMotion() {
+    if (homeTabObserver) { homeTabObserver.disconnect(); homeTabObserver = null; }
+    if (motionResizeHandler) { window.removeEventListener('resize', motionResizeHandler); motionResizeHandler = null; }
+    if (homeRaidCleanup) { homeRaidCleanup(); homeRaidCleanup = null; }
+    document.querySelectorAll('.section-card.ds-card-enter').forEach(function (c) {
+      c.classList.remove('ds-card-enter');
+      c.style.removeProperty('--ds-i');
+    });
+  }
+
+  function mountGuideMotion() {
+    var tocList = document.querySelector('.ds-guide-body-wrap .guide-toc-list');
+    if (!tocList) return;
+
+    var indicator = document.createElement('span');
+    indicator.className = 'ds-toc-indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    tocList.classList.add('ds-has-indicator');
+    tocList.insertBefore(indicator, tocList.firstChild);
+
+    function positionToc(instant) {
+      var active = tocList.querySelector('.guide-toc-link.active');
+      if (!active) { indicator.style.opacity = '0'; return; }
+      if (instant) indicator.style.transition = 'none';
+      indicator.style.opacity = '1';
+      indicator.style.height = active.offsetHeight + 'px';
+      indicator.style.transform = 'translate3d(0, ' + active.offsetTop + 'px, 0)';
+      if (instant) {
+        void indicator.offsetHeight;
+        indicator.style.transition = '';
+      }
+    }
+
+    if (window.MutationObserver) {
+      guideTocObserver = new MutationObserver(function () {
+        positionToc(false);
+      });
+      tocList.querySelectorAll('.guide-toc-link').forEach(function (a) {
+        guideTocObserver.observe(a, { attributes: true, attributeFilter: ['class'] });
+      });
+    }
+
+    motionResizeHandler = function () { positionToc(true); };
+    window.addEventListener('resize', motionResizeHandler, { passive: true });
+    requestAnimationFrame(function () { positionToc(true); });
+  }
+
+  function unmountGuideMotion() {
+    if (guideTocObserver) { guideTocObserver.disconnect(); guideTocObserver = null; }
+    if (motionResizeHandler) { window.removeEventListener('resize', motionResizeHandler); motionResizeHandler = null; }
+    var tocList = document.querySelector('.guide-toc-list.ds-has-indicator');
+    if (tocList) {
+      tocList.classList.remove('ds-has-indicator');
+      var ind = tocList.querySelector('.ds-toc-indicator');
+      if (ind) ind.remove();
+    }
+  }
+
   /* ── 5. Page Mount & Clean Unmount ───────────────────────────────────────── */
   function mountHome() {
     var main = document.querySelector('main.main-content');
@@ -356,10 +697,12 @@
     land.appendChild(workspace);
 
     mountedKind = 'home';
+    mountHomeMotion();
     return true;
   }
 
   function unmountHome() {
+    unmountHomeMotion();
     var main = document.querySelector('main.main-content');
     var skyWrap = main ? main.querySelector(':scope > .ds-home-sky') : null;
     var land = main ? main.querySelector(':scope > .ds-cloud-land') : null;
@@ -408,10 +751,12 @@
     });
 
     mountedKind = 'guide';
+    mountGuideMotion();
     return true;
   }
 
   function unmountGuide() {
+    unmountGuideMotion();
     var main = document.querySelector('main.main-content');
     var sky = main ? main.querySelector(':scope > .ds-guide-sky') : null;
     var bodyWrap = main ? main.querySelector(':scope > .ds-guide-body-wrap') : null;

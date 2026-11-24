@@ -26,6 +26,42 @@
     let verifyBusy = false;
     let verifyAlert = null;
     let lastModalTrigger = null;
+    let statsNeedsCountUp = true;
+
+    function shouldAnimateRefresh() {
+        const html = document.documentElement;
+        if (html.getAttribute('data-ui') !== 'refresh') return false;
+        const theme = html.getAttribute('data-theme') || '';
+        if (theme.indexOf('lite') !== -1) return false;
+        try {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+        } catch (e) {}
+        return true;
+    }
+
+    function triggerPanelEnter(el) {
+        if (!el || !shouldAnimateRefresh()) return;
+        el.classList.remove('ds-panel-enter');
+        void el.offsetWidth;
+        el.classList.add('ds-panel-enter');
+    }
+
+    function animateCountUp(el, target, suffix = '') {
+        if (!el || !shouldAnimateRefresh() || target <= 0) {
+            if (el) el.textContent = `${target}${suffix}`;
+            return;
+        }
+        const duration = 360;
+        const start = performance.now();
+        function tick(now) {
+            const p = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = `${Math.round(target * eased)}${suffix}`;
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = `${target}${suffix}`;
+        }
+        requestAnimationFrame(tick);
+    }
 
     // ── Raid, Role, Job & Progression Definitions (from js/signup-data.js) ──────
     const _data = window.ALNR_SIGNUP_DATA || {};
@@ -698,6 +734,7 @@
         const formCard = document.getElementById('signup-form-card');
         if (formCard) {
             formCard.style.display = 'block';
+            triggerPanelEnter(formCard);
             if (window.innerWidth < 1024) {
                 formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
@@ -743,13 +780,24 @@
     // ── Dynamic Form Rendering ───────────────────────────────────────────────────
 
     function setChipSelected(btn, state) {
+        const changed = btn.classList.contains('selected') !== Boolean(state);
         btn.classList.toggle('selected', state);
         btn.setAttribute('aria-pressed', state ? 'true' : 'false');
+        if (changed && shouldAnimateRefresh()) {
+            btn.classList.remove('ds-chip-pop');
+            void btn.offsetWidth;
+            btn.classList.add('ds-chip-pop');
+        }
     }
 
     function toggleChipSelected(btn) {
         const state = btn.classList.toggle('selected');
         btn.setAttribute('aria-pressed', state ? 'true' : 'false');
+        if (shouldAnimateRefresh()) {
+            btn.classList.remove('ds-chip-pop');
+            void btn.offsetWidth;
+            btn.classList.add('ds-chip-pop');
+        }
         return state;
     }
 
@@ -1518,7 +1566,7 @@
                         }
 
                         return `
-                            <div class="my-signup-item raid-${typeBadgeClass}" data-signup-idx="${idx}" role="button" tabindex="0" title="Click to view full application details">
+                            <div class="my-signup-item raid-${typeBadgeClass} ds-card-enter" style="--ds-i: ${Math.min(idx, 10)};" data-signup-idx="${idx}" role="button" tabindex="0" title="Click to view full application details">
                                 <div class="my-signup-item-top">
                                     <div class="my-signup-item-title-row">
                                         <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>
@@ -2835,15 +2883,15 @@
                 <div class="glass-card ds-stats-overview-card">
                     <div class="ds-stats-open-grid">
                         <div class="ds-stats-open-item">
-                            <div class="ds-stats-open-val">${totalRuns}</div>
+                            <div class="ds-stats-open-val" data-count-target="${totalRuns}">${totalRuns}</div>
                             <div class="ds-stats-open-label">Total Runs</div>
                         </div>
                         <div class="ds-stats-open-item">
-                            <div class="ds-stats-open-val is-clears">${totalClears}</div>
+                            <div class="ds-stats-open-val is-clears" data-count-target="${totalClears}">${totalClears}</div>
                             <div class="ds-stats-open-label">Total Clears</div>
                         </div>
                         <div class="ds-stats-open-item">
-                            <div class="ds-stats-open-val is-rate">${clearRatePct}%</div>
+                            <div class="ds-stats-open-val is-rate" data-count-target="${clearRatePct}" data-count-suffix="%">${clearRatePct}%</div>
                             <div class="ds-stats-open-label">Clear Rate</div>
                         </div>
                     </div>
@@ -2915,6 +2963,15 @@
                 ${showMoreHtml}
             </div>
         `;
+
+        if (isRefreshUi && activeProfileTab === 'stats' && statsNeedsCountUp) {
+            statsNeedsCountUp = false;
+            container.querySelectorAll('.ds-stats-open-val[data-count-target]').forEach(el => {
+                const target = Number(el.getAttribute('data-count-target') || 0);
+                const suffix = el.getAttribute('data-count-suffix') || '';
+                animateCountUp(el, target, suffix);
+            });
+        }
 
         container.querySelectorAll('[data-stats-raid]').forEach(rowBtn => {
             rowBtn.onclick = () => {
@@ -3275,6 +3332,9 @@
         if (pPrefs) pPrefs.style.display = tabName === 'prefs' ? 'flex' : 'none';
         if (pVerify) pVerify.style.display = tabName === 'verify' ? 'flex' : 'none';
 
+        const activePanelEl = tabName === 'signups' ? pSignups : tabName === 'stats' ? pStats : tabName === 'prefs' ? pPrefs : pVerify;
+        triggerPanelEnter(activePanelEl);
+
         if (IS_PROFILE_PAGE && window.location.protocol !== 'file:') {
             try {
                 const url = new URL(window.location.href);
@@ -3285,6 +3345,7 @@
         }
 
         if (tabName === 'stats') {
+            statsNeedsCountUp = true;
             loadMyRunStats(false);
         } else if (tabName === 'verify') {
             renderVerifyTab();

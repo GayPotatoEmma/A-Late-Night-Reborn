@@ -719,81 +719,422 @@ html[data-ui="refresh"] .ds-cloud-land .home-workspace-grid {
 }
 
 html[data-ui="refresh"] .ds-cloud-land .home-sidebar {
-  position: static !important;
+  position: relative !important;
+  top: auto !important;
   width: 100% !important;
   max-height: none !important;
+  padding-right: 0 !important;
   overflow: visible !important;
 }
 
-/* Clean Editorial Underline Raid Selector */
-html[data-ui="refresh"] .ds-cloud-land .raid-tab-bar.ds-editorial-tabs {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  align-items: center;
-  gap: 0.35rem 1.75rem !important;
-  padding: 0 !important;
-  overflow: visible !important;
-  background: transparent !important;
-  border: none !important;
-  border-bottom: 1.5px solid var(--ds-border) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-}
-
+/* Refresh [Beta] hides the legacy tab strip & uses the 2-stage Raid Hub -> Dropdown flow */
+html[data-ui="refresh"] .ds-cloud-land .raid-tab-bar.ds-editorial-tabs,
 html[data-ui="refresh"] .ds-cloud-land .home-sidebar-heading {
   display: none !important;
 }
 
-html[data-ui="refresh"] .ds-cloud-land .ds-editorial-tabs .raid-tab {
+html[data-ui="refresh"] body.ds-home-raid-picker .ds-cloud-land .home-main-col,
+html[data-ui="refresh"] body.ds-home-raid-picker .ds-raid-switcher-bar {
+  display: none !important;
+}
+
+html[data-ui="refresh"] body.ds-home-raid-selected .ds-raid-hub {
+  display: none !important;
+}
+
+/* Stage 1: Initial Raid Selector Hub */
+html[data-ui="refresh"] .ds-raid-hub {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-group {
+  display: flex;
+  flex-direction: column;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-wip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card {
   position: relative;
-  width: auto !important;
-  display: inline-flex !important;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 0.1rem 0.85rem !important;
-  margin-bottom: -1.5px;
-  border-radius: 0 !important;
-  background: transparent !important;
-  border: none !important;
-  border-bottom: 2.5px solid transparent !important;
-  color: var(--ds-ink-2) !important;
-  font-family: var(--ds-sans) !important;
-  font-size: 0.96rem !important;
-  font-weight: 700 !important;
-  box-shadow: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  width: 100%;
+  background: var(--ds-surface);
+  border: 1.5px solid var(--ds-border);
+  border-radius: 18px;
+  padding: 1.15rem 3.4rem 1.2rem 1.35rem;
+  box-shadow: var(--shadow-glass);
   cursor: pointer;
+  color: var(--ds-ink);
+  font-family: var(--ds-sans);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card:hover:not(.is-locked) {
+  transform: translateY(-3px);
+  border-color: var(--ds-border-strong);
+  box-shadow: 0 14px 30px rgba(42, 31, 74, 0.12);
+}
+
+html[data-ui="refresh"][data-theme^="dark"] .ds-raid-hub-card:hover:not(.is-locked) {
+  box-shadow: 0 14px 32px rgba(5, 4, 18, 0.56);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card[data-raid="ftb"]:hover {
+  border-color: var(--ds-ftb-border);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card[data-raid="ftm"]:hover {
+  border-color: var(--ds-ftm-border);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card[data-raid="cod"]:hover {
+  border-color: var(--ds-chaotic-border);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card:active:not(.is-locked) {
+  transform: scale(0.985);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card.is-locked {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.22rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.55rem;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card[data-raid="ftb"] .ds-raid-hub-badge {
+  background: var(--ds-ftb-soft);
+  color: var(--ds-ftb);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card[data-raid="ftm"] .ds-raid-hub-badge {
+  background: var(--ds-ftm-soft);
+  color: var(--ds-ftm);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card[data-raid="cod"] .ds-raid-hub-badge {
+  background: var(--ds-chaotic-soft);
+  color: var(--ds-chaotic);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-title {
+  font-family: var(--ds-display);
+  font-size: 1.26rem;
+  font-weight: 600;
+  line-height: 1.24;
+  color: var(--ds-ink);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-cta {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ds-surface-soft);
+  color: var(--ds-ink-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.94rem;
+  font-weight: 800;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card:hover:not(.is-locked) .ds-raid-hub-cta {
+  transform: translate(4px, -50%);
+  background: var(--ds-ink);
+  color: var(--ds-ground);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-wip-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-wip-title {
+  font-family: var(--ds-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ds-ink);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-wip-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0.16rem 0.58rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-wip-pill .material-symbols-outlined {
+  font-size: 0.82rem;
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card[data-raid="ba"] .ds-raid-hub-wip-pill,
+html[data-ui="refresh"] .ds-raid-dropdown-option[data-raid="ba"] .ds-raid-hub-wip-pill {
+  background: var(--ds-ba-soft);
+  color: var(--ds-ba);
+}
+
+html[data-ui="refresh"] .ds-raid-hub-card[data-raid="drs"] .ds-raid-hub-wip-pill,
+html[data-ui="refresh"] .ds-raid-dropdown-option[data-raid="drs"] .ds-raid-hub-wip-pill {
+  background: var(--ds-drs-soft);
+  color: var(--ds-drs);
+}
+
+/* Stage 2: Selected Raid Dropdown Switcher Bar */
+html[data-ui="refresh"] .ds-raid-switcher-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.25rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1.5px solid var(--ds-border);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown {
+  position: relative;
+  width: min(100%, 400px);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding: 0.7rem 1rem 0.7rem 1.05rem;
+  background: var(--ds-surface);
+  border: 1.5px solid var(--ds-border-strong);
+  border-radius: 14px;
+  color: var(--ds-ink);
+  font-family: var(--ds-sans);
+  font-size: 0.98rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-glass);
+  transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-trigger:hover,
+html[data-ui="refresh"] .ds-raid-dropdown.is-open .ds-raid-dropdown-trigger {
+  background: var(--ds-surface-soft);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown[data-active-raid="ftb"] .ds-raid-dropdown-trigger {
+  border-color: var(--ds-ftb-border);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown[data-active-raid="ftm"] .ds-raid-dropdown-trigger {
+  border-color: var(--ds-ftm-border);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown[data-active-raid="cod"] .ds-raid-dropdown-trigger {
+  border-color: var(--ds-chaotic-border);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-trigger-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  transition: color 0.18s ease, border-color 0.18s ease, opacity 0.18s ease !important;
 }
 
-html[data-ui="refresh"] .ds-cloud-land .ds-editorial-tabs .raid-tab:hover:not(.is-locked) {
-  color: var(--ds-ink) !important;
-  transform: none !important;
+html[data-ui="refresh"] .ds-raid-dropdown-chev {
+  font-size: 1.25rem;
+  color: var(--ds-ink-muted);
+  flex-shrink: 0;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-html[data-ui="refresh"] .ds-cloud-land .ds-editorial-tabs .raid-tab.active {
-  color: var(--ds-ink) !important;
-  font-weight: 800 !important;
+html[data-ui="refresh"] .ds-raid-dropdown.is-open .ds-raid-dropdown-chev {
+  transform: rotate(180deg);
 }
 
-html[data-ui="refresh"] .ds-cloud-land .ds-editorial-tabs .raid-tab.active[data-raid="ftb"] {
-  border-bottom-color: var(--ds-ftb) !important;
+html[data-ui="refresh"] .ds-raid-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 45;
+  background: var(--ds-surface);
+  border: 1.5px solid var(--ds-border-strong);
+  border-radius: 16px;
+  padding: 0.45rem;
+  box-shadow: 0 18px 44px rgba(14, 10, 34, 0.24);
+  display: none;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
-html[data-ui="refresh"] .ds-cloud-land .ds-editorial-tabs .raid-tab.active[data-raid="ftm"] {
-  border-bottom-color: var(--ds-ftm) !important;
+html[data-ui="refresh"][data-theme^="dark"] .ds-raid-dropdown-menu {
+  background: #1d173b;
+  box-shadow: 0 20px 48px rgba(4, 3, 16, 0.68);
 }
 
-html[data-ui="refresh"] .ds-cloud-land .ds-editorial-tabs .raid-tab.active[data-raid="cod"] {
-  border-bottom-color: var(--ds-chaotic) !important;
+html[data-ui="refresh"] .ds-raid-dropdown.is-open .ds-raid-dropdown-menu {
+  display: flex;
+  animation: dsPanelFade 0.16s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-html[data-ui="refresh"] .ds-cloud-land .ds-editorial-tabs .raid-tab.is-locked {
-  cursor: not-allowed !important;
-  opacity: 0.68;
+html[data-ui="refresh"] .ds-raid-dropdown-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border: none;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--ds-ink-2);
+  font-family: var(--ds-sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
+
+html[data-ui="refresh"] .ds-raid-dropdown-option:hover:not(.is-locked) {
+  background: var(--ds-surface-soft);
+  color: var(--ds-ink);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-option.is-active {
+  color: var(--ds-ink);
+  font-weight: 800;
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-option.is-active[data-raid="ftb"] {
+  background: var(--ds-ftb-soft);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-option.is-active[data-raid="ftm"] {
+  background: var(--ds-ftm-soft);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-option.is-active[data-raid="cod"] {
+  background: var(--ds-chaotic-soft);
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-option.is-locked {
+  opacity: 0.56;
+  cursor: not-allowed;
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-opt-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-check {
+  font-size: 1.05rem;
+  color: var(--ds-ink);
+  opacity: 0;
+  flex-shrink: 0;
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-option.is-active .ds-raid-dropdown-check {
+  opacity: 1;
+}
+
+html[data-ui="refresh"] .ds-raid-dropdown-sep {
+  height: 1px;
+  background: var(--ds-border);
+  margin: 0.28rem 0.5rem;
+}
+
+html[data-ui="refresh"] .ds-raid-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 12px;
+  background: transparent;
+  border: 1.5px solid var(--ds-border);
+  color: var(--ds-ink-2);
+  font-family: var(--ds-sans);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+
+html[data-ui="refresh"] .ds-raid-back-btn:hover {
+  background: var(--ds-surface);
+  border-color: var(--ds-border-strong);
+  color: var(--ds-ink);
+}
+
+html[data-ui="refresh"] .ds-raid-back-btn .material-symbols-outlined {
+  font-size: 1.05rem;
+}
+
+html[data-ui="refresh"] .ds-raid-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+html[data-ui="refresh"] .ds-raid-dot.ftb { background: var(--ds-ftb); }
+html[data-ui="refresh"] .ds-raid-dot.ftm { background: var(--ds-ftm); }
+html[data-ui="refresh"] .ds-raid-dot.cod { background: var(--ds-chaotic); }
+html[data-ui="refresh"] .ds-raid-dot.ba { background: var(--ds-ba); }
+html[data-ui="refresh"] .ds-raid-dot.drs { background: var(--ds-drs); }
 
 html[data-ui="refresh"] .ds-cloud-land .ds-editorial-tabs .tab-dot {
   width: 8px;
@@ -1695,9 +2036,150 @@ html[data-ui="refresh"] .lightbox-close:hover {
   background: rgba(253, 212, 201, 0.25) !important;
 }
 
+/* ============================================================================
+   Motion System & Micro-Interactions (GPU-only, disabled in Performance Mode)
+   ============================================================================ */
+
+@keyframes dsCardFadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes dsCardFadeUpLocked {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 0.62;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes dsPanelFade {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Home Guide Card Stagger & Arrow Nudge */
+html[data-ui="refresh"] .ds-cloud-land .section-card.ds-card-enter,
+html[data-ui="refresh"] .ds-cloud-land .ds-raid-hub-card:not(.is-locked).ds-card-enter {
+  animation: dsCardFadeUp 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--ds-i, 0) * 26ms);
+}
+
+html[data-ui="refresh"] .ds-cloud-land .ds-raid-hub-card.is-locked.ds-card-enter {
+  animation: dsCardFadeUpLocked 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--ds-i, 0) * 26ms);
+}
+
+html[data-ui="refresh"] .ds-cloud-land .section-card:hover .card-cta {
+  transform: translateX(4px);
+}
+
+/* Sliding Guide "On This Page" TOC Pill */
+html[data-ui="refresh"] .ds-guide-body-wrap .guide-toc-list.ds-has-indicator {
+  position: relative;
+}
+
+html[data-ui="refresh"] .ds-guide-body-wrap .guide-toc-list.ds-has-indicator .guide-toc-link {
+  position: relative;
+  z-index: 1;
+}
+
+html[data-ui="refresh"] .ds-guide-body-wrap .guide-toc-list.ds-has-indicator .guide-toc-link.active {
+  background: transparent !important;
+}
+
+html[data-ui="refresh"] .ds-toc-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-radius: 11px;
+  background: #261e3d;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform, height;
+  transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), height 0.22s ease, opacity 0.18s ease;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] .ds-toc-indicator {
+  background: rgba(253, 212, 201, 0.16);
+}
+
+/* Crisp Tactile Press Feedback & Smooth Lightbox Zoom */
+html[data-ui="refresh"] .hero-cta-btn:active,
+html[data-ui="refresh"] .header-discord:active,
+html[data-ui="refresh"] .macro-copy-btn:active,
+html[data-ui="refresh"] .ds-header-link:active,
+html[data-ui="refresh"] .section-card:active {
+  transform: scale(0.98) !important;
+}
+
+html[data-ui="refresh"] .lightbox-overlay {
+  transition: opacity 0.22s ease, visibility 0.22s ease !important;
+}
+
+html[data-ui="refresh"] .lightbox-img {
+  transform: scale(0.95);
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+html[data-ui="refresh"] .lightbox-overlay.active .lightbox-img {
+  transform: scale(1);
+}
+
+html[data-ui="refresh"] .lightbox-overlay.active .lightbox-img.zoomed {
+  transform: scale(1.45);
+}
+
+/* Minimal Motion in Performance Mode (-lite) & Reduced Motion */
+html[data-ui="refresh"][data-theme$="-lite"] .ds-cloud-land .section-card.ds-card-enter,
+html[data-ui="refresh"][data-theme$="-lite"] .ds-cloud-land .ds-raid-hub-card.ds-card-enter,
+html[data-ui="refresh"][data-theme$="-lite"] .ds-raid-dropdown.is-open .ds-raid-dropdown-menu {
+  animation: none !important;
+}
+
+html[data-ui="refresh"][data-theme$="-lite"] .ds-toc-indicator,
+html[data-ui="refresh"][data-theme$="-lite"] .ds-raid-dropdown-chev,
+html[data-ui="refresh"][data-theme$="-lite"] .lightbox-img,
+html[data-ui="refresh"][data-theme$="-lite"] .lightbox-overlay {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui="refresh"] .ds-cloud-land .section-card.ds-card-enter,
+  html[data-ui="refresh"] .ds-cloud-land .ds-raid-hub-card.ds-card-enter,
+  html[data-ui="refresh"] .ds-raid-dropdown.is-open .ds-raid-dropdown-menu {
+    animation: none !important;
+  }
+  html[data-ui="refresh"] .ds-toc-indicator,
+  html[data-ui="refresh"] .ds-raid-dropdown-chev,
+  html[data-ui="refresh"] .lightbox-img,
+  html[data-ui="refresh"] .lightbox-overlay {
+    transition: none !important;
+  }
+}
+
 @media (max-width: 1080px) {
   html[data-ui="refresh"] .ds-cloud-land .section-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  html[data-ui="refresh"] .ds-raid-hub-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1739,12 +2221,12 @@ html[data-ui="refresh"] .main-content {
   html[data-ui="refresh"] .ds-cloud-land {
     padding: 0.6rem 1.15rem 3.5rem;
   }
-  html[data-ui="refresh"] .ds-cloud-land .raid-tab-bar.ds-editorial-tabs {
-    gap: 0.2rem 1.15rem !important;
+  html[data-ui="refresh"] .ds-raid-hub-grid,
+  html[data-ui="refresh"] .ds-raid-hub-wip-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
-  html[data-ui="refresh"] .ds-cloud-land .ds-editorial-tabs .raid-tab {
-    font-size: 0.88rem !important;
-    padding: 0.55rem 0.05rem 0.7rem !important;
+  html[data-ui="refresh"] .ds-raid-dropdown {
+    width: 100%;
   }
   html[data-ui="refresh"] .ds-cloud-land .section-grid {
     grid-template-columns: minmax(0, 1fr) !important;
@@ -1774,8 +2256,8 @@ html[data-ui="refresh"] .ds-guide-body-wrap {
     padding: 0 0.82rem;
     font-size: 0.8rem;
   }
-  html[data-ui="refresh"] .ds-cloud-land .raid-tab {
-    font-size: 0.85rem !important;
-    padding: 0.55rem 0.95rem !important;
+  html[data-ui="refresh"] .ds-raid-dropdown-trigger {
+    font-size: 0.92rem;
+    padding: 0.66rem 0.9rem;
   }
 }

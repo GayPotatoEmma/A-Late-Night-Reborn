@@ -18,6 +18,7 @@
   var homeTabObserver = null;
   var homeRaidCleanup = null;
   var guideTocObserver = null;
+  var profileNavCleanup = null;
   var motionResizeHandler = null;
   var lastProfileUser = null;
   var lastProfileMeta = null;
@@ -679,6 +680,84 @@
     }
   }
 
+  function mountProfileMotion() {
+    var navCard = document.getElementById('profile-top-tabs');
+    if (!navCard || navCard.querySelector('.ds-profile-nav-indicator')) return;
+
+    var indicator = document.createElement('span');
+    indicator.className = 'ds-profile-nav-indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    navCard.classList.add('ds-has-indicator');
+    navCard.insertBefore(indicator, navCard.firstChild);
+
+    var positionedOnce = false;
+
+    function positionNav(instant) {
+      var active = navCard.querySelector('.profile-nav-btn.active');
+      if (!active || active.offsetWidth === 0 || active.offsetHeight === 0) {
+        indicator.style.opacity = '0';
+        return;
+      }
+      var snap = Boolean(instant || !positionedOnce);
+      if (snap) indicator.style.transition = 'none';
+      indicator.style.opacity = '1';
+      indicator.style.width = active.offsetWidth + 'px';
+      indicator.style.height = active.offsetHeight + 'px';
+      indicator.style.transform = 'translate3d(' + active.offsetLeft + 'px, ' + active.offsetTop + 'px, 0)';
+      positionedOnce = true;
+      if (snap) {
+        void indicator.offsetHeight;
+        indicator.style.transition = '';
+      }
+    }
+
+    var btnObserver = null;
+    var visObserver = null;
+    var ro = null;
+
+    if (window.MutationObserver) {
+      btnObserver = new MutationObserver(function () {
+        positionNav(false);
+      });
+      navCard.querySelectorAll('.profile-nav-btn').forEach(function (btn) {
+        btnObserver.observe(btn, { attributes: true, attributeFilter: ['class'] });
+      });
+
+      var workspace = document.getElementById('profile-workspace-card');
+      if (workspace) {
+        visObserver = new MutationObserver(function () {
+          requestAnimationFrame(function () { positionNav(true); });
+        });
+        visObserver.observe(workspace, { attributes: true, attributeFilter: ['style', 'class'] });
+      }
+    }
+
+    if (window.ResizeObserver) {
+      ro = new ResizeObserver(function () { positionNav(true); });
+      ro.observe(navCard);
+    }
+
+    var onResize = function () { positionNav(true); };
+    window.addEventListener('resize', onResize, { passive: true });
+    requestAnimationFrame(function () { positionNav(true); });
+
+    profileNavCleanup = function () {
+      if (btnObserver) btnObserver.disconnect();
+      if (visObserver) visObserver.disconnect();
+      if (ro) ro.disconnect();
+      window.removeEventListener('resize', onResize);
+      navCard.classList.remove('ds-has-indicator');
+      if (indicator && indicator.parentNode) indicator.parentNode.removeChild(indicator);
+    };
+  }
+
+  function unmountProfileMotion() {
+    if (profileNavCleanup) {
+      profileNavCleanup();
+      profileNavCleanup = null;
+    }
+  }
+
   /* ── 5. Page Mount & Clean Unmount ───────────────────────────────────────── */
   function mountHome() {
     var main = document.querySelector('main.main-content');
@@ -841,12 +920,16 @@
     container.appendChild(bodyWrap);
 
     mountedKind = kind;
-    if (isProfile && lastProfileUser) applyProfileHero(lastProfileUser);
+    if (isProfile) {
+      if (lastProfileUser) applyProfileHero(lastProfileUser);
+      mountProfileMotion();
+    }
     return true;
   }
 
   function unmountSignupsOrProfile(kind) {
     var isProfile = kind === 'profile';
+    if (isProfile) unmountProfileMotion();
     var container = document.querySelector('.signups-container');
     if (container) {
       var sky = container.querySelector(isProfile ? ':scope > .ds-profile-sky' : ':scope > .ds-signups-sky');

@@ -733,37 +733,80 @@ html[data-ui="refresh"] body.ds-page-profile .card-heading {
   padding-bottom: 0.75rem;
 }
 
-/* Profile Left Sidebar Navigation */
+/* Profile Left Sidebar Navigation (matched to Guide TOC polish & sliding indicator) */
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-card.ds-has-indicator {
+  position: relative !important;
+}
+
 html[data-ui="refresh"] body.ds-page-profile .profile-nav-heading {
   color: var(--ds-ink-muted) !important;
   border-bottom-color: var(--ds-border) !important;
+  position: relative;
+  z-index: 1;
 }
 
 html[data-ui="refresh"] body.ds-page-profile .profile-nav-btn {
+  position: relative;
+  z-index: 1;
   color: var(--ds-ink-2) !important;
   border-radius: 13px !important;
   font-weight: 800 !important;
+  transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, transform 0.15s ease !important;
 }
 
-html[data-ui="refresh"] body.ds-page-profile .profile-nav-btn:hover {
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-btn .material-symbols-outlined {
+  transition: color 0.18s ease;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-btn:hover:not(.active) {
   background: var(--ds-surface-soft) !important;
   color: var(--ds-ink) !important;
 }
 
 html[data-ui="refresh"] body.ds-page-profile .profile-nav-btn.active {
-  background: #252047 !important;
+  background: #261e3d !important;
   color: var(--ds-moon) !important;
   border-color: transparent !important;
-  box-shadow: 0 8px 20px rgba(37, 32, 71, 0.22) !important;
+  box-shadow: none !important;
+}
+
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-btn.active .material-symbols-outlined {
+  color: var(--ds-moon) !important;
 }
 
 html[data-ui="refresh"][data-theme="dark"] body.ds-page-profile .profile-nav-btn.active,
 html[data-ui="refresh"][data-theme="dark-lite"] body.ds-page-profile .profile-nav-btn.active {
-  background: rgba(253, 212, 201, 0.18) !important;
+  background: rgba(253, 212, 201, 0.16) !important;
   color: var(--ds-moon) !important;
 }
 
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-card.ds-has-indicator .profile-nav-btn.active,
+html[data-ui="refresh"] body.ds-page-profile .profile-nav-card.ds-has-indicator .profile-nav-btn.active:hover {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-ui="refresh"] .ds-profile-nav-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 13px;
+  background: #261e3d;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  will-change: transform, width, height;
+  transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), width 0.24s cubic-bezier(0.22, 1, 0.36, 1), height 0.22s ease, opacity 0.18s ease;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] .ds-profile-nav-indicator {
+  background: rgba(253, 212, 201, 0.16);
+}
+
 html[data-ui="refresh"] body.ds-page-profile .profile-nav-footer {
+  position: relative;
+  z-index: 1;
   border-top-color: var(--ds-border) !important;
 }
 
@@ -2105,6 +2148,8 @@ html[data-ui="refresh"] .my-signup-quick-link:active,
 html[data-ui="refresh"] .stats-filter-pill:active,
 html[data-ui="refresh"] .ds-stats-raid-tile:active,
 html[data-ui="refresh"] .prefs-tab-btn:active,
+html[data-ui="refresh"] .profile-nav-btn:active,
+html[data-ui="refresh"] .profile-signout-all-btn:active,
 html[data-ui="refresh"] .lite-btn:active,
 html[data-ui="refresh"] .lite-icon-btn:active {
   transform: scale(0.97) !important;
@@ -2120,6 +2165,10 @@ html[data-ui="refresh"][data-theme$="-lite"] .ds-stats-ribbon.ds-ribbon-enter {
   animation: none !important;
 }
 
+html[data-ui="refresh"][data-theme$="-lite"] .ds-profile-nav-indicator {
+  transition: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html[data-ui="refresh"] .ds-panel-enter,
   html[data-ui="refresh"] .ds-card-enter,
@@ -2128,6 +2177,9 @@ html[data-ui="refresh"][data-theme$="-lite"] .ds-stats-ribbon.ds-ribbon-enter {
   html[data-ui="refresh"] .modal-backdrop .modal-box,
   html[data-ui="refresh"] .ds-stats-ribbon.ds-ribbon-enter {
     animation: none !important;
+  }
+  html[data-ui="refresh"] .ds-profile-nav-indicator {
+    transition: none !important;
   }
 }
 

@@ -388,13 +388,44 @@ html[data-ui="refresh"][data-theme] .popover-perf-row.active .popover-switch {
   background: #23a86b !important;
 }
 
+html[data-ui="refresh"][data-theme] .header-avatar-dot {
+  border-color: #0a0b1c !important;
+}
+
+html[data-ui="refresh"][data-theme] .header-popover .popover-user-head {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-bottom-color: rgba(253, 212, 201, 0.14) !important;
+}
+
 html[data-ui="refresh"][data-theme] .header-popover .popover-user-name,
+html[data-ui="refresh"][data-theme] .header-popover .popover-user-name-row,
 html[data-ui="refresh"][data-theme] .header-popover .popover-item {
   color: #f8f2fa !important;
 }
 
-html[data-ui="refresh"][data-theme] .header-popover .popover-user-sub {
-  color: #c2b6e0 !important;
+html[data-ui="refresh"][data-theme] .header-popover .popover-user-sub,
+html[data-ui="refresh"][data-theme] .header-popover .popover-user-char {
+  color: #d6cceb !important;
+}
+
+html[data-ui="refresh"][data-theme] .header-popover .popover-user-handle {
+  color: #a89bc7 !important;
+}
+
+html[data-ui="refresh"][data-theme] .header-popover .popover-status-pill.verified {
+  background: rgba(46, 204, 113, 0.16) !important;
+  border-color: rgba(46, 204, 113, 0.42) !important;
+  color: #5eeea0 !important;
+}
+
+html[data-ui="refresh"][data-theme] .header-popover .popover-status-pill.unverified {
+  background: rgba(245, 158, 11, 0.16) !important;
+  border-color: rgba(245, 158, 11, 0.42) !important;
+  color: #fcd34d !important;
+}
+
+html[data-ui="refresh"][data-theme] .header-popover .popover-divider {
+  background: rgba(253, 212, 201, 0.12) !important;
 }
 
 html[data-ui="refresh"][data-theme] .header-popover .popover-item:hover {

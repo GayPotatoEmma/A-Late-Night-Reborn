@@ -16,6 +16,7 @@
   var hashHandler = null;
   var resizeHandler = null;
   var lastProfileUser = null;
+  var lastProfileMeta = null;
 
   function isRefreshActive() {
     return document.documentElement.getAttribute('data-ui') === 'refresh';
@@ -237,25 +238,94 @@
   }
 
   /* ── 4. Profile Hero Sync Helper ─────────────────────────────────────────── */
-  function applyProfileHero(user) {
+  function escapeHeroText(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function getInitials(name) {
+    var parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return '?';
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+
+  function applyProfileHero(user, extra) {
     lastProfileUser = user || null;
+    if (!user) {
+      lastProfileMeta = null;
+    } else if (extra && typeof extra === 'object') {
+      lastProfileMeta = extra;
+    }
     if (!mounted || mountedKind !== 'profile') return;
     var skyInner = document.querySelector('.ds-profile-sky-inner');
     if (!skyInner) return;
     var titleEl = skyInner.querySelector('.signups-title');
     var metaEl = document.getElementById('ds-profile-sky-meta');
+    var avatarWrap = document.getElementById('ds-profile-avatar-wrap');
     if (!titleEl || !metaEl) return;
+
     if (user) {
-      var displayName = user.character_name || user.display_name || user.username || 'My Profile';
+      var displayName = user.character_name || user.global_name || user.display_name || user.username || 'My Profile';
       titleEl.textContent = displayName;
-      var badge = user.is_verified
-        ? '<span class="ds-profile-sky-badge">&#10022; Verified Raider</span>'
-        : '<span class="ds-profile-sky-badge">Discord Connected</span>';
-      var handle = user.username ? '<span>@' + String(user.username).replace(/[<>&"]/g, '') + '</span>' : '';
-      metaEl.innerHTML = badge + handle;
+
+      if (avatarWrap) {
+        var checkHtml = user.is_verified
+          ? '<span class="ds-profile-avatar-check" title="Verified Raider" aria-label="Verified Raider">&#10003;</span>'
+          : '';
+        var initials = escapeHeroText(getInitials(displayName));
+        if (user.avatar_url) {
+          avatarWrap.innerHTML =
+            '<img class="ds-profile-avatar" src="' + escapeHeroText(user.avatar_url) + '" alt="' + escapeHeroText(displayName) + '" />' +
+            '<span class="ds-profile-avatar ds-profile-avatar-fallback" style="display:none;" aria-hidden="true">' + initials + '</span>' +
+            checkHtml;
+          var imgEl = avatarWrap.querySelector('img.ds-profile-avatar');
+          var fbEl = avatarWrap.querySelector('.ds-profile-avatar-fallback');
+          if (imgEl && fbEl) {
+            imgEl.onerror = function () {
+              imgEl.style.display = 'none';
+              fbEl.style.display = 'flex';
+            };
+          }
+        } else {
+          avatarWrap.innerHTML =
+            '<span class="ds-profile-avatar ds-profile-avatar-fallback" aria-hidden="true">' + initials + '</span>' +
+            checkHtml;
+        }
+        avatarWrap.style.display = '';
+      }
+
+      var badge = '';
+      if (user.is_in_guild === false) {
+        badge = '<a href="https://discord.gg/alnr" target="_blank" rel="noopener" class="ds-profile-sky-badge is-warn">Not in Server</a>';
+      } else if (user.is_verified) {
+        badge = '<span class="ds-profile-sky-badge">&#10022; Verified Raider</span>';
+      } else {
+        badge = '<button type="button" class="ds-profile-sky-badge is-warn is-clickable" id="ds-hero-verify-btn">Unverified &bull; Verify Now</button>';
+      }
+
+      var handle = user.username ? '<span class="ds-profile-sky-handle">@' + escapeHeroText(user.username) + '</span>' : '';
+      var raidingSince = lastProfileMeta && lastProfileMeta.raidingSince ? String(lastProfileMeta.raidingSince).trim() : '';
+      var sinceHtml = (raidingSince && raidingSince !== 'N/A')
+        ? '<span class="ds-profile-sky-sep" aria-hidden="true">&bull;</span><span class="ds-profile-sky-since">Raiding since ' + escapeHeroText(raidingSince) + '</span>'
+        : '';
+
+      metaEl.innerHTML = badge + handle + sinceHtml;
+
+      var verifyBtn = document.getElementById('ds-hero-verify-btn');
+      if (verifyBtn) {
+        verifyBtn.onclick = function () {
+          if (typeof window.alnrSwitchProfileTab === 'function') {
+            window.alnrSwitchProfileTab('verify');
+          }
+        };
+      }
     } else {
       titleEl.textContent = 'My Profile';
       metaEl.innerHTML = '';
+      if (avatarWrap) {
+        avatarWrap.innerHTML = '';
+        avatarWrap.style.display = 'none';
+      }
     }
   }
 
@@ -380,12 +450,29 @@
 
     var skyInner = document.createElement('div');
     skyInner.className = isProfile ? 'ds-profile-sky-inner' : 'ds-signups-sky-inner';
-    skyInner.appendChild(topBar);
     if (isProfile) {
+      var heroRow = document.createElement('div');
+      heroRow.className = 'ds-profile-hero-row';
+
+      var avatarWrap = document.createElement('div');
+      avatarWrap.className = 'ds-profile-avatar-wrap';
+      avatarWrap.id = 'ds-profile-avatar-wrap';
+      avatarWrap.style.display = 'none';
+
+      var idCol = document.createElement('div');
+      idCol.className = 'ds-profile-identity-col';
+      idCol.appendChild(topBar);
+
       var meta = document.createElement('div');
       meta.className = 'ds-profile-sky-meta';
       meta.id = 'ds-profile-sky-meta';
-      skyInner.appendChild(meta);
+      idCol.appendChild(meta);
+
+      heroRow.appendChild(avatarWrap);
+      heroRow.appendChild(idCol);
+      skyInner.appendChild(heroRow);
+    } else {
+      skyInner.appendChild(topBar);
     }
     sky.appendChild(skyInner);
 

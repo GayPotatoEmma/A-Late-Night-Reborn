@@ -241,11 +241,17 @@
 
     // ── Rendering Auth State ─────────────────────────────────────────────────────
 
+    function syncProfileHero() {
+        if (typeof window.alnrDreamscapeUpdateProfileHero !== 'function') return;
+        const summary = cachedMyStats && cachedMyStats.summary;
+        const hasRuns = Boolean(cachedMyStats && cachedMyStats.matched && summary && Number(summary.total_runs || 0) > 0);
+        const raidingSince = hasRuns && summary.first_run ? formatStatsMonthYear(summary.first_run) : '';
+        window.alnrDreamscapeUpdateProfileHero(currentUser, { raidingSince });
+    }
+
     function renderAuthBanner() {
         // Sync auth state into the site-wide header avatar popover & optional Refresh [Beta] hero
-        if (typeof window.alnrDreamscapeUpdateProfileHero === 'function') {
-            window.alnrDreamscapeUpdateProfileHero(currentUser);
-        }
+        syncProfileHero();
         if (window.alnrHeaderProfile && typeof window.alnrHeaderProfile.setState === 'function') {
             window.alnrHeaderProfile.setState({
                 user: currentUser,
@@ -2613,6 +2619,7 @@
             cachedMyStats = data;
             activeStatsRaidFilter = 'all';
             statsHistoryVisibleCount = 10;
+            syncProfileHero();
             renderMyRunStats();
         } catch (err) {
             container.innerHTML = `
@@ -2838,10 +2845,6 @@
                         <div class="ds-stats-open-item">
                             <div class="ds-stats-open-val is-rate">${clearRatePct}%</div>
                             <div class="ds-stats-open-label">Clear Rate</div>
-                        </div>
-                        <div class="ds-stats-open-item">
-                            <div class="ds-stats-open-val is-since">${escapeHtml(raidingSince)}</div>
-                            <div class="ds-stats-open-label">Raiding Since</div>
                         </div>
                     </div>
 
@@ -4174,6 +4177,9 @@
             if (currentUser) {
                 activeProfileTab = '';
                 switchProfileTab(initTab, initRaid);
+                if (initTab !== 'stats') {
+                    loadMyRunStats(false);
+                }
             }
         }
 
@@ -4187,9 +4193,7 @@
             if (IS_PROFILE_PAGE && cachedMyStats && typeof renderMyRunStats === 'function') {
                 renderMyRunStats();
             }
-            if (typeof window.alnrDreamscapeUpdateProfileHero === 'function') {
-                window.alnrDreamscapeUpdateProfileHero(currentUser);
-            }
+            syncProfileHero();
         });
     });
 })();

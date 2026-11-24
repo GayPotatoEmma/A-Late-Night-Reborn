@@ -903,6 +903,95 @@ html[data-ui="refresh"] .stats-raid-badge.rb-ftm { background: var(--ds-ftm-soft
 html[data-ui="refresh"] .stats-raid-badge.rb-ba { background: var(--ds-ba-soft) !important; color: var(--ds-ba) !important; }
 html[data-ui="refresh"] .stats-raid-badge.rb-drs { background: var(--ds-drs-soft) !important; color: var(--ds-drs) !important; }
 
+/* Recent Run History - B3 Month Summary Strip + 2-Column Journal */
+html[data-ui="refresh"] .ds-history-months {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+html[data-ui="refresh"] .ds-history-month-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.48rem 0.9rem;
+  border-radius: 11px;
+  background: var(--ds-surface-soft);
+  margin-bottom: 0.75rem;
+}
+
+html[data-ui="refresh"] .ds-history-month-name {
+  font-family: var(--ds-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ds-ink);
+}
+
+html[data-ui="refresh"][data-theme^="dark"] .ds-history-month-name {
+  color: var(--ds-moon);
+}
+
+html[data-ui="refresh"] .ds-history-month-meta {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ds-ink-2);
+}
+
+html[data-ui="refresh"] .ds-history-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.72rem;
+}
+
+html[data-ui="refresh"] .ds-history-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.78rem 0.95rem 0.78rem 1rem;
+  border-radius: 14px;
+  background: var(--ds-ground);
+  border: 1.5px solid var(--ds-border);
+  border-left: 4px solid var(--ds-border-strong);
+  transition: border-color 0.16s ease, transform 0.16s ease;
+}
+
+html[data-ui="refresh"] .ds-history-card:hover {
+  border-color: var(--ds-border-strong);
+  transform: translateY(-1px);
+}
+
+html[data-ui="refresh"] .ds-history-card.rb-ftb     { border-left-color: var(--ds-ftb); }
+html[data-ui="refresh"] .ds-history-card.rb-ftm     { border-left-color: var(--ds-ftm); }
+html[data-ui="refresh"] .ds-history-card.rb-chaotic { border-left-color: var(--ds-chaotic); }
+html[data-ui="refresh"] .ds-history-card.rb-ba      { border-left-color: var(--ds-ba); }
+html[data-ui="refresh"] .ds-history-card.rb-drs     { border-left-color: var(--ds-drs); }
+
+html[data-ui="refresh"] .ds-history-card-left {
+  min-width: 0;
+}
+
+html[data-ui="refresh"] .ds-history-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+html[data-ui="refresh"] .ds-history-card-title {
+  font-size: 0.94rem;
+  font-weight: 800;
+  color: var(--ds-ink);
+}
+
+html[data-ui="refresh"] .ds-history-card-date {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ds-ink-muted);
+  margin-top: 0.22rem;
+}
+
 /* Recent Voyages History Rows */
 html[data-ui="refresh"] .stats-history-item {
   background: var(--ds-ground) !important;
@@ -999,5 +1088,8 @@ html[data-ui="refresh"] body.ds-page-signups #signup-form-card {
   }
   html[data-ui="refresh"] .ds-stats-open-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  html[data-ui="refresh"] .ds-history-grid-2 {
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 }

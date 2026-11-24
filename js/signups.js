@@ -2891,6 +2891,77 @@
         const isRefreshUi = document.documentElement.getAttribute('data-ui') === 'refresh';
         const clearRatePct = totalRuns > 0 ? Math.round((clearedRuns / totalRuns) * 100) : 0;
 
+        let historyContentHtml = '';
+        if (visibleRuns.length === 0) {
+            historyContentHtml = `<div class="stats-history-list"><div class="stats-empty-box">No runs found for this filter.</div></div>`;
+        } else if (isRefreshUi) {
+            // Precompute full filtered month totals so monthly summary strip is accurate even before Show More
+            const monthTotals = {};
+            filteredRuns.forEach(r => {
+                const mKey = formatStatsMonthYear(r.date) || 'Other';
+                if (!monthTotals[mKey]) monthTotals[mKey] = { runs: 0, clears: 0 };
+                monthTotals[mKey].runs += 1;
+                monthTotals[mKey].clears += Number(r.clears || (r.is_clear ? 1 : 0));
+            });
+
+            const groups = [];
+            const groupMap = {};
+            visibleRuns.forEach(r => {
+                const mKey = formatStatsMonthYear(r.date) || 'Other';
+                if (!groupMap[mKey]) {
+                    groupMap[mKey] = { label: mKey, items: [] };
+                    groups.push(groupMap[mKey]);
+                }
+                groupMap[mKey].items.push(r);
+            });
+
+            historyContentHtml = `<div class="ds-history-months">` + groups.map(g => {
+                const mt = monthTotals[g.label] || { runs: g.items.length, clears: 0 };
+                const cardsHtml = g.items.map(r => {
+                    const st = getRaidBadgeStyle(r.raid);
+                    const titleText = r.goal || 'Community Run';
+                    let shortDate = r.date || '';
+                    try {
+                        const dObj = new Date(String(r.date || '') + 'T00:00:00');
+                        if (!isNaN(dObj.getTime())) {
+                            shortDate = dObj.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+                        }
+                    } catch (e) {}
+                    let pillText = r.result || (r.is_clear ? 'Cleared' : 'Completed');
+                    if (r.is_clear && Number(r.clears || 0) > 1 && !/\d/.test(pillText)) {
+                        pillText = `${r.clears} Clears`;
+                    }
+                    const pillCls = r.is_clear ? 'stats-result-pill' : 'stats-result-pill prog';
+                    return `
+                        <div class="ds-history-card ${st.cls}">
+                            <div class="ds-history-card-left">
+                                <div class="ds-history-card-top">
+                                    <span class="stats-raid-badge ${st.cls}">${escapeHtml(st.label)}</span>
+                                    <span class="ds-history-card-title">${escapeHtml(titleText)}</span>
+                                </div>
+                                <div class="ds-history-card-date">${escapeHtml(shortDate)}</div>
+                            </div>
+                            <span class="${pillCls}">${escapeHtml(pillText)}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="ds-history-month-group">
+                        <div class="ds-history-month-bar">
+                            <span class="ds-history-month-name">${escapeHtml(g.label)}</span>
+                            <span class="ds-history-month-meta">${mt.runs} ${mt.runs === 1 ? 'run' : 'runs'} &bull; ${mt.clears} ${mt.clears === 1 ? 'clear' : 'clears'}</span>
+                        </div>
+                        <div class="ds-history-grid-2">
+                            ${cardsHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('') + `</div>`;
+        } else {
+            historyContentHtml = `<div class="stats-history-list">${historyRowsHtml}</div>`;
+        }
+
         let overviewCardHtml = '';
         if (isRefreshUi) {
             const totalSumRuns = byRaid.reduce((acc, r) => acc + Number(r.runs || 0), 0) || 1;
@@ -3000,7 +3071,7 @@
                     </div>
                     <div class="stats-filter-pills">${filterPillsHtml}</div>
                 </div>
-                <div class="stats-history-list">${historyRowsHtml}</div>
+                ${historyContentHtml}
                 ${showMoreHtml}
             </div>
         `;

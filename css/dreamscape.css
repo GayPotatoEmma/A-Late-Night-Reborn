@@ -214,7 +214,7 @@ html[data-ui="refresh"][data-theme$="-lite"] body.ds-scrolled .site-header {
 }
 
 html[data-ui="refresh"] .header-inner {
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 0 auto;
   padding: 0.72rem 2rem;
   display: flex;
@@ -538,7 +538,7 @@ html[data-ui="refresh"] .ds-home-sky .hero {
   position: relative;
   z-index: 4;
   width: 100%;
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 0 auto !important;
   padding: 2.2rem 2rem 1.5rem !important;
   text-align: left !important;
@@ -611,7 +611,7 @@ html[data-ui="refresh"] .ds-cloud-land {
 }
 
 html[data-ui="refresh"] .ds-cloud-land .home-workspace-grid {
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 0 auto !important;
   display: flex !important;
   flex-direction: column !important;
@@ -747,7 +747,7 @@ html[data-ui="refresh"] .ds-cloud-land .sections-label {
 
 html[data-ui="refresh"] .ds-cloud-land .section-grid {
   display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   gap: 1rem !important;
 }
 
@@ -894,7 +894,7 @@ html[data-ui="refresh"][data-theme="dark-lite"] .ds-guide-sky {
 html[data-ui="refresh"] .ds-guide-sky-inner {
   position: relative;
   z-index: 4;
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -966,7 +966,7 @@ html[data-ui="refresh"] .ds-guide-body-wrap {
 }
 
 html[data-ui="refresh"] .ds-guide-body-wrap .guide-workspace-grid {
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 0 auto !important;
   gap: 2.25rem !important;
   align-items: start;
@@ -1290,7 +1290,7 @@ html[data-ui="refresh"] .tl-badge.enrage { background: var(--ds-ftb-soft) !impor
 
 /* Section Prev/Next Nav inside Guides */
 html[data-ui="refresh"] .section-nav {
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 2rem auto 0 !important;
 }
 
@@ -1364,7 +1364,7 @@ html[data-ui="refresh"][data-theme="dark-lite"] .ds-secondary-sky {
 html[data-ui="refresh"] .ds-secondary-sky-inner {
   position: relative;
   z-index: 4;
-  max-width: 1080px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -1403,7 +1403,7 @@ html[data-ui="refresh"] .ds-secondary-body-wrap {
 }
 
 html[data-ui="refresh"] .ds-secondary-body-inner {
-  max-width: 1080px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
@@ -1531,6 +1531,12 @@ html[data-ui="refresh"][data-theme^="dark"] .nav-drawer a.active {
 /* ============================================================================
    Responsive Polish (1024px Laptop & 390px Mobile)
    ============================================================================ */
+
+@media (max-width: 1439px) {
+  html[data-ui="refresh"] .ds-cloud-land .section-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
 
 @media (max-width: 1080px) {
   html[data-ui="refresh"] .ds-cloud-land .section-grid {

@@ -34,7 +34,7 @@ html[data-ui="refresh"][data-theme="dark-lite"] .ds-signups-sky {
 html[data-ui="refresh"] .ds-signups-sky-inner {
   position: relative;
   z-index: 4;
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -68,13 +68,13 @@ html[data-ui="refresh"] .ds-signups-body-wrap {
 }
 
 html[data-ui="refresh"] .ds-signups-body-inner {
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 0 auto;
 }
 
 html[data-ui="refresh"] body.ds-page-signups .signups-workspace-grid {
   display: grid !important;
-  grid-template-columns: minmax(360px, 490px) minmax(0, 1fr) !important;
+  grid-template-columns: minmax(420px, 560px) minmax(0, 1fr) !important;
   gap: 2rem !important;
   align-items: start;
 }
@@ -552,7 +552,7 @@ html[data-ui="refresh"][data-theme="dark-lite"] .ds-profile-sky {
 html[data-ui="refresh"] .ds-profile-sky-inner {
   position: relative;
   z-index: 4;
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -612,7 +612,7 @@ html[data-ui="refresh"] .ds-profile-body-wrap {
 }
 
 html[data-ui="refresh"] .ds-profile-body-inner {
-  max-width: 1320px;
+  max-width: 1560px;
   margin: 0 auto;
 }
 
@@ -948,7 +948,13 @@ html[data-ui="refresh"] .stats-filter-pill.active {
   color: var(--ds-moon) !important;
 }
 
-/* Active Signup Cards on Profile */
+/* Active Signup Cards on Profile - 3 columns on wide desktop (1440px+) */
+@media (min-width: 1440px) {
+  html[data-ui="refresh"] body.ds-page-profile .profile-signups-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
 html[data-ui="refresh"] .my-signup-card {
   background: var(--ds-ground) !important;
   border: 1.5px solid var(--ds-border) !important;

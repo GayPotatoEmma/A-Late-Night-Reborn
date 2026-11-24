@@ -1037,22 +1037,171 @@ html[data-ui="refresh"] .stats-filter-pill.active {
   color: var(--ds-moon) !important;
 }
 
-/* Active Signup Cards on Profile - 3 columns on wide desktop (1440px+) */
+/* Active Signup Cards on Profile - Dreamscape Consistent Styling */
+html[data-ui="refresh"] body.ds-page-profile .profile-signups-grid {
+  gap: 0.95rem !important;
+}
+
 @media (min-width: 1440px) {
   html[data-ui="refresh"] body.ds-page-profile .profile-signups-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 }
 
-html[data-ui="refresh"] .my-signup-card {
+html[data-ui="refresh"][data-theme] .my-signup-item {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  padding: 1rem 1.15rem 1rem 1.2rem !important;
+  border-radius: 16px !important;
   background: var(--ds-ground) !important;
+  color: var(--ds-ink) !important;
   border: 1.5px solid var(--ds-border) !important;
-  border-radius: 18px !important;
+  border-left: 4px solid var(--ds-border-strong) !important;
+  box-shadow: none !important;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-chaotic { border-left-color: var(--ds-chaotic) !important; }
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-ftb     { border-left-color: var(--ds-ftb) !important; }
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-ftm     { border-left-color: var(--ds-ftm) !important; }
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-ba      { border-left-color: var(--ds-ba) !important; }
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-drs     { border-left-color: var(--ds-drs) !important; }
+
+html[data-ui="refresh"][data-theme] .my-signup-item:hover {
+  background: var(--ds-surface) !important;
+  border-color: var(--ds-border-strong) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 24px rgba(38, 30, 61, 0.09) !important;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] .my-signup-item:hover {
+  background: var(--ds-surface-soft) !important;
+  box-shadow: 0 10px 26px rgba(6, 5, 18, 0.42) !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-chaotic:hover { border-left-color: var(--ds-chaotic) !important; }
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-ftb:hover     { border-left-color: var(--ds-ftb) !important; }
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-ftm:hover     { border-left-color: var(--ds-ftm) !important; }
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-ba:hover      { border-left-color: var(--ds-ba) !important; }
+html[data-ui="refresh"][data-theme] .my-signup-item.raid-drs:hover     { border-left-color: var(--ds-drs) !important; }
+
+html[data-ui="refresh"] .my-signup-item-title-row strong {
+  font-family: var(--ds-serif) !important;
+  font-size: 1.04rem !important;
+  font-weight: 600 !important;
+  color: var(--ds-ink) !important;
+  line-height: 1.25;
+}
+
+html[data-ui="refresh"][data-theme] .btn-view-application-more {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 999px !important;
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  color: var(--ds-ink-muted) !important;
+  box-shadow: none !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-item:hover .btn-view-application-more {
+  background: var(--ds-surface) !important;
+  border-color: var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
+  box-shadow: none !important;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] .my-signup-item:hover .btn-view-application-more {
+  background: var(--ds-ground) !important;
+  color: var(--ds-moon) !important;
+}
+
+html[data-ui="refresh"] .my-signup-item-time {
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"] .my-signup-item-time .material-symbols-outlined {
+  color: var(--ds-ink-muted) !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-roster-banner {
+  border-radius: 999px !important;
+  padding: 0.28rem 0.78rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 800 !important;
+  margin-top: 0.15rem !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-roster-banner.is-selected {
+  background: var(--ds-chaotic-soft) !important;
+  border: 1px solid var(--ds-chaotic-border) !important;
+  color: var(--ds-chaotic) !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-roster-banner.is-standby {
+  background: var(--ds-drs-soft) !important;
+  border: 1px solid rgba(217, 150, 22, 0.38) !important;
+  color: var(--ds-drs) !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-roster-banner.is-pending {
+  background: var(--ds-surface-soft) !important;
+  border: 1px solid var(--ds-border) !important;
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"] .my-signup-item-meta {
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  color: var(--ds-ink-muted) !important;
+}
+
+html[data-ui="refresh"] .my-signup-quick-links {
+  margin-top: auto !important;
+  padding-top: 0.45rem !important;
+  gap: 0.45rem !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-quick-link {
+  border-radius: 999px !important;
+  padding: 0.34rem 0.82rem !important;
+  font-size: 0.78rem !important;
+  font-weight: 800 !important;
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-quick-link:hover {
+  background: var(--ds-surface) !important;
+  border-color: var(--ds-border-strong) !important;
   color: var(--ds-ink) !important;
 }
 
-html[data-ui="refresh"] .my-signup-card:hover {
-  border-color: var(--ds-border-strong) !important;
+html[data-ui="refresh"][data-theme^="dark"] .my-signup-quick-link:hover {
+  background: var(--ds-ground) !important;
+  color: var(--ds-moon) !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-quick-link.is-roster {
+  background: var(--ds-chaotic-soft) !important;
+  border-color: var(--ds-chaotic-border) !important;
+  color: var(--ds-chaotic) !important;
+}
+
+html[data-ui="refresh"][data-theme] .my-signup-quick-link.is-roster:hover {
+  background: var(--ds-chaotic) !important;
+  border-color: var(--ds-chaotic) !important;
+  color: #ffffff !important;
+}
+
+html[data-ui="refresh"][data-theme] .stats-empty-box {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 16px !important;
+  color: var(--ds-ink-2) !important;
 }
 
 /* ============================================================================

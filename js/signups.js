@@ -1612,7 +1612,7 @@
                         }
 
                         return `
-                            <div class="my-signup-item" data-signup-idx="${idx}" role="button" tabindex="0" title="Click to view full application details">
+                            <div class="my-signup-item raid-${typeBadgeClass}" data-signup-idx="${idx}" role="button" tabindex="0" title="Click to view full application details">
                                 <div class="my-signup-item-top">
                                     <div class="my-signup-item-title-row">
                                         <span class="run-type-badge ${typeBadgeClass}">${badgeLabel}</span>

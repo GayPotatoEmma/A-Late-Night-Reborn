@@ -103,6 +103,9 @@
                 statusBox.appendChild(iconEl);
                 statusBox.appendChild(document.createTextNode(' '));
                 statusBox.appendChild(textEl);
+                if (typeof window.alnrToast === 'function') {
+                    window.alnrToast(String(text), type === 'success' ? 'success' : 'error');
+                }
             }
         });
     }

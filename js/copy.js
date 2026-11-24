@@ -21,6 +21,9 @@
   function showCopied(btn, ok) {
     btn.textContent = ok ? 'Copied!' : 'Copy failed';
     btn.classList.toggle('copied', ok);
+    if (typeof window.alnrToast === 'function') {
+      window.alnrToast(ok ? 'Macro copied to clipboard' : 'Could not copy macro', ok ? 'success' : 'error');
+    }
     setTimeout(function () {
       btn.textContent = 'Copy';
       btn.classList.remove('copied');

@@ -841,14 +841,14 @@ html[data-ui="refresh"] .ds-stats-ribbon {
   height: 14px;
   border-radius: 999px;
   overflow: hidden;
-  background: var(--ds-surface-soft);
+  background: transparent;
 }
 
 html[data-ui="refresh"] .ds-stats-ribbon-seg {
   border: none;
   padding: 0;
   cursor: pointer;
-  min-width: 6px;
+  min-width: 10px;
   transition: opacity 0.18s ease, filter 0.18s ease;
 }
 
@@ -2060,14 +2060,12 @@ html[data-ui="refresh"][data-theme] body.ds-page-dashboard .lite-icon-btn.danger
   }
 }
 
-@keyframes dsRibbonGrow {
+@keyframes dsRibbonReveal {
   from {
-    transform: scaleX(0);
-    opacity: 0.4;
+    clip-path: inset(0 100% 0 0 round 999px);
   }
   to {
-    transform: scaleX(1);
-    opacity: 1;
+    clip-path: inset(0 0% 0 0 round 999px);
   }
 }
 
@@ -2092,9 +2090,8 @@ html[data-ui="refresh"] .modal-backdrop .modal-box {
   animation: dsModalBoxIn 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-html[data-ui="refresh"] .ds-stats-ribbon-seg {
-  transform-origin: left center;
-  animation: dsRibbonGrow 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+html[data-ui="refresh"] .ds-stats-ribbon.ds-ribbon-enter {
+  animation: dsRibbonReveal 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Tactile Press Feedback (:active) */
@@ -2119,7 +2116,7 @@ html[data-ui="refresh"][data-theme$="-lite"] .ds-card-enter,
 html[data-ui="refresh"][data-theme$="-lite"] .ds-chip-pop,
 html[data-ui="refresh"][data-theme$="-lite"] .modal-backdrop,
 html[data-ui="refresh"][data-theme$="-lite"] .modal-backdrop .modal-box,
-html[data-ui="refresh"][data-theme$="-lite"] .ds-stats-ribbon-seg {
+html[data-ui="refresh"][data-theme$="-lite"] .ds-stats-ribbon.ds-ribbon-enter {
   animation: none !important;
 }
 
@@ -2129,7 +2126,7 @@ html[data-ui="refresh"][data-theme$="-lite"] .ds-stats-ribbon-seg {
   html[data-ui="refresh"] .ds-chip-pop,
   html[data-ui="refresh"] .modal-backdrop,
   html[data-ui="refresh"] .modal-backdrop .modal-box,
-  html[data-ui="refresh"] .ds-stats-ribbon-seg {
+  html[data-ui="refresh"] .ds-stats-ribbon.ds-ribbon-enter {
     animation: none !important;
   }
 }

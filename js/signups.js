@@ -1917,6 +1917,9 @@
     }
 
     function showStatusAlert(msg, type) {
+        if (typeof window.alnrToast === 'function' && msg && type !== 'info') {
+            window.alnrToast(msg, type);
+        }
         const alertBox = document.getElementById('signup-status-alert');
         if (!alertBox) return;
         alertBox.className = `status-alert ${type}`;
@@ -2652,7 +2655,21 @@
         if (myStatsLoading) return;
 
         myStatsLoading = true;
-        container.innerHTML = `<div class="glass-card"><div class="stats-empty-box">Loading your ALNR run stats...</div></div>`;
+        container.innerHTML = `
+            <div class="glass-card alnr-skel-card alnr-skel-stats-card" aria-busy="true" aria-label="Loading run stats">
+                <div class="alnr-skel-stats-grid">
+                    <div class="alnr-skel-stat-slot"><span class="alnr-skel-line is-num"></span><span class="alnr-skel-line is-sm"></span></div>
+                    <div class="alnr-skel-stat-slot"><span class="alnr-skel-line is-num"></span><span class="alnr-skel-line is-sm"></span></div>
+                    <div class="alnr-skel-stat-slot"><span class="alnr-skel-line is-num"></span><span class="alnr-skel-line is-sm"></span></div>
+                </div>
+                <div class="alnr-skel-line is-bar"></div>
+                <div class="alnr-skel-tiles">
+                    <span class="alnr-skel-block"></span>
+                    <span class="alnr-skel-block"></span>
+                    <span class="alnr-skel-block"></span>
+                </div>
+            </div>
+        `;
         try {
             const res = await fetch(`${getApiUrl()}/api/public/my-stats`, {
                 credentials: 'include'
@@ -2855,14 +2872,15 @@
         }
 
         let overviewCardHtml = '';
+        const shouldAnimateStatsIntro = isRefreshUi && activeProfileTab === 'stats' && statsNeedsCountUp;
         if (isRefreshUi) {
             const totalSumRuns = byRaid.reduce((acc, r) => acc + Number(r.runs || 0), 0) || 1;
             const ribbonSegsHtml = byRaid.map(r => {
                 const st = getRaidBadgeStyle(r.raid);
-                const pct = Math.max(2, (Number(r.runs || 0) / totalSumRuns) * 100);
+                const weight = Math.max(totalSumRuns * 0.025, Number(r.runs || 0));
                 const isActive = activeStatsRaidFilter === r.raid;
                 const isDim = activeStatsRaidFilter !== 'all' && !isActive;
-                return `<button type="button" class="ds-stats-ribbon-seg ${st.cls}${isActive ? ' is-active' : ''}${isDim ? ' is-dim' : ''}" style="width: ${pct.toFixed(2)}%;" data-stats-raid="${escapeHtml(r.raid)}" title="${escapeHtml(st.label)}: ${r.runs} ${r.runs === 1 ? 'run' : 'runs'}, ${r.clears} ${r.clears === 1 ? 'clear' : 'clears'}"></button>`;
+                return `<button type="button" class="ds-stats-ribbon-seg ${st.cls}${isActive ? ' is-active' : ''}${isDim ? ' is-dim' : ''}" style="flex: ${weight.toFixed(3)} 0 0;" data-stats-raid="${escapeHtml(r.raid)}" title="${escapeHtml(st.label)}: ${r.runs} ${r.runs === 1 ? 'run' : 'runs'}, ${r.clears} ${r.clears === 1 ? 'clear' : 'clears'}"></button>`;
             }).join('');
 
             const raidTilesHtml = byRaid.map(r => {
@@ -2897,7 +2915,7 @@
                     </div>
 
                     <div class="ds-stats-ribbon-wrap">
-                        <div class="ds-stats-ribbon" role="group" aria-label="Raid breakdown proportion">
+                        <div class="ds-stats-ribbon${shouldAnimateStatsIntro ? ' ds-ribbon-enter' : ''}" role="group" aria-label="Raid breakdown proportion">
                             ${ribbonSegsHtml}
                         </div>
                         <div class="ds-stats-raid-tiles">
@@ -3297,6 +3315,9 @@
                     ? `Verified as ${data.char_name}! Note: ${data.warning}`
                     : `Successfully verified as ${data.char_name}! Your Discord nickname and Verified role have been updated.`
             };
+            if (typeof window.alnrToast === 'function') {
+                window.alnrToast(`Verified as ${data.char_name}!`, 'success');
+            }
             renderAuthBanner();
         } catch (err) {
             verifyAlert = { type: 'error', msg: err.message || 'Verification failed. Please try again.' };
@@ -3939,6 +3960,9 @@
         savePreferencesForContent(contentType, profile);
         renderPrefsModalTab(contentType);
         showPrefsModalAlert(`Saved ${contentType} preferences!`, 'success');
+        if (typeof window.alnrToast === 'function') {
+            window.alnrToast(`Saved ${contentType} preferences`, 'success');
+        }
 
         if (selectedEvent && selectedEvent.content_type === contentType) {
             applySavedPrefsToStep2Form(contentType);
@@ -3951,6 +3975,9 @@
         clearPreferencesForContent(contentType);
         renderPrefsModalTab(contentType);
         showPrefsModalAlert(`Reset saved preferences for ${contentType}.`, 'info');
+        if (typeof window.alnrToast === 'function') {
+            window.alnrToast(`Reset ${contentType} preferences`, 'info');
+        }
         if (selectedEvent && selectedEvent.content_type === contentType) {
             renderFormInputs();
         }
@@ -4057,7 +4084,11 @@
                 if (!window.confirm('Sign out of all devices? This will end your session on every browser you are signed into.')) {
                     return;
                 }
-                signOut(true);
+                signOut(true).then(() => {
+                    if (typeof window.alnrToast === 'function') {
+                        window.alnrToast('Signed out of all devices', 'info');
+                    }
+                });
             };
         }
 

@@ -95,7 +95,11 @@
 
         var headerH = headerEl ? headerEl.offsetHeight : 64;
         var pastSky = skyEl ? (skyEl.getBoundingClientRect().bottom <= headerH + 22) : true;
+        var prevPastSky = document.body.classList.contains('ds-past-sky');
         document.body.classList.toggle('ds-past-sky', pastSky);
+        if (pastSky !== prevPastSky && window.alnrTheme && typeof window.alnrTheme.syncThemeColor === 'function') {
+          window.alnrTheme.syncThemeColor(pastSky);
+        }
 
         if (!isLiteOrReduced() && y < 700) {
           if (moonLayer) moonLayer.style.transform = 'translate3d(0,' + (y * 0.16).toFixed(1) + 'px,0)';
@@ -128,6 +132,9 @@
       resizeHandler = null;
     }
     document.body.classList.remove('ds-scrolled', 'ds-past-sky');
+    if (window.alnrTheme && typeof window.alnrTheme.syncThemeColor === 'function') {
+      window.alnrTheme.syncThemeColor(false);
+    }
   }
 
   /* ── 3. Illustrated Twilight Sky SVGs ────────────────────────────────────── */

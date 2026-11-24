@@ -159,20 +159,6 @@
     max-width: 600px;
   }
 
-  #auth-banner-container {
-    flex: 0 0 auto;
-    min-width: 520px;
-  }
-
-  #auth-banner-container .glass-card {
-    margin-bottom: 0;
-    padding: 1rem 1.35rem;
-  }
-
-  #auth-banner-container .auth-banner-authed {
-    flex-wrap: nowrap;
-  }
-
   .signups-workspace-grid {
     display: grid;
     grid-template-columns: 520px minmax(0, 1fr);
@@ -241,17 +227,7 @@
   color: var(--accent-purple);
 }
 
-/* ── Discord Auth Banner ──────────────────────────── */
-.auth-banner-unauthed {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  background: linear-gradient(135deg, rgba(88, 101, 242, 0.15) 0%, rgba(20, 21, 50, 0.6) 100%);
-  border: 1px solid rgba(88, 101, 242, 0.4);
-}
-
+/* ── Discord Auth Controls ────────────────────────── */
 .auth-info-left {
   display: flex;
   align-items: center;
@@ -343,16 +319,6 @@
   max-width: 440px;
   margin-bottom: 1.5rem;
   line-height: 1.55;
-}
-
-.auth-banner-authed {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.12) 0%, rgba(20, 21, 50, 0.6) 100%);
-  border: 1px solid rgba(46, 204, 113, 0.35);
 }
 
 .user-profile-strip {
@@ -1533,20 +1499,6 @@
   background-clip: text;
 }
 
-[data-theme^="light"] .auth-banner-unauthed {
-  background: linear-gradient(135deg, rgba(88, 101, 242, 0.08) 0%, rgba(255, 255, 255, 0.8) 100%);
-  border-color: rgba(88, 101, 242, 0.3);
-}
-
-[data-theme^="light"] .auth-banner-unauthed .auth-info-left div > div:first-child {
-  color: #221e2a !important;
-}
-
-[data-theme^="light"] .auth-banner-authed {
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.08) 0%, rgba(255, 255, 255, 0.8) 100%);
-  border-color: rgba(46, 204, 113, 0.3);
-}
-
 [data-theme^="light"] .user-display-name {
   color: #221e2a;
 }
@@ -2716,26 +2668,6 @@
 .btn-profile-pill .material-symbols-outlined {
   font-size: 1.12rem;
   color: var(--accent-purple);
-}
-
-.profile-modal-box {
-  max-width: 900px;
-}
-
-.profile-modal-avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(178, 145, 247, 0.55);
-  flex-shrink: 0;
-}
-
-.profile-modal-title-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
 }
 
 .profile-top-tabs {

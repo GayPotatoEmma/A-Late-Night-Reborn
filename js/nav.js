@@ -344,6 +344,7 @@
     navHTML = navHTML
       .replace('href="/" class="nav-home-link"', 'href="' + prefix + 'index.html" class="nav-home-link"')
       .replace('href="/signups" class="nav-home-link"', 'href="' + prefix + 'signups.html" class="nav-home-link"')
+      .replace('href="/profile" class="nav-home-link"', 'href="' + prefix + 'profile.html" class="nav-home-link"')
       .replace(/href="\/(ftb|ftm|chaotic)\/([^"#]+)(#[^"]*)?"/g, function (m, folder, page, hash) {
         return 'href="' + prefix + folder + '/' + page + '.html' + (hash || '') + '"';
       });
@@ -362,34 +363,42 @@
   var panel   = document.getElementById('nav-panel');
   var overlay = document.getElementById('nav-overlay');
   var close   = document.getElementById('nav-close');
+  panel.setAttribute('aria-hidden', 'true');
 
   function openNav() {
     panel.classList.add('open');
     overlay.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    if (close) close.focus();
   }
 
-  function closeNav() {
+  function closeNav(restoreFocus) {
+    if (!panel.classList.contains('open')) return;
     panel.classList.remove('open');
     overlay.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) toggle.focus();
+    }
   }
 
   if (toggle) {
     toggle.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>';
     toggle.addEventListener('click', openNav);
   }
-  close.addEventListener('click', closeNav);
-  overlay.addEventListener('click', closeNav);
+  close.addEventListener('click', function () { closeNav(true); });
+  overlay.addEventListener('click', function () { closeNav(true); });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeNav();
+    if (e.key === 'Escape' && panel.classList.contains('open')) closeNav(true);
   });
 
   document.querySelectorAll('.nav-sub-link, .nav-page-link, .nav-home-link').forEach(function (link) {
-    link.addEventListener('click', closeNav);
+    link.addEventListener('click', function () { closeNav(false); });
   });
 
   document.querySelectorAll('.nav-section-toggle').forEach(function (el) {
@@ -615,14 +624,13 @@
     var headerInner = document.querySelector('.site-header .header-inner');
     if (!headerInner || document.getElementById('header-profile-wrap')) return;
 
-    var API_URL = 'https://api.alatenightreborn.com';
-    var DISCORD_CLIENT_ID = '1526282207185080411';
-    var PREFS_KEY = 'alnr_signup_preferences_v1';
+    var cfg = window.ALNR_CONFIG || {};
+    var API_URL = cfg.API_URL || 'https://api.alatenightreborn.com';
+    var DISCORD_CLIENT_ID = cfg.DISCORD_CLIENT_ID || '1526282207185080411';
 
     var state = {
       user: null,
       loaded: false,
-      activeSignupsCount: null,
       outdatedPrefs: false,
       onSignOut: null,
       onLogin: null
@@ -630,10 +638,6 @@
 
     var ICONS = {
       person: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
-      signups: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/><polyline points="9 10 11 12 15 8"/></svg>',
-      stats: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
-      prefs: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>',
-      verify: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>',
       bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
       logout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>',
       warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;flex-shrink:0;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
@@ -642,21 +646,6 @@
 
     function esc(s) {
       return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    function getCurrentTheme() {
-      if (window.alnrTheme && typeof window.alnrTheme.get === 'function') return window.alnrTheme.get();
-      return document.documentElement.getAttribute('data-theme') || 'dark';
-    }
-
-    function setCurrentTheme(t) {
-      if (window.alnrTheme && typeof window.alnrTheme.set === 'function') {
-        window.alnrTheme.set(t);
-      } else {
-        document.documentElement.setAttribute('data-theme', t);
-        try { localStorage.setItem('alnr-theme', t); } catch (e) {}
-      }
-      renderPopover();
     }
 
     function startDefaultDiscordLogin() {
@@ -696,7 +685,6 @@
       }).catch(function () {}).finally(function () {
         try { localStorage.removeItem('alnr_session_token'); } catch (e) {}
         state.user = null;
-        state.activeSignupsCount = null;
         togglePopover(false);
         renderPopover();
       });
@@ -844,20 +832,16 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && wrap.classList.contains('open')) {
         togglePopover(false);
+        avatarBtn.focus();
       }
-    });
-
-    window.addEventListener('alnr:themechange', function () {
-      renderPopover();
     });
 
     window.alnrHeaderProfile = {
       setState: function (partial) {
         if (!partial || typeof partial !== 'object') return;
         if ('user' in partial) { state.user = partial.user; state.loaded = true; }
-        if ('activeSignupsCount' in partial) state.activeSignupsCount = partial.activeSignupsCount;
         if ('outdatedPrefs' in partial) state.outdatedPrefs = Boolean(partial.outdatedPrefs);
         if ('onSignOut' in partial) state.onSignOut = partial.onSignOut;
         if ('onLogin' in partial) state.onLogin = partial.onLogin;
@@ -888,9 +872,9 @@
     }
   })();
 
-  // ── Auto-load optional Refresh [Beta] engine across all pages ─────────────
+  // ── Auto-load optional Refresh [Beta] engine if not already included in HTML ─
   (function loadDreamscapeEngine() {
-    if (window.__alnrDreamscapeEngine || document.getElementById('alnr-dreamscape-script')) return;
+    if (window.__alnrDreamscapeEngine || document.getElementById('alnr-dreamscape-script') || document.querySelector('script[src*="dreamscape.js"]')) return;
     var isSub = /\/(ftb|ftm|chaotic)\//i.test(window.location.pathname || '');
     var sc = document.createElement('script');
     sc.id = 'alnr-dreamscape-script';

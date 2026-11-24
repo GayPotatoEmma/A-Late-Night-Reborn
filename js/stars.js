@@ -255,10 +255,11 @@
   }
 
   var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  var currentUi = document.documentElement.getAttribute('data-ui') || 'classic';
   var resizeTimer = null;
 
-  function isLiteTheme() {
-    return currentTheme.indexOf('lite') !== -1;
+  function isDisabled() {
+    return currentTheme.indexOf('lite') !== -1 || currentUi === 'refresh';
   }
 
   function resizeCanvasOnly() {
@@ -273,7 +274,7 @@
 
   function drawStaticFrame() {
     ctx.clearRect(0, 0, W, H);
-    if (isLiteTheme()) return;
+    if (isDisabled()) return;
     var isLight = currentTheme.indexOf('light') === 0;
     if (isLight) {
       drawLightMode();
@@ -287,7 +288,7 @@
   var lastFrameTime = 0;
 
   function draw(timestamp) {
-    if (isReducedMotion || isLiteTheme()) {
+    if (isReducedMotion || isDisabled()) {
       cancelAnimationFrame(raf);
       ctx.clearRect(0, 0, W, H);
       return;
@@ -304,18 +305,22 @@
     }
   }
 
-  init();
-  if (isReducedMotion) {
-    drawStaticFrame();
-  } else {
-    draw();
+  if (!isDisabled()) {
+    init();
+    if (isReducedMotion) {
+      drawStaticFrame();
+    } else {
+      draw();
+    }
   }
 
   window.addEventListener('resize', function () {
+    if (isDisabled()) return;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
+      if (isDisabled()) return;
       cancelAnimationFrame(raf);
-      if (window.innerWidth === W) {
+      if (window.innerWidth === W && stars.length > 0) {
         resizeCanvasOnly();
       } else {
         init();
@@ -332,8 +337,9 @@
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
       cancelAnimationFrame(raf);
-    } else if (!isReducedMotion && !isLiteTheme()) {
+    } else if (!isReducedMotion && !isDisabled()) {
       cancelAnimationFrame(raf);
+      if (!stars.length) init();
       lastFrameTime = performance.now();
       draw();
     }
@@ -341,22 +347,32 @@
 
   if (window.MutationObserver) {
     var themeObserver = new MutationObserver(function (mutations) {
+      var changed = false;
       mutations.forEach(function (m) {
-        if (m.attributeName === 'data-theme') {
-          currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-          cancelAnimationFrame(raf);
-          if (isLiteTheme()) {
-            ctx.clearRect(0, 0, W, H);
-          } else if (isReducedMotion) {
-            shootingStar = null;
-            drawStaticFrame();
-          } else {
-            lastFrameTime = performance.now();
-            draw();
-          }
+        if (m.attributeName === 'data-theme' || m.attributeName === 'data-ui') {
+          changed = true;
         }
       });
+      if (!changed) return;
+
+      currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      currentUi = document.documentElement.getAttribute('data-ui') || 'classic';
+      cancelAnimationFrame(raf);
+      if (isDisabled()) {
+        ctx.clearRect(0, 0, W || canvas.width, H || canvas.height);
+      } else {
+        if (!stars.length || W !== window.innerWidth || H !== window.innerHeight) {
+          init();
+        }
+        if (isReducedMotion) {
+          shootingStar = null;
+          drawStaticFrame();
+        } else {
+          lastFrameTime = performance.now();
+          draw();
+        }
+      }
     });
-    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-ui'] });
   }
 })();

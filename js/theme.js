@@ -217,8 +217,9 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && wrapper.classList.contains('open')) {
         toggleDropdown(false);
+        btn.focus();
       }
     });
 

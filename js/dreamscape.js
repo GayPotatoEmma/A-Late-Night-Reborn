@@ -44,9 +44,10 @@
     var isProfile = path.indexOf('profile') !== -1;
     var isGuides = !isSignups && !isProfile && path.indexOf('contact') === -1 && path.indexOf('privacy') === -1 && path.indexOf('dashboard') === -1;
 
+    var isFile = window.location.protocol === 'file:';
     var links = [
-      { label: 'Guides', href: rootPrefix + 'index.html', active: isGuides },
-      { label: 'Signups', href: rootPrefix + 'signups.html', active: isSignups }
+      { label: 'Guides', href: isFile ? (rootPrefix + 'index.html') : '/', active: isGuides },
+      { label: 'Signups', href: isFile ? (rootPrefix + 'signups.html') : '/signups', active: isSignups }
     ];
 
     links.forEach(function (item) {
@@ -72,6 +73,10 @@
   /* ── 2. Scroll State & Subtle GPU Sky Parallax ───────────────────────────── */
   function startScrollAndParallax() {
     var ticking = false;
+    var moonLayer = document.querySelector('.ds-parallax-moon');
+    var towerLayer = document.querySelector('.ds-parallax-tower');
+    var midCloud = document.querySelector('.ds-parallax-cloud');
+
     scrollHandler = function () {
       if (ticking || !mounted) return;
       ticking = true;
@@ -81,9 +86,6 @@
         document.body.classList.toggle('ds-scrolled', y > 28);
 
         if (!isLiteOrReduced() && y < 700) {
-          var moonLayer = document.querySelector('.ds-parallax-moon');
-          var towerLayer = document.querySelector('.ds-parallax-tower');
-          var midCloud = document.querySelector('.ds-parallax-cloud');
           if (moonLayer) moonLayer.style.transform = 'translate3d(0,' + (y * 0.16).toFixed(1) + 'px,0)';
           if (towerLayer) towerLayer.style.transform = 'translate3d(0,' + (y * 0.09).toFixed(1) + 'px,0)';
           if (midCloud) midCloud.style.transform = 'translate3d(0,' + (y * 0.05).toFixed(1) + 'px,0)';
@@ -493,8 +495,12 @@
 
     var isProfile = Boolean(document.body && document.body.dataset && document.body.dataset.page === 'profile');
     var isSignups = Boolean(document.getElementById('runs-selection-container'));
+    var isDashboard = Boolean(document.getElementById('alnr-dashboard-root'));
 
-    if (!mountHome()) {
+    if (isDashboard) {
+      document.body.classList.add('ds-page-dashboard');
+      mountedKind = 'dashboard';
+    } else if (!mountHome()) {
       if (isProfile) mountSignupsOrProfile('profile');
       else if (isSignups) mountSignupsOrProfile('signups');
       else if (!mountGuide()) mountSecondary();
@@ -512,6 +518,7 @@
     else if (mountedKind === 'profile') unmountSignupsOrProfile('profile');
     else if (mountedKind === 'signups') unmountSignupsOrProfile('signups');
     else if (mountedKind === 'secondary') unmountSecondary();
+    else if (mountedKind === 'dashboard') document.body.classList.remove('ds-page-dashboard');
 
     mountedKind = null;
     mounted = false;

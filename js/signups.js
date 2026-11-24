@@ -1,10 +1,11 @@
 // Dynamic Run Signups Module for A Late Night Reborn
 
 (function () {
-    const DISCORD_CLIENT_ID = "1526282207185080411";
+    const _cfg = window.ALNR_CONFIG || {};
+    const DISCORD_CLIENT_ID = _cfg.DISCORD_CLIENT_ID || "1526282207185080411";
 
     function getApiUrl() {
-        return 'https://api.alatenightreborn.com';
+        return _cfg.API_URL || 'https://api.alatenightreborn.com';
     }
 
     let currentUser = null;
@@ -24,125 +25,23 @@
     let verifyReverifyMode = false;
     let verifyBusy = false;
     let verifyAlert = null;
+    let lastModalTrigger = null;
 
-    // ── Saved Preferences & Schema Versioning ────────────────────────────────────
-    const PREFS_STORAGE_KEY = 'alnr_signup_preferences_v1';
-    const CONTENT_TYPES = ['Chaotic', 'FT:B', 'FT:M', 'BA', 'DRS'];
-    const CONTENT_SCHEMA_VERSIONS = {
-        'Chaotic': 1,
-        'FT:B': 1,
-        'FT:M': 1,
-        'BA': 1,
-        'DRS': 1
-    };
-
-    const BA_LOGOS_ACTIONS = [
-        'Perception (Finding Traps)',
-        'Spirit Dart (Vulnerability)',
-        'Feint (Evasion)',
-        'Dispel (Buff Removal)',
-        'Bravery (Buffs)',
-        'Refresh (Magia Wheel)'
-    ];
-
-    const DRS_LOST_ACTIONS = [
-        'Perception (Finding Traps)',
-        'Rend Armor (Vulnerability)',
-        'Banish (Phantom Vulnerability)',
-        'Flare Star (BLM DoT)',
-        'Dispel (Buff Removal)',
-        'Cure IV (Party Bravery)'
-    ];
-
-    const DRS_DUEL_OPTIONS = [
-        'No',
-        "Yes and I'm experienced",
-        "Yes but it's my first time"
-    ];
-
-    function getPartyOptionsForContent(contentType) {
-        if (contentType === 'Chaotic') {
-            return [
-                { value: 'Any', label: 'Any Party' },
-                { value: 'A', label: 'Party A' },
-                { value: 'B', label: 'Party B' },
-                { value: 'C', label: 'Party C' }
-            ];
-        } else if (contentType === 'DRS') {
-            return [
-                { value: 'Any', label: 'Any Party' },
-                { value: 'A (Slimes)', label: 'A (Slimes)' },
-                { value: 'B (Slimes)', label: 'B (Slimes)' },
-                { value: 'C (Slimes)', label: 'C (Slimes)' },
-                { value: '1 (Golems)', label: '1 (Golems)' },
-                { value: '2 (Golems)', label: '2 (Golems)' },
-                { value: '3 (Golems)', label: '3 (Golems)' }
-            ];
-        }
-        return [
-            { value: 'Any', label: 'Any Party' },
-            { value: 'A', label: 'Party A' },
-            { value: 'B', label: 'Party B' },
-            { value: 'C', label: 'Party C' },
-            { value: '1', label: 'Party 1' },
-            { value: '2', label: 'Party 2' },
-            { value: '3', label: 'Party 3' }
-        ];
-    }
-
-    // ── Pre-defined Lists ────────────────────────────────────────────────────────
-    const ALL_ROLES = [
-        { id: 'Tank', label: 'Tank', class: 'role-tank' },
-        { id: 'Regen Healer', label: 'Regen Healer', class: 'role-healer' },
-        { id: 'Shield Healer', label: 'Shield Healer', class: 'role-healer' },
-        { id: 'Melee DPS', label: 'Melee DPS', class: 'role-dps' },
-        { id: 'Magical DPS', label: 'Magical DPS', class: 'role-dps' },
-        { id: 'Physical Ranged DPS', label: 'Physical Ranged', class: 'role-dps' },
-        { id: 'Any', label: 'Any Role', class: 'role-any' }
-    ];
-
-    const REGEN_HEALER_JOBS = ['White Mage', 'Astrologian'];
-    const SHIELD_HEALER_JOBS = ['Scholar', 'Sage'];
-
-    const JOBS_BY_ROLE = {
-        'Tank': ['Paladin', 'Warrior', 'Dark Knight', 'Gunbreaker'],
-        'Healer': ['White Mage', 'Astrologian', 'Scholar', 'Sage'],
-        'Melee DPS': ['Monk', 'Dragoon', 'Ninja', 'Samurai', 'Reaper', 'Viper'],
-        'Magical DPS': ['Black Mage', 'Summoner', 'Red Mage', 'Pictomancer'],
-        'Physical Ranged DPS': ['Bard', 'Machinist', 'Dancer']
-    };
-
-    const PHANTOM_JOBS = [
-        'Bard', 'Berserker', 'Black Mage', 'Blue Mage', 'Cannoneer', 
-        'Chemist', 'Dancer', 'Dragoon', 'Geomancer', 'Gladiator', 
-        'Knight', 'Monk', 'Mystic Knight', 'Necromancer', 'Ninja', 
-        'Oracle', 'Ranger', 'Red Mage', 'Samurai', 'Summoner', 
-        'Thief', 'Time Mage', 'White Mage'
-    ];
-
-    const PROG_OPTIONS = {
-        'Chaotic': [
-            'No Experience', 'Seen Phase 2 - Swaps', 'Seen Enrage', 
-            'Cleared 1-4 times', 'Cleared 5+ times'
-        ],
-        'FT:B': [
-            'No Experience', 'Seen Dead Stars', 'Seen Bridges', 'Seen Marble Dragon', 
-            'Seen Magitaur', 'Clear Ready: Seen Magitaur - Holy Lance', 
-            'Cleared 1-4 times', 'Cleared 5+ times'
-        ],
-        'FT:M': [
-            'No Experience', 'Seen Twin Snakes', 'Seen Sword Dancer', 'Seen Platforms', 
-            'Seen Necrophobia', 'Seen Index', 'Cleared 1-4 times', 'Cleared 5+ times'
-        ],
-        'BA': [
-            'No Experience', 'Seen Raiden', 'Seen Absolute Virtue', 'Seen Ozma', 
-            'Cleared 1-4 times', 'Cleared 5+ times'
-        ],
-        'DRS': [
-            'No Experience', 'Seen Trinity Seeker', "Seen Queen's Guard",
-            'Seen Trinity Avowed', 'Seen the Queen', 'Cleared 1-4 times', 'Cleared 5+ times'
-        ]
-    };
+    // ── Raid, Role, Job & Progression Definitions (from js/signup-data.js) ──────
+    const _data = window.ALNR_SIGNUP_DATA || {};
+    const PREFS_STORAGE_KEY = _data.PREFS_STORAGE_KEY || 'alnr_signup_preferences_v1';
+    const CONTENT_TYPES = _data.CONTENT_TYPES || ['Chaotic', 'FT:B', 'FT:M', 'BA', 'DRS'];
+    const CONTENT_SCHEMA_VERSIONS = _data.CONTENT_SCHEMA_VERSIONS || { 'Chaotic': 1, 'FT:B': 1, 'FT:M': 1, 'BA': 1, 'DRS': 1 };
+    const BA_LOGOS_ACTIONS = _data.BA_LOGOS_ACTIONS || [];
+    const DRS_LOST_ACTIONS = _data.DRS_LOST_ACTIONS || [];
+    const DRS_DUEL_OPTIONS = _data.DRS_DUEL_OPTIONS || [];
+    const getPartyOptionsForContent = _data.getPartyOptionsForContent || (() => [{ value: 'Any', label: 'Any Party' }]);
+    const ALL_ROLES = _data.ALL_ROLES || [];
+    const REGEN_HEALER_JOBS = _data.REGEN_HEALER_JOBS || [];
+    const SHIELD_HEALER_JOBS = _data.SHIELD_HEALER_JOBS || [];
+    const JOBS_BY_ROLE = _data.JOBS_BY_ROLE || {};
+    const PHANTOM_JOBS = _data.PHANTOM_JOBS || [];
+    const PROG_OPTIONS = _data.PROG_OPTIONS || {};
 
     const IS_PROFILE_PAGE = Boolean(document.body && document.body.dataset && document.body.dataset.page === 'profile');
 
@@ -225,7 +124,6 @@
         cachedMyStats = null;
         activeStatsRaidFilter = 'all';
         statsHistoryVisibleCount = 10;
-        closePrefsModal(true);
 
         // 4. Close any open Application Details modal & wipe body
         closeApplicationModal();
@@ -361,12 +259,6 @@
         if (verifyDot) {
             const needsVerify = Boolean(currentUser && currentUser.is_in_guild && !currentUser.is_verified);
             verifyDot.style.display = needsVerify ? 'inline-flex' : 'none';
-        }
-
-        const container = document.getElementById('auth-banner-container');
-        if (container) {
-            container.innerHTML = '';
-            container.style.display = 'none';
         }
 
         if (IS_PROFILE_PAGE) {
@@ -1245,18 +1137,25 @@
         phantomWarningContext = context;
         const backdrop = document.getElementById('phantom-exp-warning-backdrop');
         if (!backdrop) return;
+        lastModalTrigger = document.activeElement;
         backdrop.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+        const cancelBtn = document.getElementById('phantom-warning-cancel-btn') || document.getElementById('phantom-warning-close-btn');
+        if (cancelBtn) cancelBtn.focus();
     }
 
     function closePhantomExpWarningModal() {
         const backdrop = document.getElementById('phantom-exp-warning-backdrop');
-        if (!backdrop) return;
+        if (!backdrop || backdrop.style.display === 'none') return;
         backdrop.style.display = 'none';
-        const prefsModal = document.getElementById('prefs-modal-backdrop');
-        if (!prefsModal || prefsModal.style.display === 'none') {
+        const appModal = document.getElementById('application-modal-backdrop');
+        if (!appModal || appModal.style.display === 'none') {
             document.body.style.overflow = '';
         }
+        if (lastModalTrigger && typeof lastModalTrigger.focus === 'function') {
+            lastModalTrigger.focus();
+        }
+        lastModalTrigger = null;
     }
 
     function confirmPhantomExpSelectAll() {
@@ -1944,18 +1843,22 @@
             </div>
         `;
 
+        lastModalTrigger = document.activeElement;
         modalBackdrop.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+        const closeBtn = document.getElementById('modal-close-btn') || document.getElementById('modal-dismiss-btn');
+        if (closeBtn) closeBtn.focus();
     }
 
     function closeApplicationModal() {
         const modalBackdrop = document.getElementById('application-modal-backdrop');
-        if (!modalBackdrop) return;
+        if (!modalBackdrop || modalBackdrop.style.display === 'none') return;
         modalBackdrop.style.display = 'none';
-        const profileModal = document.getElementById('prefs-modal-backdrop');
-        if (!profileModal || profileModal.style.display === 'none') {
-            document.body.style.overflow = '';
+        document.body.style.overflow = '';
+        if (lastModalTrigger && typeof lastModalTrigger.focus === 'function') {
+            lastModalTrigger.focus();
         }
+        lastModalTrigger = null;
     }
 
     function showStatusAlert(msg, type) {
@@ -2300,9 +2203,7 @@
     }
 
     function updatePrefsCogBadge() {
-        const badge = document.getElementById('prefs-outdated-badge');
         const tabDot = document.getElementById('profile-tab-prefs-outdated');
-        const cogBtn = document.getElementById('btn-open-prefs-modal');
 
         const store = loadSavedPreferencesStore();
         const outdatedTypes = [];
@@ -2319,21 +2220,13 @@
             window.alnrHeaderProfile.setState({ outdatedPrefs: outdatedTypes.length > 0 });
         }
 
-        if (outdatedTypes.length > 0) {
-            const msg = `Saved preferences need updating for: ${outdatedTypes.join(', ')}`;
-            if (badge) {
-                badge.style.display = 'inline-flex';
-                badge.title = msg;
-            }
-            if (tabDot) {
+        if (tabDot) {
+            if (outdatedTypes.length > 0) {
                 tabDot.style.display = 'inline-flex';
-                tabDot.title = msg;
+                tabDot.title = `Saved preferences need updating for: ${outdatedTypes.join(', ')}`;
+            } else {
+                tabDot.style.display = 'none';
             }
-            if (cogBtn) cogBtn.title = msg;
-        } else {
-            if (badge) badge.style.display = 'none';
-            if (tabDot) tabDot.style.display = 'none';
-            if (cogBtn) cogBtn.title = 'My Profile (Active Signups, Run Stats & Saved Preferences)';
         }
     }
 
@@ -2690,62 +2583,6 @@
         return { cls: 'rb-other', label: String(raid || 'OTHER').toUpperCase(), grad: 'linear-gradient(90deg, #64748b, #94a3b8)' };
     }
 
-    function updateProfileModalHeader() {
-        const avatarEl = document.getElementById('profile-modal-avatar');
-        const charBadgeEl = document.getElementById('profile-modal-char-badge');
-        const subEl = document.getElementById('profile-modal-subtitle');
-
-        if (avatarEl && currentUser && currentUser.avatar_url) {
-            avatarEl.src = currentUser.avatar_url;
-        }
-
-        const charName = (cachedMyStats && cachedMyStats.character_name) || (currentUser && currentUser.character_name) || '';
-        if (charBadgeEl) {
-            if (charName) {
-                charBadgeEl.textContent = charName;
-                charBadgeEl.style.display = 'inline-flex';
-            } else {
-                charBadgeEl.style.display = 'none';
-            }
-        }
-
-        if (subEl && currentUser) {
-            const parts = [`@${currentUser.username}`];
-            const lastRun = cachedMyStats && cachedMyStats.summary && cachedMyStats.summary.last_run;
-            if (lastRun) {
-                const dtParts = String(lastRun).slice(0, 10).split('-');
-                if (dtParts.length === 3) {
-                    const dt = new Date(Date.UTC(parseInt(dtParts[0], 10), parseInt(dtParts[1], 10) - 1, parseInt(dtParts[2], 10)));
-                    if (!Number.isNaN(dt.getTime())) {
-                        parts.push(`Last run: ${dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })}`);
-                    }
-                }
-            }
-            subEl.textContent = parts.join(' • ');
-        }
-    }
-
-    function updateProfileModalFooterHint(tabName) {
-        const hintEl = document.getElementById('profile-modal-footer-hint');
-        if (!hintEl) return;
-        if (tabName === 'prefs') {
-            hintEl.innerHTML = `
-                <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">lock</span>
-                <span>Saved exclusively on your device. See our <a href="privacy.html">Privacy Notice</a>.</span>
-            `;
-        } else if (tabName === 'stats') {
-            hintEl.innerHTML = `
-                <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">lock</span>
-                <span>Only visible to you.</span>
-            `;
-        } else {
-            hintEl.innerHTML = `
-                <span class="material-symbols-outlined" style="font-size: 1.1rem; color: var(--accent-purple);">info</span>
-                <span>Click any active signup to view full details or roster status.</span>
-            `;
-        }
-    }
-
     async function loadMyRunStats(force = false) {
         const container = document.getElementById('profile-stats-content');
         if (!container) return;
@@ -2775,7 +2612,6 @@
             cachedMyStats = data;
             activeStatsRaidFilter = 'all';
             statsHistoryVisibleCount = 10;
-            updateProfileModalHeader();
             renderMyRunStats();
         } catch (err) {
             container.innerHTML = `
@@ -3435,8 +3271,6 @@
         if (pPrefs) pPrefs.style.display = tabName === 'prefs' ? 'flex' : 'none';
         if (pVerify) pVerify.style.display = tabName === 'verify' ? 'flex' : 'none';
 
-        updateProfileModalFooterHint(tabName);
-
         if (IS_PROFILE_PAGE && window.location.protocol !== 'file:') {
             try {
                 const url = new URL(window.location.href);
@@ -3503,28 +3337,9 @@
     }
 
     function hasUnsavedPrefsModalChanges() {
-        if (IS_PROFILE_PAGE) {
-            if (activeProfileTab !== 'prefs') return false;
-            if (!prefsModalInitialSnapshot) return false;
-            return getPrefsModalStateSnapshot() !== prefsModalInitialSnapshot;
-        }
-        const backdrop = document.getElementById('prefs-modal-backdrop');
-        if (!backdrop || backdrop.style.display === 'none') return false;
-        if (activeProfileTab !== 'prefs') return false;
+        if (!IS_PROFILE_PAGE || activeProfileTab !== 'prefs') return false;
         if (!prefsModalInitialSnapshot) return false;
         return getPrefsModalStateSnapshot() !== prefsModalInitialSnapshot;
-    }
-
-    function closePrefsModal(force = false) {
-        const backdrop = document.getElementById('prefs-modal-backdrop');
-        if (!backdrop || backdrop.style.display === 'none') return;
-        if (!force && hasUnsavedPrefsModalChanges()) {
-            if (!window.confirm(`You have unsaved changes for ${activePrefsTab}. Close without saving?`)) {
-                return;
-            }
-        }
-        backdrop.style.display = 'none';
-        document.body.style.overflow = '';
     }
 
     function syncPrefsModalChaoticVisibility() {
@@ -4171,17 +3986,6 @@
         const profileLoginBtn = document.getElementById('btn-profile-discord-login');
         if (profileLoginBtn) profileLoginBtn.onclick = initiateDiscordLogin;
 
-        const prefsModalBackdrop = document.getElementById('prefs-modal-backdrop');
-        const prefsModalCloseBtn = document.getElementById('prefs-modal-close-btn');
-        const prefsModalDismissBtn = document.getElementById('prefs-modal-dismiss-btn');
-        if (prefsModalCloseBtn) prefsModalCloseBtn.onclick = () => closePrefsModal();
-        if (prefsModalDismissBtn) prefsModalDismissBtn.onclick = () => closePrefsModal();
-        if (prefsModalBackdrop) {
-            prefsModalBackdrop.onclick = (e) => {
-                if (e.target === prefsModalBackdrop) closePrefsModal();
-            };
-        }
-
         document.querySelectorAll('#profile-top-tabs [data-profile-tab]').forEach(tabBtn => {
             tabBtn.onclick = () => {
                 const targetTab = tabBtn.getAttribute('data-profile-tab');
@@ -4339,11 +4143,12 @@
                     return;
                 }
                 closeApplicationModal();
-                closePrefsModal();
             }
         });
 
-        // 8. Auth code check, verify session & load events
+        // 8. Fetch public events in parallel with auth check to cut startup waterfall
+        const eventsPromise = loadEvents();
+
         await handleAuthCodeIfPresent();
         if (!currentUser) {
             await verifyExistingSession();
@@ -4359,16 +4164,14 @@
                 activeProfileTab = '';
                 switchProfileTab(initTab, initRaid);
             }
-            await loadEvents();
-            await loadMySignups();
-        } else {
-            await loadEvents();
-            await loadMySignups();
         }
 
+        await eventsPromise;
+        await loadMySignups();
+
         window.addEventListener('alnr:uichange', () => {
-            if (!IS_PROFILE_PAGE && typeof renderEvents === 'function') {
-                renderEvents();
+            if (!IS_PROFILE_PAGE && typeof renderEventsGrid === 'function') {
+                renderEventsGrid();
             }
             if (IS_PROFILE_PAGE && cachedMyStats && typeof renderMyRunStats === 'function') {
                 renderMyRunStats();

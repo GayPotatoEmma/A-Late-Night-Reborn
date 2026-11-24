@@ -2,12 +2,9 @@
 
 (function () {
     function getApiUrl() {
-        let stored = localStorage.getItem('alnr_api_url');
-        if (stored && (stored.includes('workers.dev') || (!window.location.hostname.includes('localhost') && stored.includes('localhost')))) {
-            localStorage.removeItem('alnr_api_url');
-            stored = null;
+        if (window.ALNR_CONFIG && typeof window.ALNR_CONFIG.getApiUrl === 'function') {
+            return window.ALNR_CONFIG.getApiUrl(true);
         }
-        if (stored) return stored.replace(/\/+$/, '');
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
             return 'http://127.0.0.1:5000';
         }
@@ -92,13 +89,20 @@
                 if (!text) {
                     statusBox.style.display = 'none';
                     statusBox.className = 'contact-status';
-                    statusBox.innerHTML = '';
+                    statusBox.textContent = '';
                     return;
                 }
                 statusBox.style.display = 'flex';
                 statusBox.className = `contact-status status-alert ${type}`;
-                const icon = type === 'success' ? 'check_circle' : 'error';
-                statusBox.innerHTML = `<span class="material-symbols-outlined">${icon}</span> <span>${text}</span>`;
+                statusBox.textContent = '';
+                const iconEl = document.createElement('span');
+                iconEl.className = 'material-symbols-outlined';
+                iconEl.textContent = type === 'success' ? 'check_circle' : 'error';
+                const textEl = document.createElement('span');
+                textEl.textContent = String(text);
+                statusBox.appendChild(iconEl);
+                statusBox.appendChild(document.createTextNode(' '));
+                statusBox.appendChild(textEl);
             }
         });
     }

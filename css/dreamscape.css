@@ -1,9 +1,7 @@
 /* ============================================================================
    A Late Night Reborn - 04 / DREAMSCAPE (Living Illustrated Twilight Sky World)
-   Sandbox Visual Overhaul Stylesheet
+   Optional Refresh [Beta] Stylesheet (Fredoka loaded via page <link>)
    ============================================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Quicksand:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap');
 
 html[data-ui="refresh"],
 html[data-ui="refresh"][data-theme="light"],
@@ -47,7 +45,7 @@ html[data-ui="refresh"][data-theme="light-lite"] {
 
   --ds-display:         'Fredoka', 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
   --ds-serif:           'Fredoka', 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
-  --ds-sans:            'Quicksand', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ds-sans:            'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Map legacy CSS variables so existing components harmonize cleanly */
   --bg-deep:            var(--ds-ground);
@@ -1536,6 +1534,94 @@ html[data-ui="refresh"][data-theme^="dark"] .nav-drawer a.active {
   html[data-ui="refresh"] .ds-cloud-land .section-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
+}
+
+/* Guide Macro Boxes & Lightbox Polish */
+html[data-ui="refresh"][data-theme] .macro-box {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 16px !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .macro-box pre {
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .macro-copy-btn {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 999px !important;
+  color: var(--ds-ink-2) !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"][data-theme] .macro-copy-btn:hover {
+  border-color: var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .macro-copy-btn.copied {
+  background: var(--ds-chaotic-soft) !important;
+  border-color: var(--ds-chaotic-border) !important;
+  color: var(--ds-chaotic) !important;
+}
+
+html[data-ui="refresh"] .lightbox-overlay {
+  background: rgba(14, 11, 32, 0.86) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+html[data-ui="refresh"] .lightbox-img {
+  border-radius: 14px !important;
+  box-shadow: 0 24px 64px rgba(6, 4, 18, 0.65) !important;
+}
+
+html[data-ui="refresh"] .lightbox-close {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border: 1.5px solid rgba(253, 212, 201, 0.35) !important;
+  border-radius: 999px !important;
+  color: #ffffff !important;
+}
+
+html[data-ui="refresh"] .lightbox-close:hover {
+  background: rgba(253, 212, 201, 0.25) !important;
+}
+
+/* Host Dashboard subtle Refresh [Beta] container support */
+html[data-ui="refresh"] body.ds-page-dashboard {
+  background: var(--ds-ground) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-dashboard .site-header {
+  background: rgba(253, 246, 239, 0.94) !important;
+  border-bottom: 1px solid var(--ds-border) !important;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] body.ds-page-dashboard .site-header {
+  background: rgba(22, 18, 44, 0.94) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-dashboard .site-header .header-site-name,
+html[data-ui="refresh"] body.ds-page-dashboard .site-header .ds-header-link,
+html[data-ui="refresh"] body.ds-page-dashboard .site-header .theme-toggle,
+html[data-ui="refresh"] body.ds-page-dashboard .site-header .nav-toggle,
+html[data-ui="refresh"] body.ds-page-dashboard .site-header .header-avatar-btn {
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"] body.ds-page-dashboard .main-content {
+  padding-top: 96px !important;
+}
+
+html[data-ui="refresh"] body.ds-page-dashboard .glass-card {
+  background: var(--ds-surface) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 20px !important;
+  box-shadow: var(--shadow-glass) !important;
+  backdrop-filter: none !important;
 }
 
 @media (max-width: 1080px) {

@@ -1205,6 +1205,356 @@ html[data-ui="refresh"][data-theme] .stats-empty-box {
 }
 
 /* ============================================================================
+   5. DREAMSCAPE MODALS, SAVED PREFERENCES, VERIFICATION & FORM SUB-COMPONENTS
+   ============================================================================ */
+
+/* Modals (Application Details & Phantom Job Warning) */
+html[data-ui="refresh"] .modal-backdrop {
+  background: rgba(14, 11, 32, 0.72) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-box {
+  background: var(--ds-surface) !important;
+  border: 1.5px solid var(--ds-border-strong) !important;
+  border-radius: 22px !important;
+  color: var(--ds-ink) !important;
+  box-shadow: 0 24px 64px rgba(10, 8, 28, 0.45) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-box.modal-box-warning {
+  border-color: var(--ds-ftb-border) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-header {
+  background: var(--ds-ground) !important;
+  border-bottom: 1.5px solid var(--ds-border) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-title {
+  font-family: var(--ds-serif) !important;
+  font-weight: 600 !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-subtitle {
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-header-icon {
+  color: var(--ds-ftm) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-header-icon.warning-icon {
+  color: var(--ds-ftb) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-close-btn {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 999px !important;
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-close-btn:hover {
+  border-color: var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-body {
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-section,
+html[data-ui="refresh"][data-theme] .modal-info-box {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 16px !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-section-title,
+html[data-ui="refresh"][data-theme] .modal-sublabel {
+  color: var(--ds-ink-muted) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-subvalue,
+html[data-ui="refresh"][data-theme] .modal-subvalue-lg,
+html[data-ui="refresh"][data-theme] .modal-key-val {
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-job-group {
+  border-bottom-color: var(--ds-border) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-roster-card {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 16px !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-roster-card.is-selected {
+  background: var(--ds-chaotic-soft) !important;
+  border-color: var(--ds-chaotic-border) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-roster-card.is-standby {
+  background: var(--ds-drs-soft) !important;
+  border-color: rgba(217, 150, 22, 0.35) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-roster-assign-chip {
+  background: var(--ds-surface) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 999px !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-warning-text {
+  background: var(--ds-ftb-soft) !important;
+  border: 1.5px solid var(--ds-ftb-border) !important;
+  color: var(--ds-ink) !important;
+  border-radius: 14px !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-warning-text strong {
+  color: var(--ds-ftb) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-warning-subtext {
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-footer {
+  background: var(--ds-ground) !important;
+  border-top: 1.5px solid var(--ds-border) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-cancellation-hint {
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-btn-dismiss {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 999px !important;
+  color: var(--ds-ink) !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-btn-dismiss:hover {
+  border-color: var(--ds-border-strong) !important;
+  background: var(--ds-surface) !important;
+}
+
+html[data-ui="refresh"][data-theme] .modal-btn-confirm-warning {
+  background: var(--ds-ftb) !important;
+  border-radius: 999px !important;
+  color: #ffffff !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+  box-shadow: 0 8px 20px rgba(224, 79, 99, 0.30) !important;
+}
+
+/* Profile: Saved Preferences Tab */
+html[data-ui="refresh"][data-theme] .prefs-content-tabs {
+  gap: 0.45rem !important;
+}
+
+html[data-ui="refresh"][data-theme] .prefs-tab-btn {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 999px !important;
+  color: var(--ds-ink-2) !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"][data-theme] .prefs-tab-btn:hover {
+  border-color: var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .prefs-tab-btn.active {
+  background: #252047 !important;
+  border-color: #252047 !important;
+  color: var(--ds-moon) !important;
+}
+
+html[data-ui="refresh"][data-theme^="dark"] .prefs-tab-btn.active {
+  background: var(--ds-moon) !important;
+  border-color: var(--ds-moon) !important;
+  color: #211b40 !important;
+}
+
+html[data-ui="refresh"][data-theme] .prefs-modal-status-banner {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 14px !important;
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"][data-theme] .prefs-modal-status-banner.is-saved {
+  background: var(--ds-chaotic-soft) !important;
+  border-color: var(--ds-chaotic-border) !important;
+  color: var(--ds-chaotic) !important;
+}
+
+html[data-ui="refresh"][data-theme] .prefs-modal-status-banner.is-outdated {
+  background: var(--ds-drs-soft) !important;
+  border-color: rgba(217, 150, 22, 0.38) !important;
+  color: var(--ds-drs) !important;
+}
+
+html[data-ui="refresh"][data-theme] .btn-prefs-secondary,
+html[data-ui="refresh"][data-theme] .btn-prefs-banner-action,
+html[data-ui="refresh"][data-theme] .btn-prefs-banner-jump {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 999px !important;
+  color: var(--ds-ink) !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"][data-theme] .btn-prefs-secondary:hover,
+html[data-ui="refresh"][data-theme] .btn-prefs-banner-action:hover,
+html[data-ui="refresh"][data-theme] .btn-prefs-banner-jump:hover {
+  border-color: var(--ds-border-strong) !important;
+  background: var(--ds-surface) !important;
+}
+
+html[data-ui="refresh"][data-theme] .prefs-btn-danger-outline,
+html[data-ui="refresh"][data-theme] .prefs-btn-danger-text {
+  background: var(--ds-ftb-soft) !important;
+  border-color: var(--ds-ftb-border) !important;
+  color: var(--ds-ftb) !important;
+}
+
+html[data-ui="refresh"][data-theme] .prefs-btn-danger-outline:hover,
+html[data-ui="refresh"][data-theme] .prefs-btn-danger-text:hover {
+  background: var(--ds-ftb) !important;
+  border-color: var(--ds-ftb) !important;
+  color: #ffffff !important;
+}
+
+html[data-ui="refresh"][data-theme] .prefs-transfer-desc {
+  color: var(--ds-ink-2) !important;
+}
+
+/* Profile: Character Verification Tab */
+html[data-ui="refresh"][data-theme] .verify-lead-desc,
+html[data-ui="refresh"][data-theme] .verify-verified-sub,
+html[data-ui="refresh"][data-theme] .verify-char-meta {
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"][data-theme] .verify-verified-title,
+html[data-ui="refresh"][data-theme] .verify-char-name {
+  font-family: var(--ds-serif) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .verify-verified-card {
+  background: var(--ds-chaotic-soft) !important;
+  border: 1.5px solid var(--ds-chaotic-border) !important;
+  border-radius: 18px !important;
+}
+
+html[data-ui="refresh"][data-theme] .verify-char-preview,
+html[data-ui="refresh"][data-theme] .verify-step-row {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 16px !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .verify-step-num {
+  background: var(--ds-ftm-soft) !important;
+  border: 1.5px solid var(--ds-ftm-border) !important;
+  color: var(--ds-ftm) !important;
+}
+
+html[data-ui="refresh"][data-theme] .verify-code-box {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border-strong) !important;
+  border-radius: 14px !important;
+}
+
+html[data-ui="refresh"][data-theme] .verify-code-label {
+  color: var(--ds-ink-muted) !important;
+}
+
+html[data-ui="refresh"][data-theme] .verify-code-val {
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .verify-status-pill {
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+}
+
+/* Signups Form Sub-Components & Status Alerts */
+html[data-ui="refresh"][data-theme] .dynamic-jobs-box {
+  background: var(--ds-ground) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+}
+
+html[data-ui="refresh"][data-theme] .jobs-role-title {
+  font-family: var(--ds-serif) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .btn-mini-toggle {
+  background: var(--ds-surface-soft) !important;
+  border: 1.5px solid var(--ds-border) !important;
+  border-radius: 999px !important;
+  color: var(--ds-ink-2) !important;
+  font-family: var(--ds-sans) !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui="refresh"][data-theme] .btn-mini-toggle:hover {
+  border-color: var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme] .status-alert {
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+}
+
+html[data-ui="refresh"][data-theme] .status-alert.success {
+  background: var(--ds-chaotic-soft) !important;
+  border: 1.5px solid var(--ds-chaotic-border) !important;
+  color: var(--ds-chaotic) !important;
+}
+
+html[data-ui="refresh"][data-theme] .status-alert.error {
+  background: var(--ds-ftb-soft) !important;
+  border: 1.5px solid var(--ds-ftb-border) !important;
+  color: var(--ds-ftb) !important;
+}
+
+html[data-ui="refresh"][data-theme] .status-alert.info {
+  background: var(--ds-ftm-soft) !important;
+  border: 1.5px solid var(--ds-ftm-border) !important;
+  color: var(--ds-ftm) !important;
+}
+
+html[data-ui="refresh"][data-theme] .run-closed-badge,
+html[data-ui="refresh"][data-theme] .run-cancelled-badge {
+  border-radius: 999px !important;
+  background: var(--ds-ftb-soft) !important;
+  border: 1px solid var(--ds-ftb-border) !important;
+  color: var(--ds-ftb) !important;
+  font-weight: 800 !important;
+}
+
+/* ============================================================================
    Responsive Polish for Signups & Profile
    ============================================================================ */
 

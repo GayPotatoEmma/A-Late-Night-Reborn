@@ -557,6 +557,10 @@ html[data-ui="refresh"] .ds-profile-sky-inner {
   padding: 0 2rem;
 }
 
+html[data-ui="refresh"] .ds-profile-sky .signups-top-bar {
+  margin-bottom: 0 !important;
+}
+
 html[data-ui="refresh"] .ds-profile-sky .signups-title {
   font-family: var(--ds-display) !important;
   font-size: clamp(2.15rem, 3.8vw, 3rem) !important;
@@ -566,12 +570,14 @@ html[data-ui="refresh"] .ds-profile-sky .signups-title {
   color: #ffffff !important;
   text-shadow: 0 4px 22px rgba(15, 11, 38, 0.45);
   filter: none !important;
+  margin-bottom: 0 !important;
+  line-height: 1.12 !important;
 }
 
 html[data-ui="refresh"] .ds-profile-sky-meta {
-  margin-top: 0.4rem;
+  margin-top: 0.45rem !important;
   color: rgba(242, 234, 255, 0.88);
-  font-size: 0.98rem;
+  font-size: 0.96rem;
   font-weight: 700;
   display: flex;
   align-items: center;

@@ -75,7 +75,7 @@
   function startScrollAndParallax() {
     var ticking = false;
     var headerEl = document.querySelector('.site-header');
-    var skyEl = document.querySelector('.ds-home-sky, .ds-guide-sky, .ds-signups-sky, .ds-profile-sky, .ds-secondary-sky');
+    var skyEl = document.querySelector('.ds-home-sky, .ds-guide-sky, .ds-signups-sky, .ds-profile-sky, .ds-secondary-sky, .ds-dashboard-sky');
     var moonLayer = document.querySelector('.ds-parallax-moon');
     var towerLayer = document.querySelector('.ds-parallax-tower');
     var midCloud = document.querySelector('.ds-parallax-cloud');
@@ -501,6 +501,56 @@
     document.body.classList.remove('ds-page-secondary');
   }
 
+  function mountDashboard() {
+    var main = document.querySelector('main.main-content');
+    var root = document.getElementById('alnr-dashboard-root');
+    if (!main || !root) return false;
+
+    document.body.classList.add('ds-page-dashboard');
+
+    var sky = document.createElement('div');
+    sky.className = 'ds-dashboard-sky';
+    var art = document.createElement('div');
+    art.className = 'ds-sky-art';
+    art.innerHTML = buildBannerSkySvg();
+    sky.appendChild(art);
+
+    var skyInner = document.createElement('div');
+    skyInner.className = 'ds-dashboard-sky-inner';
+    skyInner.innerHTML =
+      '<div class="signups-hero">' +
+        '<h1 class="signups-title">Host Dashboard</h1>' +
+        '<p class="signups-desc">Manage active runs and signed-up players.</p>' +
+      '</div>';
+    sky.appendChild(skyInner);
+
+    var bodyWrap = document.createElement('div');
+    bodyWrap.className = 'ds-dashboard-body-wrap';
+    var bodyInner = document.createElement('div');
+    bodyInner.className = 'ds-dashboard-body-inner';
+
+    main.insertBefore(sky, root);
+    main.insertBefore(bodyWrap, root);
+    bodyInner.appendChild(root);
+    bodyWrap.appendChild(bodyInner);
+
+    mountedKind = 'dashboard';
+    return true;
+  }
+
+  function unmountDashboard() {
+    var main = document.querySelector('main.main-content');
+    var sky = main ? main.querySelector(':scope > .ds-dashboard-sky') : null;
+    var bodyWrap = main ? main.querySelector(':scope > .ds-dashboard-body-wrap') : null;
+    if (sky) sky.remove();
+    if (bodyWrap) {
+      var root = document.getElementById('alnr-dashboard-root');
+      if (root && main) main.insertBefore(root, bodyWrap);
+      bodyWrap.remove();
+    }
+    document.body.classList.remove('ds-page-dashboard');
+  }
+
   function mount() {
     if (mounted || !isRefreshActive()) return;
     mounted = true;
@@ -511,8 +561,7 @@
     var isDashboard = Boolean(document.getElementById('alnr-dashboard-root'));
 
     if (isDashboard) {
-      document.body.classList.add('ds-page-dashboard');
-      mountedKind = 'dashboard';
+      mountDashboard();
     } else if (!mountHome()) {
       if (isProfile) mountSignupsOrProfile('profile');
       else if (isSignups) mountSignupsOrProfile('signups');
@@ -531,7 +580,7 @@
     else if (mountedKind === 'profile') unmountSignupsOrProfile('profile');
     else if (mountedKind === 'signups') unmountSignupsOrProfile('signups');
     else if (mountedKind === 'secondary') unmountSecondary();
-    else if (mountedKind === 'dashboard') document.body.classList.remove('ds-page-dashboard');
+    else if (mountedKind === 'dashboard') unmountDashboard();
 
     mountedKind = null;
     mounted = false;

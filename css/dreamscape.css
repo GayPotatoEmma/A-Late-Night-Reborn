@@ -1695,47 +1695,6 @@ html[data-ui="refresh"] .lightbox-close:hover {
   background: rgba(253, 212, 201, 0.25) !important;
 }
 
-/* Host Dashboard subtle Refresh [Beta] container support */
-html[data-ui="refresh"] body.ds-page-dashboard {
-  background: var(--ds-ground) !important;
-  color: var(--ds-ink) !important;
-}
-
-html[data-ui="refresh"] body.ds-page-dashboard .site-header {
-  background: rgba(253, 246, 239, 0.94) !important;
-  border-bottom: 1px solid var(--ds-border) !important;
-}
-
-html[data-ui="refresh"][data-theme^="dark"] body.ds-page-dashboard .site-header {
-  background: rgba(22, 18, 44, 0.94) !important;
-}
-
-html[data-ui="refresh"] body.ds-page-dashboard .site-header .header-site-name,
-html[data-ui="refresh"] body.ds-page-dashboard .site-header .ds-header-link,
-html[data-ui="refresh"] body.ds-page-dashboard .site-header .theme-toggle,
-html[data-ui="refresh"] body.ds-page-dashboard .site-header .nav-toggle,
-html[data-ui="refresh"] body.ds-page-dashboard .site-header .header-avatar-btn {
-  color: var(--ds-ink) !important;
-}
-
-html[data-ui="refresh"] body.ds-page-dashboard .main-content {
-  padding-top: 96px !important;
-}
-
-html[data-ui="refresh"] body.ds-page-dashboard .signups-container {
-  max-width: 1560px !important;
-  margin: 0 auto !important;
-  padding: 0 2rem 4rem !important;
-}
-
-html[data-ui="refresh"] body.ds-page-dashboard .glass-card {
-  background: var(--ds-surface) !important;
-  border: 1.5px solid var(--ds-border) !important;
-  border-radius: 20px !important;
-  box-shadow: var(--shadow-glass) !important;
-  backdrop-filter: none !important;
-}
-
 @media (max-width: 1080px) {
   html[data-ui="refresh"] .ds-cloud-land .section-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -1795,10 +1754,9 @@ html[data-ui="refresh"] .main-content {
     padding: 84px 0 92px;
   }
   html[data-ui="refresh"] .ds-guide-sky-inner,
-html[data-ui="refresh"] .ds-guide-body-wrap,
-html[data-ui="refresh"] body.ds-page-dashboard .signups-container {
-    padding-left: 1.15rem !important;
-    padding-right: 1.15rem !important;
+html[data-ui="refresh"] .ds-guide-body-wrap {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
   }
   html[data-ui="refresh"] .content-card {
     padding: 1.35rem 1.15rem !important;

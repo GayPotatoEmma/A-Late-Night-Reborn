@@ -86,10 +86,11 @@
         window.location.href = oauthUrl;
     }
 
-    async function signOut() {
-        // 1. Invalidate session token on server and clear session cookies
+    async function signOut(allDevices = false) {
+        // 1. Invalidate session token(s) on server and clear session cookies
+        const endpoint = allDevices ? '/api/public/auth/logout-all' : '/api/public/auth/logout';
         try {
-            await fetch(`${getApiUrl()}/api/public/auth/logout`, {
+            await fetch(`${getApiUrl()}${endpoint}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

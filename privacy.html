@@ -111,7 +111,7 @@
                             The website server only passes the form submission straight to the sheet and does not store copies of your submissions.
                         </p>
                         <p>
-                            Your login session confirms your Discord identity while you're using the site. It stays active as long as you visit regularly, and automatically expires after 7 days of inactivity.
+                            Your login session confirms your Discord identity while you're using the site. It stays active as long as you visit regularly, automatically expires after 30 days of inactivity (up to a 90-day maximum), and is immediately revoked when you sign out or use Sign Out All Devices.
                         </p>
                     </div>
 
@@ -160,7 +160,7 @@
                             We only use a few basic browser items to keep you signed in and remember your settings:
                         </p>
                         <ul class="privacy-list">
-                            <li><strong>Login Session:</strong> An encrypted cookie that keeps you logged in while using the site. It automatically stays active as long as you visit regularly, and is cleared immediately when you sign out.</li>
+                            <li><strong>Login Session:</strong> A secure server-side session cookie that keeps you logged in while using the site. It stays active for up to 30 days of inactivity (90 days max), and is revoked immediately when you sign out or sign out of all devices.</li>
                             <li><strong>Discord Login Security:</strong> A temporary security code stored in your browser while logging in through Discord to protect against login tampering. It is automatically deleted once you are signed in.</li>
                             <li><strong>Saved Signup Preferences (Optional):</strong> If you choose to save your default raid preferences (such as preferred roles, playable jobs, progression point, party preferences, or action experience per content type), these preferences are stored <strong>exclusively on your device</strong> inside your browser's local storage (<code>alnr_signup_preferences_v1</code>). They are never transmitted to or stored on our server unless you actively submit a run signup, and you can export, import, or delete them at any time from the signup preferences menu or by clearing your browser's site data.</li>
                             <li><strong>Theme Preference:</strong> Remembers whether you prefer dark or light mode across visits.</li>
@@ -254,7 +254,7 @@
     <script src="js/config.js?v=1" defer></script>
     <script src="js/theme.js?v=4" defer></script>
     <script src="js/stars.js?v=2" defer></script>
-    <script src="js/nav.js?v=6" defer></script>
+    <script src="js/nav.js?v=7" defer></script>
     <script src="js/dreamscape.js?v=2" defer></script>
     <script src="js/contact.js?v=2" defer></script>
 </body>

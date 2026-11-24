@@ -1419,7 +1419,7 @@ html[data-ui="refresh"][data-theme] .modal-roster-card.is-standby {
 html[data-ui="refresh"][data-theme] .modal-roster-assign-chip {
   background: var(--ds-surface) !important;
   border: 1.5px solid var(--ds-border) !important;
-  border-radius: 999px !important;
+  border-radius: 12px !important;
   color: var(--ds-ink) !important;
 }
 

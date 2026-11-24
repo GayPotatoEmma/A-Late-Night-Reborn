@@ -14,6 +14,7 @@
   var mountedKind = null;
   var scrollHandler = null;
   var hashHandler = null;
+  var resizeHandler = null;
   var lastProfileUser = null;
 
   function isRefreshActive() {
@@ -73,6 +74,8 @@
   /* ── 2. Scroll State & Subtle GPU Sky Parallax ───────────────────────────── */
   function startScrollAndParallax() {
     var ticking = false;
+    var headerEl = document.querySelector('.site-header');
+    var skyEl = document.querySelector('.ds-home-sky, .ds-guide-sky, .ds-signups-sky, .ds-profile-sky, .ds-secondary-sky');
     var moonLayer = document.querySelector('.ds-parallax-moon');
     var towerLayer = document.querySelector('.ds-parallax-tower');
     var midCloud = document.querySelector('.ds-parallax-cloud');
@@ -85,6 +88,10 @@
         var y = window.scrollY || window.pageYOffset || 0;
         document.body.classList.toggle('ds-scrolled', y > 28);
 
+        var headerH = headerEl ? headerEl.offsetHeight : 64;
+        var pastSky = skyEl ? (skyEl.getBoundingClientRect().bottom <= headerH + 22) : true;
+        document.body.classList.toggle('ds-past-sky', pastSky);
+
         if (!isLiteOrReduced() && y < 700) {
           if (moonLayer) moonLayer.style.transform = 'translate3d(0,' + (y * 0.16).toFixed(1) + 'px,0)';
           if (towerLayer) towerLayer.style.transform = 'translate3d(0,' + (y * 0.09).toFixed(1) + 'px,0)';
@@ -94,8 +101,10 @@
       });
     };
     hashHandler = function () { setTimeout(scrollHandler, 40); };
+    resizeHandler = function () { scrollHandler(); };
     window.addEventListener('scroll', scrollHandler, { passive: true });
     window.addEventListener('hashchange', hashHandler);
+    window.addEventListener('resize', resizeHandler, { passive: true });
     setTimeout(scrollHandler, 120);
     scrollHandler();
   }
@@ -109,7 +118,11 @@
       window.removeEventListener('hashchange', hashHandler);
       hashHandler = null;
     }
-    document.body.classList.remove('ds-scrolled');
+    if (resizeHandler) {
+      window.removeEventListener('resize', resizeHandler);
+      resizeHandler = null;
+    }
+    document.body.classList.remove('ds-scrolled', 'ds-past-sky');
   }
 
   /* ── 3. Illustrated Twilight Sky SVGs ────────────────────────────────────── */

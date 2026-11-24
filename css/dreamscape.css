@@ -335,6 +335,77 @@ html[data-ui="refresh"] .site-header .nav-toggle:hover {
   border-radius: 50%;
 }
 
+/* Light Mode Adaptive Sky-to-Paper Header (Option 1: Warm Cloud-Paper Bar Past Sky) */
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header {
+  background: rgba(253, 246, 239, 0.93) !important;
+  backdrop-filter: blur(20px) saturate(145%);
+  -webkit-backdrop-filter: blur(20px) saturate(145%);
+  border-bottom-color: var(--ds-border) !important;
+  box-shadow: 0 8px 26px rgba(42, 31, 74, 0.08) !important;
+}
+
+html[data-ui="refresh"][data-theme="light-lite"] body.ds-past-sky .site-header {
+  background: #fdf6ef !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .header-logo {
+  filter: drop-shadow(0 2px 8px rgba(38, 30, 61, 0.14));
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .header-site-name {
+  color: var(--ds-ink) !important;
+  -webkit-text-fill-color: var(--ds-ink) !important;
+  text-shadow: none !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .ds-header-link {
+  color: var(--ds-ink-2) !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .ds-header-link:hover {
+  color: var(--ds-ink) !important;
+  background: rgba(38, 30, 61, 0.07) !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .ds-header-link.is-active {
+  color: #5b35a8 !important;
+  background: rgba(129, 82, 220, 0.12) !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .header-discord {
+  background: #261e3d !important;
+  border-color: #261e3d !important;
+  color: var(--ds-moon) !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .header-discord:hover {
+  background: #352a56 !important;
+  border-color: #352a56 !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .theme-toggle,
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .header-avatar-btn {
+  background: var(--ds-surface-soft) !important;
+  border-color: var(--ds-border-strong) !important;
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .theme-toggle:hover,
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .header-avatar-btn:hover {
+  background: var(--ds-surface) !important;
+  border-color: var(--ds-ink-muted) !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .nav-toggle {
+  color: var(--ds-ink) !important;
+}
+
+html[data-ui="refresh"][data-theme^="light"] body.ds-past-sky .site-header .nav-toggle:hover {
+  background: rgba(38, 30, 61, 0.07) !important;
+}
+
 /* Header dropdown popovers (Theme & Profile) - high specificity across all 4 theme modes */
 html[data-ui="refresh"][data-theme] .theme-dropdown-menu,
 html[data-ui="refresh"][data-theme] .header-popover {

@@ -39,8 +39,22 @@ html[data-ui="refresh"] .ds-signups-sky-inner {
   padding: 0 2rem;
 }
 
-html[data-ui="refresh"] .ds-signups-sky .signups-top-bar {
+html[data-ui="refresh"] .ds-signups-sky .signups-top-bar,
+html[data-ui="refresh"] .ds-signups-sky .signups-hero,
+html[data-ui="refresh"] .ds-profile-sky .signups-top-bar,
+html[data-ui="refresh"] .ds-profile-sky .signups-hero,
+html[data-ui="refresh"] .ds-dashboard-sky .signups-top-bar,
+html[data-ui="refresh"] .ds-dashboard-sky .signups-hero {
   margin-bottom: 0 !important;
+  text-align: left !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+}
+
+html[data-ui="refresh"] .ds-signups-sky .signups-title,
+html[data-ui="refresh"] .ds-profile-sky .signups-title,
+html[data-ui="refresh"] .ds-dashboard-sky .signups-title {
+  text-align: left !important;
 }
 
 html[data-ui="refresh"] .ds-signups-sky .signups-title {
@@ -54,10 +68,12 @@ html[data-ui="refresh"] .ds-signups-sky .signups-title {
   filter: none !important;
 }
 
-html[data-ui="refresh"] .ds-signups-sky .signups-desc {
+html[data-ui="refresh"] .ds-signups-sky .signups-desc,
+html[data-ui="refresh"] .ds-dashboard-sky .signups-desc {
   color: rgba(242, 234, 255, 0.90) !important;
   font-size: 1rem !important;
-  margin-top: 0.4rem;
+  margin: 0.4rem 0 0 !important;
+  text-align: left !important;
 }
 
 html[data-ui="refresh"] .ds-signups-body-wrap {
@@ -2059,6 +2075,7 @@ html[data-ui="refresh"] body.ds-page-dashboard .glass-card {
   }
   html[data-ui="refresh"] .ds-profile-hero-row {
     gap: 1rem;
+    align-items: flex-start;
   }
   html[data-ui="refresh"] .ds-profile-avatar-wrap,
   html[data-ui="refresh"] .ds-profile-avatar {
@@ -2069,6 +2086,13 @@ html[data-ui="refresh"] body.ds-page-dashboard .glass-card {
     width: 20px;
     height: 20px;
     font-size: 0.68rem;
+  }
+  html[data-ui="refresh"] .ds-profile-sky-sep {
+    display: none;
+  }
+  html[data-ui="refresh"] .ds-profile-sky-since {
+    flex-basis: 100%;
+    font-size: 0.86rem;
   }
   html[data-ui="refresh"] .ds-history-grid-2 {
     grid-template-columns: minmax(0, 1fr) !important;

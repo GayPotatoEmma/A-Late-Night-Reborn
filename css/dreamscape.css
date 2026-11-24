@@ -749,6 +749,10 @@ html[data-ui="refresh"] .ds-cloud-land .section-grid {
   gap: 1rem !important;
 }
 
+html[data-ui="refresh"] .ds-cloud-land .section-card:last-child:nth-child(3n - 2) {
+  grid-column: auto !important;
+}
+
 html[data-ui="refresh"] .ds-cloud-land .section-card {
   position: relative;
   display: flex !important;
@@ -1616,6 +1620,12 @@ html[data-ui="refresh"] body.ds-page-dashboard .main-content {
   padding-top: 96px !important;
 }
 
+html[data-ui="refresh"] body.ds-page-dashboard .signups-container {
+  max-width: 1560px !important;
+  margin: 0 auto !important;
+  padding: 0 2rem 4rem !important;
+}
+
 html[data-ui="refresh"] body.ds-page-dashboard .glass-card {
   background: var(--ds-surface) !important;
   border: 1.5px solid var(--ds-border) !important;
@@ -1683,9 +1693,10 @@ html[data-ui="refresh"] .main-content {
     padding: 84px 0 92px;
   }
   html[data-ui="refresh"] .ds-guide-sky-inner,
-html[data-ui="refresh"] .ds-guide-body-wrap {
-    padding-left: 1.15rem;
-    padding-right: 1.15rem;
+html[data-ui="refresh"] .ds-guide-body-wrap,
+html[data-ui="refresh"] body.ds-page-dashboard .signups-container {
+    padding-left: 1.15rem !important;
+    padding-right: 1.15rem !important;
   }
   html[data-ui="refresh"] .content-card {
     padding: 1.35rem 1.15rem !important;

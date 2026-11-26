@@ -16,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Quicksand:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" />
-  <link rel="stylesheet" href="../css/style.css?v=7" />
+  <link rel="stylesheet" href="../css/style.css?v=8" />
     <link rel="stylesheet" href="../css/dreamscape.css?v=9" />
-  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);if(localStorage.getItem('alnr-ui')==='refresh')document.documentElement.setAttribute('data-ui','refresh');}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
+  <script>document.documentElement.setAttribute('data-ui','refresh');try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);if(localStorage.getItem('alnr-ui-v2')==='classic')document.documentElement.removeAttribute('data-ui');}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
 </head>
 <body>
 
@@ -77,9 +77,9 @@
           </div>
           <p style="margin-top:.9rem;margin-bottom:.25rem;">How does Berserker work?</p>
           <ul class="mech-steps" style="margin-top:0;">
-            <li><strong>Rage</strong> renders you immovable for 10 seconds, during which you auto-attack the target six times at 150 potency (~60k per hit).</li>
+            <li><img src="../assets/icons/actions/rage.png" alt="" class="guide-action-icon" loading="lazy" decoding="async" width="80" height="80" /><strong>Rage</strong> renders you immovable for 10 seconds, during which you auto-attack the target six times at 150 potency (~60k per hit).</li>
             <li>While under the effect of Rage, you gain <strong>Pent-up Rage</strong>, which increases the damage of your next Deadly Blow by approximately 5 times the total damage taken, up to a hard cap of ~2.4 million.</li>
-            <li><strong>Deadly Blow</strong> also deals increased damage the lower your current HP is. This effect becomes irrelevant once you reach the 2.4 million cap.</li>
+            <li><img src="../assets/icons/actions/deadly-blow.png" alt="" class="guide-action-icon" loading="lazy" decoding="async" width="80" height="80" /><strong>Deadly Blow</strong> also deals increased damage the lower your current HP is. This effect becomes irrelevant once you reach the 2.4 million cap.</li>
           </ul>
         </div>
       </div>
@@ -91,7 +91,7 @@
           <p>Berserker's damage scales with how much damage you take during Rage. Mitigation applied by healers directly reduces that incoming damage and lowers your Pent-up Rage multiplier. Use the macro for your healer's job before each Rage to strip their buffs from you.</p>
           <div class="accordion">
             <details class="accordion-item">
-              <summary>Sage</summary>
+              <summary><span class="summary-label"><img src="../assets/icons/jobs/sage.png" alt="" class="guide-healer-icon" loading="lazy" decoding="async" width="56" height="56" />Sage</span></summary>
               <div class="accordion-body">
                 <div class="macro-box" data-macro-i18n="status">
                   <button class="macro-copy-btn">Copy</button>
@@ -114,7 +114,7 @@
               </div>
             </details>
             <details class="accordion-item">
-              <summary>Scholar</summary>
+              <summary><span class="summary-label"><img src="../assets/icons/jobs/scholar.png" alt="" class="guide-healer-icon" loading="lazy" decoding="async" width="56" height="56" />Scholar</span></summary>
               <div class="accordion-body">
                 <div class="macro-box" data-macro-i18n="status">
                   <button class="macro-copy-btn">Copy</button>
@@ -134,7 +134,7 @@
               </div>
             </details>
             <details class="accordion-item">
-              <summary>Astrologian</summary>
+              <summary><span class="summary-label"><img src="../assets/icons/jobs/astrologian.png" alt="" class="guide-healer-icon" loading="lazy" decoding="async" width="56" height="56" />Astrologian</span></summary>
               <div class="accordion-body">
                 <div class="macro-box" data-macro-i18n="status">
                   <button class="macro-copy-btn">Copy</button>
@@ -156,7 +156,7 @@
               </div>
             </details>
             <details class="accordion-item">
-              <summary>White Mage</summary>
+              <summary><span class="summary-label"><img src="../assets/icons/jobs/white-mage.png" alt="" class="guide-healer-icon" loading="lazy" decoding="async" width="56" height="56" />White Mage</span></summary>
               <div class="accordion-body">
                 <div class="macro-box" data-macro-i18n="status">
                   <button class="macro-copy-btn">Copy</button>
@@ -417,7 +417,7 @@
   </div>
 
   <script src="../js/config.js?v=1" defer></script>
-  <script src="../js/theme.js?v=5" defer></script>
+  <script src="../js/theme.js?v=6" defer></script>
   <script src="../js/stars.js?v=2" defer></script>
   <script src="../js/nav.js?v=10" defer></script>
   <script src="../js/dreamscape.js?v=8" defer></script>

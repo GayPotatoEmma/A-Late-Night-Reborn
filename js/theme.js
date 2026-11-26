@@ -1,6 +1,6 @@
 (function () {
   var STORAGE_KEY = 'alnr-theme';
-  var UI_STORAGE_KEY = 'alnr-ui';
+  var UI_STORAGE_KEY = 'alnr-ui-v2';
   var html = document.documentElement;
 
   var THEMES = {
@@ -101,7 +101,7 @@
   }
 
   function normalizeUi(ui) {
-    return ui === 'refresh' ? 'refresh' : 'classic';
+    return ui === 'classic' ? 'classic' : 'refresh';
   }
 
   function applyUi(ui, animate) {
@@ -119,11 +119,11 @@
       html.removeAttribute('data-ui');
     }
 
-    var refreshToggle = document.getElementById('theme-refresh-toggle');
-    if (refreshToggle) {
-      var isRefresh = ui === 'refresh';
-      refreshToggle.classList.toggle('active', isRefresh);
-      refreshToggle.setAttribute('aria-checked', isRefresh ? 'true' : 'false');
+    var classicToggle = document.getElementById('theme-classic-toggle');
+    if (classicToggle) {
+      var isClassic = ui === 'classic';
+      classicToggle.classList.toggle('active', isClassic);
+      classicToggle.setAttribute('aria-checked', isClassic ? 'true' : 'false');
     }
 
     try { localStorage.setItem(UI_STORAGE_KEY, ui); } catch (e) {}
@@ -139,7 +139,7 @@
       applyTheme(theme, true);
     },
     getUi: function () {
-      return normalizeUi(html.getAttribute('data-ui') || 'classic');
+      return html.getAttribute('data-ui') === 'refresh' ? 'refresh' : 'classic';
     },
     setUi: function (ui) {
       applyUi(ui, true);
@@ -225,7 +225,7 @@
     savedUi = localStorage.getItem(UI_STORAGE_KEY);
   } catch (e) {}
   var initialTheme = normalizeTheme(savedTheme || html.getAttribute('data-theme') || 'dark');
-  var initialUi = normalizeUi(savedUi || html.getAttribute('data-ui') || 'classic');
+  var initialUi = normalizeUi(savedUi || 'refresh');
   applyTheme(initialTheme, false);
   applyUi(initialUi, false);
 
@@ -261,8 +261,8 @@
         '<span class="popover-perf-label">Performance Mode</span>' +
         '<span class="popover-switch" aria-hidden="true"><span class="popover-switch-thumb"></span></span>' +
       '</button>' +
-      '<button type="button" class="popover-perf-row" id="theme-refresh-toggle" role="switch" aria-checked="false">' +
-        '<span class="popover-perf-label">Refresh <span class="popover-beta-pill">Beta</span></span>' +
+      '<button type="button" class="popover-perf-row" id="theme-classic-toggle" role="switch" aria-checked="false">' +
+        '<span class="popover-perf-label">Classic</span>' +
         '<span class="popover-switch" aria-hidden="true"><span class="popover-switch-thumb"></span></span>' +
       '</button>';
     wrapper.appendChild(dropdown);
@@ -304,10 +304,10 @@
         applyTheme((isLight ? 'light' : 'dark') + (!isLite2 ? '-lite' : ''), true);
         return;
       }
-      var refreshBtn = e.target.closest('#theme-refresh-toggle');
-      if (refreshBtn) {
-        var curUi = normalizeUi(html.getAttribute('data-ui') || 'classic');
-        applyUi(curUi === 'refresh' ? 'classic' : 'refresh', true);
+      var classicBtn = e.target.closest('#theme-classic-toggle');
+      if (classicBtn) {
+        var curUi = html.getAttribute('data-ui') === 'refresh' ? 'refresh' : 'classic';
+        applyUi(curUi === 'classic' ? 'refresh' : 'classic', true);
       }
     });
 
@@ -329,7 +329,7 @@
     };
 
     var current = html.getAttribute('data-theme') || 'dark';
-    var currentUi = html.getAttribute('data-ui') || 'classic';
+    var currentUi = html.getAttribute('data-ui') === 'refresh' ? 'refresh' : 'classic';
     applyTheme(current, false);
     applyUi(currentUi, false);
   }

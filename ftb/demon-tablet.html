@@ -16,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Quicksand:wght@500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" />
-  <link rel="stylesheet" href="../css/style.css?v=7" />
+  <link rel="stylesheet" href="../css/style.css?v=8" />
     <link rel="stylesheet" href="../css/dreamscape.css?v=9" />
-  <script>try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);if(localStorage.getItem('alnr-ui')==='refresh')document.documentElement.setAttribute('data-ui','refresh');}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
+  <script>document.documentElement.setAttribute('data-ui','refresh');try{var _t=localStorage.getItem('alnr-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);if(localStorage.getItem('alnr-ui-v2')==='classic')document.documentElement.removeAttribute('data-ui');}catch(e){}if(window.location.protocol!=='file:'&&location.pathname.endsWith('.html')){var _c=location.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'');history.replaceState(null,'',_c+location.search+location.hash);}</script>
 </head>
 <body>
 
@@ -67,11 +67,11 @@
         <h2 class="card-heading purple">Overview</h2>
         <div class="content-body">
           <p>
-            Avoidable AoEs inflict <strong>Thrice-come Ruin</strong>. Three stacks inflict Doom and kill
+            Avoidable AoEs inflict <img src="../assets/icons/status/thrice-come-ruin.png" alt="Thrice-come Ruin debuff" class="guide-status-icon" loading="lazy" decoding="async" width="48" height="64" /><strong>Thrice-come Ruin</strong>. Three stacks inflict <img src="../assets/icons/status/doom.png" alt="Doom debuff" class="guide-status-icon" loading="lazy" decoding="async" width="48" height="64" />Doom and kill
             you. Phantom Berserkers with high enmity should stack for Occult Chisel and use invulnerability.
           </p>
           <div class="elemental-weakness">
-            <strong>Elemental Weakness:</strong> <span class="element-lightning">Lightning</span>
+            <strong>Elemental Weakness:</strong> <span class="element-lightning"><img src="../assets/icons/elements/lightning.png" alt="" class="guide-elem-icon" loading="lazy" decoding="async" width="64" height="64" />Lightning</span>
           </div>
         </div>
       </div>
@@ -224,7 +224,7 @@
             </li>
             <li><strong>Dispel:</strong>
               <ul class="mech-sub">
-                <li>The Arch Demon has a buff called <strong>Dark Defenses</strong> that must be dispelled by a Phantom Time Mage via <strong>Occult Dispel</strong>.</li>
+                <li>The Arch Demon has a buff called <img src="../assets/icons/status/dark-defenses.png" alt="Dark Defenses buff" class="guide-status-icon" loading="lazy" decoding="async" width="48" height="64" /><strong>Dark Defenses</strong> that must be dispelled by a Phantom Time Mage via <img src="../assets/icons/actions/occult-dispel.png" alt="" class="guide-action-icon" loading="lazy" decoding="async" width="80" height="80" /><strong>Occult Dispel</strong>.</li>
               </ul>
             </li>
           </ul>
@@ -247,7 +247,7 @@
             </li>
             <li><strong>Towers:</strong>
               <ul class="mech-sub">
-                <li>At least 12 people need to stand near one of the 2 statues, which cast Float on everyone close enough, allowing them to soak the 3 top-level stack towers (at least 4 players per tower).</li>
+                <li>At least 12 people need to stand near one of the 2 statues, which cast <img src="../assets/icons/status/defying-gravity.png" alt="Defying Gravity buff" class="guide-status-icon" loading="lazy" decoding="async" width="48" height="64" />Float on everyone close enough, allowing them to soak the 3 top-level stack towers (at least 4 players per tower).</li>
               </ul>
             </li>
             <li><strong>Return:</strong>
@@ -326,7 +326,7 @@
   </div>
 
   <script src="../js/config.js?v=1" defer></script>
-  <script src="../js/theme.js?v=5" defer></script>
+  <script src="../js/theme.js?v=6" defer></script>
   <script src="../js/stars.js?v=2" defer></script>
   <script src="../js/lightbox.js?v=2" defer></script>
   <script src="../js/nav.js?v=10" defer></script>

@@ -81,7 +81,7 @@
               <a href="/ftb/marble-dragon#adds-tank" class="nav-sub-link"><span>Add Phase: Tank</span></a>\
               <a href="/ftb/marble-dragon#wicked-water" class="nav-sub-link"><span>Wicked Water</span></a>\
               <a href="/ftb/marble-dragon#towers" class="nav-sub-link"><span>Towers during Imitation Rain 4</span></a>\
-              <a href="/ftb/marble-dragon#how-to" class="nav-sub-link"><span>How do we resolve mechanics?</span></a>\
+              <a href="/ftb/marble-dragon#how-to" class="nav-sub-link"><span>How Do We Resolve Mechanics?</span></a>\
             </div>\
           </div>\
           <div class="nav-section">\
@@ -114,7 +114,7 @@
               <a href="/ftb/magitaur#sages-staff" class="nav-sub-link"><span>Sage\'s Staff</span></a>\
               <a href="/ftb/magitaur#rune-axe" class="nav-sub-link"><span>Rune Axe</span></a>\
               <a href="/ftb/magitaur#holy-lance" class="nav-sub-link"><span>Holy Lance</span></a>\
-              <a href="/ftb/magitaur#how-to" class="nav-sub-link"><span>How do we resolve mechanics?</span></a>\
+              <a href="/ftb/magitaur#how-to" class="nav-sub-link"><span>How Do We Resolve Mechanics?</span></a>\
             </div>\
           </div>\
           <div class="nav-section">\
@@ -143,7 +143,7 @@
               <a href="/ftb/phantom-berserker#remove-mit-macros" class="nav-sub-link"><span>Remove Mitigation Macros</span></a>\
               <a href="/ftb/phantom-berserker#boss1" class="nav-sub-link"><span>Boss 1: Demon Tablet</span></a>\
               <a href="/ftb/phantom-berserker#boss2" class="nav-sub-link"><span>Boss 2: Dead Stars</span></a>\
-              <a href="/ftb/phantom-berserker#bridges" class="nav-sub-link"><span>Bridges: Progenitor/Progenitrix</span></a>\
+              <a href="/ftb/phantom-berserker#bridges" class="nav-sub-link"><span>Bridges: Progenitor &amp; Progenitrix</span></a>\
               <a href="/ftb/phantom-berserker#boss3" class="nav-sub-link"><span>Boss 3: Marble Dragon</span></a>\
               <a href="/ftb/phantom-berserker#boss4" class="nav-sub-link"><span>Boss 4: Magitaur</span></a>\
             </div>\
@@ -207,7 +207,7 @@
             </div>\
           </div>\
           <div class="nav-section">\
-            <div class="nav-section-label nav-section-toggle"><span class="nav-badge mini-boss">Mini Boss</span><span class="nav-chevron">&#9656;</span></div>\
+            <div class="nav-section-label nav-section-toggle"><span class="nav-badge mini-boss">Mini-Boss</span><span class="nav-chevron">&#9656;</span></div>\
             <a href="/ftm/storm-generators" class="nav-page-link"><span>Storm Generators</span></a>\
             <div class="nav-sub-links">\
               <a href="/ftm/storm-generators#overview" class="nav-sub-link"><span>Overview</span></a>\

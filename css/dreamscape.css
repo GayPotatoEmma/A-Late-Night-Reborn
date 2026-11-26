@@ -1271,6 +1271,11 @@ html[data-ui="refresh"] #ftm-content .card-badge.mini-boss {
   color: var(--ds-ftm) !important;
 }
 
+html[data-ui="refresh"] #cod-content .card-badge.boss {
+  background: var(--ds-chaotic-soft) !important;
+  color: var(--ds-chaotic) !important;
+}
+
 html[data-ui="refresh"] #cod-content .section-card.is-boss .card-title {
   color: var(--ds-ink) !important;
 }
@@ -1285,8 +1290,8 @@ html[data-ui="refresh"] .ds-cloud-land .card-badge.traversal {
 }
 
 html[data-ui="refresh"] .ds-cloud-land .card-badge.puzzle {
-  background: var(--ds-ftm-soft) !important;
-  color: var(--ds-ftm) !important;
+  background: var(--ds-ba-soft) !important;
+  color: var(--ds-ba) !important;
 }
 
 html[data-ui="refresh"] .ds-cloud-land .card-badge.additional {
@@ -2008,6 +2013,47 @@ html[data-ui="refresh"][data-theme^="dark"] .nav-drawer a:hover,
 html[data-ui="refresh"][data-theme^="dark"] .nav-drawer a.active {
   background: rgba(253, 212, 201, 0.16) !important;
   color: var(--ds-moon) !important;
+}
+
+/* Unified Nav Drawer Section Badges (matches Home page card badges 1-to-1) */
+html[data-ui="refresh"] .nav-panel .nav-badge {
+  border: none !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  padding: 0.16rem 0.56rem !important;
+}
+
+html[data-ui="refresh"] .nav-panel #nav-raid-ftb .nav-badge.boss,
+html[data-ui="refresh"] .nav-panel #nav-raid-ftb .nav-badge.mini-boss {
+  background: var(--ds-ftb-soft) !important;
+  color: var(--ds-ftb) !important;
+}
+
+html[data-ui="refresh"] .nav-panel #nav-raid-ftm .nav-badge.boss,
+html[data-ui="refresh"] .nav-panel #nav-raid-ftm .nav-badge.mini-boss {
+  background: var(--ds-ftm-soft) !important;
+  color: var(--ds-ftm) !important;
+}
+
+html[data-ui="refresh"] .nav-panel #nav-raid-cod .nav-badge.boss {
+  background: var(--ds-chaotic-soft) !important;
+  color: var(--ds-chaotic) !important;
+}
+
+html[data-ui="refresh"] .nav-panel .nav-badge.traversal {
+  background: var(--ds-chaotic-soft) !important;
+  color: var(--ds-chaotic) !important;
+}
+
+html[data-ui="refresh"] .nav-panel .nav-badge.puzzle {
+  background: var(--ds-ba-soft) !important;
+  color: var(--ds-ba) !important;
+}
+
+html[data-ui="refresh"] .nav-panel .nav-badge.additional {
+  background: var(--ds-drs-soft) !important;
+  color: var(--ds-drs) !important;
 }
 
 /* ============================================================================

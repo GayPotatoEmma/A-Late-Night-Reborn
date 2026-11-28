@@ -65,8 +65,9 @@
       nav.appendChild(a);
     });
 
-    if (discordBtn) {
-      headerInner.insertBefore(nav, discordBtn);
+    var insertAnchor = headerInner.querySelector('.header-live-wrap') || discordBtn;
+    if (insertAnchor) {
+      headerInner.insertBefore(nav, insertAnchor);
     } else {
       headerInner.appendChild(nav);
     }

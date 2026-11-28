@@ -678,6 +678,9 @@
       if (willOpen && window.alnrTheme && typeof window.alnrTheme.closeDropdown === 'function') {
         window.alnrTheme.closeDropdown();
       }
+      if (willOpen && window.alnrHeaderLive && typeof window.alnrHeaderLive.close === 'function') {
+        window.alnrHeaderLive.close();
+      }
       wrap.classList.toggle('open', willOpen);
       avatarBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
     }
@@ -825,6 +828,246 @@
           }
         })
         .catch(function () {});
+    }
+  })();
+
+  // ── Site-Wide Header Live Streams Pill & Popover (Option C) ───────────────
+  (function initHeaderLiveStreams() {
+    var headerInner = document.querySelector('.site-header .header-inner');
+    if (!headerInner || document.getElementById('header-live-wrap')) return;
+
+    var cfg = window.ALNR_CONFIG || {};
+    var API_URL = cfg.API_URL || 'https://api.alatenightreborn.com';
+
+    var liveState = {
+      active: false,
+      active_event: '',
+      active_events: [],
+      streams: []
+    };
+
+    function detectContentBadges(eventsList, fallbackEvent) {
+      var names = Array.isArray(eventsList) && eventsList.length ? eventsList : (fallbackEvent ? [fallbackEvent] : []);
+      var seen = {};
+      var badges = [];
+      for (var i = 0; i < names.length; i++) {
+        var raw = String(names[i] || '').trim();
+        if (!raw) continue;
+        var up = raw.toUpperCase();
+        var match = null;
+        if (/^\[?\s*FT\s*:?\s*B\b|\bFORKED\s+TOWER\s*:?\s*BLOOD\b|\bFTB\b/.test(up)) {
+          match = { key: 'ftb', label: 'FT:B' };
+        } else if (/^\[?\s*FT\s*:?\s*M\b|\bFORKED\s+TOWER\s*:?\s*MAGIC\b|\bFTM\b/.test(up)) {
+          match = { key: 'ftm', label: 'FT:M' };
+        } else if (/^\[?\s*(?:C|COD|CAR|CHAOTIC)\s*\]|\bCHAOTIC\b|\bCLOUD\s+OF\s+DARKNESS\b/.test(up)) {
+          match = { key: 'cod', label: 'CHAOTIC' };
+        } else if (/^\[?\s*BA\s*\]|\bBALDESION\s+ARSENAL\b/.test(up)) {
+          match = { key: 'ba', label: 'BA' };
+        } else if (/^\[?\s*DRS\s*\]|\bDELUBRUM\s+REGINAE\b/.test(up)) {
+          match = { key: 'drs', label: 'DRS' };
+        }
+        if (match && !seen[match.key]) {
+          seen[match.key] = true;
+          badges.push(match);
+        }
+      }
+      return badges;
+    }
+
+    function esc(s) {
+      return String(s || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function safeHttpUrl(url) {
+      var s = String(url || '').trim();
+      return /^https?:\/\//i.test(s) ? s : 'https://www.twitch.tv';
+    }
+
+    function initialsFor(name) {
+      var parts = String(name || 'S').trim().split(/\s+/).filter(Boolean);
+      if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+      return (parts[0] || 'S').slice(0, 2).toUpperCase();
+    }
+
+    var wrap = document.createElement('div');
+    wrap.className = 'header-live-wrap';
+    wrap.id = 'header-live-wrap';
+
+    var pillBtn = document.createElement('button');
+    pillBtn.type = 'button';
+    pillBtn.className = 'header-live-pill';
+    pillBtn.id = 'header-live-pill';
+    pillBtn.setAttribute('aria-haspopup', 'true');
+    pillBtn.setAttribute('aria-expanded', 'false');
+    pillBtn.setAttribute('aria-label', 'Live community streams');
+
+    var popover = document.createElement('div');
+    popover.className = 'header-live-popover';
+    popover.id = 'header-live-popover';
+    popover.setAttribute('role', 'region');
+    popover.setAttribute('aria-label', 'Live Community Streams');
+
+    wrap.appendChild(pillBtn);
+    wrap.appendChild(popover);
+
+    var discordBtn = headerInner.querySelector('.header-discord');
+    if (discordBtn && discordBtn.parentNode === headerInner) {
+      headerInner.insertBefore(wrap, discordBtn);
+    } else {
+      var profWrap = document.getElementById('header-profile-wrap');
+      if (profWrap && profWrap.parentNode === headerInner) {
+        headerInner.insertBefore(wrap, profWrap);
+      } else {
+        headerInner.appendChild(wrap);
+      }
+    }
+
+    function toggleLivePopover(force) {
+      var willOpen = typeof force === 'boolean' ? force : !wrap.classList.contains('open');
+      if (willOpen && window.alnrHeaderProfile && typeof window.alnrHeaderProfile.close === 'function') {
+        window.alnrHeaderProfile.close();
+      }
+      if (willOpen && window.alnrTheme && typeof window.alnrTheme.closeDropdown === 'function') {
+        window.alnrTheme.closeDropdown();
+      }
+      wrap.classList.toggle('open', willOpen);
+      pillBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+
+    function renderLiveUI() {
+      var streams = Array.isArray(liveState.streams) ? liveState.streams : [];
+      if (!liveState.active || streams.length === 0) {
+        toggleLivePopover(false);
+        wrap.classList.remove('is-visible');
+        return;
+      }
+
+      wrap.classList.add('is-visible');
+
+      // Pill avatars (up to 3)
+      var avHtml = streams.slice(0, 3).map(function (st) {
+        var av = st.avatar_url ? safeHttpUrl(st.avatar_url) : '';
+        if (av && /^https?:\/\//i.test(st.avatar_url || '')) {
+          return '<img class="hdr-live-av" src="' + esc(av) + '" alt="" loading="lazy" decoding="async" />';
+        }
+        return '<span class="hdr-live-av hdr-live-av-fallback">' + esc(initialsFor(st.display_name)) + '</span>';
+      }).join('');
+
+      var countLabel = streams.length === 1 ? '1 Live' : (streams.length + ' Live');
+      pillBtn.innerHTML =
+        '<span class="hdr-live-dot" aria-hidden="true"></span>' +
+        '<span class="hdr-live-av-stack" aria-hidden="true">' + avHtml + '</span>' +
+        '<span class="hdr-live-label">' + esc(countLabel) + '</span>' +
+        '<span class="hdr-live-caret" aria-hidden="true">&#9662;</span>';
+
+      // Popover header + stream rows
+      var cacheBust = Math.floor(Date.now() / 60000);
+      var contentBadges = detectContentBadges(liveState.active_events, liveState.active_event);
+      var badgesHtml = contentBadges.length
+        ? '<div class="hdr-live-content-badges">' + contentBadges.map(function (b) {
+            return '<span class="hdr-live-content-badge is-' + b.key + '">' + esc(b.label) + '</span>';
+          }).join('') + '</div>'
+        : '';
+
+      var itemsHtml = streams.map(function (st) {
+        var url = safeHttpUrl(st.url);
+        var thumbSrc = st.thumbnail_url ? (st.thumbnail_url + '?t=' + cacheBust) : '';
+        var avFallback = st.avatar_url && /^https?:\/\//i.test(st.avatar_url)
+          ? '<img class="hdr-live-thumb-av" src="' + esc(st.avatar_url) + '" alt="" loading="lazy" />'
+          : '<span class="hdr-live-thumb-init">' + esc(initialsFor(st.display_name)) + '</span>';
+
+        var thumbInner = thumbSrc
+          ? '<img class="hdr-live-thumb-img" src="' + esc(thumbSrc) + '" alt="' + esc(st.display_name) + ' live preview" loading="lazy" decoding="async" onerror="this.style.display=\'none\';if(this.nextElementSibling)this.nextElementSibling.style.display=\'flex\';" />' +
+            '<div class="hdr-live-thumb-fallback" style="display:none;">' + avFallback + '</div>'
+          : '<div class="hdr-live-thumb-fallback">' + avFallback + '</div>';
+
+        return (
+          '<a class="hdr-live-item" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
+            '<div class="hdr-live-thumb">' +
+              thumbInner +
+              '<span class="hdr-live-badge">LIVE</span>' +
+            '</div>' +
+            '<div class="hdr-live-info">' +
+              '<div class="hdr-live-name">' + esc(st.display_name || 'Streamer') + '</div>' +
+              '<div class="hdr-live-title">' + esc(st.title || 'FFXIV Stream') + '</div>' +
+            '</div>' +
+            '<span class="hdr-live-watch">Watch &#8599;</span>' +
+          '</a>'
+        );
+      }).join('');
+
+      popover.innerHTML =
+        '<div class="hdr-live-pop-top">' +
+          '<div class="hdr-live-pop-heading"><span class="hdr-live-dot" aria-hidden="true"></span><span>Live Community Streams</span></div>' +
+          badgesHtml +
+        '</div>' +
+        '<div class="hdr-live-pop-list">' + itemsHtml + '</div>';
+    }
+
+    function fetchLiveStreams() {
+      if (window.location.protocol === 'file:') return;
+      fetch(API_URL + '/api/public/streams', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || typeof d !== 'object') return;
+          liveState.active = Boolean(d.active);
+          liveState.active_event = String(d.active_event || '');
+          liveState.active_events = Array.isArray(d.active_events) ? d.active_events : [];
+          liveState.streams = Array.isArray(d.streams) ? d.streams : [];
+          renderLiveUI();
+        })
+        .catch(function () {});
+    }
+
+    popover.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+
+    pillBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggleLivePopover();
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) {
+        toggleLivePopover(false);
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && wrap.classList.contains('open')) {
+        toggleLivePopover(false);
+        pillBtn.focus();
+      }
+    });
+
+    window.alnrHeaderLive = {
+      refresh: fetchLiveStreams,
+      open: function () { toggleLivePopover(true); },
+      close: function () { toggleLivePopover(false); },
+      setData: function (payload) {
+        if (!payload || typeof payload !== 'object') return;
+        liveState.active = Boolean(payload.active);
+        liveState.active_event = String(payload.active_event || '');
+        liveState.active_events = Array.isArray(payload.active_events) ? payload.active_events : [];
+        liveState.streams = Array.isArray(payload.streams) ? payload.streams : [];
+        renderLiveUI();
+      }
+    };
+
+    if (window.__ALNR_MOCK_STREAMS) {
+      window.alnrHeaderLive.setData(window.__ALNR_MOCK_STREAMS);
+    } else {
+      fetchLiveStreams();
+      window.setInterval(function () {
+        if (document.visibilityState === 'visible') {
+          fetchLiveStreams();
+        }
+      }, 60000);
     }
   })();
 
